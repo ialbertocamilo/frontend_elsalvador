@@ -1,0 +1,12 @@
+node_modules
+dist
+.build
+./tsconfig.json
+build
+
+# don't lint nyc coverage output
+coverage
+
+.eslintrc.js
+
+.babel.config.js
