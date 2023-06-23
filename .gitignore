@@ -1,0 +1,12 @@
+node_modules
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/codeStyles/Project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/jsLinters/eslint.xml
+/.idea/.gitignore
+/.idea/aws.xml
+/.idea/jsonSchemas.xml
+/.idea/modules.xml
+/.idea/plataforma_elsalvador.iml
+/.idea/prettier.xml
+/.idea/vcs.xml
