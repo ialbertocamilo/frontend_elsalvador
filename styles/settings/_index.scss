@@ -29,18 +29,18 @@ $gray-900: #212529;
 $black: #000;
 
 $grays: (
-	'100': $gray-100,
-	'200': $gray-200,
-	'300': $gray-300,
-	'400': $gray-400,
-	'500': $gray-500,
-	'600': $gray-600,
-	'700': $gray-700,
-	'800': $gray-800,
-	'900': $gray-900,
+        '100': $gray-100,
+        '200': $gray-200,
+        '300': $gray-300,
+        '400': $gray-400,
+        '500': $gray-500,
+        '600': $gray-600,
+        '700': $gray-700,
+        '800': $gray-800,
+        '900': $gray-900,
 );
 
-$primary: #6c5dd3; // Don't forget to make changes to the .env file as well.
+$primary: #0e9de1; // Don't forget to make changes to the .env file as well.
 $secondary: #ffa2c0; // Don't forget to make changes to the .env file as well.
 $success: #46bcaa; // Don't forget to make changes to the .env file as well.
 $info: #4d69fa; // Don't forget to make changes to the .env file as well.
@@ -81,27 +81,27 @@ $enable-negative-margins: true;
 //
 // Define the edge positioning anchors of the position utilities.
 $position-values: (
-	0: 0,
-	5: 5%,
-	10: 10%,
-	15: 15%,
-	20: 20%,
-	25: 25%,
-	30: 30%,
-	35: 35%,
-	40: 40%,
-	45: 45%,
-	50: 50%,
-	55: 55%,
-	60: 60%,
-	65: 65%,
-	70: 70%,
-	75: 75%,
-	80: 80%,
-	85: 85%,
-	90: 90%,
-	95: 95%,
-	100: 100%,
+        0: 0,
+        5: 5%,
+        10: 10%,
+        15: 15%,
+        20: 20%,
+        25: 25%,
+        30: 30%,
+        35: 35%,
+        40: 40%,
+        45: 45%,
+        50: 50%,
+        55: 55%,
+        60: 60%,
+        65: 65%,
+        70: 70%,
+        75: 75%,
+        80: 80%,
+        85: 85%,
+        90: 90%,
+        95: 95%,
+        100: 100%,
 );
 
 //
@@ -459,8 +459,8 @@ $alert-color-scale-outline: 40% !default;
 $dark-progress-bg: $gray-800 !default;
 
 // List group
-// $dark-list-group-color: $gray-100 !default;
-// $dark-list-group-bg: $dark !default;
+//$dark-list-group-color: $gray-100 !default;
+//$dark-list-group-bg: $dark !default;
 
 $dark-list-group-item-color-scale: 100%;
 
@@ -510,27 +510,27 @@ $overlay-backdrop-filter: 0.5rem !default;
 //  Icon Sizes
 //
 $icon-sizes: (
-	'sm': $font-size-sm,
-	'md': $font-size-base,
-	'lg': $font-size-lg,
-	'2x': $font-size-base * 2,
-	'3x': $font-size-base * 3,
-	'4x': $font-size-base * 4,
-	'5x': $font-size-base * 5,
-	'6x': $font-size-base * 6,
-	'7x': $font-size-base * 7,
-	'8x': $font-size-base * 8,
-	'9x': $font-size-base * 9,
-	'10x': $font-size-base * 10,
+        'sm': $font-size-sm,
+        'md': $font-size-base,
+        'lg': $font-size-lg,
+        '2x': $font-size-base * 2,
+        '3x': $font-size-base * 3,
+        '4x': $font-size-base * 4,
+        '5x': $font-size-base * 5,
+        '6x': $font-size-base * 6,
+        '7x': $font-size-base * 7,
+        '8x': $font-size-base * 8,
+        '9x': $font-size-base * 9,
+        '10x': $font-size-base * 10,
 ) !default;
 
 //
 //  Utilities Size
 //
 $g-utilities-sizes: (
-	sm: 0.5,
-	md: 1,
-	lg: 1.5,
+        sm: 0.5,
+        md: 1,
+        lg: 1.5,
 ) !default;
 
 $notification-min-width: 20rem !default;
@@ -595,10 +595,10 @@ $transparent: transparent !default;
 $storybook: #ff4785 !default;
 
 $custom-colors: (
-	'brand': $brand,
-	'brand-two': $brand-two,
-	'transparent': $transparent,
-	'storybook': $storybook,
+        'brand': $brand,
+        'brand-two': $brand-two,
+        'transparent': $transparent,
+        'storybook': $storybook,
 );
 
 // Merge the maps

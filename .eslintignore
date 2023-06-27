@@ -1,12 +1,11 @@
-node_modules
-dist
-.build
-./tsconfig.json
-build
+SvgIcons/
+build/
 
-# don't lint nyc coverage output
-coverage
+node_modules/
+public/
+assets/
+components/icon/
+styles/
 
-.eslintrc.js
+next.config.js
 
-.babel.config.js

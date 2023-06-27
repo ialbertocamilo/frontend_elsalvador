@@ -6,7 +6,7 @@ import useDeviceScreen from '../../../hooks/useDeviceScreen';
 import Popovers from '../../../components/bootstrap/Popovers';
 
 const DefaultHeader = () => {
-	const { width } = useDeviceScreen();
+	const deviceScreen = useDeviceScreen();
 	return (
 		<Header>
 			<HeaderLeft>
@@ -14,15 +14,16 @@ const DefaultHeader = () => {
 					menu={{ ...pageLayoutTypesPagesMenu }}
 					id='header-top-menu'
 					horizontal={
-						!!width && width >= Number(import.meta.env.VITE_MOBILE_BREAKPOINT_SIZE)
+						!!deviceScreen?.width &&
+						deviceScreen.width >= Number(process.env.NEXT_PUBLIC_MOBILE_BREAKPOINT_SIZE)
 					}
 				/>
 			</HeaderLeft>
 			<HeaderRight>
 				<Popovers
 					title='DefaultHeader.tsx'
-					desc={<code>src/pages/common/Headers/DefaultHeader.tsx</code>}>
-					Header Right
+					desc={<code>pages/_layout/_headers/DefaultHeader.tsx</code>}>
+					HeaderRight
 				</Popovers>
 				<code>DefaultHeader.tsx</code>
 			</HeaderRight>

@@ -59,7 +59,6 @@ const Textarea: FC<ITextareaProps> = ({
 	onInput,
 	onInvalid,
 	onSelect,
-	required,
 	...props
 }) => {
 	return (
@@ -93,7 +92,6 @@ const Textarea: FC<ITextareaProps> = ({
 				onInput={onInput}
 				onInvalid={onInvalid}
 				onSelect={onSelect}
-				required={required}
 				// eslint-disable-next-line react/jsx-props-no-spreading
 				{...props}
 			/>
@@ -190,7 +188,6 @@ Textarea.defaultProps = {
 	onInput: undefined,
 	onInvalid: undefined,
 	onSelect: undefined,
-	required: undefined,
 };
 
 export default Textarea;

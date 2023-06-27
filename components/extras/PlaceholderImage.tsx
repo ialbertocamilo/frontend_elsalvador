@@ -8,6 +8,7 @@ interface IPlaceholderImageProps extends HTMLAttributes<HTMLOrSVGElement> {
 	text?: string;
 	className?: string;
 	ariaLabel?: string;
+	alt?: string;
 }
 const PlaceholderImage: FC<IPlaceholderImageProps> = ({
 	width,
@@ -24,7 +25,8 @@ const PlaceholderImage: FC<IPlaceholderImageProps> = ({
 			xmlns='http://www.w3.org/2000/svg'
 			role='img'
 			aria-label={ariaLabel || `Example placeholder image: ${width}x${height}`}
-			preserveAspectRatio='xMidYMid slice'>
+			preserveAspectRatio='xMidYMid slice'
+			focusable='false'>
 			<title>Example placeholder image</title>
 			<rect width='100%' height='100%' fill='var(--bs-gray)' />
 			<text

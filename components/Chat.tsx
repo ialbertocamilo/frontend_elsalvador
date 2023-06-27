@@ -7,7 +7,6 @@ import { TColor } from '../type/color-type';
 
 interface IChatAvatarProps extends HTMLAttributes<HTMLDivElement> {
 	src?: string;
-	srcSet?: string;
 	className?: string;
 	color?: TColor | 'link' | 'brand' | 'brand-two' | 'storybook';
 	unreadMessage?: number;
@@ -16,7 +15,6 @@ interface IChatAvatarProps extends HTMLAttributes<HTMLDivElement> {
 }
 export const ChatAvatar: FC<IChatAvatarProps> = ({
 	src,
-	srcSet,
 	className,
 	color,
 	unreadMessage,
@@ -30,7 +28,7 @@ export const ChatAvatar: FC<IChatAvatarProps> = ({
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			{...props}>
 			<div className='position-relative'>
-				{src && <Avatar srcSet={srcSet} src={src} size={size} color={color} />}
+				{src && <Avatar src={src} size={size} color={color} />}
 				{unreadMessage && (
 					<span className='position-absolute top-15 start-85 translate-middle badge rounded-pill bg-danger'>
 						{unreadMessage} <span className='visually-hidden'>unread messages</span>
@@ -46,8 +44,6 @@ export const ChatAvatar: FC<IChatAvatarProps> = ({
 	);
 };
 ChatAvatar.propTypes = {
-	src: PropTypes.string,
-	srcSet: PropTypes.string,
 	className: PropTypes.string,
 	color: PropTypes.oneOf([
 		'primary',
@@ -69,7 +65,6 @@ ChatAvatar.propTypes = {
 };
 ChatAvatar.defaultProps = {
 	src: undefined,
-	srcSet: undefined,
 	className: undefined,
 	color: undefined,
 	unreadMessage: undefined,
@@ -79,7 +74,6 @@ ChatAvatar.defaultProps = {
 
 interface IChatListItemProps extends HTMLAttributes<HTMLDivElement> {
 	src: string;
-	srcSet?: string;
 	className?: string;
 	isOnline?: boolean;
 	color?: TColor | 'link' | 'brand' | 'brand-two' | 'storybook';
@@ -93,7 +87,6 @@ interface IChatListItemProps extends HTMLAttributes<HTMLDivElement> {
 }
 export const ChatListItem: FC<IChatListItemProps> = ({
 	src,
-	srcSet,
 	className,
 	isOnline,
 	color,
@@ -125,7 +118,6 @@ export const ChatListItem: FC<IChatListItemProps> = ({
 				)}>
 				<ChatAvatar
 					src={src}
-					srcSet={srcSet}
 					isOnline={isOnline}
 					unreadMessage={unreadMessage}
 					color={color}
@@ -155,8 +147,6 @@ export const ChatListItem: FC<IChatListItemProps> = ({
 	);
 };
 ChatListItem.propTypes = {
-	src: PropTypes.string.isRequired,
-	srcSet: PropTypes.string,
 	className: PropTypes.string,
 	isOnline: PropTypes.bool,
 	color: PropTypes.oneOf([
@@ -182,7 +172,6 @@ ChatListItem.propTypes = {
 	lastSeenTime: PropTypes.string,
 };
 ChatListItem.defaultProps = {
-	srcSet: undefined,
 	className: undefined,
 	isOnline: false,
 	color: 'primary',
@@ -253,7 +242,6 @@ interface IChatGroupProps extends HTMLAttributes<HTMLDivElement> {
 	color?: TColor | 'link' | 'brand' | 'brand-two' | 'storybook';
 	user: {
 		src?: string;
-		srcSet?: string;
 		username?: string;
 		name?: string;
 		surname?: string;
@@ -269,14 +257,7 @@ export const ChatGroup: FC<IChatGroupProps> = ({
 	user,
 	...props
 }) => {
-	const AVATAR = (
-		<ChatAvatar
-			src={user.src}
-			srcSet={user.srcSet}
-			isOnline={user.isOnline}
-			color={user.color}
-		/>
-	);
+	const AVATAR = <ChatAvatar src={user.src} isOnline={user.isOnline} color={user.color} />;
 	return (
 		// eslint-disable-next-line react/jsx-props-no-spreading
 		<div className={classNames('chat-group', { 'chat-group-reply': isReply })} {...props}>
@@ -313,7 +294,6 @@ ChatGroup.propTypes = {
 	// @ts-ignore
 	user: PropTypes.shape({
 		src: PropTypes.string,
-		srcSet: PropTypes.string,
 		username: PropTypes.string,
 		name: PropTypes.string,
 		surname: PropTypes.string,

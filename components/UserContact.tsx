@@ -11,7 +11,6 @@ interface IUserContactProps {
 	name: string;
 	position?: string;
 	src: string;
-	srcSet?: string;
 	color?: TColor | 'link' | 'brand' | 'brand-two' | 'storybook';
 	mail?: string;
 	phone?: string;
@@ -21,7 +20,6 @@ const UserContact: FC<IUserContactProps> = ({
 	name,
 	position,
 	src,
-	srcSet,
 	color,
 	mail,
 	phone,
@@ -73,11 +71,10 @@ const UserContact: FC<IUserContactProps> = ({
 						)}
 					</div>
 				</div>
-				{(src || srcSet) && (
+				{src && (
 					<div className='flex-shrink-0'>
 						<Avatar
 							src={src}
-							srcSet={srcSet}
 							color={color}
 							className='rounded-circle'
 							shadow='sm'
@@ -93,8 +90,6 @@ UserContact.propTypes = {
 	className: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	position: PropTypes.string,
-	src: PropTypes.string.isRequired,
-	srcSet: PropTypes.string,
 	color: PropTypes.oneOf([
 		'primary',
 		'secondary',
@@ -116,7 +111,6 @@ UserContact.propTypes = {
 UserContact.defaultProps = {
 	className: undefined,
 	position: undefined,
-	srcSet: undefined,
 	color: undefined,
 	mail: undefined,
 	phone: undefined,

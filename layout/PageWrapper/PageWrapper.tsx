@@ -1,16 +1,13 @@
-import React, { useLayoutEffect, forwardRef, ReactElement, useContext, useEffect } from 'react';
+import React, { forwardRef, ReactElement, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
 import { ISubHeaderProps } from '../SubHeader/SubHeader';
 import { IPageProps } from '../Page/Page';
-import AuthContext from '../../contexts/authContext';
-import { demoPagesMenu } from '../../menu';
+import AuthContext from '../../context/authContext';
+import Mounted from '../../components/Mounted';
 
 interface IPageWrapperProps {
 	isProtected?: boolean;
-	title?: string;
-	description?: string;
 	children:
 		| ReactElement<ISubHeaderProps>[]
 		| ReactElement<IPageProps>
@@ -18,24 +15,13 @@ interface IPageWrapperProps {
 	className?: string;
 }
 const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
-	({ isProtected, title, description, className, children }, ref) => {
-		useLayoutEffect(() => {
-			// @ts-ignore
-			document.getElementsByTagName('TITLE')[0].text = `${title ? `${title} | ` : ''}${
-				import.meta.env.VITE_SITE_NAME
-			}`;
-			// @ts-ignore
-			document
-				?.querySelector('meta[name="description"]')
-				.setAttribute('content', description || import.meta.env.VITE_META_DESC || '');
-		});
-
+	({ isProtected, className, children }, ref) => {
 		const { user } = useContext(AuthContext);
 
-		const navigate = useNavigate();
+		// const navigate = useNavigate();
 		useEffect(() => {
 			if (isProtected && user === '') {
-				navigate(`../${demoPagesMenu.login.path}`);
+				// navigate(`../${demoPages.login.path}`);
 			}
 			return () => {};
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +29,7 @@ const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
 
 		return (
 			<div ref={ref} className={classNames('page-wrapper', 'container-fluid', className)}>
-				{children}
+				<Mounted>{children}</Mounted>
 			</div>
 		);
 	},
@@ -51,16 +37,12 @@ const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
 PageWrapper.displayName = 'PageWrapper';
 PageWrapper.propTypes = {
 	isProtected: PropTypes.bool,
-	title: PropTypes.string,
-	description: PropTypes.string,
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
 PageWrapper.defaultProps = {
 	isProtected: true,
-	title: undefined,
-	description: undefined,
 	className: undefined,
 };
 

@@ -1,9 +1,9 @@
-import { useContext, useLayoutEffect } from 'react';
-import ThemeContext from '../contexts/themeContext';
+import { useContext, useEffect } from 'react';
+import ThemeContext from '../context/themeContext';
 
 export default function useMinimizeAside() {
 	const { setAsideStatus, mobileDesign } = useContext(ThemeContext);
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (!mobileDesign) setAsideStatus(false);
 		return () => {
 			if (!mobileDesign) setAsideStatus(true);

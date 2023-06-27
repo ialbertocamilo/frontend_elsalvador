@@ -1,21 +1,24 @@
-import React, { useLayoutEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import Header, { HeaderLeft, HeaderRight } from '../../../layout/Header/Header';
 import Popovers from '../../../components/bootstrap/Popovers';
 import Button, { IButtonProps } from '../../../components/bootstrap/Button';
+import Icon from '../../../components/icon/Icon';
 import useDarkMode from '../../../hooks/useDarkMode';
-import LANG, { getLangWithKey, ILang } from '../../../lang';
 import Dropdown, {
 	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
 } from '../../../components/bootstrap/Dropdown';
-import showNotification from '../../../components/extras/showNotification';
-import Icon from '../../../components/icon/Icon';
+import LANG, { getLangWithKey, ILang } from '../../../lang';
 import Spinner from '../../../components/bootstrap/Spinner';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import showNotification from '../../../components/extras/showNotification';
 
 const DashboardHeader = () => {
+	const router = useRouter();
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
+
 	const styledBtn: IButtonProps = {
 		color: darkModeStatus ? 'dark' : 'light',
 		hoverShadow: 'default',
@@ -26,63 +29,61 @@ const DashboardHeader = () => {
 	const { i18n } = useTranslation();
 
 	const changeLanguage = (lng: ILang['key']['lng']) => {
-		i18n.changeLanguage(lng).then(() =>
-			showNotification(
-				<span className='d-flex align-items-center'>
-					<Icon icon={getLangWithKey(lng)?.icon} size='lg' className='me-1' />
-					<span>{`Language changed to ${getLangWithKey(lng)?.text}`}</span>
-				</span>,
-				'You updated the language of the site. (Only "Aside" was prepared as an example.)',
-			),
+		i18n.changeLanguage(lng);
+		router.push(router.pathname, router.pathname, { locale: lng });
+		showNotification(
+			<span className='d-flex align-items-center'>
+				<Icon icon={getLangWithKey(lng)?.icon} size='lg' className='me-1' />
+				<span>{`Language changed to ${getLangWithKey(lng)?.text}`}</span>
+			</span>,
+			'You updated the language of the site. (Only "Aside" was prepared as an example.)',
 		);
 	};
-
-	/**
-	 * Language attribute
-	 */
-	useLayoutEffect(() => {
-		document.documentElement.setAttribute('lang', i18n.language);
-	});
 
 	return (
 		<Header>
 			<HeaderLeft>
 				<Popovers
 					title='DashboardHeader.tsx'
-					desc={<code>src/pages/_layout/_headers/DashboardHeader.tsx</code>}>
+					desc={<code>pages/_layout/_headers/DashboardHeader.tsx</code>}>
 					HeaderLeft
 				</Popovers>
 				<code>DashboardHeader.tsx</code>
 			</HeaderLeft>
-
 			<HeaderRight>
 				<div className='row g-3 align-items-center'>
 					<div className='col-auto'>
 						<Popovers
 							title='DashboardHeader.tsx'
-							desc={<code>src/pages/_layout/_headers/DashboardHeader.tsx</code>}>
+							desc={<code>pages/_layout/_headers/DashboardHeader.tsx</code>}>
 							HeaderRight
 						</Popovers>
 						<code className='ps-3'>DashboardHeader.tsx</code>
 					</div>
+
 					{/* Dark Mode */}
 					<div className='col-auto'>
 						<Popovers trigger='hover' desc='Dark / Light mode'>
 							<Button
 								// eslint-disable-next-line react/jsx-props-no-spreading
 								{...styledBtn}
-								icon={darkModeStatus ? 'DarkMode' : 'LightMode'}
 								onClick={() => setDarkModeStatus(!darkModeStatus)}
-								aria-label='Toggle fullscreen'
-								data-tour='dark-mode'
-							/>
+								className='btn-only-icon'
+								data-tour='dark-mode'>
+								<Icon
+									icon={darkModeStatus ? 'DarkMode' : 'LightMode'}
+									color={darkModeStatus ? 'info' : 'warning'}
+									className='btn-icon'
+								/>
+							</Button>
 						</Popovers>
 					</div>
+
 					{/* Lang Selector */}
 					<div className='col-auto'>
 						<Dropdown>
 							<DropdownToggle hasIcon={false}>
-								{typeof getLangWithKey(i18n.language as ILang['key']['lng'])
+								{typeof getLangWithKey(router.locale as ILang['key']['lng'])
 									?.icon === 'undefined' ? (
 									<Button
 										// eslint-disable-next-line react/jsx-props-no-spreading
@@ -97,7 +98,7 @@ const DashboardHeader = () => {
 										// eslint-disable-next-line react/jsx-props-no-spreading
 										{...styledBtn}
 										icon={
-											getLangWithKey(i18n.language as ILang['key']['lng'])
+											getLangWithKey(router.locale as ILang['key']['lng'])
 												?.icon
 										}
 										aria-label='Change language'

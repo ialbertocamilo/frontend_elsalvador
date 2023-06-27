@@ -1,12 +1,15 @@
-import React, { ReactNode, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Brand from '../../../layout/Brand/Brand';
 import Navigation, { NavigationLine } from '../../../layout/Navigation/Navigation';
 import User from '../../../layout/User/User';
 import { dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu } from '../../../menu';
-import ThemeContext from '../../../contexts/themeContext';
+import ThemeContext from '../../../context/themeContext';
 import Icon from '../../../components/icon/Icon';
+import useDarkMode from '../../../hooks/useDarkMode';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Aside, { AsideBody, AsideFoot, AsideHead } from '../../../layout/Aside/Aside';
 import Popovers from '../../../components/bootstrap/Popovers';
 
@@ -14,10 +17,14 @@ const DefaultAside = () => {
 	const { asideStatus, setAsideStatus } = useContext(ThemeContext);
 
 	const [doc, setDoc] = useState(
-		localStorage.getItem('facit_asideDocStatus') === 'true' || false,
+		(typeof window !== 'undefined' &&
+			localStorage.getItem('facit_asideDocStatus') === 'true') ||
+			false,
 	);
 
-	const { t } = useTranslation(['translation', 'menu']);
+	const { t } = useTranslation(['common', 'menu']);
+
+	const { darkModeStatus } = useDarkMode();
 
 	return (
 		<Aside>
@@ -40,10 +47,10 @@ const DefaultAside = () => {
 										<span className='navigation-link-info'>
 											<span className='navigation-text'>
 												<Popovers
-													title='Aside.tsx'
+													title='DefaultAside.tsx'
 													desc={
 														<code>
-															src/pages/_layout/_asides/DefaultAside.tsx
+															pages/_layout/_asides/DefaultAside.tsx
 														</code>
 													}>
 													Aside
@@ -57,6 +64,7 @@ const DefaultAside = () => {
 						</nav>
 					</>
 				)}
+
 				{asideStatus && doc && <div className='p-4'>Documentation</div>}
 			</AsideBody>
 			<AsideFoot>
@@ -78,7 +86,7 @@ const DefaultAside = () => {
 										className='navigation-icon'
 									/>
 									<span className='navigation-text'>
-										{t('menu:Documentation') as ReactNode}
+										{t('menu:Documentation')}
 									</span>
 								</span>
 								<span className='navigation-link-extra'>
@@ -100,5 +108,12 @@ const DefaultAside = () => {
 		</Aside>
 	);
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+	props: {
+		// @ts-ignore
+		...(await serverSideTranslations(locale, ['common', 'menu'])),
+	},
+});
 
 export default DefaultAside;

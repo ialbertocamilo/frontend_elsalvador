@@ -359,9 +359,6 @@ Input.defaultProps = {
 	onSelect: undefined,
 	mask: undefined,
 	format: undefined,
-	maskChar: undefined,
-	formatChars: undefined,
-	accept: undefined,
 };
 
 export default Input;

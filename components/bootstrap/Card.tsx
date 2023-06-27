@@ -7,7 +7,6 @@ import React, {
 	ReactElement,
 	memo,
 	HTMLAttributes,
-	CSSProperties,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -277,7 +276,7 @@ CardBody.defaultProps = {
 interface ICardCodeViewProps {
 	children: string;
 	language?: string;
-	customStyle?: CSSProperties;
+	customStyle?: object;
 	isPrismJs?: boolean;
 	className?: string;
 }
@@ -318,14 +317,12 @@ CardCodeView.propTypes = {
 	language: PropTypes.string,
 	isPrismJs: PropTypes.bool,
 	className: PropTypes.string,
-	// eslint-disable-next-line react/forbid-prop-types
 	customStyle: PropTypes.object,
 };
 CardCodeView.defaultProps = {
 	language: 'jsx',
 	isPrismJs: true,
 	className: undefined,
-	customStyle: undefined,
 };
 
 interface ICardFooterLeftProps extends HTMLAttributes<HTMLElement> {
@@ -619,8 +616,6 @@ Card.defaultProps = {
 	tabBodyClassName: undefined,
 	stretch: false,
 	isCompact: false,
-	onSubmit: undefined,
-	noValidate: undefined,
 };
 
 export default Card;

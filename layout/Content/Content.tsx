@@ -1,9 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { FC, ReactNode } from 'react';
 import Card, { CardBody } from '../../components/bootstrap/Card';
 import PageWrapper from '../PageWrapper/PageWrapper';
 import Page from '../Page/Page';
 import SubHeader from '../SubHeader/SubHeader';
-import ContentRoutes from './ContentRoutes';
 
 const LOADING = (
 	<PageWrapper>
@@ -36,14 +35,11 @@ const LOADING = (
 	</PageWrapper>
 );
 
-const Content = () => {
-	return (
-		<main className='content'>
-			<Suspense fallback={LOADING}>
-				<ContentRoutes />
-			</Suspense>
-		</main>
-	);
+interface IContent {
+	children: ReactNode;
+}
+const Content: FC<IContent> = ({ children }) => {
+	return <main className='content'>{children}</main>;
 };
 
 export default Content;

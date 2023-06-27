@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useMotionValue, useTransform } from 'framer-motion';
-import ThemeContext from '../contexts/themeContext';
+import ThemeContext from '../context/themeContext';
 import useDeviceScreen from './useDeviceScreen';
 
 const useAsideTouch = () => {
@@ -8,19 +8,19 @@ const useAsideTouch = () => {
 	const deviceScreen = useDeviceScreen();
 
 	const mobileDesign =
-		typeof deviceScreen?.width !== 'undefined' &&
-		deviceScreen?.width <= Number(import.meta.env.VITE_MOBILE_BREAKPOINT_SIZE);
+		// @ts-ignore
+		deviceScreen?.width <= Number(process.env.NEXT_PUBLIC_MOBILE_BREAKPOINT_SIZE);
 	const hasTouchButton =
-		typeof deviceScreen?.width !== 'undefined' &&
-		deviceScreen?.width > Number(import.meta.env.VITE_ASIDE_MINIMIZE_BREAKPOINT_SIZE);
+		// @ts-ignore
+		deviceScreen?.width > Number(process.env.NEXT_PUBLIC_ASIDE_MINIMIZE_BREAKPOINT_SIZE);
 
 	const asideWidthWithSpace =
-		(parseInt(String(import.meta.env.VITE_ASIDE_WIDTH_PX), 10) +
-			parseInt(String(import.meta.env.VITE_SPACER_PX), 10)) *
+		(parseInt(String(process.env.NEXT_PUBLIC_ASIDE_WIDTH_PX), 10) +
+			parseInt(String(process.env.NEXT_PUBLIC_SPACER_PX), 10)) *
 		-1;
 
 	const x = useMotionValue(
-		import.meta.env.VITE_ASIDE_TOUCH_STATUS === 'true' ? 0 : asideWidthWithSpace,
+		process.env.NEXT_PUBLIC_ASIDE_TOUCH_STATUS === 'true' ? 0 : asideWidthWithSpace,
 	);
 	const [touchStatus, setTouchStatus] = useState(!x.get());
 	const left = useTransform(
@@ -52,7 +52,7 @@ const useAsideTouch = () => {
 		}
 		return () => {};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hasTouchButton, deviceScreen.width]);
+	}, [hasTouchButton, deviceScreen?.width]);
 
 	//  for start minimize aside
 	useEffect(() => {
@@ -64,7 +64,7 @@ const useAsideTouch = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [asideStatus]);
 
-	const asideStyle = hasTouchButton ? { left } : { left: mobileDesign ? undefined : '0rem' };
+	const asideStyle = hasTouchButton ? { left } : { left: mobileDesign ? null : '0rem' };
 
 	return { asideStyle, touchStatus, hasTouchButton, asideWidthWithSpace, x };
 };

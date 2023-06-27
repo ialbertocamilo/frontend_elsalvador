@@ -1,11 +1,14 @@
-import React, { FC, ReactElement, ReactNode, useContext, useLayoutEffect } from 'react';
+import React, { FC, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useMeasure, useWindowSize } from 'react-use';
-import ThemeContext from '../../contexts/themeContext';
+import ThemeContext from '../../context/themeContext';
 import Button from '../../components/bootstrap/Button';
 import Portal from '../Portal/Portal';
 import useDarkMode from '../../hooks/useDarkMode';
+import useMounted from '../../hooks/useMounted';
+import Mounted from '../../components/Mounted';
+import useRoot from '../../hooks/useRoot';
 
 interface IHeaderLeftProps {
 	children: ReactNode;
@@ -29,8 +32,8 @@ interface IHeaderRightProps {
 export const HeaderRight: FC<IHeaderRightProps> = ({ children, className }) => {
 	const [ref, { height }] = useMeasure<HTMLDivElement>();
 
-	const root = document.documentElement;
-	root.style.setProperty('--header-right-height', `${height}px`);
+	const root = useRoot();
+	root?.style.setProperty('--header-right-height', `${height}px`);
 
 	return (
 		<div ref={ref} className={classNames('header-right', 'col-md-auto', className)}>
@@ -53,14 +56,20 @@ interface IHeaderProps {
 }
 const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileMenu }) => {
 	const { themeStatus } = useDarkMode();
+	const { mounted } = useMounted();
 
 	const windowsWidth = useWindowSize().width;
 	const [refMobileHeader, sizeMobileHeader] = useMeasure<HTMLDivElement>();
 	const [refHeader, sizeHeader] = useMeasure<HTMLDivElement>();
 
-	const root = document.documentElement;
-	root.style.setProperty('--mobile-header-height', `${sizeMobileHeader.height}px`);
-	root.style.setProperty('--header-height', `${sizeHeader.height}px`);
+	const [root, setRoot] = useState<any>(null);
+	useEffect(() => {
+		if (mounted) {
+			setRoot(document.documentElement);
+		}
+	}, [mounted]);
+	root?.style.setProperty('--mobile-header-height', `${sizeMobileHeader.height}px`);
+	root?.style.setProperty('--header-height', `${sizeHeader.height}px`);
 
 	const {
 		asideStatus,
@@ -71,10 +80,10 @@ const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileM
 		setRightMenuStatus,
 	} = useContext(ThemeContext);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (
 			(asideStatus || leftMenuStatus || rightMenuStatus) &&
-			windowsWidth < Number(import.meta.env.VITE_MOBILE_BREAKPOINT_SIZE)
+			windowsWidth < Number(process.env.NEXT_PUBLIC_MOBILE_BREAKPOINT_SIZE)
 		)
 			document.body.classList.add('overflow-hidden');
 		return () => {
@@ -83,7 +92,7 @@ const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileM
 	});
 
 	return (
-		<>
+		<Mounted>
 			<header ref={refMobileHeader} className='mobile-header'>
 				<div className='container-fluid'>
 					<div className='row'>
@@ -165,7 +174,7 @@ const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileM
 					</div>
 				</div>
 			</header>
-		</>
+		</Mounted>
 	);
 };
 Header.propTypes = {

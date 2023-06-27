@@ -18,6 +18,7 @@ interface IFormGroupProps extends HTMLAttributes<HTMLElement> {
 	isHiddenLabel?: boolean;
 	isColForLabel?: boolean;
 	formText?: ReactNode;
+	name?: string;
 }
 const FormGroup: FC<IFormGroupProps> = ({
 	children,

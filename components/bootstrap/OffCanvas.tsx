@@ -3,7 +3,7 @@ import React, {
 	FC,
 	ReactNode,
 	useContext,
-	useLayoutEffect,
+	useEffect,
 	useRef,
 	ReactElement,
 	HTMLAttributes,
@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Portal from '../../layout/Portal/Portal';
 import TagWrapper from '../TagWrapper';
 import useEventListener from '../../hooks/useEventListener';
-import ThemeContext from '../../contexts/themeContext';
+import ThemeContext from '../../context/themeContext';
 import useDeviceScreen from '../../hooks/useDeviceScreen';
 import { TOffCanvasPlacement } from '../../type/offCanvas-type';
 
@@ -115,7 +115,6 @@ OffCanvasBody.propTypes = {
 OffCanvasBody.defaultProps = {
 	className: undefined,
 	tag: 'div',
-	onSubmit: undefined,
 };
 
 interface IOffCanvasProps extends HTMLAttributes<HTMLElement> {
@@ -163,7 +162,7 @@ const OffCanvas: FC<IOffCanvasProps> = ({
 	const { setRightPanel } = useContext(ThemeContext);
 	const deviceScreen = useDeviceScreen();
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		// @ts-ignore
 		setRightPanel(isRightPanel && deviceScreen?.width > 1200 && isOpen);
 	});
@@ -171,7 +170,7 @@ const OffCanvas: FC<IOffCanvasProps> = ({
 	const ref = useRef(null);
 
 	// Disable Body Scroll
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (!initialProps.isBodyScroll && isOpen) {
 			document.body.style.overflow = 'hidden';
 			document.body.style.paddingRight = '0px';
@@ -263,8 +262,6 @@ OffCanvas.defaultProps = {
 	isModalStyle: false,
 	isRightPanel: false,
 	tag: 'div',
-	onSubmit: undefined,
-	noValidate: undefined,
 };
 
 export default OffCanvas;

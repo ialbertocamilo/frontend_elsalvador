@@ -111,8 +111,6 @@ AccordionItem.defaultProps = {
 	tag: 'div',
 	headerTag: 'h2',
 	overWriteColor: null,
-	activeItem: undefined,
-	setActiveItem: undefined,
 };
 
 interface IAccordionProps {

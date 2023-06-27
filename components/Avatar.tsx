@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, forwardRef, FC, ReactNode, HTMLAttributes } from 'react';
+import React, { Children, cloneElement, FC, ReactNode, HTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { randomColor } from '../helpers/helpers';
@@ -43,8 +43,7 @@ export const AvatarGroup: FC<IAvatarGroupProps> = ({ className, children, size }
 					)}
 					trigger='hover'>
 					<div className='avatar-more' style={{ width: size, height: size }}>
-						{/* eslint-disable-next-line no-unsafe-optional-chaining */}+
-						{children?.length - 3}
+						+{children?.length - 3}
 					</div>
 				</Popovers>
 			)}
@@ -73,70 +72,57 @@ interface IAvatarProps extends HTMLAttributes<HTMLImageElement> {
 	shadow?: 'none' | 'sm' | 'default' | 'lg' | null;
 	size?: number;
 	src: string;
-	srcSet?: string | undefined;
 	userName?: string | null;
 }
-const Avatar = forwardRef<HTMLImageElement, IAvatarProps>(
-	(
-		{
-			srcSet,
-			src,
-			className,
-			size,
-			rounded,
-			shadow,
-			color,
-			border,
-			borderColor,
-			userName,
-			isOnline, // Not used
-			isReply, // Not used
-			...props
-		},
-		ref,
-	) => {
-		const { darkModeStatus } = useDarkMode();
+const Avatar: FC<IAvatarProps> = ({
+	src,
+	className,
+	size,
+	rounded,
+	shadow,
+	color,
+	border,
+	borderColor,
+	userName,
+	isOnline, // Not used
+	isReply, // Not used
+}) => {
+	const { darkModeStatus } = useDarkMode();
 
-		const INNER = (
-			<img
-				ref={ref}
-				className={classNames(
-					'avatar',
-					{
-						[`rounded${rounded !== 'default' ? `-${rounded}` : ''}`]: rounded,
-						'rounded-0': rounded === 0,
-						[`shadow${shadow !== 'default' ? `-${shadow}` : ''}`]: !!shadow,
-						border: !!border,
-						[`border-${border}`]: !!border,
-						[`border-${borderColor}`]: borderColor,
-					},
-					`bg-l${darkModeStatus ? 'o' : ''}25-${color}`,
-					className,
-				)}
-				srcSet={srcSet}
-				src={src}
-				alt='Avatar'
-				width={size}
-				height={size}
-				// eslint-disable-next-line react/jsx-props-no-spreading
-				{...props}
-			/>
+	const INNER = (
+		// eslint-disable-next-line @next/next/no-img-element
+		<img
+			className={classNames(
+				'avatar',
+				{
+					[`rounded${rounded !== 'default' ? `-${rounded}` : ''}`]: rounded,
+					'rounded-0': rounded === 0,
+					[`shadow${shadow !== 'default' ? `-${shadow}` : ''}`]: !!shadow,
+					border: !!border,
+					[`border-${border}`]: !!border,
+					[`border-${borderColor}`]: borderColor,
+				},
+				`bg-l${darkModeStatus ? 'o' : ''}25-${color}`,
+				className,
+			)}
+			src={src}
+			alt='Avatar'
+			width={size}
+			height={size}
+		/>
+	);
+
+	if (userName) {
+		return (
+			<Popovers desc={userName} trigger='hover'>
+				{INNER}
+			</Popovers>
 		);
-
-		if (userName) {
-			return (
-				<Popovers desc={userName} trigger='hover'>
-					{INNER}
-				</Popovers>
-			);
-		}
-		return INNER;
-	},
-);
+	}
+	return INNER;
+};
 Avatar.displayName = 'Avatar';
 Avatar.propTypes = {
-	src: PropTypes.string.isRequired,
-	srcSet: PropTypes.string,
 	className: PropTypes.string,
 	size: PropTypes.number,
 	rounded: PropTypes.oneOf([
@@ -190,7 +176,6 @@ Avatar.propTypes = {
 	isReply: PropTypes.bool,
 };
 Avatar.defaultProps = {
-	srcSet: undefined,
 	className: undefined,
 	size: 128,
 	rounded: 'circle',

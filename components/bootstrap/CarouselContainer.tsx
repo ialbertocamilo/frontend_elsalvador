@@ -158,12 +158,12 @@ class CarouselContainer extends Component<TCarouselContainerProps, TCarouselCont
 		// eslint-disable-next-line react/destructuring-assignment
 		if (this.props.keyboard) {
 			if (evt.keyCode === 37) {
-				// @ts-ignore
 				// eslint-disable-next-line react/destructuring-assignment
+				// @ts-ignore
 				this.props.previous();
 			} else if (evt.keyCode === 39) {
-				// @ts-ignore
 				// eslint-disable-next-line react/destructuring-assignment
+				// @ts-ignore
 				this.props.next();
 			}
 		}
@@ -199,12 +199,12 @@ class CarouselContainer extends Component<TCarouselContainerProps, TCarouselCont
 		}
 
 		if (currentX < this.touchStartX) {
-			// @ts-ignore
 			// eslint-disable-next-line react/destructuring-assignment
+			// @ts-ignore
 			this.props.next();
 		} else {
-			// @ts-ignore
 			// eslint-disable-next-line react/destructuring-assignment
+			// @ts-ignore
 			this.props.previous();
 		}
 	}
@@ -378,7 +378,6 @@ CarouselContainer.defaultProps = {
 	isFluid: false,
 	hasChildren: false,
 	height: null,
-	innerRef: undefined,
 };
 // @ts-ignore
 CarouselContainer.childContextTypes = {

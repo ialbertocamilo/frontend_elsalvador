@@ -28,7 +28,6 @@ Option.propTypes = {
 Option.defaultProps = {
 	disabled: false,
 	ariaLabelledby: null,
-	value: undefined,
 };
 
 export interface IOptionsProps {

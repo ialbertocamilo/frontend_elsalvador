@@ -66,7 +66,7 @@ const Select = forwardRef<HTMLSelectElement, ISelectProps>(
 			onSelect,
 			...props
 		},
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 		ref,
 	) => {
 		return (

@@ -24,7 +24,7 @@ interface IPaginationButtonsProps {
 	perPage: number;
 	setPerPage(...args: unknown[]): unknown;
 	data: unknown[];
-	label?: string;
+	label: string;
 }
 const PaginationButtons: FC<IPaginationButtonsProps> = ({
 	setCurrentPage,
@@ -93,7 +93,6 @@ const PaginationButtons: FC<IPaginationButtonsProps> = ({
 
 			<CardFooterRight className='d-flex'>
 				{totalPage > 1 && (
-					// @ts-ignore
 					<Pagination ariaLabel={label}>
 						<PaginationItem
 							isFirst
@@ -154,7 +153,7 @@ PaginationButtons.propTypes = {
 	setPerPage: PropTypes.func.isRequired,
 	// eslint-disable-next-line react/forbid-prop-types
 	data: PropTypes.array.isRequired,
-	label: PropTypes.string,
+	label: PropTypes.string.isRequired,
 };
 PaginationButtons.defaultProps = {
 	label: 'items',

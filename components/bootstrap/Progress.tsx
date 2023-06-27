@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { TColor } from '../../type/color-type';
+import useMounted from '../../hooks/useMounted';
 
-const useStyles = createUseStyles({
-	// stylelint-disable-next-line selector-type-no-unknown
-	dynamicHeight: (props) => ({
-		// @ts-ignore
-		height: props.height,
-	}),
-});
+const useStyles = createUseStyles(
+	{
+		// stylelint-disable-next-line selector-type-no-unknown
+		dynamicHeight: (props) => ({
+			// @ts-ignore
+			height: props.height,
+		}),
+	},
+	{ link: true },
+);
 
 interface IProgressProps extends HTMLAttributes<HTMLDivElement> {
 	value?: number;
@@ -44,6 +48,8 @@ const Progress = forwardRef<HTMLDivElement, IProgressProps>(
 		},
 		ref,
 	) => {
+		const { mounted } = useMounted();
+
 		// @ts-ignore
 		const VALUE = (100 * (value - min)) / (max - min);
 		// @ts-ignore
@@ -82,7 +88,11 @@ const Progress = forwardRef<HTMLDivElement, IProgressProps>(
 		return (
 			<div
 				ref={ref}
-				className={classNames('progress', { [classes.dynamicHeight]: !!height }, className)}
+				className={classNames(
+					'progress',
+					{ [classes.dynamicHeight]: mounted && !!height },
+					className,
+				)}
 				style={{
 					// @ts-ignore
 					// eslint-disable-next-line react/prop-types
@@ -143,7 +153,6 @@ Progress.defaultProps = {
 	color: undefined,
 	children: undefined,
 	className: undefined,
-	isOnlyBar: undefined,
 };
 
 export default Progress;

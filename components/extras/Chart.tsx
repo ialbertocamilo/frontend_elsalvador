@@ -1,8 +1,14 @@
 import React, { FC, HTMLAttributes, memo } from 'react';
 import PropTypes from 'prop-types';
-import ReactApexChart from 'react-apexcharts';
 import classNames from 'classnames';
 import { ApexOptions } from 'apexcharts';
+
+import dynamic from 'next/dynamic';
+import Mounted from '../Mounted';
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+	ssr: false,
+});
 
 interface IChartProps extends HTMLAttributes<HTMLDivElement> {
 	series: ApexOptions['series'];
@@ -16,38 +22,40 @@ const Chart: FC<IChartProps> = ({ series, options, type, width, height, classNam
 	return (
 		// eslint-disable-next-line react/jsx-props-no-spreading
 		<div className={classNames('apex-chart', className)} {...props}>
-			<ReactApexChart
-				options={{
-					colors: [
-						import.meta.env.VITE_PRIMARY_COLOR,
-						import.meta.env.VITE_SECONDARY_COLOR,
-						import.meta.env.VITE_SUCCESS_COLOR,
-						import.meta.env.VITE_INFO_COLOR,
-						import.meta.env.VITE_WARNING_COLOR,
-						import.meta.env.VITE_DANGER_COLOR,
-					],
-					plotOptions: {
-						candlestick: {
-							colors: {
-								upward: import.meta.env.VITE_SUCCESS_COLOR,
-								downward: import.meta.env.VITE_DANGER_COLOR,
+			<Mounted>
+				<ReactApexChart
+					options={{
+						colors: [
+							String(process.env.NEXT_PUBLIC_PRIMARY_COLOR),
+							String(process.env.NEXT_PUBLIC_SECONDARY_COLOR),
+							String(process.env.NEXT_PUBLIC_SUCCESS_COLOR),
+							String(process.env.NEXT_PUBLIC_INFO_COLOR),
+							String(process.env.NEXT_PUBLIC_WARNING_COLOR),
+							String(process.env.NEXT_PUBLIC_DANGER_COLOR),
+						],
+						plotOptions: {
+							candlestick: {
+								colors: {
+									upward: String(process.env.NEXT_PUBLIC_SUCCESS_COLOR),
+									downward: String(process.env.NEXT_PUBLIC_DANGER_COLOR),
+								},
+							},
+							boxPlot: {
+								colors: {
+									upper: String(process.env.NEXT_PUBLIC_SUCCESS_COLOR),
+									lower: String(process.env.NEXT_PUBLIC_DANGER_COLOR),
+								},
 							},
 						},
-						boxPlot: {
-							colors: {
-								upper: import.meta.env.VITE_SUCCESS_COLOR,
-								lower: import.meta.env.VITE_DANGER_COLOR,
-							},
-						},
-					},
-					...options,
-				}}
-				series={series}
-				// @ts-ignore
-				type={type}
-				width={width}
-				height={height}
-			/>
+						...options,
+					}}
+					series={series}
+					// @ts-ignore
+					type={type}
+					width={width}
+					height={height}
+				/>
+			</Mounted>
 		</div>
 	);
 };

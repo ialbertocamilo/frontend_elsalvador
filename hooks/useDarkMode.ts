@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import ThemeContext from '../contexts/themeContext';
+import ThemeContext from '../context/themeContext';
 
 export default function useDarkMode() {
 	const { darkModeStatus, setDarkModeStatus } = useContext(ThemeContext);

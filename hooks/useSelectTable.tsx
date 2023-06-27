@@ -62,7 +62,6 @@ const useSelectTable = (data: any[]) => {
 			id='selectAll'
 			onChange={selectTable.handleChange}
 			checked={selectTable.values.selectAll}
-			ariaLabel='Select All'
 		/>
 	);
 

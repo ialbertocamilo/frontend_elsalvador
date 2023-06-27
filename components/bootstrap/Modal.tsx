@@ -2,7 +2,7 @@ import React, {
 	forwardRef,
 	FC,
 	ReactNode,
-	useLayoutEffect,
+	useEffect,
 	useRef,
 	ReactElement,
 	HTMLAttributes,
@@ -166,7 +166,7 @@ const Modal: FC<IModalProps> = ({
 	const ref = useRef(null);
 
 	// <body> modal-open class (presentation)
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (isOpen) {
 			document.body.classList.add('modal-open');
 		}

@@ -64,6 +64,7 @@ const TransferAction: FC<ITransferActionProps> = ({
 						</div>
 					</div>
 					<div className='col'>
+						{/* eslint-disable-next-line @next/next/no-img-element */}
 						<img src={img} alt='Bank Of America' width={imgWidth} height='auto' />
 					</div>
 					<div className='col-auto'>

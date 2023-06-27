@@ -3,8 +3,10 @@ export function test() {
 }
 
 export function getOS() {
-	const { userAgent } = window.navigator;
-	const { platform } = window.navigator;
+	// @ts-ignore
+	const { userAgent } = typeof window !== 'undefined' && window.navigator;
+	// @ts-ignore
+	const { platform } = typeof window !== 'undefined' && window.navigator;
 	const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
 	const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
 	const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
@@ -23,7 +25,7 @@ export function getOS() {
 	}
 
 	// @ts-ignore
-	document.documentElement.setAttribute('os', os);
+	typeof document !== 'undefined' && document.documentElement.setAttribute('os', os);
 	return os;
 }
 
@@ -31,11 +33,16 @@ export const hasNotch = () => {
 	/**
 	 * For storybook test
 	 */
-	const storybook = window.location !== window.parent.location;
+	const storybook =
+		typeof window !== 'undefined' ? window.location !== window.parent.location : '';
 	// @ts-ignore
-	const iPhone = /iPhone/.test(navigator.userAgent) && !window.MSStream;
-	const aspect = window.screen.width / window.screen.height;
-	const aspectFrame = window.innerWidth / window.innerHeight;
+	const iPhone =
+		typeof window !== 'undefined'
+			? // @ts-ignore
+			  /iPhone/.test(navigator.userAgent) && !window?.MSStream
+			: '';
+	const aspect = typeof window !== 'undefined' ? window.screen.width / window.screen.height : 0;
+	const aspectFrame = typeof window !== 'undefined' ? window.innerWidth / window.innerHeight : 0;
 	return (
 		(iPhone && aspect.toFixed(3) === '0.462') ||
 		(storybook && aspectFrame.toFixed(3) === '0.462')
@@ -63,7 +70,7 @@ export const randomColor = () => {
 };
 
 export const priceFormat = (price: number) => {
-	return price.toLocaleString('en-US', {
+	return price?.toLocaleString('en-US', {
 		style: 'currency',
 		currency: 'USD',
 	});
@@ -95,4 +102,15 @@ export const debounce = (func: (arg0: any) => void, wait = 1000) => {
 		clearTimeout(timeout);
 		timeout = setTimeout(later, wait);
 	};
+};
+
+export const pathRetouch = (path?: string): string => {
+	if (path === '/') return '/';
+	return '/' + path;
+};
+
+export const pathToRoute = (path: string): string => {
+	if (path === '/') return '/';
+	if (path?.length > 1 && path?.substring(1, 0) === '/') return path?.substring(1, path?.length);
+	return path;
 };

@@ -1,3 +1,8 @@
-.eslintrc.js
-dist
-node_modules
+SvgIcons/
+build/
+node_modules/
+public/
+src/assets
+src/components/icon/
+#src/pages/documentation
+next.config.js

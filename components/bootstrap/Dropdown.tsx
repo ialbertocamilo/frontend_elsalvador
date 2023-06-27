@@ -14,18 +14,17 @@ import React, {
 import PropTypes from 'prop-types';
 import { Manager, Popper, Reference } from 'react-popper';
 import classNames from 'classnames';
-// @ts-ignore
-import useEventOutside from '@omtanke/react-use-event-outside';
 import useDarkMode from '../../hooks/useDarkMode';
-// eslint-disable-next-line import/no-cycle
 import { IButtonProps } from './Button';
 import { TDropdownDirection } from '../../type/dropdown-type';
+import useEventOutside from '../../hooks/useEventOutside';
 
 interface IDropdownToggleProps {
 	children: ReactElement<IButtonProps> | ReactNode;
 	isOpen?: boolean;
 	setIsOpen?: (value: ((prevState: boolean) => boolean) | boolean | null) => void | null;
 	hasIcon?: boolean;
+	isStatic?: boolean;
 }
 export const DropdownToggle: FC<IDropdownToggleProps> = ({
 	children,
@@ -54,7 +53,6 @@ export const DropdownToggle: FC<IDropdownToggleProps> = ({
 						ref: (node: null) => setButtonRef(node, ref),
 						onClick: () => {
 							// @ts-ignore
-							// eslint-disable-next-line no-unused-expressions,@typescript-eslint/no-unused-expressions
 							children?.props?.onClick ? children.props.onClick() : null;
 							if (setIsOpen) {
 								setIsOpen(!isOpen);
@@ -351,7 +349,7 @@ const Dropdown: FC<IDropdownProps> = ({
 
 	return (
 		<Manager>
-			{/* @ts-ignore */}
+			{/*@ts-ignore*/}
 			<Tag
 				ref={dropdownRef}
 				className={classNames(

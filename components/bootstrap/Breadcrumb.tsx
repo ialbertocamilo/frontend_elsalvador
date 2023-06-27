@@ -8,9 +8,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
 import TagWrapper from '../TagWrapper';
 import Icon from '../icon/Icon';
+import Link from 'next/link';
 
 interface IBreadcrumbItemProps extends Record<string, any> {
 	children: ReactNode;
@@ -44,9 +44,9 @@ export const BreadcrumbItem: FC<IBreadcrumbItemProps> = ({
 			{isActive ? (
 				children
 			) : (
-				<NavLink to={to} aria-label={ariaLabel}>
+				<Link href={to} aria-label={ariaLabel}>
 					{children}
-				</NavLink>
+				</Link>
 			)}
 		</TagWrapper>
 	);

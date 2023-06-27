@@ -4,16 +4,20 @@ import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import TagWrapper from '../TagWrapper';
 import { TColor } from '../../type/color-type';
+import useMounted from '../../hooks/useMounted';
 
-const useStyles = createUseStyles({
-	// stylelint-disable-next-line selector-type-no-unknown
-	dynamicSize: (props) => ({
-		// @ts-ignore
-		height: props.size,
-		// @ts-ignore
-		width: props.size,
-	}),
-});
+const useStyles = createUseStyles(
+	{
+		// stylelint-disable-next-line selector-type-no-unknown
+		dynamicSize: (props) => ({
+			// @ts-ignore
+			height: props.size,
+			// @ts-ignore
+			width: props.size,
+		}),
+	},
+	{ link: true },
+);
 
 interface ISpinnerProps {
 	children?: ReactNode;
@@ -27,6 +31,8 @@ interface ISpinnerProps {
 }
 const Spinner = forwardRef<HTMLDivElement, ISpinnerProps>(
 	({ tag, color, isGrow, isSmall, size, children, inButton, className, ...props }, ref) => {
+		const { mounted } = useMounted();
+
 		// @ts-ignore
 		const classes = useStyles({ size });
 
@@ -43,7 +49,7 @@ const Spinner = forwardRef<HTMLDivElement, ISpinnerProps>(
 							'spinner-grow-sm': isGrow && isSmall,
 						},
 						{ [`text-${color}`]: color },
-						{ [classes.dynamicSize]: size },
+						{ [classes.dynamicSize]: mounted && size },
 						{ 'me-2': inButton !== 'onlyIcon' && !!inButton },
 						className,
 					)}

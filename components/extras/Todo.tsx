@@ -83,11 +83,7 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 					/>
 				</div>
 				<div className='todo-check'>
-					<Checks
-						checked={list[index].status}
-						onChange={() => handleChange(index)}
-						ariaLabel={itemData.title as string}
-					/>
+					<Checks checked={list[index].status} onChange={() => handleChange(index)} />
 				</div>
 				<div className='todo-content'>
 					<div
@@ -113,11 +109,7 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 					<span>
 						<Dropdown>
 							<DropdownToggle hasIcon={false}>
-								<Button
-									color={themeStatus}
-									icon='MoreHoriz'
-									aria-label='More options'
-								/>
+								<Button color={themeStatus} icon='MoreHoriz' />
 							</DropdownToggle>
 							<DropdownMenu isAlignmentEnd>
 								<DropdownItem>

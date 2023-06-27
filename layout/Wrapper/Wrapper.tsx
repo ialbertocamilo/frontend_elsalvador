@@ -5,7 +5,7 @@ import Content from '../Content/Content';
 import WrapperOverlay from './WrapperOverlay';
 import HeaderRoutes from '../Header/HeaderRoutes';
 import FooterRoutes from '../Footer/FooterRoutes';
-import ThemeContext from '../../contexts/themeContext';
+import ThemeContext from '../../context/themeContext';
 
 interface IWrapperContainerProps {
 	children: ReactNode;
@@ -34,12 +34,15 @@ WrapperContainer.defaultProps = {
 	className: undefined,
 };
 
-const Wrapper = () => {
+interface IWrapper {
+	children: ReactNode;
+}
+const Wrapper: FC<IWrapper> = ({ children }) => {
 	return (
 		<>
 			<WrapperContainer>
 				<HeaderRoutes />
-				<Content />
+				<Content>{children}</Content>
 				<FooterRoutes />
 			</WrapperContainer>
 			<WrapperOverlay />

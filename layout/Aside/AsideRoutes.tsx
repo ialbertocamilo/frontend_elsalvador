@@ -1,16 +1,20 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import asides from '../../routes/asideRoutes';
+import { pathToRoute } from '../../helpers/helpers';
+import Mounted from '../../components/Mounted';
 
 const AsideRoutes = () => {
-	return (
-		<Routes>
-			{asides.map((page) => (
-				// eslint-disable-next-line react/jsx-props-no-spreading
-				<Route key={page.path} {...page} />
-			))}
-		</Routes>
-	);
+	const router = useRouter();
+
+	const PAGE = asides.find((key) => {
+		return key.path.substring(key.path?.length - 2) === '/*'
+			? router.pathname.includes(key.path.substring(0, key.path?.length - 2))
+			: key.path === pathToRoute(router.pathname);
+	});
+
+	if (PAGE) return <Mounted>{PAGE?.element}</Mounted>;
+	return null;
 };
 
 export default AsideRoutes;

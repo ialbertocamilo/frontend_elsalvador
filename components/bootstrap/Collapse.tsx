@@ -70,7 +70,7 @@ const Collapse: FC<ICollapseProps> = ({
 	const onExiting = () => {
 		// getting this variable triggers a reflow
 		// @ts-ignore
-		const UNUSED = NODE.offsetHeight; // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
+		const UNUSED = NODE.offsetHeight;
 		setHeight(0);
 		// eslint-disable-next-line react/destructuring-assignment
 		// @ts-ignore

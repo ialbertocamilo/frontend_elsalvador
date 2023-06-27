@@ -97,20 +97,14 @@ Toast.propTypes = {
 };
 
 interface IToastContainerProps {
-	children: ReactNode;
+	children?: ReactNode | undefined;
 }
 export const ToastContainer: FC<IToastContainerProps> = ({ children }) => {
 	return <div className='toast-container position-fixed top-0 end-0 p-3'>{children}</div>;
 };
 ToastContainer.propTypes = {
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 };
-
-// @ts-ignore
-// eslint-disable-next-line react/prop-types
-export const ToastCloseButton = ({ closeToast }) => (
-	<button type='button' className='btn-close' aria-label='Close' />
-);
 
 interface IToastsProps {
 	title: ReactNode;
@@ -118,11 +112,31 @@ interface IToastsProps {
 	icon?: TIcons;
 	iconColor?: TColor;
 	time?: string | null;
+	isDismiss?: boolean;
 }
-const Toasts: FC<IToastsProps> = ({ icon, iconColor, title, time, children, ...props }) => {
+const Toasts: FC<IToastsProps> = ({
+	icon,
+	iconColor,
+	title,
+	time,
+	isDismiss,
+	children,
+	...props
+}) => {
+	// @ts-ignore
+	// eslint-disable-next-line react/prop-types
+	const { onDismiss } = props;
 	return (
 		<>
-			<ToastHeader icon={icon} iconColor={iconColor} title={title} time={time} />
+			<ToastHeader
+				icon={icon}
+				iconColor={iconColor}
+				title={title}
+				time={time}
+				isDismiss={isDismiss}
+				// @ts-ignore
+				onDismiss={onDismiss}
+			/>
 			<ToastBody>{children}</ToastBody>
 		</>
 	);
@@ -142,11 +156,13 @@ Toasts.propTypes = {
 		'dark',
 	]),
 	time: PropTypes.string,
+	isDismiss: PropTypes.bool,
 };
 Toasts.defaultProps = {
 	icon: undefined,
 	iconColor: undefined,
 	time: null,
+	isDismiss: true,
 };
 
 export default Toasts;

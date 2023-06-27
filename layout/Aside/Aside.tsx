@@ -1,9 +1,13 @@
 import React, { FC, ReactNode, useContext, useRef } from 'react';
-import classNames from 'classnames';
 import { motion, MotionStyle } from 'framer-motion';
-import ThemeContext from '../../contexts/themeContext';
-import Tooltips from '../../components/bootstrap/Tooltips';
+import classNames from 'classnames';
+import ThemeContext from '../../context/themeContext';
 import useAsideTouch from '../../hooks/useAsideTouch';
+import useMounted from '../../hooks/useMounted';
+import { useRouter } from 'next/router';
+import withOutAsideRoutes from '../../routes/asideRoutes';
+import { pathToRoute } from '../../helpers/helpers';
+import Tooltips from '../../components/bootstrap/Tooltips';
 
 interface IAsideHeadProps {
 	children: ReactNode;
@@ -34,26 +38,30 @@ const Aside: FC<IAsideProps> = ({ children }) => {
 
 	const { asideStyle, touchStatus, hasTouchButton, asideWidthWithSpace, x } = useAsideTouch();
 
-	const isModernDesign = import.meta.env.VITE_MODERN_DESGIN === 'true';
+	const isModernDesign = process.env.NEXT_PUBLIC_MODERN_DESGIN === 'true';
 
 	const constraintsRef = useRef(null);
 
+	const { mounted } = useMounted();
+
+	const router = useRouter();
+
+	if (withOutAsideRoutes.find((key) => key.path === pathToRoute(router.pathname))) return null;
 	return (
 		<>
 			<motion.aside
-				style={asideStyle as MotionStyle}
-				className={classNames(
-					'aside',
-					{ open: asideStatus },
-					{
-						'aside-touch-bar': hasTouchButton && isModernDesign,
-						'aside-touch-bar-close': !touchStatus && hasTouchButton && isModernDesign,
-						'aside-touch-bar-open': touchStatus && hasTouchButton && isModernDesign,
-					},
-				)}>
+				style={mounted ? (asideStyle as MotionStyle) : undefined}
+				className={classNames('aside', {
+					open: mounted && asideStatus,
+					'aside-touch-bar': mounted && hasTouchButton && isModernDesign,
+					'aside-touch-bar-close':
+						mounted && !touchStatus && hasTouchButton && isModernDesign,
+					'aside-touch-bar-open':
+						mounted && touchStatus && hasTouchButton && isModernDesign,
+				})}>
 				{children}
 			</motion.aside>
-			{asideStatus && hasTouchButton && isModernDesign && (
+			{mounted && asideStatus && hasTouchButton && isModernDesign && (
 				<>
 					<motion.div className='aside-drag-area' ref={constraintsRef} />
 					<Tooltips title='Toggle Aside' flip={['top', 'right']}>

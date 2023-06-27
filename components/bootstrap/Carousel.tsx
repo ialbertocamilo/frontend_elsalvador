@@ -67,7 +67,6 @@ const Carousel = forwardRef<HTMLDivElement, ICarouselProps>(
 		const next = () => {
 			if (animating) return;
 			// @ts-ignore
-			// eslint-disable-next-line no-unsafe-optional-chaining
 			const nextIndex = activeIndex === ITEMS?.length - 1 ? 0 : activeIndex + 1;
 			setActiveIndex(nextIndex);
 		};
@@ -109,7 +108,10 @@ const Carousel = forwardRef<HTMLDivElement, ICarouselProps>(
 				}
 				return (
 					<>
-						<img src={_item.src} alt={_item.altText} className='d-block w-100' />
+						{_item?.src && (
+							// eslint-disable-next-line @next/next/no-img-element
+							<img src={_item?.src} alt={_item.altText} className='d-block w-100' />
+						)}
 						<CarouselCaption
 							captionText={_item.captionText}
 							captionHeader={_item.captionHeader}
@@ -156,7 +158,6 @@ const Carousel = forwardRef<HTMLDivElement, ICarouselProps>(
 							<CarouselItem
 								onExiting={() => setAnimating(true)}
 								onExited={() => setAnimating(false)}
-								// eslint-disable-next-line react/no-array-index-key
 								key={index}
 								isFluid={isFluid || !!children}>
 								{/* @ts-ignore */}

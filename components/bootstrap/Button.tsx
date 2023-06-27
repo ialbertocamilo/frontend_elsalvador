@@ -7,14 +7,12 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import TagWrapper from '../TagWrapper';
 import Icon from '../icon/Icon';
 import { TColor } from '../../type/color-type';
-// eslint-disable-next-line import/no-cycle
 import { IDropdownProps } from './Dropdown';
 import { TIcons } from '../../type/icons-type';
+import Link from 'next/link';
 
 interface IButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
 	children:
@@ -76,8 +74,8 @@ export interface IButtonProps
 	children?: ReactNode;
 	tag?: 'button' | 'a' | 'input' | 'link';
 	type?: 'button' | 'submit' | 'reset';
-	to?: string | undefined;
-	href?: string | undefined;
+	to?: string;
+	href?: string;
 	isActive?: boolean;
 	color?: TColor | 'link' | 'brand' | 'brand-two' | 'storybook';
 	isOutline?: boolean;
@@ -180,24 +178,24 @@ const Button = forwardRef<HTMLAnchorElement, IButtonProps>(
 		if (tag === 'a') {
 			if (typeof to === 'string' && ANCHOR_LINK_PATTERN.test(to)) {
 				return (
-					<HashLink
+					<Link
+						href={to}
 						ref={ref}
 						className={BTN_CLASS}
-						to={to}
 						// eslint-disable-next-line react/jsx-props-no-spreading
 						{...disableProps}
 						// eslint-disable-next-line react/jsx-props-no-spreading
 						{...props}>
 						{INNER}
-					</HashLink>
+					</Link>
 				);
 			}
 			if (to) {
 				return (
 					<Link
+						href={to}
 						ref={ref}
 						className={BTN_CLASS}
-						to={to}
 						rel='noopener'
 						target={target}
 						// eslint-disable-next-line react/jsx-props-no-spreading
@@ -343,8 +341,6 @@ Button.defaultProps = {
 	hoverShadow: null,
 	target: undefined,
 	isVisuallyHidden: false,
-	onClick: undefined,
-	download: undefined,
 };
 
 export default Button;

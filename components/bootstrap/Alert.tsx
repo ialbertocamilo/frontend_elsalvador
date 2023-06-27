@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
 import TagWrapper from '../TagWrapper';
 import Icon from '../icon/Icon';
 import { TColor } from '../../type/color-type';
 import { TIcons } from '../../type/icons-type';
+import Link from 'next/link';
 
 interface IAlertHeadingProps extends Record<string, any> {
 	children: ReactNode;
@@ -41,9 +41,9 @@ export const AlertLink: FC<IAlertLinkProps> = ({ className, children, href, to, 
 	if (to) {
 		return (
 			// eslint-disable-next-line react/jsx-props-no-spreading
-			<NavLink to={to} className={LINK_CLASSES} {...props}>
+			<Link href={`../${to}`} className={LINK_CLASSES} {...props}>
 				{children}
-			</NavLink>
+			</Link>
 		);
 	}
 	return (

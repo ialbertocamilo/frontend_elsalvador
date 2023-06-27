@@ -3,25 +3,29 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useMeasure } from 'react-use';
 import { createUseStyles } from 'react-jss';
+import useMounted from '../../hooks/useMounted';
 
-const useStyles = createUseStyles({
-	// stylelint-disable-next-line selector-type-no-unknown
-	scale: {
-		// stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
-		'& .rccs': {
-			// @ts-ignore
-			zoom: (data) => (data.width / 290) * data.scale,
+const useStyles = createUseStyles(
+	{
+		// stylelint-disable-next-line selector-type-no-unknown
+		scale: {
+			// stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
+			'& .rccs': {
+				// @ts-ignore
+				zoom: (data) => (data.width / 290) * data.scale,
+			},
+		},
+		// stylelint-disable-next-line selector-type-no-unknown
+		fluid: {
+			// stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
+			'& .rccs': {
+				// @ts-ignore
+				zoom: (data) => data.width / 290,
+			},
 		},
 	},
-	// stylelint-disable-next-line selector-type-no-unknown
-	fluid: {
-		// stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
-		'& .rccs': {
-			// @ts-ignore
-			zoom: (data) => data.width / 290,
-		},
-	},
-});
+	{ link: true },
+);
 
 interface IReactCreditCardsContainerProps extends HTMLAttributes<HTMLDivElement> {
 	className?: string;
@@ -38,6 +42,8 @@ const ReactCreditCardsContainer: FC<IReactCreditCardsContainerProps> = ({
 	children,
 	...props
 }) => {
+	const { mounted } = useMounted();
+
 	const [ref, { width }] = useMeasure<HTMLDivElement>();
 	// @ts-ignore
 	const classes = useStyles({ width, scale });
@@ -54,7 +60,7 @@ const ReactCreditCardsContainer: FC<IReactCreditCardsContainerProps> = ({
 						'dark'
 					}`]: is3dShadow,
 				},
-				{ [classes.scale]: !!scale, [classes.fluid]: width < 290 },
+				{ [classes.scale]: mounted && !!scale, [classes.fluid]: mounted && width < 290 },
 				className,
 			)}
 			// eslint-disable-next-line react/jsx-props-no-spreading
