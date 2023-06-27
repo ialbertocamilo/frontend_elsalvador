@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { FC, useCallback, useContext, useState } from 'react';
 import AuthContext from '../../../context/authContext';
 import useDarkMode from '../../../hooks/useDarkMode';
-import USERS, { getUserDataWithUsername } from '../../../common/data/userDummyData';
+import USERS from '../../../common/data/userDummyData';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';

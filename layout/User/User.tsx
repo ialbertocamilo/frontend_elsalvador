@@ -11,10 +11,13 @@ import AuthContext from '../../context/authContext';
 
 import { useRouter } from 'next/router';
 import Popovers from '../../components/bootstrap/Popovers';
+import { useSession } from 'next-auth/react';
 
 const User = () => {
 	const { userData, setUser } = useContext(AuthContext);
 
+	const { data, status } = useSession();
+	console.log(data);
 	const router = useRouter();
 
 	const handleItem = useNavigationItemHandle();
@@ -39,7 +42,7 @@ const User = () => {
 				<div className='user-info'>
 					<div className='user-name'>
 						<Popovers title='User.tsx' desc={<code>layout/User/User.tsx</code>}>
-							{`${userData?.name} ${userData?.surname}`}
+							{`${userData}`}
 						</Popovers>
 						<code className='ps-2'>User.tsx</code>
 					</div>
