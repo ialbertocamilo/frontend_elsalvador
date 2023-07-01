@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import classNames from 'classnames';
-import { demoPagesMenu } from '../../menu';
+import { pagesMenu } from '../../menu';
 import useDarkMode from '../../hooks/useDarkMode';
 import Collapse from '../../components/bootstrap/Collapse';
 import { NavigationLine } from '../Navigation/Navigation';
@@ -11,13 +11,10 @@ import AuthContext from '../../context/authContext';
 
 import { useRouter } from 'next/router';
 import Popovers from '../../components/bootstrap/Popovers';
-import { useSession } from 'next-auth/react';
 
 const User = () => {
 	const { userData, setUser } = useContext(AuthContext);
 
-	const { data, status } = useSession();
-	console.log(data);
 	const router = useRouter();
 
 	const handleItem = useNavigationItemHandle();
@@ -27,10 +24,11 @@ const User = () => {
 
 	const { t } = useTranslation(['translation', 'menu']);
 
+	console.log(userData);
 	return (
 		<>
 			<div
-				className={classNames('user', { open: collapseStatus })}
+				className={classNames('user', { open: collapseStatus }, 'bg-primary')}
 				role='presentation'
 				onClick={() => setCollapseStatus(!collapseStatus)}>
 				<div className='user-avatar'>
@@ -39,18 +37,11 @@ const User = () => {
 						<img src={userData?.src} alt='Avatar' width={128} height={128} />
 					)}
 				</div>
-				<div className='user-info'>
-					<div className='user-name'>
+				<div className='user-info '>
+					<div className='user-name text-dark'>
 						<Popovers title='User.tsx' desc={<code>layout/User/User.tsx</code>}>
-							{`${userData}`}
+							{`${userData?.username} ${userData?.surname}`}
 						</Popovers>
-						<code className='ps-2'>User.tsx</code>
-					</div>
-					<div className='user-sub-title'>
-						<Popovers title='User.tsx' desc={<code>layout/User/User.tsx</code>}>
-							User
-						</Popovers>
-						<code className='ps-2'>User.tsx</code>
 					</div>
 				</div>
 			</div>

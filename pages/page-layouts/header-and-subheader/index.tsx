@@ -34,23 +34,8 @@ const Index: NextPage = () => {
 						desc={<code>pages/page-layouts/header-and-subheader/index.tsx</code>}>
 						SubHeaderRight
 					</Popovers>
-					<code>index.tsx</code>
 				</SubHeaderRight>
 			</SubHeader>
-			<Page>
-				<div className='row d-flex align-items-center h-100'>
-					<div
-						className='col-12 d-flex justify-content-center align-items-center'
-						style={{ fontSize: 'calc(1rem + 1vw)' }}>
-						<Popovers
-							title='index.tsx'
-							desc={<code>pages/page-layouts/header-and-subheader/index.tsx</code>}>
-							Page
-						</Popovers>
-						<code className='ps-3'>index.tsx</code>
-					</div>
-				</div>
-			</Page>
 		</PageWrapper>
 	);
 };

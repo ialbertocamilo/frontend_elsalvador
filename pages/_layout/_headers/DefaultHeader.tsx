@@ -20,12 +20,9 @@ const DefaultHeader = () => {
 				/>
 			</HeaderLeft>
 			<HeaderRight>
-				<Popovers
-					title='DefaultHeader.tsx'
-					desc={<code>pages/_layout/_headers/DefaultHeader.tsx</code>}>
-					HeaderRight
+				<Popovers title='User' desc={<code>pages/_layout/_headers/DefaultHeader.tsx</code>}>
+					User
 				</Popovers>
-				<code>DefaultHeader.tsx</code>
 			</HeaderRight>
 		</Header>
 	);

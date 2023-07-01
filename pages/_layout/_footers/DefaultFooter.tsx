@@ -17,7 +17,6 @@ const DefaultFooter = () => {
 							desc={<code>pages/_layout/_footers/DefaultFooter.tsx</code>}>
 							Footer
 						</Popovers>
-						<code className='ps-3'>DefaultFooter.tsx</code>
 					</div>
 					<div className='col-auto'>
 						<Popovers
@@ -25,7 +24,6 @@ const DefaultFooter = () => {
 							desc={<code>pages/_layout/_footers/DefaultFooter.tsx</code>}>
 							Footer
 						</Popovers>
-						<code className='ps-3'>DefaultFooter.tsx</code>
 					</div>
 				</div>
 			</div>

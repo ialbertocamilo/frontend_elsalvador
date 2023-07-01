@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrapper from '../layout/PageWrapper/PageWrapper';
-import { demoPagesMenu } from '../menu';
+import { pagesMenu } from '../menu';
 import Page from '../layout/Page/Page';
 import Head from 'next/head';
 import Button from '../components/bootstrap/Button';
@@ -12,7 +12,7 @@ const Page404 = () => {
 	return (
 		<PageWrapper>
 			<Head>
-				<title>{demoPagesMenu.page404.text}</title>
+				<title>{'404'}</title>
 			</Head>
 			<Page>
 				<div className='row d-flex align-items-center h-100'>

@@ -1,4 +1,39 @@
-export const dashboardPagesMenu = {
+export const pagesMenu = {
+	auth: {
+		id: 'menu',
+		text: 'Menu',
+		icon: 'Extension',
+	},
+	location: {
+		id: 'Location',
+		text: 'Ubicación',
+		path: 'location',
+		icon: 'EditLocation',
+	},
+	projects: {
+		id: 'Projects',
+		text: 'Proyectos',
+		path: 'projects',
+		icon: 'FilePresent',
+	},
+	calc: {
+		id: 'Calculator',
+		text: 'Calculadoras',
+		path: 'calculators',
+		icon: 'ConfirmationNumber',
+	},
+	packages: {
+		id: 'Packages',
+		text: 'Paquetes',
+		path: 'packages',
+		icon: 'Backpack',
+	},
+	config: {
+		id: 'Configuration',
+		text: 'Configuración',
+		path: 'configuration',
+		icon: 'PanTool',
+	},
 	dashboard: {
 		id: 'dashboard',
 		text: 'Dashboard',
@@ -8,46 +43,15 @@ export const dashboardPagesMenu = {
 	},
 };
 
-export const demoPagesMenu = {
-	auth: {
-		id: 'auth',
-		text: 'Auth Pages',
-		icon: 'Extension',
-	},
-	login: {
-		id: 'login',
-		text: 'Login',
-		path: 'auth/login',
-		icon: 'Login',
-	},
-	signUp: {
-		id: 'signUp',
-		text: 'Sign Up',
-		path: 'auth/sign-up',
-		icon: 'PersonAdd',
-	},
-	page404: {
-		id: 'Page404',
-		text: '404 Page',
-		path: '404',
-		icon: 'ReportGmailerrorred',
-	},
-};
-
 export const pageLayoutTypesPagesMenu = {
 	layoutTypes: {
 		id: 'layoutTypes',
 		text: 'Page Layout Types',
 	},
-	blank: {
-		id: 'blank',
-		text: 'Blank',
-		path: 'page-layouts/blank',
-		icon: 'check_box_outline_blank ',
-	},
+
 	pageLayout: {
 		id: 'pageLayout',
-		text: 'Page Layout',
+		text: 'Page',
 		path: 'page-layouts',
 		icon: 'BackupTable',
 		subMenu: {
@@ -74,26 +78,6 @@ export const pageLayoutTypesPagesMenu = {
 				text: 'Only Content',
 				path: 'page-layouts/only-content',
 				icon: 'WebAsset',
-			},
-		},
-	},
-	asideTypes: {
-		id: 'asideTypes',
-		text: 'Aside Types',
-		path: 'aside-types',
-		icon: 'Vertical Split',
-		subMenu: {
-			defaultAside: {
-				id: 'defaultAside',
-				text: 'Default Aside',
-				path: 'aside-types/default-aside',
-				icon: 'ViewQuilt',
-			},
-			minimizeAside: {
-				id: 'minimizeAside',
-				text: 'Minimize Aside',
-				path: 'aside-types/minimize-aside',
-				icon: 'View Compact',
 			},
 		},
 	},

@@ -55,7 +55,7 @@ const Index: NextPage = () => {
 					<Popovers title='index.tsx' desc={<code>pages/index.tsx</code>}>
 						SubHeaderRight
 					</Popovers>
-					<code>index.tsx</code>
+					<code>index.tsxs</code>
 				</SubHeaderRight>
 			</SubHeader>
 			<Page>
