@@ -10,3 +10,4 @@ styles/
 next.config.js
 
 .env
+.eslintrc.json

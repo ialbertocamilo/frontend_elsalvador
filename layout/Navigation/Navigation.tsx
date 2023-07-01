@@ -32,6 +32,7 @@ interface IListProps extends HTMLAttributes<HTMLUListElement> {
 	rootId?: string;
 	horizontal?: boolean;
 }
+
 export const List = forwardRef<HTMLUListElement, IListProps>(
 	({ id, children, className, ariaLabelledby, parentId, rootId, horizontal, ...props }, ref) => {
 		return (
@@ -86,8 +87,10 @@ interface IItemProps {
 	isMore?: boolean;
 	hide?: boolean;
 	activeItem?: string;
+
 	setActiveItem?(...args: unknown[]): unknown;
 }
+
 export const Item: FC<IItemProps> = ({
 	children,
 	to,
@@ -338,6 +341,7 @@ Item.defaultProps = {
 interface INavigationLineProps {
 	className?: string;
 }
+
 export const NavigationLine: FC<INavigationLineProps> = ({ className }) => {
 	return <hr className={classNames('navigation-line', className)} />;
 };
@@ -352,6 +356,7 @@ interface INavigationTitleProps extends HTMLAttributes<HTMLSpanElement> {
 	className?: string;
 	children: ReactNode;
 }
+
 export const NavigationTitle: FC<INavigationTitleProps> = ({ className, children, ...props }) => {
 	return (
 		<li className='navigation-item'>
@@ -393,6 +398,7 @@ interface INavigationProps {
 	id: string;
 	className?: string;
 }
+
 const Navigation = forwardRef<HTMLElement, INavigationProps>(
 	({ menu, horizontal, id, className, ...props }, ref) => {
 		const [activeItem, setActiveItem] = useState(undefined);
@@ -463,16 +469,6 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 			<nav ref={ref} aria-label={id} className={className} {...props}>
 				<List id={id} horizontal={horizontal}>
 					{fillMenu(menu, id, id, horizontal, undefined)}
-					{horizontal && (
-						<Item
-							rootId={`other-${id}`}
-							title={t('More') as string}
-							icon='MoreHoriz'
-							isHorizontal
-							isMore>
-							{fillMenu(menu, `other-${id}`, `other-${id}`, false, true)}
-						</Item>
-					)}
 				</List>
 			</nav>
 		);

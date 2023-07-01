@@ -1,6 +1,8 @@
 import NextAuth, { RequestInternal, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axiosService from '../../../lib/axios';
+import { useContext } from 'react';
+import AuthContext from '../../../context/authContext';
 
 export default NextAuth({
 	providers: [
@@ -8,22 +10,17 @@ export default NextAuth({
 			async authorize(
 				credentials: Record<any, any> | undefined,
 				req: Pick<RequestInternal, 'body' | 'query' | 'headers' | 'method'>,
-			): Promise<User | null> {
+			) {
 				console.log('authorizing');
-				try {
-					const resp = await axiosService().post('/login', {
-						username: credentials?.username,
-						password: credentials?.password,
-					});
-					if (resp.data) {
-						console.log(resp.data);
-						return Promise.resolve(resp.data);
-					}
-				} catch (e) {
-					console.log(e);
-					return Promise.reject(null);
+				const resp = await axiosService().post('/login', {
+					username: credentials?.username,
+					password: credentials?.password,
+				});
+				if (!resp?.data) {
+					throw new Error('Error en el servidor al tratar de logearse');
 				}
-				return Promise.reject(null);
+				console.log(resp.data);
+				return resp.data;
 			},
 			name: 'credentials',
 			credentials: {
@@ -44,15 +41,9 @@ export default NextAuth({
 		signIn: '/auth/login',
 	},
 	callbacks: {
-		async jwt({ token, user }) {
-			if (user) {
-				token.id = user.id;
-			}
-			return Promise.resolve(token);
-		},
-		async session({ session, user }) {
-			session.user = user;
-			return Promise.resolve(session);
+		async session({ session, user, token }) {
+			if (session.user) Object.assign(session.user, token);
+			return session;
 		},
 		signIn({ user, email, credentials, profile }) {
 			const isTrue = true;

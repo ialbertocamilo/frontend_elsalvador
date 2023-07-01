@@ -80,15 +80,13 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 		},
 		validateOnChange: false,
 		onSubmit: async (values) => {
-			console.log('process Login');
-			await signIn('credentials', {
+			const result = await signIn('credentials', {
 				username: values.loginUsername,
 				password: values.loginPassword,
-				redirect: true,
-				callbackUrl: '/',
+				redirect: false,
 			});
-			if (setUser) {
-				setUser(JSON.stringify({ name: 'gaa', surname: 'aeaea' }));
+			if (result?.ok) {
+				await router.replace('/projects');
 			}
 		},
 	});

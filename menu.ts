@@ -51,34 +51,8 @@ export const pageLayoutTypesPagesMenu = {
 
 	pageLayout: {
 		id: 'pageLayout',
-		text: 'Page',
-		path: 'page-layouts',
+		text: 'Inicio',
+		path: '/',
 		icon: 'BackupTable',
-		subMenu: {
-			headerAndSubheader: {
-				id: 'headerAndSubheader',
-				text: 'Header & Subheader',
-				path: 'page-layouts/header-and-subheader',
-				icon: 'ViewAgenda',
-			},
-			onlyHeader: {
-				id: 'onlyHeader',
-				text: 'Only Header',
-				path: 'page-layouts/only-header',
-				icon: 'ViewStream',
-			},
-			onlySubheader: {
-				id: 'onlySubheader',
-				text: 'Only Subheader',
-				path: 'page-layouts/only-subheader',
-				icon: 'ViewStream',
-			},
-			onlyContent: {
-				id: 'onlyContent',
-				text: 'Only Content',
-				path: 'page-layouts/only-content',
-				icon: 'WebAsset',
-			},
-		},
 	},
 };

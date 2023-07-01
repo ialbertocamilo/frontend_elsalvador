@@ -24,9 +24,20 @@ const nextConfig = withInterceptStdout(
 		},
 		reactStrictMode: true,
 		swcMinify: true,
-		i18n
+		i18n,
+		// basePath: '/projects',
+		async redirects() {
+			return [
+				{
+					source: '/',
+					destination:'/auth/login',
+					permanent: true,
+					basePath:false
+				},
+			]
+		},
 	}),
-	(log) => (hideWarn.some((warn) => log.includes(warn)) ? '' : log),
+	(log) => (hideWarn.some((warn) => log.includes(warn)) ? '' : log)
 );
 
 module.exports = nextConfig;

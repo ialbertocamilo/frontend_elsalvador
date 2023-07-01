@@ -46,7 +46,7 @@ const Index: NextPage = () => {
 			<SubHeader>
 				<SubHeaderLeft>
 					<Popovers title='index.tsx' desc={<code>pages/index.tsx</code>}>
-						SubHeaderLeft
+						SubHeaderLefts
 					</Popovers>
 					<code>index.tsx</code>
 					<SubheaderSeparator />

@@ -24,7 +24,6 @@ const User = () => {
 
 	const { t } = useTranslation(['translation', 'menu']);
 
-	console.log(userData);
 	return (
 		<>
 			<div
@@ -98,7 +97,6 @@ const User = () => {
 								if (setUser) {
 									setUser('');
 								}
-								router.push(`/${demoPagesMenu.login.path}`);
 							}}>
 							<span className='navigation-link navigation-link-pill'>
 								<span className='navigation-link-info'>

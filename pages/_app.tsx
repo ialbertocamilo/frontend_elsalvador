@@ -17,6 +17,7 @@ import { appWithTranslation } from 'next-i18next';
 import App from '../layout/App/App';
 import AsideRoutes from '../layout/Aside/AsideRoutes';
 import { SessionProvider } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
 	getOS();
