@@ -12,6 +12,7 @@ import Tooltips from '../../components/bootstrap/Tooltips';
 interface IAsideHeadProps {
 	children: ReactNode;
 }
+
 export const AsideHead: FC<IAsideHeadProps> = ({ children }) => {
 	return <div className='aside-head'>{children}</div>;
 };
@@ -19,6 +20,7 @@ export const AsideHead: FC<IAsideHeadProps> = ({ children }) => {
 interface IAsideBodyProps {
 	children: ReactNode;
 }
+
 export const AsideBody: FC<IAsideBodyProps> = ({ children }) => {
 	return <div className='aside-body'>{children}</div>;
 };
@@ -26,6 +28,7 @@ export const AsideBody: FC<IAsideBodyProps> = ({ children }) => {
 interface IAsideFootProps {
 	children: ReactNode;
 }
+
 export const AsideFoot: FC<IAsideFootProps> = ({ children }) => {
 	return <div className='aside-foot'>{children}</div>;
 };
@@ -33,6 +36,7 @@ export const AsideFoot: FC<IAsideFootProps> = ({ children }) => {
 interface IAsideProps {
 	children: any;
 }
+
 const Aside: FC<IAsideProps> = ({ children }) => {
 	const { asideStatus } = useContext(ThemeContext);
 
@@ -51,7 +55,7 @@ const Aside: FC<IAsideProps> = ({ children }) => {
 		<>
 			<motion.aside
 				style={mounted ? (asideStyle as MotionStyle) : undefined}
-				className={classNames('aside', {
+				className={classNames('bg-primary aside', {
 					open: mounted && asideStatus,
 					'aside-touch-bar': mounted && hasTouchButton && isModernDesign,
 					'aside-touch-bar-close':

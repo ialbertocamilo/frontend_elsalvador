@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { FC, useCallback, useContext, useState } from 'react';
 import AuthContext from '../../../context/authContext';
 import useDarkMode from '../../../hooks/useDarkMode';
-import USERS, { getUserDataWithUsername } from '../../../common/data/userDummyData';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
@@ -63,8 +62,8 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			loginUsername: USERS.JOHN.username,
-			loginPassword: USERS.JOHN.password,
+			loginUsername: '',
+			loginPassword: '',
 		},
 		validate: (values) => {
 			const errors: { loginUsername?: string; loginPassword?: string } = {};
@@ -89,9 +88,8 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 				callbackUrl: '/',
 			});
 			if (setUser) {
-				setUser(values.loginUsername);
+				setUser(JSON.stringify({ name: 'gaa', surname: 'aeaea' }));
 			}
-			// handleOnClick();
 		},
 	});
 
@@ -203,11 +201,12 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													label='Usuario o email'>
 													<Input
 														autoComplete='username'
-														value={formik.values.loginUsername}
 														isTouched={formik.touched.loginUsername}
 														invalidFeedback={
 															formik.errors.loginUsername
 														}
+														placeholder={'john'}
+														value={formik.values.loginUsername}
 														isValid={formik.isValid}
 														onChange={formik.handleChange}
 														onBlur={formik.handleBlur}
@@ -226,11 +225,12 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 													<Input
 														type='password'
 														autoComplete='current-password'
-														value={formik.values.loginPassword}
 														isTouched={formik.touched.loginPassword}
 														invalidFeedback={
 															formik.errors.loginPassword
 														}
+														value={formik.values.loginPassword}
+														placeholder={'*********'}
 														validFeedback='Looks good!'
 														isValid={formik.isValid}
 														onChange={formik.handleChange}

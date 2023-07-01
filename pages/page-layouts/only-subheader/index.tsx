@@ -21,7 +21,7 @@ const Index: NextPage = () => {
 				<SubHeaderLeft>
 					<Breadcrumb
 						list={[
-							{ title: 'Page Layout', to: '/page-layouts' },
+							{ title: 'Title', to: '/page-layouts' },
 							{
 								title: 'Only Subheader',
 								to: '/page-layouts/only-subheader',
