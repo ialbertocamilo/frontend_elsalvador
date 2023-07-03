@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import classNames from 'classnames';
-import { pagesMenu } from '../../menu';
 import useDarkMode from '../../hooks/useDarkMode';
 import Collapse from '../../components/bootstrap/Collapse';
 import { NavigationLine } from '../Navigation/Navigation';
@@ -11,14 +10,21 @@ import AuthContext from '../../context/authContext';
 
 import { useRouter } from 'next/router';
 import Popovers from '../../components/bootstrap/Popovers';
+import { useSession } from 'next-auth/react';
 
 const User = () => {
-	const { userData, setUser } = useContext(AuthContext);
-
 	const router = useRouter();
 
 	const handleItem = useNavigationItemHandle();
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
+
+	const { data } = useSession();
+
+	const [user, setUser] = useState<any>({ name: '', email: '', id: '' });
+	useEffect(() => {
+		console.log(data?.user);
+		setUser(data?.user);
+	}, [data]);
 
 	const [collapseStatus, setCollapseStatus] = useState<boolean>(false);
 
@@ -31,15 +37,17 @@ const User = () => {
 				role='presentation'
 				onClick={() => setCollapseStatus(!collapseStatus)}>
 				<div className='user-avatar'>
-					{!!userData?.src && (
-						// eslint-disable-next-line @next/next/no-img-element
-						<img src={userData?.src} alt='Avatar' width={128} height={128} />
-					)}
+					<img
+						src='../assets/img/wanna/landing1.png'
+						alt='Avatar'
+						width={128}
+						height={128}
+					/>
 				</div>
 				<div className='user-info '>
 					<div className='user-name text-dark'>
 						<Popovers title='User.tsx' desc={<code>layout/User/User.tsx</code>}>
-							{`${userData?.username} ${userData?.surname}`}
+							{`${user?.name}`}
 						</Popovers>
 					</div>
 				</div>

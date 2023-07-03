@@ -13,9 +13,6 @@ import FormGroup from '../../components/bootstrap/forms/FormGroup';
 import PropTypes from 'prop-types';
 import Map from '../../components/Map';
 import dynamic from 'next/dynamic';
-import InputGroup, { InputGroupText } from '../../components/bootstrap/forms/InputGroup';
-import Label from '../../components/bootstrap/forms/Label';
-import Textarea from '../../components/bootstrap/forms/Textarea';
 
 const LocationPage = () => {
 	const router = useRouter();
@@ -39,25 +36,28 @@ const LocationPage = () => {
 		<PageWrapper>
 			<Page>
 				<Card>
-					<CardBody>
-						<FormGroup>
-							<Input
-								size='lg'
-								placeholder='Ingresa la direccion o coordenadas del proyecto'></Input>
-						</FormGroup>
-						<br />
-						<Button color='dark'>Buscar</Button>
+					<CardBody className=''>
+						<div className='row g-5 justify-content-center  '>
+							<Card
+								style={{ width: '175px', height: '100px' }}
+								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover'
+								color='primary'>
+								Calculo de proporcion muro ventana
+							</Card>
+							<Card
+								style={{ width: '175px', height: '100px ' }}
+								color='bg-primary'
+								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover'>
+								Calculo de transmitancia termica de muros
+							</Card>
+							<Card
+								style={{ width: '175px', height: '100px' }}
+								className='text-center mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover'>
+								Calculo de ventanas
+							</Card>
+						</div>
 					</CardBody>
 				</Card>
-				<div className='row'>
-					<div className='col'>
-						<Map />
-					</div>
-					<div className='col'>
-						<Label htmlFor='location'>Datos de ubicaciones encontradas</Label>
-						<Textarea id='location' placeholder='Ubicacion '></Textarea>
-					</div>
-				</div>
 			</Page>
 		</PageWrapper>
 	);

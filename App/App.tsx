@@ -83,7 +83,6 @@ const App = () => {
 						overflow: fullScreenStatus ? 'scroll' : undefined,
 					}}>
 					<AsideRoutes />
-					<Wrapper />
 				</div>
 				<Portal id='portal-notification'>
 					<ReactNotifications />

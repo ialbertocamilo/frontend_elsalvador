@@ -42,7 +42,6 @@ const DefaultAsidePage = () => {
 							}>
 							Page
 						</Popovers>
-						<code className='ps-3'>DefaultAsidePage.tsx</code>
 					</div>
 				</div>
 			</Page>

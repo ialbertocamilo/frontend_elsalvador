@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useContext, useState } from 'react';
+import { FC, ReactElement, ReactNode, useCallback, useContext, useState } from 'react';
 import AuthContext from '../../../context/authContext';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { useFormik } from 'formik';
@@ -15,6 +15,7 @@ import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
 import PropTypes from 'prop-types';
 import { signIn, useSession } from 'next-auth/react';
+import { Props } from 'next/script';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
@@ -43,6 +44,7 @@ const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 
 interface ILoginProps {
 	isSignUp?: boolean;
+	getLayout: (page: ReactElement) => ReactNode;
 }
 
 const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
@@ -164,14 +166,6 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 											</div>
 											<div className='col-12'>
 												<FormGroup
-													id='username'
-													isFloating
-													label='Nombre de usuario'>
-													<Input autoComplete='family-name' />
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
 													id='password'
 													isFloating
 													label='Contraseña'>
@@ -261,7 +255,6 @@ Login.propTypes = {
 Login.defaultProps = {
 	isSignUp: false,
 };
-
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
 	props: {
 		// @ts-ignore

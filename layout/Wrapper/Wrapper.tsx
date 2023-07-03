@@ -11,6 +11,7 @@ interface IWrapperContainerProps {
 	children: ReactNode;
 	className?: string;
 }
+
 export const WrapperContainer: FC<IWrapperContainerProps> = ({ children, className, ...props }) => {
 	const { rightPanel } = useContext(ThemeContext);
 	return (
@@ -37,13 +38,13 @@ WrapperContainer.defaultProps = {
 interface IWrapper {
 	children: ReactNode;
 }
+
 const Wrapper: FC<IWrapper> = ({ children }) => {
 	return (
 		<>
 			<WrapperContainer>
 				<HeaderRoutes />
 				<Content>{children}</Content>
-				<FooterRoutes />
 			</WrapperContainer>
 			<WrapperOverlay />
 		</>

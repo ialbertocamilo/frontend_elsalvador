@@ -19,6 +19,7 @@ import Alert from '../../../components/bootstrap/Alert';
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
 }
+
 const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 	if (isNewUser) {
 		return (
@@ -42,6 +43,7 @@ LoginHeader.defaultProps = {
 interface ILoginProps {
 	isSignUp?: boolean;
 }
+
 const Login: FC<ILoginProps> = ({ isSignUp }) => {
 	const { setUser } = useContext(AuthContext);
 
@@ -133,7 +135,7 @@ const Login: FC<ILoginProps> = ({ isSignUp }) => {
 												'text-light': darkModeStatus,
 											},
 										)}
-										aria-label='Facit'>
+										aria-label='Logo'>
 										<Logo width={200} />
 									</Link>
 								</div>

@@ -16,6 +16,7 @@ export default NextAuth({
 					username: credentials?.username,
 					password: credentials?.password,
 				});
+				console.log(resp?.data);
 				if (!resp?.data) {
 					throw new Error('Error en el servidor al tratar de logearse');
 				}
@@ -43,6 +44,7 @@ export default NextAuth({
 	callbacks: {
 		async session({ session, user, token }) {
 			if (session.user) Object.assign(session.user, token);
+			console.log(token);
 			return session;
 		},
 		signIn({ user, email, credentials, profile }) {
