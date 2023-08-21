@@ -1,19 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
 import PAYMENTS from './enumPaymentMethod';
-import UserImage from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna1.png';
-import UserImageWebp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna1.webp';
-import UserImage2 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna2.png';
-import UserImage2Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna2.webp';
-import UserImage3 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna3.png';
-import UserImage3Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna3.webp';
-import UserImage4 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna4.png';
-import UserImage4Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna4.webp';
-import UserImage5 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna5.png';
-import UserImage5Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna5.webp';
-import UserImage6 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna6.png';
-import UserImage6Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna6.webp';
-import UserImage7 from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna7.png';
-import UserImage7Webp from '../../../../Documents/plataforma el salvador/Facit - React Admin Dashboard Template/Vite/facit-vite/src/assets/img/wanna/wanna7.webp';
 
 const data: {
 	id: number;
@@ -23,8 +9,6 @@ const data: {
 	membershipDate: Dayjs;
 	balance: number;
 	payout: string;
-	src: string;
-	srcSet: string;
 	isOnline?: boolean;
 	streetAddress: string;
 	streetAddress2: string;
@@ -50,8 +34,6 @@ const data: {
 		membershipDate: dayjs().add(-1, 'month'),
 		balance: 580,
 		payout: PAYMENTS.PAYPAL.name,
-		src: UserImage3,
-		srcSet: UserImage3Webp,
 		streetAddress: '245 May Street',
 		streetAddress2: '',
 		city: 'Ashland',
@@ -76,8 +58,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 124,
 		payout: PAYMENTS.SWIFT.name,
-		src: UserImage5,
-		srcSet: UserImage5Webp,
 		streetAddress: '1296 Sunny Glen Lane',
 		streetAddress2: '',
 		city: 'Cleveland',
@@ -102,8 +82,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 1089,
 		payout: PAYMENTS.PAYPAL.name,
-		src: UserImage6,
-		srcSet: UserImage6Webp,
 		streetAddress: '2463 Daffodil Lane',
 		streetAddress2: '',
 		city: 'Lorton',
@@ -128,8 +106,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 120,
 		payout: PAYMENTS.PAYONEER.name,
-		src: UserImage4,
-		srcSet: UserImage4Webp,
 		isOnline: true,
 		streetAddress: '3785 Boone Crockett Lane',
 		streetAddress2: '',
@@ -155,8 +131,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 890,
 		payout: PAYMENTS.SWIFT.name,
-		src: UserImage7,
-		srcSet: UserImage7Webp,
 		streetAddress: '4941 Petunia Way',
 		streetAddress2: '',
 		city: 'Hueytown',
@@ -181,8 +155,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 437,
 		payout: PAYMENTS.PAYPAL.name,
-		src: UserImage,
-		srcSet: UserImageWebp,
 		streetAddress: '2248 Sigley Road',
 		streetAddress2: '',
 		city: 'Topeka',
@@ -207,8 +179,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 678,
 		payout: PAYMENTS.PAYONEER.name,
-		src: UserImage4,
-		srcSet: UserImage4Webp,
 		streetAddress: '3392 Melm Street',
 		streetAddress2: '',
 		city: 'Wellborn',
@@ -233,8 +203,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 703,
 		payout: PAYMENTS.PAYONEER.name,
-		src: UserImage2,
-		srcSet: UserImage2Webp,
 		streetAddress: '4558 Dancing Dove Lane',
 		streetAddress2: '',
 		city: 'New York',
@@ -259,8 +227,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 389,
 		payout: PAYMENTS.PAYPAL.name,
-		src: UserImage6,
-		srcSet: UserImage6Webp,
 		streetAddress: '1946 Juniper Drive',
 		streetAddress2: '',
 		city: 'Mount Pleasant',
@@ -285,8 +251,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 943,
 		payout: PAYMENTS.PAYPAL.name,
-		src: UserImage2,
-		srcSet: UserImage2Webp,
 		streetAddress: '4904 Cerullo Road',
 		streetAddress2: '',
 		city: 'Louisville',
@@ -311,8 +275,6 @@ const data: {
 		membershipDate: dayjs().add(-2, 'month'),
 		balance: 738,
 		payout: PAYMENTS.SWIFT.name,
-		src: UserImage4,
-		srcSet: UserImage4Webp,
 		streetAddress: '111 Brannon Street',
 		streetAddress2: '',
 		city: 'City Of Commerce',
