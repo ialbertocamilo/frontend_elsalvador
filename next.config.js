@@ -18,12 +18,13 @@ const nextConfig = withInterceptStdout(
     experimental: {
       images: {
         allowFutureImage: true
-      }
+      },
+      appDir: true
     },
     images: {
       disableStaticImages: true
     },
-    reactStrictMode: true,
+    reactStrictMode: false,
     swcMinify: true,
     i18n,
     // basePath: '/projects',
@@ -36,7 +37,10 @@ const nextConfig = withInterceptStdout(
           basePath: false
         }
       ];
-    }
+    },
+    env:{
+      BACKEND_URL:process.env.BACKEND_URL
+    },
   }),
   (log) => (hideWarn.some((warn) => log.includes(warn)) ? "" : log)
 );

@@ -7,31 +7,31 @@ export const pagesMenu = {
 	location: {
 		id: 'Location',
 		text: 'Ubicación',
-		path: 'location',
+		path: 'home/location',
 		icon: 'EditLocation',
 	},
 	projects: {
 		id: 'Projects',
 		text: 'Proyectos',
-		path: 'projects',
+		path: 'home/projects',
 		icon: 'FilePresent',
 	},
 	calc: {
 		id: 'Calculator',
 		text: 'Calculadoras',
-		path: 'calculators',
+		path: 'home/calculators',
 		icon: 'ConfirmationNumber',
 	},
 	packages: {
 		id: 'Packages',
 		text: 'Paquetes',
-		path: 'packages',
+		path: 'home/packages',
 		icon: 'Backpack',
 	},
 	config: {
 		id: 'Configuration',
 		text: 'Configuración',
-		path: 'configuration',
+		path: 'home/configuration',
 		icon: 'PanTool',
 	},
 	dashboard: {

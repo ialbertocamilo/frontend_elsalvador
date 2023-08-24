@@ -18,7 +18,7 @@ import ThemeContext from '../../context/themeContext';
 import Collapse from '../../components/bootstrap/Collapse';
 import useDarkMode from '../../hooks/useDarkMode';
 import { TIcons } from '../../type/icons-type';
-import { useRouter } from 'next/router';
+import { useRouter,usePathname } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
 import { pathRetouch } from '../../helpers/helpers';
@@ -129,10 +129,11 @@ export const Item: FC<IItemProps> = ({
 	const ANCHOR_LINK_PATTERN = /^#/i;
 	const router = useRouter();
 
+	const pathname=usePathname() as string
 	// For aside menu
-	const here = typeof to === 'string' && to !== '/' && router.pathname.includes(to);
+	const here = typeof to === 'string' && to !== '/' && pathname.includes(to);
 	// For top menu
-	const match = to !== '/' && router.pathname === to;
+	const match = to !== '/' && pathname === to;
 
 	const { t } = useTranslation('menu');
 

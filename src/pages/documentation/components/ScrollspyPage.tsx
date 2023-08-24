@@ -18,10 +18,10 @@ import Card, {
 	CardTitle,
 } from '../../../components/bootstrap/Card';
 import ScrollspyNav from '../../../components/bootstrap/ScrollspyNav';
-import HumansWebp from '../../../assets/img/scene1.webp';
-import Humans from '../../../assets/img/scene1.png';
-import HumansWebp2 from '../../../assets/img/scene2.webp';
-import Humans2 from '../../../assets/img/scene2.png';
+import HumansWebp from '../../../../app/assets/img/scene1.webp';
+import Humans from '../../../../app/assets/img/scene1.png';
+import HumansWebp2 from '../../../../app/assets/img/scene2.webp';
+import Humans2 from '../../../../app/assets/img/scene2.png';
 
 const ScrollspyPage = () => {
 	const GENERAL_USAGE = `

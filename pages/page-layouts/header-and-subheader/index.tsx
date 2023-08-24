@@ -30,8 +30,8 @@ const Index: NextPage = () => {
 				</SubHeaderLeft>
 				<SubHeaderRight>
 					<Popovers
-						title='index.tsx'
-						desc={<code>pages/page-layouts/header-and-subheader/index.tsx</code>}>
+						title='page.tsx'
+						desc={<code>pages/page-layouts/header-and-subheader/page.tsx</code>}>
 						SubHeaderRight
 					</Popovers>
 				</SubHeaderRight>

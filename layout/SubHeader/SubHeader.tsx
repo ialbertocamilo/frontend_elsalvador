@@ -1,3 +1,4 @@
+"use client"
 import React, { FC, ReactNode, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';

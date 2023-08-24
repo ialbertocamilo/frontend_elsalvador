@@ -275,10 +275,10 @@ const DefaultTable = () => {
 												</Button>
 											</td>
 											<td>
-												<div>{i.membershipDate.format('ll')}</div>
+												<div>{i.membershipDate?.format('ll')}</div>
 												<div>
 													<small className='text-muted'>
-														{i.membershipDate.fromNow()}
+														{"nowwwww"}
 													</small>
 												</div>
 											</td>

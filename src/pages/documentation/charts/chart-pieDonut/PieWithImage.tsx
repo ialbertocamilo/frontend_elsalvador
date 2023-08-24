@@ -7,10 +7,10 @@ import Card, {
 	CardTitle,
 } from '../../../../components/bootstrap/Card';
 import Chart, { IChartOptions } from '../../../../components/extras/Chart';
-import Avocado from '../../../../assets/img/fruit/avocado.jpg';
-import Banana from '../../../../assets/img/fruit/banana.jpg';
-import Pineapple from '../../../../assets/img/fruit/pineapple.jpg';
-import Strawberry from '../../../../assets/img/fruit/strawberry.jpg';
+import Avocado from '../../../../../app/assets/img/fruit/avocado.jpg';
+import Banana from '../../../../../app/assets/img/fruit/banana.jpg';
+import Pineapple from '../../../../../app/assets/img/fruit/pineapple.jpg';
+import Strawberry from '../../../../../app/assets/img/fruit/strawberry.jpg';
 
 const PieWithImage = () => {
 	const [state] = useState<IChartOptions>({

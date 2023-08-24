@@ -7,7 +7,7 @@ import Card, {
 	CardTitle,
 } from '../../../../components/bootstrap/Card';
 import Chart, { IChartOptions } from '../../../../components/extras/Chart';
-import Image from '../../../../assets/img/coins.jpeg';
+import Image from '../../../../../app/assets/img/coins.jpeg';
 
 const BarWithImages = () => {
 	const [state] = useState<IChartOptions>({

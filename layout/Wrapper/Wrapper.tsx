@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Content from '../Content/Content';
 import WrapperOverlay from './WrapperOverlay';
 import HeaderRoutes from '../Header/HeaderRoutes';
-import FooterRoutes from '../Footer/FooterRoutes';
 import ThemeContext from '../../context/themeContext';
 
 interface IWrapperContainerProps {

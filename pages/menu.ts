@@ -328,24 +328,6 @@ export const demoPagesMenu = {
 				path: 'crm/customer/1',
 				icon: 'Badge',
 			},
-			// sales: {
-			// 	id: 'sales',
-			// 	text: 'Sales',
-			// 	path: 'crm/sales',
-			// 	icon: 'Storefront',
-			// },
-			// invoiceID: {
-			// 	id: 'invoiceID',
-			// 	text: 'invoiceID',
-			// 	path: 'crm/invoice',
-			// 	hide: true,
-			// },
-			// invoice: {
-			// 	id: 'invoice',
-			// 	text: 'Invoice',
-			// 	path: 'crm/invoice/1',
-			// 	icon: 'Receipt',
-			// },
 		},
 	},
 	chat: {
@@ -373,18 +355,6 @@ export const demoPagesMenu = {
 		id: 'auth',
 		text: 'Auth Pages',
 		icon: 'Extension',
-	},
-	login: {
-		id: 'login',
-		text: 'Login',
-		path: 'auth-pages/login',
-		icon: 'Login',
-	},
-	signUp: {
-		id: 'signUp',
-		text: 'Sign Up',
-		path: 'auth-pages/sign-up',
-		icon: 'PersonAdd',
 	},
 	page404: {
 		id: 'Page404',

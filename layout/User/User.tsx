@@ -6,11 +6,9 @@ import Collapse from '../../components/bootstrap/Collapse';
 import { NavigationLine } from '../Navigation/Navigation';
 import Icon from '../../components/icon/Icon';
 import useNavigationItemHandle from '../../hooks/useNavigationItemHandle';
-import AuthContext from '../../context/authContext';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Popovers from '../../components/bootstrap/Popovers';
-import { useSession } from 'next-auth/react';
 
 const User = () => {
 	const router = useRouter();
@@ -18,13 +16,7 @@ const User = () => {
 	const handleItem = useNavigationItemHandle();
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
 
-	const { data } = useSession();
-
 	const [user, setUser] = useState<any>({ name: '', email: '', id: '' });
-	useEffect(() => {
-		console.log(data?.user);
-		setUser(data?.user);
-	}, [data]);
 
 	const [collapseStatus, setCollapseStatus] = useState<boolean>(false);
 

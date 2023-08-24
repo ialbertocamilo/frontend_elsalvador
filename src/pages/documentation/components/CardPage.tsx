@@ -14,7 +14,7 @@ import Card, {
 	CardTabItem,
 	CardTitle,
 } from '../../../components/bootstrap/Card';
-import Pose from '../../../assets/img/pose.png';
+import Pose from '../../../../app/assets/img/pose.png';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Breadcrumb from '../../../components/bootstrap/Breadcrumb';

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ThemeContext from '../../context/themeContext';
 import useAsideTouch from '../../hooks/useAsideTouch';
 import useMounted from '../../hooks/useMounted';
-import { useRouter } from 'next/router';
+import { useRouter,usePathname } from 'next/navigation';
 import withOutAsideRoutes from '../../routes/asideRoutes';
 import { pathToRoute } from '../../helpers/helpers';
 import Tooltips from '../../components/bootstrap/Tooltips';
@@ -40,6 +40,7 @@ interface IAsideProps {
 const Aside: FC<IAsideProps> = ({ children }) => {
 	const { asideStatus } = useContext(ThemeContext);
 
+	const pathname=usePathname() as string
 	const { asideStyle, touchStatus, hasTouchButton, asideWidthWithSpace, x } = useAsideTouch();
 
 	const isModernDesign = process.env.NEXT_PUBLIC_MODERN_DESGIN === 'true';
@@ -50,7 +51,7 @@ const Aside: FC<IAsideProps> = ({ children }) => {
 
 	const router = useRouter();
 
-	if (withOutAsideRoutes.find((key) => key.path === pathToRoute(router.pathname))) return null;
+	if (withOutAsideRoutes.find((key) => key.path === pathToRoute(pathname))) return null;
 	return (
 		<>
 			<motion.aside

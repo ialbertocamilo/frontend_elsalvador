@@ -7,8 +7,8 @@ import Card, {
 	CardTitle,
 } from '../../../../components/bootstrap/Card';
 import Chart, { IChartOptions } from '../../../../components/extras/Chart';
-import Clock from '../../../../assets/img/clock.jpeg';
-import AlarmClock from '../../../../assets/img/Alarm Clock.svg';
+import Clock from '../../../../../app/assets/img/clock.jpeg';
+import AlarmClock from '../../../../../app/assets/img/Alarm Clock.svg';
 
 const RadialBarWithImage = () => {
 	const [state] = useState<IChartOptions>({

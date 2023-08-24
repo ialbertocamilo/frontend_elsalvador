@@ -2,7 +2,7 @@ import React from 'react';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Humans from '../../../assets/img/scene4.png';
-import HumansWebp from '../../../assets/img/scene4.webp';
+import HumansWebp from '../../../app/assets/img/scene4.webp';
 import Button from '../../../components/bootstrap/Button';
 import { demoPagesMenu } from '../../../menu';
 

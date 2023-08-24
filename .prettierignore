@@ -2,7 +2,7 @@ SvgIcons/
 build/
 node_modules/
 public/
-src/assets
+app/assets
 src/components/icon/
 #src/pages/documentation
 next.config.js

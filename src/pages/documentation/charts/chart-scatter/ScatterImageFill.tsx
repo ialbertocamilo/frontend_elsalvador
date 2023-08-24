@@ -7,8 +7,8 @@ import Card, {
 	CardTitle,
 } from '../../../../components/bootstrap/Card';
 import Chart, { IChartOptions } from '../../../../components/extras/Chart';
-import Instagram from '../../../../assets/img/instagram.svg';
-import Messenger from '../../../../assets/img/messenger.svg';
+import Instagram from '../../../../../app/assets/img/instagram.svg';
+import Messenger from '../../../../../app/assets/img/messenger.svg';
 
 const ScatterImageFill = () => {
 	const [state] = useState<IChartOptions>({

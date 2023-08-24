@@ -20,11 +20,11 @@ const Index: NextPage = () => {
 						className='col-12 d-flex justify-content-center align-items-center'
 						style={{ fontSize: 'calc(1rem + 1vw)' }}>
 						<Popovers
-							title='index.tsx'
-							desc={<code>pages/page-layouts/only-header/index.tsx</code>}>
+							title='page.tsx'
+							desc={<code>pages/page-layouts/only-header/page.tsx</code>}>
 							Page
 						</Popovers>
-						<code className='ps-3'>index.tsx</code>
+						<code className='ps-3'>page.tsx</code>
 					</div>
 				</div>
 			</Page>

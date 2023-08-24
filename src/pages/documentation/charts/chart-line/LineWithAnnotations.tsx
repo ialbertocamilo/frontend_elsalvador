@@ -8,7 +8,7 @@ import Card, {
 } from '../../../../components/bootstrap/Card';
 import Chart, { IChartOptions } from '../../../../components/extras/Chart';
 import { series } from '../../../../common/data/chartDummyData';
-import Instagram from '../../../../assets/img/instagram.svg';
+import Instagram from '../../../../../app/assets/img/instagram.svg';
 
 const LineWithAnnotations = () => {
 	const [state] = useState<IChartOptions>({
