@@ -1,31 +1,23 @@
 import React from 'react';
 import Header, { HeaderLeft, HeaderRight } from '../../../layout/Header/Header';
 import Navigation from '../../../layout/Navigation/Navigation';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import useDeviceScreen from '../../../hooks/useDeviceScreen';
-import Popovers from '../../../components/bootstrap/Popovers';
+import { observer } from 'mobx-react-lite';
+import userStore from '../../../stores/userStore';
 
-const DefaultHeader = () => {
+const DefaultHeader = observer(() => {
 	const deviceScreen = useDeviceScreen();
+
 	return (
 		<Header>
 			<HeaderLeft>
-				<Navigation
-					menu={{ ...pageLayoutTypesPagesMenu }}
-					id='header-top-menu'
-					horizontal={
-						!!deviceScreen?.width &&
-						deviceScreen.width >= Number(process.env.NEXT_PUBLIC_MOBILE_BREAKPOINT_SIZE)
-					}
-				/>
 			</HeaderLeft>
 			<HeaderRight>
-				<Popovers title='User' desc={<code>pages/_layout/_headers/DefaultHeader.tsx</code>}>
-					User
-				</Popovers>
+				<span className={'text-black-50 '}>Usuario:</span> <b> {userStore.value.name}</b>
 			</HeaderRight>
 		</Header>
 	);
-};
+});
 
 export default DefaultHeader;

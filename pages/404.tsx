@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrapper from '../layout/PageWrapper/PageWrapper';
-import { pagesMenu } from '../menu';
+import { pagesMenu } from '../common/constants/menu';
 import Page from '../layout/Page/Page';
 import Head from 'next/head';
 import Button from '../components/bootstrap/Button';

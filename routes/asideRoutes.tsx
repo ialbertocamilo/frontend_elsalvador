@@ -1,4 +1,4 @@
-import DefaultAside from '../pages/_layout/_asides/DefaultAside';
+import DefaultAside from '../layout/Aside/DefaultAside';
 
 
 const asides = [

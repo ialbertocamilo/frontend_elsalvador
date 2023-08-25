@@ -1,5 +1,5 @@
 import { AuthUser } from './user';
-import { StorageTypes } from '../constants';
+import { StorageTypes } from '../constants/default';
 import { UserStorage } from '../types/user.types';
 import showNotification from "../../components/extras/showNotification";
 

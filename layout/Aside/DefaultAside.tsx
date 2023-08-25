@@ -1,17 +1,15 @@
 import React, { useContext, useState } from 'react';
-import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
-import Brand from '../../../layout/Brand/Brand';
-import Navigation, { NavigationLine } from '../../../layout/Navigation/Navigation';
-import User from '../../../layout/User/User';
-import { pagesMenu, pageLayoutTypesPagesMenu } from '../../../menu';
-import ThemeContext from '../../../context/themeContext';
-import Icon from '../../../components/icon/Icon';
-import useDarkMode from '../../../hooks/useDarkMode';
+import Brand from '../Brand/Brand';
+import Navigation, { NavigationLine } from '../Navigation/Navigation';
+import User from '../User/User';
+import { pagesMenu } from '../../common/constants/menu';
+import ThemeContext from '../../context/themeContext';
+import useDarkMode from '../../hooks/useDarkMode';
 import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Aside, { AsideBody, AsideFoot, AsideHead } from '../../../layout/Aside/Aside';
-import Popovers from '../../../components/bootstrap/Popovers';
+import Aside, { AsideBody, AsideFoot, AsideHead } from './Aside';
+import Button from '../../components/bootstrap/Button';
+import { types } from 'sass';
 
 const DefaultAside = () => {
 	const { asideStatus, setAsideStatus } = useContext(ThemeContext);
@@ -43,20 +41,11 @@ const DefaultAside = () => {
 				{asideStatus && doc && <div className='p-4'>Documentation</div>}
 			</AsideBody>
 			<AsideFoot>
-				<nav aria-label='aside-bottom-menu'>
-					<div className='navigation'>
-						<div
-							role='presentation'
-							className='navigation-item cursor-pointer'
-							onClick={() => {
-								localStorage.setItem('facit_asideDocStatus', String(!doc));
-								setDoc(!doc);
-							}}
-							data-tour='documentation'>
-						</div>
+				<div className='row '>
+					<div className="col align-items-center text-center">
+						<User />
 					</div>
-				</nav>
-				<User />
+				</div>
 			</AsideFoot>
 		</Aside>
 	);

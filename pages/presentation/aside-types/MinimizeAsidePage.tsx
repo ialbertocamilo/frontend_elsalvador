@@ -4,7 +4,7 @@ import SubHeader, { SubHeaderLeft, SubHeaderRight } from '../../../layout/SubHea
 import Page from '../../../layout/Page/Page';
 import Breadcrumb from '../../../components/bootstrap/Breadcrumb';
 import useMinimizeAside from '../../../hooks/useMinimizeAside';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import Popovers from '../../../components/bootstrap/Popovers';
 
 const MinimizeAsidePage = () => {

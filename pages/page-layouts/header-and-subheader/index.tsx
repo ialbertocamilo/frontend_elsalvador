@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import SubHeader, { SubHeaderLeft, SubHeaderRight } from '../../../layout/SubHeader/SubHeader';
 import Breadcrumb from '../../../components/bootstrap/Breadcrumb';
 import Page from '../../../layout/Page/Page';

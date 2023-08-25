@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Humans from '../../../assets/img/scene4.png';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import Page from '../../../layout/Page/Page';
 import Popovers from '../../../components/bootstrap/Popovers';
 

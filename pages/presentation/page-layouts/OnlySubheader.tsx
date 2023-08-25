@@ -3,7 +3,7 @@ import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import SubHeader, { SubHeaderLeft, SubHeaderRight } from '../../../layout/SubHeader/SubHeader';
 import Page from '../../../layout/Page/Page';
 import Breadcrumb from '../../../components/bootstrap/Breadcrumb';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import Popovers from '../../../components/bootstrap/Popovers';
 
 const OnlySubheader = () => {

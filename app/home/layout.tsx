@@ -11,7 +11,6 @@ import { TourProvider } from "@reactour/tour";
 import steps, { styles } from "../steps";
 import App from "../../layout/App/App";
 import AsideRoutes from "../../layout/Aside/AsideRoutes";
-import DefaultHeader from "../../pages/_layout/_headers/DefaultHeader";
 import Wrapper from "../../layout/Wrapper/Wrapper";
 // eslint-disable-next-line react/function-component-definition
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -32,27 +31,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		dark: COLORS.DARK.code,
 		light: COLORS.LIGHT.code,
 	};
-	console.log('ROOT LAYOUT');
 	return (
-		<html>
-			<body>
-				<ThemeContextProvider>
-					<ThemeProvider theme={theme}>
-						<ToastProvider components={{ ToastContainer, Toast }}>
-							<TourProvider
-								steps={steps}
-								styles={styles}
-								showNavigation={false}
-								showBadge={false}>
-								<App>
-									<AsideRoutes />
-									<Wrapper>{children}</Wrapper>
-								</App>
-							</TourProvider>
-						</ToastProvider>
-					</ThemeProvider>
-				</ThemeContextProvider>
-			</body>
-		</html>
+		<ThemeContextProvider>
+			<ThemeProvider theme={theme}>
+				<ToastProvider components={{ ToastContainer, Toast }}>
+					<TourProvider
+						steps={steps}
+						styles={styles}
+						showNavigation={false}
+						showBadge={false}>
+						<App>
+							<AsideRoutes />
+							<Wrapper>{children}</Wrapper>
+						</App>
+					</TourProvider>
+				</ToastProvider>
+			</ThemeProvider>
+		</ThemeContextProvider>
 	);
 }

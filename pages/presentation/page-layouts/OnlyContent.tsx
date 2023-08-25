@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
-import { pageLayoutTypesPagesMenu } from '../../../menu';
+import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import Popovers from '../../../components/bootstrap/Popovers';
 
 const OnlyContent = () => {

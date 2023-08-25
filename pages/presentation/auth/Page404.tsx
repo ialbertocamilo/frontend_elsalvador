@@ -4,7 +4,7 @@ import Page from '../../../layout/Page/Page';
 import Humans from '../../../assets/img/scene4.png';
 import HumansWebp from '../../../app/assets/img/scene4.webp';
 import Button from '../../../components/bootstrap/Button';
-import { demoPagesMenu } from '../../../menu';
+import { demoPagesMenu } from '../../../common/constants/menu';
 
 const Page404 = () => {
 	return (

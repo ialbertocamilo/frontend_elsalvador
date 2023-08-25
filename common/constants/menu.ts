@@ -13,8 +13,22 @@ export const pagesMenu = {
 	projects: {
 		id: 'Projects',
 		text: 'Proyectos',
-		path: 'home/projects',
+		path: 'home',
 		icon: 'FilePresent',
+		subMenu: {
+			projectList: {
+				id: 'project-list',
+				text: 'Lista de proyectos',
+				path: 'home/projects',
+				icon: 'FilePresent',
+			},
+			newProject: {
+				id: 'new-project',
+				text: 'Nuevo proyecto',
+				path: 'home/projects/new',
+				icon: 'FilePresent',
+			},
+		},
 	},
 	calc: {
 		id: 'Calculator',
@@ -46,7 +60,7 @@ export const pagesMenu = {
 export const pageLayoutTypesPagesMenu = {
 	layoutTypes: {
 		id: 'layoutTypes',
-		text: 'Page Layout Types',
+		text: ' ',
 	},
 
 	pageLayout: {
@@ -55,18 +69,6 @@ export const pageLayoutTypesPagesMenu = {
 		path: 'page-layouts',
 		icon: 'BackupTable',
 		subMenu: {
-			headerAndSubheader: {
-				id: 'headerAndSubheader',
-				text: 'Header & Subheader',
-				path: 'page-layouts/header-and-subheader',
-				icon: 'ViewAgenda',
-			},
-			onlyHeader: {
-				id: 'onlyHeader',
-				text: 'Only Header',
-				path: 'page-layouts/only-header',
-				icon: 'ViewStream',
-			},
 			onlySubheader: {
 				id: 'onlySubheader',
 				text: 'Only Subheader',

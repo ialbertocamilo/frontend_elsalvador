@@ -30,6 +30,8 @@
 		"i18next": "^22.4.13",
 		"jsx-to-string": "^1.4.0",
 		"leaflet": "^1.9.4",
+		"mobx": "^6.10.0",
+		"mobx-react-lite": "^4.0.3",
 		"next": "13.2.4",
 		"next-i18next": "^13.2.2",
 		"next-images": "^1.8.4",

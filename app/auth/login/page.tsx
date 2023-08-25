@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import { login } from '../../../services/auth/authentication';
 import { ClientStorage } from '../../../common/classes/storage';
 import { useRouter } from 'next/navigation';
-import { RoutesList } from '../../../common/constants';
+import { RoutesList } from '../../../common/constants/default';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
