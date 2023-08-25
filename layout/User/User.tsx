@@ -18,32 +18,12 @@ const User = () => {
 
 	const [user, setUser] = useState<any>({ name: '', email: '', id: '' });
 
-	const [collapseStatus, setCollapseStatus] = useState<boolean>(false);
+	const [collapseStatus, setCollapseStatus] = useState<boolean>(true);
 
 	const { t } = useTranslation(['translation', 'menu']);
 
 	return (
 		<>
-			<div
-				className={classNames('user', { open: collapseStatus }, 'bg-primary')}
-				role='presentation'
-				onClick={() => setCollapseStatus(!collapseStatus)}>
-				<div className='user-avatar'>
-					<img
-						src='../assets/img/wanna/landing1.png'
-						alt='Avatar'
-						width={128}
-						height={128}
-					/>
-				</div>
-				<div className='user-info '>
-					<div className='user-name text-dark'>
-						<Popovers title='User.tsx' desc={<code>layout/User/User.tsx</code>}>
-							{`${user?.name}`}
-						</Popovers>
-					</div>
-				</div>
-			</div>
 
 			<Collapse isOpen={collapseStatus} className='user-menu'>
 				<nav aria-label='aside-bottom-user-menu'>
@@ -61,7 +41,7 @@ const User = () => {
 							<span className='navigation-link navigation-link-pill'>
 								<span className='navigation-link-info'>
 									<Icon icon='AccountBox' className='navigation-icon' />
-									<span className='navigation-text'>{t('menu:Profile')}</span>
+									<span className='navigation-text'>Perfil</span>
 								</span>
 							</span>
 						</div>
@@ -80,7 +60,7 @@ const User = () => {
 										className='navigation-icon'
 									/>
 									<span className='navigation-text'>
-										{darkModeStatus ? t('menu:DarkMode') : t('menu:LightMode')}
+										{darkModeStatus ? 'DarkMode':'LightMode'}
 									</span>
 								</span>
 							</span>
@@ -101,7 +81,7 @@ const User = () => {
 							<span className='navigation-link navigation-link-pill'>
 								<span className='navigation-link-info'>
 									<Icon icon='Logout' className='navigation-icon' />
-									<span className='navigation-text'>{t('menu:Logout')}</span>
+									<span className='navigation-text'>Logout</span>
 								</span>
 							</span>
 						</div>

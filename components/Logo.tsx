@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
-import logo from '../assets/img/logo.png';
+import logo from '/public/logo.png';
 
 interface ILogoProps {
 	width?: number;
