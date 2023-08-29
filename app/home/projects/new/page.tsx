@@ -12,6 +12,7 @@ import Button from '../../../../components/bootstrap/Button';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { useProjects } from '../../../../services/project/project.service';
+import { RoutesList } from '../../../../common/constants/default';
 
 const ProjectsPage = () => {
 	const router = useRouter();
@@ -49,6 +50,7 @@ const ProjectsPage = () => {
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, public: buttonActive });
 			await projects.saveProject(values);
+			router.push(RoutesList.calculatorProportion);
 		},
 		enableReinitialize: true,
 	});
