@@ -1,5 +1,5 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import L, { control } from "leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LocationMarker from './maps/LocationMarker';
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -15,8 +15,7 @@ const Map = ({}) => {
 	const position = [51.505, -0.09];
 
 	const myMap = useRef<any>();
-	L.esri.Geocoding.geosearch().addTo(myMap.current);
-	const map=useMap()
+	const map = useMap();
 	return (
 		<MapContainer
 			ref={myMap}
