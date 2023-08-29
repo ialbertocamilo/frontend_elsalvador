@@ -15,10 +15,6 @@ import Textarea from '../../../components/bootstrap/forms/Textarea';
 
 const LocationPage = () => {
 	const router = useRouter();
-	useEffect(() => {
-		let route = router.route;
-		console.log(route);
-	}, [router.route]);
 
 	const Map = React.useMemo(
 		() =>

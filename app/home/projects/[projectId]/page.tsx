@@ -1,9 +1,8 @@
-// generate code sample for tsx
 'use client';
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
@@ -11,26 +10,28 @@ import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
-import { useProjects } from '../../../../services/project/project.service';
+import { ProjectFormType } from '../../../../common/types/project.types';
+import { ProjectMapper } from '../../../../common/mapper/project.mapper';
+import { useProjects } from "../../../../services/project/project.service";
 
-const ProjectsPage = () => {
-	const router = useRouter();
-	const projects = useProjects();
+const GetProject = () => {
+	const router = useParams();
+	const projects= useProjects()
+
+	const [project, setProject] = useState<ProjectFormType>({});
+	useEffect(() => {
+		const projectId = router?.projectId as string;
+		projects.getProject(projectId).then((result) => {
+			if (result) {
+				const projectTransform = ProjectMapper.entityToForm(result);
+				setProject(projectTransform);
+			}
+		});
+	}, [router?.projectId]);
 
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
-		initialValues: {
-			ownerName: '',
-			projectName: '',
-			directorName: '',
-			designerName: '',
-			address: '',
-			municipality: '',
-			energyAdvisor: '',
-			levelsNumber: undefined,
-			offices: undefined,
-			surface: undefined,
-		},
+		initialValues: project,
 		validateOnChange: false,
 		validate: (values) => {
 			const errors: {
@@ -258,4 +259,4 @@ const ProjectsPage = () => {
 	);
 };
 
-export default ProjectsPage;
+export default GetProject;

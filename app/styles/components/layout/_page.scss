@@ -10,6 +10,6 @@
 	flex-direction: column;
 
 	@include only-safari {
-		// height: calc(100% - #{map-get($footer, height)});
+		// height: calc(100% - #{map-[id]($footer, height)});
 	}
 }

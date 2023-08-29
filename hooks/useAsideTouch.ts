@@ -29,7 +29,7 @@ const useAsideTouch = () => {
 		[asideWidthWithSpace, asideWidthWithSpace, 0, 0],
 	);
 
-	// X value get
+	// X value [id]
 	useEffect(() => {
 		function updateX() {
 			const X = x.get();

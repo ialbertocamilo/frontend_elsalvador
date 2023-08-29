@@ -1,5 +1,5 @@
 import { ProjectFormType } from '../types/project.types';
-import { ProjectRequest } from '../classes/project';
+import { ProjectEntity, ProjectRequest } from '../classes/project';
 
 export class ProjectMapper {
 	static formToRequest(form: ProjectFormType) {
@@ -18,5 +18,21 @@ export class ProjectMapper {
 			surface: form.surface,
 			is_public: form.public,
 		});
+	}
+
+	static entityToForm(projectEntity: ProjectEntity): ProjectFormType {
+		return {
+			projectName: projectEntity.project_name,
+			ownerName: projectEntity.owner_name,
+			designerName: projectEntity.designer_name,
+			directorName: projectEntity.project_director,
+			address: projectEntity.address,
+			municipality: projectEntity.municipality,
+			energyAdvisor: projectEntity.energy_advisor,
+			levelsNumber: projectEntity.levels,
+			offices: projectEntity.offices,
+			surface: projectEntity.surface,
+			public: projectEntity.is_public,
+		};
 	}
 }

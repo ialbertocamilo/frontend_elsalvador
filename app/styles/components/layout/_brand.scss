@@ -37,7 +37,7 @@
 	}
 
 	// &-shadow-color {
-	//    $bg-color: shade-color(map-get($aside, background-color), 10%);
+	//    $bg-color: shade-color(map-[id]($aside, background-color), 10%);
 	//
 	//    background-color: $bg-color;
 	//    color: color-contrast($bg-color);

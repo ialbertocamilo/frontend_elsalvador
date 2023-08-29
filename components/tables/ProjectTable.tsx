@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import SubHeader, {
 	SubHeaderLeft,
 	SubHeaderRight,
 	SubheaderSeparator,
-} from '../layout/SubHeader/SubHeader';
-import PAYMENTS from '../common/data/enumPaymentMethod';
-import Card, { CardBody } from '../components/bootstrap/Card';
-import { getFirstLetter, priceFormat } from '../helpers/helpers';
-import PaginationButtons, { dataPagination, PER_COUNT } from '../components/PaginationButtons';
-import Button from '../components/bootstrap/Button';
-import Icon from '../components/icon/Icon';
-import Input from '../components/bootstrap/forms/Input';
-import Dropdown, {
-	DropdownItem,
-	DropdownMenu,
-	DropdownToggle,
-} from '../components/bootstrap/Dropdown';
-import FormGroup from '../components/bootstrap/forms/FormGroup';
-import Checks, { ChecksGroup } from '../components/bootstrap/forms/Checks';
-import useSortableData from '../hooks/useSortableData';
-import InputGroup, { InputGroupText } from '../components/bootstrap/forms/InputGroup';
-import Popovers from '../components/bootstrap/Popovers';
-import { getColorNameWithIndex } from '../common/data/enumColors';
-import useDarkMode from '../hooks/useDarkMode';
-import { demoPagesMenu } from '../pages/menu';
-import data from '../common/data/dummyCustomerData';
+} from '../../layout/SubHeader/SubHeader';
+import PAYMENTS from '../../common/data/enumPaymentMethod';
+import Card, { CardBody } from '../bootstrap/Card';
+import PaginationButtons, { dataPagination, PER_COUNT } from '../PaginationButtons';
+import Button from '../bootstrap/Button';
+import Icon from '../icon/Icon';
+import Input from '../bootstrap/forms/Input';
+import Dropdown, { DropdownMenu, DropdownToggle } from '../bootstrap/Dropdown';
+import FormGroup from '../bootstrap/forms/FormGroup';
+import Checks, { ChecksGroup } from '../bootstrap/forms/Checks';
+import useSortableData from '../../hooks/useSortableData';
+import InputGroup, { InputGroupText } from '../bootstrap/forms/InputGroup';
+import Popovers from '../bootstrap/Popovers';
+import useDarkMode from '../../hooks/useDarkMode';
+import data from '../../common/data/dummyCustomerData';
+import { IProjectListResponse } from '../../common/types/project.types';
+import { ProjectEntity } from '../../common/classes/project';
+import { useRouter } from 'next/navigation';
+import { useProjects } from '../../services/project/project.service';
 
-const DefaultTable = () => {
+const ProjectTable = () => {
 	const { darkModeStatus } = useDarkMode();
 
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -40,11 +37,14 @@ const DefaultTable = () => {
 			minPrice: '',
 			maxPrice: '',
 		},
-		onSubmit: (values) => {
-			// alert(JSON.stringify(values, null, 2));
-		},
+		onSubmit: (values) => {},
 	});
 
+	const projectService = useProjects();
+	const router = useRouter();
+	const goToProject = (id: number) => {
+		router.replace(`/home/projects/${id}`);
+	};
 	const filteredData = data?.filter(
 		(f) =>
 			// Name
@@ -60,6 +60,25 @@ const DefaultTable = () => {
 
 	const [editModalStatus, setEditModalStatus] = useState<boolean>(false);
 
+	const [projects, setProjects] = useState<IProjectListResponse>({
+		current_page: '',
+		data: [],
+		first_page_url: '',
+		from: 0,
+		last_page: 0,
+		last_page_url: '',
+		links: [],
+		next_page_url: '',
+		path: '',
+		per_page: 0,
+		prev_page_url: '',
+		to: 0,
+		total: 0,
+	});
+	useEffect(() => {
+		projectService.getProjects('').then((result) => setProjects(result));
+	}, []);
+
 	return (
 		<>
 			<SubHeader>
@@ -73,7 +92,7 @@ const DefaultTable = () => {
 						id='searchInput'
 						type='search'
 						className='border-0 shadow-none bg-transparent'
-						placeholder='Search customer...'
+						placeholder='Buscar proyectos...'
 						onChange={formik.handleChange}
 						value={formik.values.searchInput}
 					/>
@@ -147,7 +166,7 @@ const DefaultTable = () => {
 						color='primary'
 						isLight
 						onClick={() => setEditModalStatus(true)}>
-						New Customer
+						Nuevo proyecto
 					</Button>
 				</SubHeaderRight>
 			</SubHeader>
@@ -159,168 +178,95 @@ const DefaultTable = () => {
 								<thead>
 									<tr>
 										<th
-											onClick={() => requestSort('name')}
+											onClick={() => requestSort('id')}
 											className='cursor-pointer text-decoration-underline'>
-											Id{' '}
+											Id
 											<Icon
 												size='lg'
-												className={getClassNamesFor('name')}
 												icon='FilterList'
 											/>
 										</th>
 										<th
-											onClick={() => requestSort('balance')}
+											onClick={() => requestSort('project')}
 											className='cursor-pointer text-decoration-underline'>
 											Nombre del proyecto
-											<Icon
-												size='lg'
-												className={getClassNamesFor('balance')}
-												icon='FilterList'
-											/>
 										</th>
 										<th
-											onClick={() => requestSort('payout')}
+											onClick={() => requestSort('owner')}
 											className='cursor-pointer text-decoration-underline'>
 											Nombre del propietario{' '}
-											<Icon
-												size='lg'
-												className={getClassNamesFor('payout')}
-												icon='FilterList'
-											/>
 										</th>
 										<th
-											onClick={() => requestSort('payout')}
+											onClick={() => requestSort('designer')}
 											className='cursor-pointer text-decoration-underline'>
 											Nombre del Diseñador{' '}
-											<Icon
-												size='lg'
-												className={getClassNamesFor('payout')}
-												icon='FilterList'
-											/>
 										</th>
 										<th
-											onClick={() => requestSort('payout')}
+											onClick={() => requestSort('project_director')}
 											className='cursor-pointer text-decoration-underline'>
 											Director responsable de obra{' '}
-											<Icon
-												size='lg'
-												className={getClassNamesFor('payout')}
-												icon='FilterList'
-											/>
 										</th>
 										<th
-											onClick={() => requestSort('payout')}
+											onClick={() => requestSort('address')}
 											className='cursor-pointer text-decoration-underline'>
 											Dirección{' '}
-											<Icon
-												size='lg'
-												className={getClassNamesFor('payout')}
-												icon='FilterList'
-											/>
 										</th>
 										<th
-											onClick={() => requestSort('payout')}
+											onClick={() => requestSort('municipality')}
 											className='cursor-pointer text-decoration-underline'>
 											Municipio{' '}
-											<Icon
-												size='lg'
-												className={getClassNamesFor('payout')}
-												icon='FilterList'
-											/>
+										</th>
+										<th
+											onClick={() => requestSort('actions')}
+											className='cursor-pointer text-decoration-underline'>
+											Acciones
 										</th>
 										<td />
 									</tr>
 								</thead>
 								<tbody>
-									{dataPagination(items, currentPage, perPage).map((i) => (
-										<tr key={i.id}>
-											<td>
-												<div className='d-flex align-items-center'>
-													<div className='flex-shrink-0'>
-														<div
-															className='ratio ratio-1x1 me-3'
-															style={{ width: 48 }}>
-															<div
-																className={`bg-l${
-																	darkModeStatus ? 'o25' : '25'
-																}-${getColorNameWithIndex(
-																	i.id,
-																)} text-${getColorNameWithIndex(
-																	i.id,
-																)} rounded-2 d-flex align-items-center justify-content-center`}>
-																<span className='fw-bold'>
-																	{getFirstLetter(i.name)}
-																</span>
-															</div>
-														</div>
-													</div>
-													<div className='flex-grow-1'>
-														<div className='fs-6 fw-bold'>{i.name}</div>
-														<div className='text-muted'>
-															<Icon icon='Label' />{' '}
-															<small>{i.type}</small>
-														</div>
-													</div>
-												</div>
-											</td>
-											<td>
-												<Button
-													isLink
-													color='light'
-													icon='Email'
-													className='text-lowercase'
-													tag='a'
-													href={`mailto:${i.email}`}>
-													{i.email}
-												</Button>
-											</td>
-											<td>
-												<div>{i.membershipDate?.format('ll')}</div>
-												<div>
+									{dataPagination(projects?.data, currentPage, perPage)?.map(
+										(i: ProjectEntity) => (
+											<tr key={i.id}>
+												<td>{i.id}</td>
+												<td className='bold h5'>{i.project_name}</td>
+												<td>
+													<div>{i.owner_name}</div>
 													<small className='text-muted'>
-														{"nowwwww"}
+														Propietario
 													</small>
-												</div>
-											</td>
-											<td>{priceFormat(i.balance)}</td>
-											<td>
-												<Icon
-													size='lg'
-													icon={`custom ${i.payout.toLowerCase()}`}
-												/>{' '}
-												{i.payout}
-											</td>
-											<td>
-												<Dropdown>
-													<DropdownToggle hasIcon={false}>
-														<Button
-															icon='MoreHoriz'
-															color='dark'
-															isLight
-															shadow='sm'
-															aria-label='More actions'
-														/>
-													</DropdownToggle>
-													<DropdownMenu isAlignmentEnd>
-														<DropdownItem>
-															<Button
-																icon='Visibility'
-																tag='a'
-																to={`../${demoPagesMenu.crm.subMenu.customerID.path}/${i.id}`}>
-																View
-															</Button>
-														</DropdownItem>
-													</DropdownMenu>
-												</Dropdown>
-											</td>
-										</tr>
-									))}
+												</td>
+												<td>
+													<div>{i.designer_name}</div>
+													<div>
+														<small className='text-muted'>
+															Diseñador
+														</small>
+													</div>
+												</td>
+												<td>
+													<div>{i.project_director}</div>
+												</td>
+												<td>
+													<div>{i.address}</div>
+												</td>
+												<td>
+													<div>{i.municipality}</div>
+												</td>
+												<td>
+													<Button onClick={() => goToProject(i.id)}>
+														Ir <Icon icon='ArrowRight'></Icon>
+													</Button>
+												</td>
+											</tr>
+										),
+									)}
 								</tbody>
 							</table>
 						</CardBody>
 						<PaginationButtons
 							data={filteredData}
-							label='customers'
+							label='proyectos'
 							setCurrentPage={setCurrentPage}
 							currentPage={currentPage}
 							perPage={perPage}
@@ -333,4 +279,4 @@ const DefaultTable = () => {
 	);
 };
 
-export default DefaultTable;
+export default ProjectTable;
