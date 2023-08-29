@@ -23,6 +23,7 @@ import { IProjectListResponse } from '../../common/types/project.types';
 import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
+import { RoutesList } from '../../common/constants/default';
 
 const ProjectTable = () => {
 	const { darkModeStatus } = useDarkMode();
@@ -75,6 +76,10 @@ const ProjectTable = () => {
 		to: 0,
 		total: 0,
 	});
+
+	const goTo = (route: string) => {
+		router.push(route);
+	};
 	useEffect(() => {
 		projectService.getProjects('').then((result) => setProjects(result));
 	}, []);
@@ -165,7 +170,7 @@ const ProjectTable = () => {
 						icon='PersonAdd'
 						color='primary'
 						isLight
-						onClick={() => setEditModalStatus(true)}>
+						onClick={() => goTo(RoutesList.newProject)}>
 						Nuevo proyecto
 					</Button>
 				</SubHeaderRight>
@@ -181,10 +186,7 @@ const ProjectTable = () => {
 											onClick={() => requestSort('id')}
 											className='cursor-pointer text-decoration-underline'>
 											Id
-											<Icon
-												size='lg'
-												icon='FilterList'
-											/>
+											<Icon size='lg' icon='FilterList' />
 										</th>
 										<th
 											onClick={() => requestSort('project')}

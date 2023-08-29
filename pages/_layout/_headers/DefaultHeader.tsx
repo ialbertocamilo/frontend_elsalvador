@@ -5,16 +5,20 @@ import { pageLayoutTypesPagesMenu } from '../../../common/constants/menu';
 import useDeviceScreen from '../../../hooks/useDeviceScreen';
 import { observer } from 'mobx-react-lite';
 import userStore from '../../../stores/userStore';
+import useDarkMode from '../../../hooks/useDarkMode';
 
 const DefaultHeader = observer(() => {
 	const deviceScreen = useDeviceScreen();
 
+	const { themeStatus } = useDarkMode();
 	return (
 		<Header>
-			<HeaderLeft>
-			</HeaderLeft>
+			<HeaderLeft></HeaderLeft>
 			<HeaderRight>
-				<span className={'text-black-50 '}>Usuario:</span> <b> {userStore.value.name}</b>
+				<span className={themeStatus == 'dark' ? 'text-white-50' : 'text-black-50'}>
+					Usuario:
+				</span>{' '}
+				<b> {userStore.value.name}</b>
 			</HeaderRight>
 		</Header>
 	);

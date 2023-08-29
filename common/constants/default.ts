@@ -3,5 +3,6 @@ export enum StorageTypes {
 }
 
 export enum RoutesList {
-	projects = 'home/projects',
+	projects = '/home/projects',
+	newProject = '/home/projects/new',
 }
