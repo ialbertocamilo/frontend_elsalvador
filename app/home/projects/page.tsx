@@ -7,7 +7,7 @@ import ProjectTable from '../../../components/tables/ProjectTable';
 const ProjectsPage = () => {
 	return (
 		<PageWrapper>
-			<Page className='mx-3'>
+			<Page>
 				<ProjectTable />
 			</Page>
 		</PageWrapper>

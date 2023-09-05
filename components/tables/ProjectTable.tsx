@@ -176,8 +176,8 @@ const ProjectTable = () => {
 				</SubHeaderRight>
 			</SubHeader>
 			<div className='row h-100'>
-				<div className='col-12'>
-					<Card stretch>
+				<div className='col-12 mx-0 px-0'>
+					<Card stretch isCompact>
 						<CardBody isScrollable className='table-responsive'>
 							<table className='table table-modern table-hover'>
 								<thead>

@@ -34,8 +34,9 @@ export function useProjects() {
 	}
 
 	async function updateProject(params: ProjectFormType) {
+		console.log(params);
 		const payload = ProjectMapper.formToRequest(params);
-		const response = await axiosService().post('/projects', payload);
+		const response = await axiosService().patch(`/projects/${params.id}`, payload);
 
 		if (!response?.data) return false;
 		showNotification(

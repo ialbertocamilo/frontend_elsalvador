@@ -13,6 +13,8 @@ import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { useProjects } from '../../../../services/project/project.service';
 import { RoutesList } from '../../../../common/constants/default';
+import Link from 'next/link';
+import Icon from '../../../../components/icon/Icon';
 
 const ProjectsPage = () => {
 	const router = useRouter();
@@ -64,9 +66,9 @@ const ProjectsPage = () => {
 					</CardBody>
 				</Card>
 
-				<div className='row align-items-start'>
-					<div className='col-8'>
-						<Card tag='form'>
+				<div className='row align-items-start '>
+					<div className='col-7 '>
+						<Card tag='form' className=''>
 							<CardBody>
 								<div className='row'>
 									<FormGroup className='col-6 my-1' id='propietario'>
@@ -209,24 +211,36 @@ const ProjectsPage = () => {
 									</div>
 								</div>
 							</div>
-							<Input
-								className='my-2'
-								name='levelsNumber'
-								value={formik.values.levelsNumber}
-								placeholder='Numero de niveles'
-								onChange={formik.handleChange}></Input>
-							<Input
-								className='my-2'
-								name='offices'
-								value={formik.values.offices}
-								placeholder='Numero de oficinas por nivel'
-								onChange={formik.handleChange}></Input>
-							<Input
-								className='my-2'
-								name='surface'
-								value={formik.values.surface}
-								placeholder='Superficie construida m2'
-								onChange={formik.handleChange}></Input>
+
+							<div className='row mt-4'>
+								<FormGroup id='lvls'>
+									<Label>Numero de niveles</Label>
+									<Input
+										className='my-2'
+										name='levelsNumber'
+										value={formik.values.levelsNumber}
+										placeholder='Numero de niveles'
+										onChange={formik.handleChange}></Input>
+								</FormGroup>
+								<FormGroup id='offices'>
+									<Label>Numero de oficinas por nivel</Label>
+									<Input
+										className='my-2'
+										name='offices'
+										value={formik.values.offices}
+										placeholder='Numero de oficinas por nivel'
+										onChange={formik.handleChange}></Input>
+								</FormGroup>
+								<Label>Superficie construida m2</Label>
+								<FormGroup id='suirface'>
+									<Input
+										className='my-2'
+										name='surface'
+										value={formik.values.surface}
+										placeholder='Superficie construida m2'
+										onChange={formik.handleChange}></Input>
+								</FormGroup>
+							</div>
 						</CardBody>
 					</Card>
 				</div>
@@ -250,7 +264,20 @@ const ProjectsPage = () => {
 									icon='GpsFixed'>
 									Geolocalización
 								</Button>
-								<div className='col-auto'></div>
+							</div>
+						</CardBody>
+					</Card>
+				</div>
+				<div className='row'>
+					<Card className='col-12'>
+						<CardBody>
+							<div className='row '>
+								<Link className='col-auto  mx-2' href={RoutesList.calculators}>
+									<Icon icon='NavigateNext' /> Calculadoras
+								</Link>
+								<Link className='col-auto  mx-2' href={RoutesList.calculators}>
+									<Icon icon='NavigateNext' /> Paquetes
+								</Link>
 							</div>
 						</CardBody>
 					</Card>

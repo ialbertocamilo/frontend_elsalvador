@@ -1,6 +1,7 @@
-import { ProjectEntity, ProjectResponse } from "../classes/project";
+import { ProjectEntity } from '../classes/project';
 
 export interface ProjectFormType {
+	id?: string;
 	ownerName?: string;
 	projectName?: string;
 	directorName?: string;

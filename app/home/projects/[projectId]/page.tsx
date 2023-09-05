@@ -12,11 +12,11 @@ import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { ProjectFormType } from '../../../../common/types/project.types';
 import { ProjectMapper } from '../../../../common/mapper/project.mapper';
-import { useProjects } from "../../../../services/project/project.service";
+import { useProjects } from '../../../../services/project/project.service';
 
 const GetProject = () => {
 	const router = useParams();
-	const projects= useProjects()
+	const projects = useProjects();
 
 	const [project, setProject] = useState<ProjectFormType>({});
 	useEffect(() => {
@@ -48,8 +48,8 @@ const GetProject = () => {
 			return errors;
 		},
 		onSubmit: async (values) => {
-			Object.assign(values, { ...values, public: buttonActive });
-			await projects.saveProject(values);
+			Object.assign(values, { ...values, public: buttonActive, id: router?.projectId });
+			await projects.updateProject(values);
 		},
 		enableReinitialize: true,
 	});
@@ -60,6 +60,7 @@ const GetProject = () => {
 				<Card className='row'>
 					<CardBody>
 						<h4 className='fw-bold'>Información de proyecto</h4>
+						<span>{formik.values.projectName}</span>
 					</CardBody>
 				</Card>
 
@@ -208,24 +209,33 @@ const GetProject = () => {
 									</div>
 								</div>
 							</div>
-							<Input
-								className='my-2'
-								name='levelsNumber'
-								value={formik.values.levelsNumber}
-								placeholder='Numero de niveles'
-								onChange={formik.handleChange}></Input>
-							<Input
-								className='my-2'
-								name='offices'
-								value={formik.values.offices}
-								placeholder='Numero de oficinas por nivel'
-								onChange={formik.handleChange}></Input>
-							<Input
-								className='my-2'
-								name='surface'
-								value={formik.values.surface}
-								placeholder='Superficie construida m2'
-								onChange={formik.handleChange}></Input>
+							<div className='row mt-4'>
+								<FormGroup id='lvls'>
+									<Label>Numero de niveles</Label>
+									<Input
+										className='my-2'
+										name='levelsNumber'
+										value={formik.values.levelsNumber}
+										placeholder='Numero de niveles'
+										onChange={formik.handleChange}></Input>
+								</FormGroup>
+								<FormGroup id='offices'>
+								<Label>Numero de oficinas por nivel</Label>
+								<Input
+									className='my-2'
+									name='offices'
+									value={formik.values.offices}
+									placeholder='Numero de oficinas por nivel'
+									onChange={formik.handleChange}></Input></FormGroup>
+								<Label>Superficie construida m2</Label>
+								<FormGroup id='suirface'>
+								<Input
+									className='my-2'
+									name='surface'
+									value={formik.values.surface}
+									placeholder='Superficie construida m2'
+									onChange={formik.handleChange}></Input></FormGroup>
+							</div>
 						</CardBody>
 					</Card>
 				</div>

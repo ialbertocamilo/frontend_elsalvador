@@ -138,8 +138,7 @@ export const Item: FC<IItemProps> = ({
 	const { t } = useTranslation('menu');
 
 	const LINK_CLASS = classNames('navigation-link', 'navigation-link-pill', {
-		collapsed: !!children && !isHorizontal,
-		active: isHorizontal ? match : here,
+		collapsed: !!children && !isHorizontal
 	});
 
 	const INNER = (
@@ -289,7 +288,7 @@ export const Item: FC<IItemProps> = ({
 					className={LINK_CLASS}
 					// data-bs-toggle='collapse'
 					// data-bs-target={`#${rootId}__${id}`}
-					aria-expanded={ACTIVE}
+					// aria-expanded={ACTIVE}
 					aria-controls={`${rootId}__${id}`}
 					role='button'
 					tabIndex={-1}

@@ -6,6 +6,7 @@ import React from 'react';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
+import { TransmittanceTable } from "../../../../components/tables/TransmittanceTable";
 
 const TransmittancePage = () => {
 	return (
@@ -32,70 +33,7 @@ const TransmittancePage = () => {
 				<div className='row align-content-between justify-content-between px-2'>
 					<Card className='col me-2'>
 						<CardBody>
-							<table>
-								<thead>
-									<tr className='text-center'>
-										<th className='px-2'>Superficie parcial</th>
-										<th className='px-2'>Valor λ</th>
-										<th className='px-2'>Superficie parcial 1(m)</th>
-										<th className='px-2'>Valor λ</th>
-										<th className='px-2'>Espesor</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td className='p-2'>
-											<FormGroup id='propietario'>
-												<Input
-													id='ownerName'
-													name='ownerName'
-													type='text'
-												/>
-											</FormGroup>
-										</td>
-										<td className='p-2'>
-											<FormGroup id='propietario'>
-												<div className="row">
-													<Input
-														id='ownerName'
-														name='ownerName'
-														type='text'
-														className='col'
-													/>
-													<span className='col align-self-center'>W/mk</span>
-												</div>
-											</FormGroup>
-										</td>
-										<td className='p-2'>
-											<FormGroup id='propietario'>
-												<Input
-													id='ownerName'
-													name='ownerName'
-													type='text'
-												/>
-											</FormGroup>
-										</td>
-										<td className='p-2'>
-											<FormGroup id='width-window'>
-												<Input
-													id='width-window'
-													name='width-window'
-													type='text'
-												/>
-											</FormGroup>
-										</td>
-										<td className='p-2'>
-											<FormGroup id='propietario'>
-												<Input
-													id='ownerName'
-													name='ownerName'
-													type='text'
-												/>
-											</FormGroup>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<TransmittanceTable/>
 						</CardBody>
 					</Card>
 					<Card className='col-md-3'>
