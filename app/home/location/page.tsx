@@ -14,7 +14,6 @@ import Label from '../../../components/bootstrap/forms/Label';
 import Textarea from '../../../components/bootstrap/forms/Textarea';
 
 const LocationPage = () => {
-	const router = useRouter();
 
 	const Map = React.useMemo(
 		() =>
