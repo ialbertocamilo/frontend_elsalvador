@@ -1,8 +1,8 @@
-import { ProjectFormType } from '../types/project.types';
+import { IProjectFormType } from '../types/project.types';
 import { ProjectEntity, ProjectRequest } from '../classes/project';
 
 export class ProjectMapper {
-	static formToRequest(form: ProjectFormType) {
+	static formToRequest(form: IProjectFormType) {
 		return new ProjectRequest({
 			project_name: form.projectName,
 			owner_name: form.ownerName,
@@ -20,7 +20,7 @@ export class ProjectMapper {
 		});
 	}
 
-	static entityToForm(projectEntity: ProjectEntity): ProjectFormType {
+	static entityToForm(projectEntity: ProjectEntity): IProjectFormType {
 		return {
 			projectName: projectEntity.project_name,
 			ownerName: projectEntity.owner_name,

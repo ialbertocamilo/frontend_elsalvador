@@ -52,7 +52,6 @@ const ProjectsPage = () => {
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, public: buttonActive });
 			await projects.saveProject(values);
-			router.push(RoutesList.calculatorProportion);
 		},
 		enableReinitialize: true,
 	});
@@ -260,24 +259,10 @@ const ProjectsPage = () => {
 								<Button
 									className='col-auto  mx-2'
 									color='info'
-									type='submit'
+									onClick={()=>router.push(RoutesList.geolocation)}
 									icon='GpsFixed'>
 									Geolocalización
 								</Button>
-							</div>
-						</CardBody>
-					</Card>
-				</div>
-				<div className='row'>
-					<Card className='col-12'>
-						<CardBody>
-							<div className='row '>
-								<Link className='col-auto  mx-2' href={RoutesList.calculators}>
-									<Icon icon='NavigateNext' /> Calculadoras
-								</Link>
-								<Link className='col-auto  mx-2' href={RoutesList.calculators}>
-									<Icon icon='NavigateNext' /> Paquetes
-								</Link>
 							</div>
 						</CardBody>
 					</Card>

@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import showNotification from '../components/extras/showNotification';
 import Icon from '../components/icon/Icon';
 import { ClientStorage } from '../common/classes/storage';
+import {useRouter} from "next/navigation";
 
 const axiosService = () => {
 	const user = ClientStorage.getUser();
@@ -19,6 +20,16 @@ const axiosService = () => {
 	axiosInstance.interceptors.response.use(
 		(value) => value,
 		(error: AxiosError) => {
+			if (error?.response?.status == 400) {
+				showNotification(
+					<span className='d-flex align-items-center'>
+						<Icon icon='Info' size='lg' className='me-1' />
+						<span>Error de validación</span>
+					</span>,
+					JSON.stringify(error.response.data),
+					'danger',
+				);
+			}
 			if (error?.response?.status == 401) {
 				showNotification(
 					<span className='d-flex align-items-center'>
@@ -28,6 +39,7 @@ const axiosService = () => {
 					'Credenciales incorrectas',
 					'danger',
 				);
+				ClientStorage.deleteAll()
 			}
 			if (error?.response?.status == 500) {
 				showNotification(

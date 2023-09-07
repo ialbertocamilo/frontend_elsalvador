@@ -14,6 +14,7 @@ import AsideRoutes from "../../layout/Aside/AsideRoutes";
 import Wrapper from "../../layout/Wrapper/Wrapper";
 // eslint-disable-next-line react/function-component-definition
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
 	getOS();
 
 	/**

@@ -85,9 +85,10 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 		onSubmit: async (values) => {
 			console.log('logeando');
 			const result = await login(values.loginUsername, values.loginPassword);
+
 			if (result) {
 				ClientStorage.saveUser(result);
-				await router.replace(RoutesList.projects);
+				router.replace(RoutesList.projects);
 			}
 		},
 	});

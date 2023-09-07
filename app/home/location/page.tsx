@@ -15,17 +15,7 @@ import Textarea from '../../../components/bootstrap/forms/Textarea';
 
 const LocationPage = () => {
 
-	const Map = React.useMemo(
-		() =>
-			dynamic(
-				() => import('../../../components/Map'), // replace '@components/map' with your component's location
-				{
-					loading: () => <p>A map is loading</p>,
-					ssr: false, // This line is important. It's what prevents server-side render
-				},
-			),
-		[],
-	);
+
 	return (
 		<PageWrapper>
 			<Page>
@@ -42,7 +32,11 @@ const LocationPage = () => {
 				</Card>
 				<div className='row'>
 					<div className='col'>
-						<Map />
+						<Map googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp?key=MYSECRETKEY"'}
+							 containerElement={<div style={{height:'400px'}}></div>}
+							 mapElement={<div style={{height:'100%'}}></div>}
+							 loadingElement={<p>Cargando</p>}
+						/>
 					</div>
 					<div className='col'>
 						<Label htmlFor='location'>Datos de ubicaciones encontradas</Label>

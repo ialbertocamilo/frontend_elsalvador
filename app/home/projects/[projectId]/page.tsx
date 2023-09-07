@@ -1,7 +1,7 @@
 'use client';
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
-import { useParams } from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
@@ -10,24 +10,28 @@ import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
-import { ProjectFormType } from '../../../../common/types/project.types';
+import { IProjectFormType } from '../../../../common/types/project.types';
 import { ProjectMapper } from '../../../../common/mapper/project.mapper';
 import { useProjects } from '../../../../services/project/project.service';
+import Link from "next/link";
+import {RoutesList} from "../../../../common/constants/default";
+import Icon from "../../../../components/icon/Icon";
 
 const GetProject = () => {
-	const router = useParams();
+	const param = useParams();
+	const router = useRouter();
 	const projects = useProjects();
 
-	const [project, setProject] = useState<ProjectFormType>({});
+	const [project, setProject] = useState<IProjectFormType>({});
 	useEffect(() => {
-		const projectId = router?.projectId as string;
+		const projectId = param?.projectId as string;
 		projects.getProject(projectId).then((result) => {
 			if (result) {
 				const projectTransform = ProjectMapper.entityToForm(result);
 				setProject(projectTransform);
 			}
 		});
-	}, [router?.projectId]);
+	}, [param?.projectId]);
 
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
@@ -48,7 +52,7 @@ const GetProject = () => {
 			return errors;
 		},
 		onSubmit: async (values) => {
-			Object.assign(values, { ...values, public: buttonActive, id: router?.projectId });
+			Object.assign(values, { ...values, public: buttonActive, id: param?.projectId });
 			await projects.updateProject(values);
 		},
 		enableReinitialize: true,
@@ -255,11 +259,25 @@ const GetProject = () => {
 								<Button
 									className='col-auto  mx-2'
 									color='info'
-									type='submit'
+									onClick={()=>router.push(RoutesList.geolocation)}
 									icon='GpsFixed'>
 									Geolocalización
 								</Button>
 								<div className='col-auto'></div>
+							</div>
+						</CardBody>
+					</Card>
+				</div>
+				<div className='row'>
+					<Card className='col-12'>
+						<CardBody>
+							<div className='row '>
+								<Link className='col-auto  mx-2' href={RoutesList.calculators+`/${param?.projectId}`}>
+									<Icon icon='NavigateNext' /> Calculadoras
+								</Link>
+								{/*<Link className='col-auto  mx-2' href={RoutesList.calculators}>*/}
+								{/*	<Icon icon='NavigateNext' /> Paquetes*/}
+								{/*</Link>*/}
 							</div>
 						</CardBody>
 					</Card>

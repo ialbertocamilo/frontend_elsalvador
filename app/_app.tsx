@@ -16,6 +16,7 @@ import App from '../layout/App/App';
 import AsideRoutes from '../layout/Aside/AsideRoutes';
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
+
 	getOS();
 
 	/**
