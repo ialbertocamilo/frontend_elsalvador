@@ -1,6 +1,5 @@
 import React, { forwardRef, ReactNode } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+
 export interface IPageProps {
 	children: ReactNode;
 	container?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid';
