@@ -8,7 +8,7 @@ import Popovers from '../../../components/bootstrap/Popovers';
 
 const OnlySubheader = () => {
 	return (
-		<PageWrapper title={pageLayoutTypesPagesMenu.pageLayout.subMenu.onlySubheader.text}>
+		<PageWrapper >
 			<SubHeader>
 				<SubHeaderLeft>
 					<Breadcrumb
