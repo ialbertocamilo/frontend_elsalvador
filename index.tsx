@@ -8,7 +8,6 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeContextProvider } from './contexts/themeContext';
 import './i18n';
 
-console.log("CARGANDOOOO");
 const children = (
 	<ThemeContextProvider>
 		<Router>

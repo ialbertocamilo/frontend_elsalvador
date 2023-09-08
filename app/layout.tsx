@@ -25,13 +25,16 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
     }, []);
     return (
-        <html>
-        <body>
-        {children}
-        <>
-            <ReactNotifications/>
-        </>
-        </body>
-        </html>
+            <html>
+            <head> <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css'/>
+                <title>El Salvador APP</title></head>
+
+            <body>
+            {children}
+            <>
+                <ReactNotifications/>
+            </>
+            </body>
+            </html>
     );
 }

@@ -804,7 +804,7 @@ const steps = [
 		resizeObservables: [getTargetName('lang-selector-menu')],
 	},
 	/**
-	 * Search
+	 * LocationSearch
 	 * @step 2
 	 */
 	{

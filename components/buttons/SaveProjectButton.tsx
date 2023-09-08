@@ -21,12 +21,18 @@ export const SaveProjectButton = ({type, payload}: SaveButtonProps) => {
     const [active, setActive] = useState(false)
 
     async function doClick() {
-        console.log("do click")
         setActive(true)
 
-        if (type == ButtonTypes.projectData) {
-            const result = await projects.saveProjectData(payload)
-          setActive(false)
+        switch (type) {
+            case ButtonTypes.projectData:
+                await projects.saveProjectData(payload)
+                setActive(false)
+                break;
+
+            case ButtonTypes.projectInfo:
+                setActive(false)
+                break;
+
         }
     }
 
@@ -35,8 +41,7 @@ export const SaveProjectButton = ({type, payload}: SaveButtonProps) => {
         isLight
         className='col-4'
         icon='Save'
-        onClick={()=> {
-            console.log("do click")
+        onClick={() => {
             doClick()
         }}
         isDisable={active}

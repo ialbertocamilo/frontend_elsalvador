@@ -18,4 +18,7 @@ export const RoutesListWithParams={
 	calculatorTransmittance :(value:any)=> `/home/calculators/${value}/transmittance`,
 	calculatorWindow :(value:any)=>  `/home/calculators/${value}/window`,
 	calculatorShading :(value:any)=>  `/home/calculators/${value}/shading`,
+	geolocation :(value:any)=>  `/home/location/${value}`,
+	calculators :(value:any)=>  `/home/calculators/${value}`,
+	project :(value:any)=>  `/home/projects/${value}`,
 }

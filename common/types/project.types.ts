@@ -41,5 +41,5 @@ export interface IProjectDataSavingRequest {
 
     project_id: string|string[];
     key: string;
-    payload:object
+    payload:object|string
 }
