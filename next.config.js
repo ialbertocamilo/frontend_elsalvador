@@ -15,18 +15,16 @@ var hideWarn = [
 const nextConfig = withInterceptStdout(
     withImages({
         appDir: true,
-        experimental: {
+        experimental: {    staticPageGenerationTimeout: 100000,
             images: {
                 allowFutureImage: true
             },
             appDir: true
         },
-        images: {
-            disableStaticImages: true
-        },
         distDir:'.build',
         reactStrictMode: false,
         swcMinify: true,
+        fallback:true,
         i18n,
         // basePath: '/projects',
         async redirects() {

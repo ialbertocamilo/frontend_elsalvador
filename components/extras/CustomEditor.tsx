@@ -1,14 +1,15 @@
 'use client';
 import { Editor } from 'react-draft-wysiwyg';
-import React, { useRef } from 'react';
-
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import React from 'react';
 
 interface CustomEditorProps {
 	placeholder?: string;
 }
 
 export const CustomEditor = ({ placeholder }: CustomEditorProps) => {
-	const editor = useRef(null);
-	return <Editor placeholder={placeholder} ref={editor} />;
+	return (
+		<section>
+			<Editor placeholder={placeholder} />
+		</section>
+	);
 };

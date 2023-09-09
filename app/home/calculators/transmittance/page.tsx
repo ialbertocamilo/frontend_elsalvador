@@ -6,8 +6,8 @@ import React, { useRef } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
-import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { CustomEditor } from '../../../../components/extras/CustomEditor';
 
 const TransmittancePage = () => {
 	const editor = useRef(null);
@@ -60,7 +60,7 @@ const TransmittancePage = () => {
 				<div className='row'>
 					<Card className='col me-2'>
 						<CardBody>
-							<Editor placeholder='Detalle muro tipo' ref={editor} />
+							<CustomEditor placeholder='Detalle muro tipo' />
 						</CardBody>
 					</Card>
 				</div>

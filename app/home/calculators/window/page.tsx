@@ -2,7 +2,7 @@
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
 import Input from '../../../../components/bootstrap/forms/Input';
@@ -34,17 +34,17 @@ const WindowPage = () => {
 		},
 	});
 
-	function calculateGValue() {
+	const calculateGValue = useCallback(() => {
 		formik.setFieldValue('calcGValue', Number(formik.values.csValue) * 0.87);
-	}
+	}, [formik]);
 
-	function calculateCrystalArea() {
+	const calculateCrystalArea = useCallback(() => {
 		let areaVain = Number(formik.values.areaVain);
 		let frameArea = Number(formik.values.frameArea);
 		formik.setFieldValue('crystalArea', areaVain - frameArea);
-	}
+	}, [formik]);
 
-	function calculateUValue() {
+	const calculateUValue = useCallback(() => {
 		let uValue = Number(formik.values.uValue1);
 		let uValue2 = Number(formik.values.uValue2);
 		let frameArea = Number(formik.values.frameArea);
@@ -58,18 +58,12 @@ const WindowPage = () => {
 				uValue2 * frameArea +
 				(0.08 * (longVain * 2 + highVain * 2)) / (crystalArea + frameArea),
 		);
-	}
-
-	useEffect(() => {
-		calculateCrystalArea();
-	}, [formik.values.areaVain]);
-
-	useEffect(() => {
-		calculateGValue();
-	}, [formik.values.csValue]);
+	}, [formik]);
 
 	useEffect(() => {
 		calculateUValue();
+		calculateGValue();
+		calculateCrystalArea();
 	}, [
 		formik.values.uValue1,
 		formik.values.uValue2,
@@ -77,13 +71,15 @@ const WindowPage = () => {
 		formik.values.highVain,
 		formik.values.frameArea,
 		formik.values.crystalArea,
+		calculateUValue,
+		calculateGValue,
+		calculateCrystalArea,
 	]);
 
 	function calculateFrameArea() {
 		const largoVano = Number(formik.values.longVain);
 		const altoVano = Number(formik.values.highVain);
 		const anchoMarco = Number(formik.values.frameWidth);
-		//TODO corregir formula, toma el valor anterior la reactividad esta rara
 		formik.setFieldValue(
 			'frameArea',
 			anchoMarco * largoVano * 2 + (altoVano - anchoMarco * 2) * anchoMarco,

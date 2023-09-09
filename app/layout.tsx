@@ -7,8 +7,9 @@ import { ReactNotifications } from 'react-notifications-component';
 import userStore from '../stores/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';
-// eslint-disable-next-line react/function-component-definition
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	console.log('loading app');
 	const router = useRouter();
 	const navi = usePathname();
@@ -40,4 +41,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			</body>
 		</html>
 	);
-}
+};
+export default RootLayout;

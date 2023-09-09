@@ -2,7 +2,6 @@ import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
 import React from 'react';
-import Textarea from '../../../../components/bootstrap/forms/Textarea';
 import { ShadingTable } from '../../../../components/tables/ShadingTable';
 import { CustomEditor } from '../../../../components/extras/CustomEditor';
 import Label from '../../../../components/bootstrap/forms/Label';
