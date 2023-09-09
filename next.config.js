@@ -24,6 +24,7 @@ const nextConfig = withInterceptStdout(
         images: {
             disableStaticImages: true
         },
+        distDir:'.build',
         reactStrictMode: false,
         swcMinify: true,
         i18n,

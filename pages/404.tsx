@@ -4,7 +4,6 @@ import { pagesMenu } from '../common/constants/menu';
 import Page from '../layout/Page/Page';
 import Head from 'next/head';
 import Button from '../components/bootstrap/Button';
-import Humans from '../assets/img/scene4.png';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -28,10 +27,7 @@ const Page404 = () => {
 							Page not found
 						</div>
 					</div>
-					<div className='col-12 d-flex align-items-baseline justify-content-center'>
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img src={Humans} alt='Humans' style={{ height: '50vh' }} />
-					</div>
+					<div className='col-12 d-flex align-items-baseline justify-content-center'></div>
 					<div className='col-12 d-flex flex-column justify-content-center align-items-center'>
 						<Button
 							className='px-5 py-3'

@@ -1,25 +1,12 @@
-import React, { forwardRef, ReactNode } from 'react';
+import React from 'react';
+import PageWrapper from '../../layout/PageWrapper/PageWrapper';
 
 export interface IPageProps {
-	children: ReactNode;
-	container?: boolean | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid';
-	className?: string;
+	children: any;
 }
-const Page = forwardRef<HTMLDivElement, IPageProps>(
-	({ children, className, container, ...props }, ref) => {
-		//@ts-ignore
-		return (
-			<div
-				ref={ref}
-				style={{padding:"0 0 0 0"}}
-				className={`container-fluid`}
-				// eslint-disable-next-line react/jsx-props-no-spreading
-				{...props}>
-				{children}
-			</div>
-		);
-	},
-);
-Page.displayName = 'Page';
+
+const Page = ({ children }: IPageProps) => {
+	return <body className={`px-0`}>{children}</body>;
+};
 
 export default Page;

@@ -1,51 +1,48 @@
-import Button from "../bootstrap/Button";
-import React, {useState} from "react";
-import {IProjectDataSavingRequest} from "../../common/types/project.types";
-import {useProjects} from "../../services/project/project.service";
-
+import Button from '../bootstrap/Button';
+import React, { useState } from 'react';
+import { IProjectDataSavingRequest } from '../../common/types/project.types';
+import { useProjects } from '../../services/project/project.service';
 
 export enum ButtonTypes {
-    projectData,
-    projectInfo,
-
+	projectData,
+	projectInfo,
 }
 
 interface SaveButtonProps {
-    type: ButtonTypes;
-    payload: IProjectDataSavingRequest
+	type: ButtonTypes;
+	payload: IProjectDataSavingRequest;
 }
 
-export const SaveProjectButton = ({type, payload}: SaveButtonProps) => {
+export const SaveProjectButton = ({ type, payload }: SaveButtonProps) => {
+	const projects = useProjects();
+	const [active, setActive] = useState(false);
 
-    const projects = useProjects()
-    const [active, setActive] = useState(false)
+	async function doClick() {
+		setActive(true);
 
-    async function doClick() {
-        setActive(true)
+		switch (type) {
+			case ButtonTypes.projectData:
+				await projects.saveProjectData(payload);
+				setActive(false);
+				break;
 
-        switch (type) {
-            case ButtonTypes.projectData:
-                await projects.saveProjectData(payload)
-                setActive(false)
-                break;
+			case ButtonTypes.projectInfo:
+				setActive(false);
+				break;
+		}
+	}
 
-            case ButtonTypes.projectInfo:
-                setActive(false)
-                break;
-
-        }
-    }
-
-    return <Button
-        color='info'
-        isLight
-        className='col-4'
-        icon='Save'
-        onClick={() => {
-            doClick()
-        }}
-        isDisable={active}
-    >
-        Guardar
-    </Button>
-}
+	return (
+		<Button
+			color='info'
+			isLight
+			className='col-4'
+			icon='Save'
+			onClick={() => {
+				doClick();
+			}}
+			isDisable={active}>
+			Guardar
+		</Button>
+	);
+};

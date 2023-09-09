@@ -42,7 +42,7 @@ const DefaultAside = () => {
 			</AsideBody>
 			<AsideFoot>
 				<div className='row '>
-					<div className="col align-items-center text-center">
+					<div className='col align-items-center text-center'>
 						<User />
 					</div>
 				</div>

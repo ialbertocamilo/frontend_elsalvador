@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import showNotification from '../components/extras/showNotification';
 import Icon from '../components/icon/Icon';
 import { ClientStorage } from '../common/classes/storage';
-import {useRouter} from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 const axiosService = () => {
 	const user = ClientStorage.getUser();
@@ -39,7 +39,7 @@ const axiosService = () => {
 					'Credenciales incorrectas',
 					'danger',
 				);
-				ClientStorage.deleteAll()
+				ClientStorage.deleteAll();
 			}
 			if (error?.response?.status == 500) {
 				showNotification(

@@ -8,7 +8,6 @@ import Modal, {
 } from '../components/bootstrap/Modal';
 import Button from '../components/bootstrap/Button';
 import Logo from '../components/Logo';
-import Img from '../assets/img/wanna/susy/susy9.png';
 import Icon from '../components/icon/Icon';
 import { useRouter } from 'next/router';
 
@@ -38,10 +37,7 @@ const TourModal = () => {
 			</ModalHeader>
 			<ModalBody>
 				<div className='row'>
-					<div className='col-md-3'>
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img src={Img} alt='' width='100%' />
-					</div>
+					<div className='col-md-3'></div>
 					<div className='col-md-9 d-flex align-items-center'>
 						<div>
 							<h2>Hi 👋🏻, I'm Susy.</h2>

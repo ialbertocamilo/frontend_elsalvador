@@ -259,7 +259,7 @@ const ProjectsPage = () => {
 								<Button
 									className='col-auto  mx-2'
 									color='info'
-									onClick={()=>router.push(RoutesList.geolocation)}
+									onClick={() => router.push(RoutesList.geolocation)}
 									icon='GpsFixed'>
 									Geolocalización
 								</Button>

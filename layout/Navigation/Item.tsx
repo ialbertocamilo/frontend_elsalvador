@@ -3,6 +3,7 @@ import { useWindowSize } from 'react-use';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { NavHashLink } from 'react-router-hash-link';
 import { Manager, Popper, Reference } from 'react-popper';
 import PropTypes from 'prop-types';
@@ -11,7 +12,7 @@ import useEventOutside from '@omtanke/react-use-event-outside';
 import Collapse from '../../components/bootstrap/Collapse';
 // @ts-ignore
 import Icon from '../../components/icon/Icon';
-import ThemeContext from '../../contexts/themeContext';
+import ThemeContext from '../../context/themeContext';
 import useDarkMode from '../../hooks/useDarkMode';
 import { TIcons } from '../../type/icons-type';
 import List from './List';
@@ -54,14 +55,13 @@ const Item: FC<IItemProps> = ({
 
 	const handleClick = () => {
 		if (typeof props.setActiveItem !== 'undefined') {
-			// eslint-disable-next-line react/prop-types, @typescript-eslint/no-unused-expressions
 			ACTIVE ? props.setActiveItem(null) : props.setActiveItem(id);
 		}
 	};
 
 	const linkHandleClick = () => {
 		// For Mobile Design
-		if (width < Number(import.meta.env.VITE_MOBILE_BREAKPOINT_SIZE)) setAsideStatus(false);
+		// setAsideStatus(false);
 		setLeftMenuStatus(false);
 		setRightMenuStatus(false);
 	};

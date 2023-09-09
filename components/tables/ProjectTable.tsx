@@ -256,7 +256,10 @@ const ProjectTable = () => {
 													<div>{i.municipality}</div>
 												</td>
 												<td>
-													<Button onClick={() => goToProject(i.id)}>
+													<Button
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
 														Ir <Icon icon='ArrowRight'></Icon>
 													</Button>
 												</td>

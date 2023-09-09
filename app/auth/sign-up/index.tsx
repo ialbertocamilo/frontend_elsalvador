@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Login from '../login/page';
 
 const Index: NextPage = () => {
-	return <Login isSignUp />;
+	return <Login />;
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({

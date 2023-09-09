@@ -18,7 +18,7 @@ import ThemeContext from '../../context/themeContext';
 import Collapse from '../../components/bootstrap/Collapse';
 import useDarkMode from '../../hooks/useDarkMode';
 import { TIcons } from '../../type/icons-type';
-import { useRouter,usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
 import { pathRetouch } from '../../helpers/helpers';
@@ -129,7 +129,7 @@ export const Item: FC<IItemProps> = ({
 	const ANCHOR_LINK_PATTERN = /^#/i;
 	const router = useRouter();
 
-	const pathname=usePathname() as string
+	const pathname = usePathname() as string;
 	// For aside menu
 	const here = typeof to === 'string' && to !== '/' && pathname.includes(to);
 	// For top menu
@@ -138,7 +138,7 @@ export const Item: FC<IItemProps> = ({
 	const { t } = useTranslation('menu');
 
 	const LINK_CLASS = classNames('navigation-link', 'navigation-link-pill', {
-		collapsed: !!children && !isHorizontal
+		collapsed: !!children && !isHorizontal,
 	});
 
 	const INNER = (

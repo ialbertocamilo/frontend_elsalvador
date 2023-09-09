@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, StrictMode, useContext} from 'react';
+import React, { FC, ReactNode, StrictMode, useContext } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Content from '../Content/Content';
@@ -43,7 +43,8 @@ const Wrapper: FC<IWrapper> = ({ children }) => {
 		<>
 			<WrapperContainer>
 				<StrictMode>
-				<HeaderRoutes /></StrictMode>
+					<HeaderRoutes />
+				</StrictMode>
 				<Content>{children}</Content>
 			</WrapperContainer>
 			<WrapperOverlay />

@@ -94,12 +94,7 @@ const DarkModeTour = () => {
 		<div className='row'>
 			<div className='col-md-5'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={SusyDarkMode}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-7 d-flex align-items-center'>
 				<div>
@@ -119,12 +114,7 @@ const LangSwitcherTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy2}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -148,12 +138,7 @@ const SearchTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy7}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -181,12 +166,7 @@ const CrmTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy8}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -246,12 +226,7 @@ const DateRangeTour = () => {
 			</div>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy3}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<TourNavigation />
 		</div>
@@ -265,12 +240,7 @@ const ListPageTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -301,12 +271,7 @@ const FilterTour = () => {
 			</div>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy3}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<TourNavigation />
 		</div>
@@ -320,12 +285,7 @@ const ListTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy8}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -361,12 +321,7 @@ const GridPageTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -386,12 +341,7 @@ const EditPageTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy6}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -414,12 +364,7 @@ const AuthPageTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy4}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -439,12 +384,7 @@ const PMTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -469,12 +409,7 @@ const ProjectsTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -495,12 +430,7 @@ const ProjectItemTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -523,12 +453,7 @@ const KnowledgeTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy8}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -547,12 +472,7 @@ const KnowledgeItemTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy7}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -574,12 +494,7 @@ const SalesTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -599,12 +514,7 @@ const AppointmentTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy4}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -626,12 +536,7 @@ const EmployeeTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -651,12 +556,7 @@ const CRMPagesTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -679,12 +579,7 @@ const ChatPagesTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy5}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -707,12 +602,7 @@ const DocTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy9}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>
@@ -733,12 +623,7 @@ const LastTour = () => {
 		<div className='row'>
 			<div className='col-md-4'>
 				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src={Susy10}
-					className={mounted ? classes.image : undefined}
-					width='100%'
-					alt=''
-				/>
+				<img className={mounted ? classes.image : undefined} width='100%' alt='' />
 			</div>
 			<div className='col-md-8 d-flex align-items-center'>
 				<div>

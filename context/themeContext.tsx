@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { createContext, useEffect, useState, useMemo, FC, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import useDeviceScreen from '../hooks/useDeviceScreen';

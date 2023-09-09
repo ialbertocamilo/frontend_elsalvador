@@ -1,10 +1,9 @@
-"use client"
-import React, { forwardRef, ReactElement, useContext, useEffect } from 'react';
+'use client';
+import React, { forwardRef, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ISubHeaderProps } from '../SubHeader/SubHeader';
 import { IPageProps } from '../Page/Page';
-import AuthContext from '../../context/authContext';
 import Mounted from '../../components/Mounted';
 
 interface IPageWrapperProps {
@@ -15,19 +14,9 @@ interface IPageWrapperProps {
 		| ReactElement<IPageProps>[];
 	className?: string;
 }
+
 const PageWrapper = forwardRef<HTMLDivElement, IPageWrapperProps>(
 	({ isProtected, className, children }, ref) => {
-		const { user } = useContext(AuthContext);
-
-		// const navigate = useNavigate();
-		useEffect(() => {
-			if (isProtected && user === '') {
-				// navigate(`../${demoPages.login.path}`);
-			}
-			return () => {};
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
-
 		return (
 			<div ref={ref} className={classNames('page-wrapper', 'container-fluid', className)}>
 				<Mounted>{children}</Mounted>

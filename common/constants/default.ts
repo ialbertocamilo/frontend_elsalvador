@@ -13,12 +13,12 @@ export enum RoutesList {
 	calculatorShading = '/home/calculators/shading',
 }
 
-export const RoutesListWithParams={
-	calculatorProportion:(value:any)=>`/home/calculators/${value}/proportion`,
-	calculatorTransmittance :(value:any)=> `/home/calculators/${value}/transmittance`,
-	calculatorWindow :(value:any)=>  `/home/calculators/${value}/window`,
-	calculatorShading :(value:any)=>  `/home/calculators/${value}/shading`,
-	geolocation :(value:any)=>  `/home/location/${value}`,
-	calculators :(value:any)=>  `/home/calculators/${value}`,
-	project :(value:any)=>  `/home/projects/${value}`,
-}
+export const RoutesListWithParams = {
+	calculatorProportion: (value: any) => `/home/calculators/${value}/proportion`,
+	calculatorTransmittance: (value: any) => `/home/calculators/${value}/transmittance`,
+	calculatorWindow: (value: any) => `/home/calculators/${value}/window`,
+	calculatorShading: (value: any) => `/home/calculators/${value}/shading`,
+	geolocation: (value: any) => `/home/location/${value}`,
+	calculators: (value: any) => `/home/calculators/${value}`,
+	project: (value: any) => `/home/projects/${value}`,
+};

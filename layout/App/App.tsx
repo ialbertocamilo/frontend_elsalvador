@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { FC, ReactNode, useContext, useEffect, useRef } from 'react';
 import ThemeContext from '../../context/themeContext';
 import { useFullscreen } from 'react-use';
@@ -8,7 +8,7 @@ import useMounted from '../../hooks/useMounted';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import DefaultHeader from "../../pages/_layout/_headers/DefaultHeader";
+import DefaultHeader from '../../pages/_layout/_headers/DefaultHeader';
 
 interface IAppProps {
 	children: ReactNode;

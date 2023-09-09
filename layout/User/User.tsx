@@ -24,7 +24,6 @@ const User = () => {
 
 	return (
 		<>
-
 			<Collapse isOpen={collapseStatus} className='user-menu'>
 				<nav aria-label='aside-bottom-user-menu'>
 					<div className='navigation'>
@@ -60,7 +59,7 @@ const User = () => {
 										className='navigation-icon'
 									/>
 									<span className='navigation-text'>
-										{darkModeStatus ? 'DarkMode':'LightMode'}
+										{darkModeStatus ? 'DarkMode' : 'LightMode'}
 									</span>
 								</span>
 							</span>

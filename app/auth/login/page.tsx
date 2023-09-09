@@ -1,7 +1,6 @@
 'use client';
 import type { NextPage } from 'next';
 import { FC, ReactElement, ReactNode, useCallback, useContext, useState } from 'react';
-import AuthContext from '../../../context/authContext';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
@@ -11,7 +10,6 @@ import Card, { CardBody } from '../../../components/bootstrap/Card';
 import Button from '../../../components/bootstrap/Button';
 import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
-import PropTypes from 'prop-types';
 import { login } from '../../../services/auth/authentication';
 import { ClientStorage } from '../../../common/classes/storage';
 import { useRouter } from 'next/navigation';
@@ -42,20 +40,13 @@ const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 	);
 };
 
-interface ILoginProps {
-	isSignUp?: boolean;
-	getLayout: (page: ReactElement) => ReactNode;
-}
-
-const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
+const Login = () => {
 	const router = useRouter();
-
-	const { setUser } = useContext(AuthContext);
 
 	const { darkModeStatus } = useDarkMode();
 
 	const [signInPassword, setSignInPassword] = useState<boolean>(false);
-	const [singUpStatus, setSingUpStatus] = useState<boolean>(!!isSignUp);
+	const [singUpStatus, setSingUpStatus] = useState<boolean>(false);
 
 	const handleOnClick = useCallback(() => router.push('/'), [router]);
 
@@ -96,10 +87,7 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	return (
-		<PageWrapper
-			isProtected={false}
-			title={singUpStatus ? 'Registro' : 'Iniciar sesión'}
-			className={'bg-primary'}>
+		<PageWrapper isProtected={false} className={'bg-primary'}>
 			<Page className='p-0'>
 				<div className='row h-100 align-items-center justify-content-center'>
 					<div className='col-xl-4 col-lg-6 col-md-8 '>
@@ -248,11 +236,5 @@ const Login: NextPage<ILoginProps> = ({ isSignUp }) => {
 			</Page>
 		</PageWrapper>
 	);
-};
-Login.propTypes = {
-	isSignUp: PropTypes.bool,
-};
-Login.defaultProps = {
-	isSignUp: false,
 };
 export default Login;

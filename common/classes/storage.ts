@@ -1,12 +1,11 @@
 import { AuthUser } from './user';
 import { StorageTypes } from '../constants/default';
 import { UserStorage } from '../types/user.types';
-import showNotification from "../../components/extras/showNotification";
+import showNotification from '../../components/extras/showNotification';
 
 export class ClientStorage {
 	static saveUser(user: AuthUser) {
 		console.log('saving AuthUser in localstorage :', user);
-
 
 		localStorage.setItem(StorageTypes.user, JSON.stringify(user));
 	}
@@ -16,7 +15,7 @@ export class ClientStorage {
 		if (data) return JSON.parse(data) as UserStorage;
 		return null;
 	}
-	static deleteAll(){
+	static deleteAll() {
 		localStorage.removeItem(StorageTypes.user);
 	}
 }

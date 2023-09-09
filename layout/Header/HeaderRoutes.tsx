@@ -1,6 +1,6 @@
-"use client"
+'use client';
 import React from 'react';
-import { useRouter,usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import headers from '../../routes/headerRoutes';
 import { pathToRoute } from '../../helpers/helpers';
 import Mounted from '../../components/Mounted';

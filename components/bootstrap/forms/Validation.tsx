@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { FC, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
