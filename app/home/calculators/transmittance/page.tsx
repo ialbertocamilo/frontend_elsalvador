@@ -10,7 +10,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { CustomEditor } from '../../../../components/extras/CustomEditor';
 
 const TransmittancePage = () => {
-	const editor = useRef(null);
 	return (
 		<PageWrapper>
 			<Page>
