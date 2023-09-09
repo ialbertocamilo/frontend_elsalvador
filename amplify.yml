@@ -1,11 +1,9 @@
 version: 1
 frontend:
   phases:
-    preBuild:
-      commands:
-        - yarn ci
     build:
       commands:
+        - yarn install
         - yarn build
   artifacts:
     baseDirectory: .next
