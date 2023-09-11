@@ -25,8 +25,11 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
+      - name: Copy key
+        run: echo ${{ secrets.SSH_PRIVATE_KEY_PATH }}>~/key.txt
+
       - name: Copy to Server
-        run: scp -i ${{ secrets.SSH_PRIVATE_KEY_PATH }} .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
+        run: scp -i ~/key.txt .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
         env:
           SSH_PRIVATE_KEY_PATH: ${{ secrets.SECRET_PEM }}
 
@@ -41,6 +44,7 @@ jobs:
             TARGET: "~/htdocs/frontend_elsalvador"
             EXCLUDE: "/dist/, /node_modules/, /vendor/"
             SCRIPT_BEFORE: |
+              echo 
               whoami
               ls -al
               cd ~/htdocs/frontend_elsalvador
