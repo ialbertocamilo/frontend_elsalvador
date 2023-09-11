@@ -21,6 +21,16 @@ const nextConfig = withInterceptStdout(
             },
             appDir: true
         },
+        images: {
+            domains: ['https://elsalvadorpublicfiles.s3.us-west-2.amazonaws.com'],
+        },
+        remotePatterns:
+            {
+                protocol: 'https',
+                hostname: 'elsalvadorpublicfiles.s3.us-west-2.amazonaws.com',
+                port: '',
+                pathname: '/public/*',
+            },
         distDir:'.build',
         reactStrictMode: false,
         swcMinify: true,

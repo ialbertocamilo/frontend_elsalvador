@@ -1,0 +1,62 @@
+name: Build and Deploy Laravel app
+on:
+  push:
+    branches:
+      -   main
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      -   name: Checkout Repository
+          uses: actions/checkout@main
+
+      -   name: Install Node.js and dependencies
+          uses: actions/setup-node@v2
+          with:
+            node-version: '18'
+
+
+      - name: Install project dependencies
+        run: npm install
+
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Copy to Server
+        run: scp -i ${{ secrets.SECRET_PEM }} -r .build  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/build
+        env:
+          SSH_PRIVATE_KEY_PATH: ${{ secrets.SECRET_PEM }}
+
+      -   name: Deploy to Server
+          uses: easingthemes/ssh-deploy@main
+          with:
+            SSH_PRIVATE_KEY: ${{ secrets.SECRET_PEM }}
+            ARGS: "-rlgoDzvc -i --delete "
+            SOURCE: "./"
+            REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+            REMOTE_USER: ${{ secrets.REMOTE_USER }}
+            TARGET: "~/htdocs/frontend_elsalvador"
+            EXCLUDE: "/dist/, /node_modules/, /vendor/"
+            SCRIPT_BEFORE: |
+              whoami
+              ls -al
+              cd ~/htdocs/frontend_elsalvador
+              git pull origin main
+
+      -   name: Build server
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.REMOTE_HOST }}
+            username: ${{ secrets.REMOTE_USER }}
+            key: ${{ secrets.SECRET_PEM }}
+            port: 22
+            script: |
+              cd ~/htdocs/backend_elsalvador
+              sudo chmod 775 ~/htdocs/backend_elsalvador
+              sudo chown -R daemon:daemon ~/htdocs/backend_elsalvador
+              npm 
+
+

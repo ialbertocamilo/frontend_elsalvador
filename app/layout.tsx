@@ -10,7 +10,6 @@ import { checkAuth } from '../services/auth/authentication';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-	console.log('loading app');
 	const router = useRouter();
 	const navi = usePathname();
 	useEffect(() => {
@@ -25,19 +24,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<html>
 			<head>
-				{' '}
 				<link
 					rel='stylesheet'
 					href='https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css'
 				/>
 				<title>El Salvador APP</title>
 			</head>
-
 			<body>
 				{children}
-				<>
+				<div>
 					<ReactNotifications />
-				</>
+				</div>
 			</body>
 		</html>
 	);
