@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Copy to Server
-        run: scp -i ${{ secrets.SECRET_PEM }} -r .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
+        run: scp -i ${{ secrets.SECRET_PEM }} .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
         env:
           SSH_PRIVATE_KEY_PATH: ${{ secrets.SECRET_PEM }}
 
