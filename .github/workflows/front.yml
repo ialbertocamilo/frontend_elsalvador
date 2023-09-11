@@ -19,7 +19,7 @@ jobs:
 
 
       - name: Install project dependencies
-        run: npm install
+        run: npm install --production
 
 
       - name: Build Next.js app
