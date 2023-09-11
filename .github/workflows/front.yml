@@ -32,6 +32,8 @@ jobs:
         run: scp -i ~/key.txt .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
         env:
           SSH_PRIVATE_KEY_PATH: ${{ secrets.SECRET_PEM }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
 
       -   name: Deploy to Server
           uses: easingthemes/ssh-deploy@main
