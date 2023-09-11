@@ -32,9 +32,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 			</head>
 			<body>
 				{children}
-				<div>
+				<>
 					<ReactNotifications />
-				</div>
+				</>
 			</body>
 		</html>
 	);
