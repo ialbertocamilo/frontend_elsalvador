@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Copy key
-        run: echo $SECRET_PEM>~/key.pem && chmod 600 key.pem
+        run: echo $SECRET_PEM>~/key.pem && chmod 600 ~/key.pem
         env:
           SECRET_PEM: ${{ secrets.SECRET_PEM }}
 
