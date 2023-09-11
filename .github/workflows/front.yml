@@ -26,12 +26,14 @@ jobs:
         run: npm run build
 
       - name: Copy key
-        run: echo ${{ secrets.SSH_PRIVATE_KEY_PATH }}>~/key.txt
+        run: echo ${{ secrets.SECRET_PEM }}>~/key.pem && chmod 600 key.pem
+        env:
+          SECRET_PEM: ${{ secrets.SECRET_PEM }}
 
       - name: Copy to Server
-        run: scp -i ~/key.txt .next  ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:~/htdocs/frontend_elsalvador/
+        run: scp -i ~/key.txt .next REMOTE_USER@$REMOTE_HOST:~/htdocs/frontend_elsalvador/
         env:
-          SSH_PRIVATE_KEY_PATH: ${{ secrets.SECRET_PEM }}
+          SECRET_PEM: ${{ secrets.SECRET_PEM }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
 
