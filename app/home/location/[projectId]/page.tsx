@@ -35,6 +35,7 @@ const LocationPage = () => {
 							<LocationSearch
 								placeholder={'Ingresa la direccion o coordenadas del proyecto'}
 								goToPlace={(place: any) => {
+									console.log(place);
 									setLocation(place);
 								}}
 							/>
@@ -49,6 +50,7 @@ const LocationPage = () => {
 								<MapLibre
 									location={location}
 									locationInfo={(data: any) => {
+										console.log(data);
 										if (data) setLocationData(data[0].Place.Label);
 									}}
 								/>
