@@ -28,7 +28,6 @@ export const useGeocodingService = () => {
 		};
 
 		const command = new SearchPlaceIndexForTextCommand(input);
-		console.log(client);
 		const res = await client.send(command);
 		if (res.Results?.length) {
 			setGeoResults(res?.Results);

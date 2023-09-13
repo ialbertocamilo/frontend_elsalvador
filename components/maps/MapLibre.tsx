@@ -6,16 +6,19 @@ import { LngLatLike } from 'mapbox-gl';
 import { SearchForTextResult } from '@aws-sdk/client-location';
 import Button from '../bootstrap/Button';
 import { useGeocodingService } from '../../services/geocoding/geocoding.service';
+import { useParams } from 'next/navigation';
 
 interface MapLibreProps {
 	location?: SearchForTextResult;
 	locationInfo?: Function;
+	setLocationMarker?: any;
 }
 
-export const MapLibre = ({ location, locationInfo }: MapLibreProps) => {
+export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibreProps) => {
 	const apiKey = process.env.MAP_API_KEY as string;
 	const region = process.env.AWS_REGION as string;
 	const mapName = 'ElSalvadorProject';
+	const mapStyle = `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`;
 
 	const geo = useGeocodingService();
 	const [selectPoint, setSelectPoint] = useState(false);
@@ -51,9 +54,23 @@ export const MapLibre = ({ location, locationInfo }: MapLibreProps) => {
 	}, [location]);
 
 	useEffect(() => {
+		//Detectar cuando quiero setear un marcador en mapa
+		console.log(setLocationMarker);
+		if (map && setLocationMarker)
+			addMarker(
+				{
+					lng: setLocationMarker.Place.Geometry?.Point[0],
+					lat: setLocationMarker.Place.Geometry?.Point[1],
+				},
+				setLocationMarker.Place.Label,
+				map,
+			);
+	}, [setLocationMarker]);
+
+	useEffect(() => {
 		const _map = new maplibregl.Map({
 			container: 'map',
-			style: `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`,
+			style: mapStyle,
 			center: [viewport.longitude, viewport.latitude],
 			zoom: viewport.zoom,
 		});
@@ -98,19 +115,27 @@ export const MapLibre = ({ location, locationInfo }: MapLibreProps) => {
 
 	const activatePointer = () => {
 		if (point && map) {
-			addMarker({ lng: point.lngLat.lng, lat: point.lngLat.lat }, 'marker', map);
+			addMarker(
+				{ lng: point.lngLat.lng, lat: point.lngLat.lat },
+				setLocationMarker.Place.Label,
+				map,
+			);
 			geo.findLocationByPosition([point.lngLat.lng, point.lngLat.lat]).then((data) => {
 				if (locationInfo) locationInfo(data);
 			});
 		}
 	};
 
+	const params = useParams();
 	return (
 		<div>
 			<div id='map' className={'mb-4'}></div>
-			<Button color={'info'} icon={'GpsNotFixed'} onClick={activatePointer}>
-				Seleccionar
-			</Button>
+
+			{params?.projectId && (
+				<Button color={'info'} icon={'GpsNotFixed'} onClick={activatePointer}>
+					Asignar marcador
+				</Button>
+			)}
 		</div>
 	);
 };

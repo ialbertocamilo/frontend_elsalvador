@@ -54,9 +54,12 @@ export function useProjects() {
 		return true;
 	}
 
-	async function getProjectData(params: IProjectDataGetterRequest) {
-		if (params.project_id && params.key)
-			return await axiosService().post(`/projects/get-data`, params);
+	async function getProjectData(params: IProjectDataGetterRequest): Promise<unknown> {
+		if (params.project_id && params.key) {
+			const result = await axiosService().post(`/projects/get-data`, params);
+			return result?.data;
+		}
+		return null;
 	}
 
 	async function saveProjectData(params: IProjectDataSavingRequest) {

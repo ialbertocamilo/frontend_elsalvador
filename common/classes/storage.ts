@@ -5,8 +5,6 @@ import showNotification from '../../components/extras/showNotification';
 
 export class ClientStorage {
 	static saveUser(user: AuthUser) {
-		console.log('saving AuthUser in localstorage :', user);
-
 		localStorage.setItem(StorageTypes.user, JSON.stringify(user));
 	}
 

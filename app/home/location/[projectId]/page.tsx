@@ -12,7 +12,8 @@ import { SearchForTextResult } from '@aws-sdk/client-location';
 import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
 import Button from '../../../../components/bootstrap/Button';
 import { useParams, useRouter } from 'next/navigation';
-import { RoutesList, RoutesListWithParams } from '../../../../common/constants/default';
+import { RoutesListWithParams } from '../../../../common/constants/default';
+import { useProjects } from '../../../../services/project/project.service';
 
 const LocationPage = () => {
 	const key = 'geoinformation';
@@ -20,12 +21,26 @@ const LocationPage = () => {
 	const [location, setLocation] = useState<SearchForTextResult | undefined>();
 
 	const params = useParams();
+	const project = useProjects();
+
 	const router = useRouter();
-	useEffect(() => {
-		if (location?.Place) setLocationData(location?.Place?.Label as string);
-	}, [location]);
 
 	const [locationData, setLocationData] = useState('');
+	const [fullInfoData, setFullInfoData] = useState('');
+
+	useEffect(() => {
+		project
+			.getProjectData({ key: 'geoinformation', project_id: params?.projectId as string })
+			.then((data: any) => {
+				if (data.payload) {
+					setFullInfoData(data.payload);
+					setLocationData(data.payload.Label);
+					setTimeout(() => {
+						setLocation({ Place: data.payload });
+					}, 900);
+				}
+			});
+	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -35,7 +50,7 @@ const LocationPage = () => {
 							<LocationSearch
 								placeholder={'Ingresa la direccion o coordenadas del proyecto'}
 								goToPlace={(place: any) => {
-									console.log(place);
+									//{ Place, PlaceId}
 									setLocation(place);
 								}}
 							/>
@@ -50,9 +65,12 @@ const LocationPage = () => {
 								<MapLibre
 									location={location}
 									locationInfo={(data: any) => {
-										console.log(data);
-										if (data) setLocationData(data[0].Place.Label);
+										if (data) {
+											setLocationData(data[0].Place.Label);
+											setFullInfoData(data[0].Place);
+										}
 									}}
+									setLocationMarker={location}
 								/>
 							</div>
 							<div className='col'>
@@ -68,8 +86,8 @@ const LocationPage = () => {
 						<SaveProjectButton
 							type={ButtonTypes.projectData}
 							payload={{
-								project_id: '1',
-								payload: locationData,
+								project_id: params?.projectId as string,
+								payload: fullInfoData,
 								key: key,
 							}}></SaveProjectButton>
 						<Button

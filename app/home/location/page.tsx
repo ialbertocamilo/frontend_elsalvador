@@ -23,7 +23,6 @@ const LocationPage = () => {
 							<LocationSearch
 								placeholder={'Ingresa la direccion o coordenadas del proyecto'}
 								goToPlace={(place: any) => {
-									console.log(place);
 									setLocation(place);
 								}}
 							/>
@@ -46,15 +45,6 @@ const LocationPage = () => {
 							</div>
 						</div>
 					</CardBody>
-					<CardFooter>
-						<SaveProjectButton
-							type={ButtonTypes.projectInfo}
-							payload={{
-								project_id: '1',
-								payload: location as object,
-								key: 'location',
-							}}></SaveProjectButton>
-					</CardFooter>
 				</Card>
 			</Page>
 		</PageWrapper>

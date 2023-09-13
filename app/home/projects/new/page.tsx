@@ -13,13 +13,12 @@ import { useFormik } from 'formik';
 import classNames from 'classnames';
 import { useProjects } from '../../../../services/project/project.service';
 import { RoutesList } from '../../../../common/constants/default';
-import Link from 'next/link';
-import Icon from '../../../../components/icon/Icon';
 
 const ProjectsPage = () => {
 	const router = useRouter();
 	const projects = useProjects();
 
+	const [isSubmit, setIsSubmit] = useState(false);
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
 		initialValues: {
@@ -51,7 +50,8 @@ const ProjectsPage = () => {
 		},
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, public: buttonActive });
-			await projects.saveProject(values);
+			const result = await projects.saveProject(values);
+			setIsSubmit(result);
 		},
 		enableReinitialize: true,
 	});
@@ -250,15 +250,19 @@ const ProjectsPage = () => {
 							<div className='row '>
 								<Button
 									className='col-auto mx-2'
-									color='primary'
+									color='info'
+									isLight
 									type='submit'
+									isDisable={isSubmit}
 									onClick={formik.handleSubmit}
 									icon='Save'>
 									Guardar datos
 								</Button>
 								<Button
 									className='col-auto  mx-2'
-									color='info'
+									color='storybook'
+									isLight
+									isDisable={!isSubmit}
 									onClick={() => router.push(RoutesList.geolocation)}
 									icon='GpsFixed'>
 									Geolocalización

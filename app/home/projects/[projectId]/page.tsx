@@ -2,7 +2,7 @@
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
@@ -252,7 +252,8 @@ const GetProject = () => {
 							<div className='row '>
 								<Button
 									className='col-auto mx-2'
-									color='primary'
+									color='info'
+									isLight
 									type='submit'
 									onClick={formik.handleSubmit}
 									icon='Save'>
@@ -260,7 +261,8 @@ const GetProject = () => {
 								</Button>
 								<Button
 									className='col-auto  mx-2'
-									color='info'
+									color='storybook'
+									isLight
 									onClick={() =>
 										router.push(
 											RoutesListWithParams.geolocation(param?.projectId),

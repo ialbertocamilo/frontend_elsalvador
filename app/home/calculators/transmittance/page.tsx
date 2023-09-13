@@ -2,14 +2,19 @@
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { CustomEditor } from '../../../../components/extras/CustomEditor';
+import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
+import { useParams } from 'next/navigation';
 
 const TransmittancePage = () => {
+	const [wallName, setWallName] = useState('');
+
+	const params = useParams();
 	return (
 		<PageWrapper>
 			<Page>
@@ -26,7 +31,10 @@ const TransmittancePage = () => {
 								<span>Nombre de muro tipo 1</span>
 							</div>
 							<div className='col-md-6 col-sm-12'>
-								<Input placeholder='Ingresa el nombre del muro'></Input>
+								<Input
+									placeholder='Ingresa el nombre del muro'
+									onChange={(e: any) => setWallName(e.target.value)}
+									value={wallName}></Input>
 							</div>
 						</div>
 					</CardBody>
@@ -63,6 +71,14 @@ const TransmittancePage = () => {
 						</CardBody>
 					</Card>
 				</div>
+
+				<SaveProjectButton
+					type={ButtonTypes.projectData}
+					payload={{
+						project_id: params?.projectId as string,
+						payload: {},
+						key: 'key',
+					}}></SaveProjectButton>
 			</Page>
 		</PageWrapper>
 	);

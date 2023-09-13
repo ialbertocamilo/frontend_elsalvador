@@ -12,13 +12,11 @@ const Row = ({ data, onInputChange }: Row) => {
 	return (
 		<tr>
 			<td className='p-2'>
-				<Autosave>
-					<Input
-						type='text'
-						value={data.column1}
-						onChange={(e: any) => onInputChange('column1', e.target.value)}
-					/>
-				</Autosave>
+				<Input
+					type='text'
+					value={data.column1}
+					onChange={(e: any) => onInputChange('column1', e.target.value)}
+				/>
 			</td>
 			<td className='p-2'>
 				<FormGroup>

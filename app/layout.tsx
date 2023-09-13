@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect } from 'react';
-
 import './styles/styles.scss';
 import { ClientStorage } from '../common/classes/storage';
 import { ReactNotifications } from 'react-notifications-component';
@@ -8,6 +7,7 @@ import userStore from '../stores/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import 'react-notifications-component/dist/theme.css';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter();
@@ -30,12 +30,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 				/>
 				<title>El Salvador APP</title>
 			</head>
-			<body>
-				{children}
-				<>
-					<ReactNotifications />
-				</>
-			</body>
+			<body>{children}</body>
 		</html>
 	);
 };

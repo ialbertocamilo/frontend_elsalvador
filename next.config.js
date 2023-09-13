@@ -1,6 +1,8 @@
 const {i18n} = require("./next-i18next.config");
 const withImages = require("next-images");
 const withInterceptStdout = require("next-intercept-stdout");
+const path = require("node:path");
+
 
 var hideWarn = [
     "Invalid next.config.js options detected:",
@@ -15,7 +17,8 @@ var hideWarn = [
 const nextConfig = withInterceptStdout(
     withImages({
         appDir: true,
-        experimental: {    staticPageGenerationTimeout: 100000,
+        experimental: {
+            staticPageGenerationTimeout: 100000,
             images: {
                 allowFutureImage: true
             },
@@ -31,10 +34,15 @@ const nextConfig = withInterceptStdout(
                 port: '',
                 pathname: '*',
             },
-        distDir:'.build',
+        resolve: {
+            alias: {
+                'aws-crt': path.resolve(__dirname, 'node_modules/aws-crt'),
+            },
+        },
+        distDir: '.build',
         reactStrictMode: false,
         swcMinify: true,
-        fallback:true,
+        fallback: true,
         i18n,
         // basePath: '/projects',
         async redirects() {
