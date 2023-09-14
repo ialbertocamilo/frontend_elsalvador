@@ -20,7 +20,6 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 	const mapName = 'ElSalvadorProject';
 	const mapStyle = `https://maps.geo.us-west-2.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`;
 
-	console.log(mapStyle);
 	const geo = useGeocodingService();
 	const [selectPoint, setSelectPoint] = useState(false);
 	const [myPosition, setMyPosition] = useState<LngLatLike>();
@@ -95,6 +94,9 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 		map?.on('click', (ev) => {
 			setPoint(ev);
 		});
+		console.log(mapStyle);
+		console.log(mapStyle);
+		console.log(mapStyle);
 	}, [map]);
 
 	function goMyLocation() {
