@@ -58,7 +58,7 @@ const nextConfig = withInterceptStdout(
         env: {
             BACKEND_URL: process.env.BACKEND_URL,
             MAP_API_KEY: process.env.MAP_API_KEY,
-            AWS_REGION: process.env.AWS_REGION,
+            AWS_BASE_REGION: process.env.AWS_BASE_REGION,
 
         },
     }),

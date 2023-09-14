@@ -8,6 +8,10 @@ import Button from '../../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../../components/tables/TransmittanceTable';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { CustomEditor } from '../../../../../components/extras/CustomEditor';
+import {
+	ButtonTypes,
+	SaveProjectButton,
+} from '../../../../../components/buttons/SaveProjectButton';
 
 const TransmittancePage = () => {
 	const editor = useRef(null);
@@ -64,6 +68,11 @@ const TransmittancePage = () => {
 						</CardBody>
 					</Card>
 				</div>
+
+				<SaveProjectButton
+					payload={{ project_id: params?.projectId || '', payload: data, key: keyName }}
+					type={ButtonTypes.projectData}
+				/>
 			</Page>
 		</PageWrapper>
 	);
