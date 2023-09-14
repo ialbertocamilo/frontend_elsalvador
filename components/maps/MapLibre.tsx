@@ -16,7 +16,7 @@ interface MapLibreProps {
 
 export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibreProps) => {
 	const apiKey = process.env.MAP_API_KEY as string;
-	const region = process.env.AWS_BASE_REGION as string;
+	const region = 'us-west-2';
 	const mapName = 'ElSalvadorProject';
 	const mapStyle = `https://maps.geo.${region}.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`;
 
