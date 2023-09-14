@@ -40,7 +40,7 @@ const LocationPage = () => {
 								<Label htmlFor='location'>Datos de ubicaciones encontradas</Label>
 								<Textarea
 									id='location'
-									placeholder='Ubicacion'
+									placeholder='Ubicación	'
 									value={location?.Place?.Label}></Textarea>
 							</div>
 						</div>
