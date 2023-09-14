@@ -12,8 +12,11 @@ import {
 	ButtonTypes,
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
+import { useParams } from 'next/navigation';
 
+const keyName = 'transmittance';
 const TransmittancePage = () => {
+	const params = useParams();
 	const editor = useRef(null);
 	return (
 		<PageWrapper>
@@ -70,7 +73,11 @@ const TransmittancePage = () => {
 				</div>
 
 				<SaveProjectButton
-					payload={{ project_id: params?.projectId || '', payload: data, key: keyName }}
+					payload={{
+						project_id: params?.projectId || '',
+						payload: {},
+						key: keyName,
+					}}
 					type={ButtonTypes.projectData}
 				/>
 			</Page>

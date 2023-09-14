@@ -106,7 +106,7 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 	useEffect(() => {
 		projects
 			.getProjectData({ key: keyName, project_id: params?.projectId as string })
-			.then((res) => {
+			.then((res: any) => {
 				if (res?.data?.payload) {
 					setRow(res.data.payload.rows);
 					setTotalPercentage(res.data.payload.result.totalPercentage);
