@@ -44,6 +44,7 @@ const nextConfig = withInterceptStdout(
         swcMinify: true,
         fallback: true,
         i18n,
+        staticPageGenerationTimeout:600,
         // basePath: '/projects',
         async redirects() {
             return [
