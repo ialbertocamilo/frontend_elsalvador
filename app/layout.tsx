@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import './styles/styles.scss';
 import { ClientStorage } from '../common/classes/storage';
-import { ReactNotifications } from 'react-notifications-component';
 import userStore from '../stores/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';

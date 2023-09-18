@@ -84,6 +84,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 interface ProportiontableProps {
 	onData: Function;
 	keyName: string;
+	loadedData?: unknown;
 }
 
 export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
@@ -91,7 +92,6 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 
 	const projects = useProjects();
 	const params = useParams();
-
 	useEffect(() => {
 		const resultData = {
 			totalOpaqueSurface: totalOpaqueSurface,
@@ -107,11 +107,12 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 		projects
 			.getProjectData({ key: keyName, project_id: params?.projectId as string })
 			.then((res: any) => {
-				if (res?.data?.payload) {
-					setRow(res.data.payload.rows);
-					setTotalPercentage(res.data.payload.result.totalPercentage);
-					setTotalGlazedSurface(res.data.payload.result.totalGlazedSurface);
-					setTotalOpaqueSurface(res.data.payload.result.totalOpaqueSurface);
+				const data = res?.payload;
+				if (data) {
+					setRow(data.rows);
+					setTotalPercentage(data.result.totalPercentage);
+					setTotalGlazedSurface(data.result.totalGlazedSurface);
+					setTotalOpaqueSurface(data.result.totalOpaqueSurface);
 				}
 			});
 	}, []);

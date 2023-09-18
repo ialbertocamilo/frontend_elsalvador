@@ -78,7 +78,15 @@ export function useProjects() {
 		return true;
 	}
 
+	async function searchProject(value: string) {
+		const response = await axiosService().post(`/projects/search?value=${value}`);
+		if (response.data) return response.data;
+
+		return null;
+	}
+
 	return {
+		searchProject,
 		getProject,
 		getProjects,
 		updateProject,

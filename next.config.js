@@ -24,6 +24,10 @@ const nextConfig = withInterceptStdout(
             },
             appDir: true
         },
+        urlEnabled: true,
+        uploadEnabled: true,
+        previewImage: true,
+        alt: { present: false, mandatory: false },
         images: {
             domains: ["elsalvadorpublicfiles.s3.us-west-2.amazonaws.com"],
         },
@@ -42,7 +46,6 @@ const nextConfig = withInterceptStdout(
         distDir: '.build',
         reactStrictMode: false,
         swcMinify: true,
-        fallback: true,
         i18n,
         staticPageGenerationTimeout:600,
         // basePath: '/projects',

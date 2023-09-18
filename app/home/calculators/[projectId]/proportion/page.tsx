@@ -1,8 +1,8 @@
 'use client';
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
-import Card, { CardBody } from '../../../../../components/bootstrap/Card';
-import React, { useState } from 'react';
+import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
+import React, { useEffect, useState } from 'react';
 import Button from '../../../../../components/bootstrap/Button';
 import { ProportionTable } from '../../../../../components/tables/ProportionTable';
 import {
@@ -10,11 +10,14 @@ import {
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
+import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
+import { useProjects } from '../../../../../services/project/project.service';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
 	const params = useParams();
-	const [data, setData] = useState({});
+	const [data, setData] = useState<any>({});
+
 	return (
 		<PageWrapper>
 			<Page>
@@ -59,10 +62,20 @@ const ProportionPage = () => {
 					</Card>
 				</div>
 
-				<SaveProjectButton
-					payload={{ project_id: params?.projectId || '', payload: data, key: keyName }}
-					type={ButtonTypes.projectData}
-				/>
+				<Card>
+					<CardFooter>
+						<SaveProjectButton
+							payload={{
+								project_id: params?.projectId || '',
+								payload: data,
+								key: keyName,
+							}}
+							type={ButtonTypes.projectData}
+						/>
+
+						<BackToCalculatorsBtn />
+					</CardFooter>
+				</Card>
 			</Page>
 		</PageWrapper>
 	);

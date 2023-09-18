@@ -1,13 +1,21 @@
 'use client';
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
-import Card, { CardBody } from '../../../../../components/bootstrap/Card';
+import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
 import React from 'react';
 import { ShadingTable } from '../../../../../components/tables/ShadingTable';
 import { CustomEditor } from '../../../../../components/extras/CustomEditor';
 import Label from '../../../../../components/bootstrap/forms/Label';
+import {
+	ButtonTypes,
+	SaveProjectButton,
+} from '../../../../../components/buttons/SaveProjectButton';
+import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
+import { useParams } from 'next/navigation';
 
+const keyName = 'shading';
 const ShadingPage = () => {
+	const params = useParams();
 	return (
 		<PageWrapper>
 			<Page>
@@ -59,6 +67,21 @@ const ShadingPage = () => {
 							</CardBody>
 						</Card>
 					</CardBody>
+				</Card>
+
+				<Card>
+					<CardFooter>
+						<SaveProjectButton
+							payload={{
+								project_id: params?.projectId || '',
+								payload: {},
+								key: keyName,
+							}}
+							type={ButtonTypes.projectData}
+						/>
+
+						<BackToCalculatorsBtn />
+					</CardFooter>
 				</Card>
 			</Page>
 		</PageWrapper>

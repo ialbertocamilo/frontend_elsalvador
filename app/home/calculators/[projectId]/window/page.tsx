@@ -1,32 +1,55 @@
 'use client';
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
-import Card, { CardBody } from '../../../../../components/bootstrap/Card';
-import React, { useCallback, useEffect } from 'react';
+import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
+import React, { useEffect, useState } from 'react';
 import FormGroup from '../../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../../components/bootstrap/forms/Label';
 import Input from '../../../../../components/bootstrap/forms/Input';
 import { useFormik } from 'formik';
 import { CustomEditor } from '../../../../../components/extras/CustomEditor';
+import {
+	ButtonTypes,
+	SaveProjectButton,
+} from '../../../../../components/buttons/SaveProjectButton';
+import { useParams } from 'next/navigation';
+import { useProjects } from '../../../../../services/project/project.service';
+import Button from '../../../../../components/bootstrap/Button';
+import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 
+const keyName = 'window';
 const WindowPage = () => {
+	const params = useParams();
+
+	const projects = useProjects();
+
+	const [initialData, setInitialData] = useState<any>({});
+	useEffect(() => {
+		projects
+			.getProjectData({ project_id: params?.projectId as string, key: keyName })
+			.then((data: any) => {
+				console.log(data);
+				setInitialData(data.payload);
+			});
+	}, []);
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			crystalType: '',
-			frameType: '',
-			windowUValue: '',
-			uValue1: '',
-			uValue2: '',
-			gValue: '',
-			csValue: '',
-			calcGValue: '',
-			frameWidth: '',
-			longVain: '',
-			highVain: '',
-			areaVain: '',
-			frameArea: '',
-			crystalArea: '',
+			crystalType: initialData.crystalType,
+			frameType: initialData.frameType,
+			windowUValue: initialData.windowUValue,
+			uValue1: initialData.uValue1,
+			uValue2: initialData.uValue2,
+			gValue: initialData.gValue,
+			csValue: initialData.csValue,
+			calcGValue: initialData.calcGValue,
+			frameWidth: initialData.frameWidth,
+			longVain: initialData.longVain,
+			highVain: initialData.highVain,
+			areaVain: initialData.areaVain,
+			frameArea: initialData.frameArea,
+			crystalArea: initialData.crystalArea,
+			windowDetailText: initialData.windowDetailText,
 		},
 		validateOnChange: true,
 		onSubmit: () => {
@@ -34,17 +57,17 @@ const WindowPage = () => {
 		},
 	});
 
-	const calculateGValue = useCallback(() => {
+	function calculateGValue() {
 		formik.setFieldValue('calcGValue', Number(formik.values.csValue) * 0.87);
-	}, [formik]);
+	}
 
-	const calculateCrystalArea = useCallback(() => {
+	function calculateCrystalArea() {
 		let areaVain = Number(formik.values.areaVain);
 		let frameArea = Number(formik.values.frameArea);
 		formik.setFieldValue('crystalArea', areaVain - frameArea);
-	}, [formik]);
+	}
 
-	const calculateUValue = useCallback(() => {
+	function calculateUValue() {
 		let uValue = Number(formik.values.uValue1);
 		let uValue2 = Number(formik.values.uValue2);
 		let frameArea = Number(formik.values.frameArea);
@@ -52,18 +75,23 @@ const WindowPage = () => {
 		let longVain = Number(formik.values.longVain);
 		let highVain = Number(formik.values.highVain);
 
-		formik.setFieldValue(
-			'windowUValue',
+		const result =
 			uValue * crystalArea +
-				uValue2 * frameArea +
-				(0.08 * (longVain * 2 + highVain * 2)) / (crystalArea + frameArea),
-		);
-	}, [formik]);
+			uValue2 * frameArea +
+			(0.08 * (longVain * 2 + highVain * 2)) / (crystalArea + frameArea);
+		formik.setFieldValue('windowUValue', result.toFixed(2));
+	}
+
+	useEffect(() => {
+		calculateCrystalArea();
+	}, [formik.values.areaVain]);
+
+	useEffect(() => {
+		calculateGValue();
+	}, [formik.values.csValue]);
 
 	useEffect(() => {
 		calculateUValue();
-		calculateGValue();
-		calculateCrystalArea();
 	}, [
 		formik.values.uValue1,
 		formik.values.uValue2,
@@ -71,15 +99,14 @@ const WindowPage = () => {
 		formik.values.highVain,
 		formik.values.frameArea,
 		formik.values.crystalArea,
-		calculateUValue,
-		calculateGValue,
-		calculateCrystalArea,
 	]);
+	const [customEditorText, setCustomEditorText] = useState('');
 
 	function calculateFrameArea() {
 		const largoVano = Number(formik.values.longVain);
 		const altoVano = Number(formik.values.highVain);
 		const anchoMarco = Number(formik.values.frameWidth);
+		//TODO corregir formula, toma el valor anterior la reactividad esta rara
 		formik.setFieldValue(
 			'frameArea',
 			anchoMarco * largoVano * 2 + (altoVano - anchoMarco * 2) * anchoMarco,
@@ -252,8 +279,28 @@ const WindowPage = () => {
 
 				<Card>
 					<CardBody>
-						<CustomEditor placeholder='Detalle de ventana tipo' />
+						<CustomEditor
+							placeholder='Detalle de ventana tipo'
+							initialText={initialData.customEditorText}
+							setText={(e: string) => {
+								setCustomEditorText(e);
+							}}
+						/>
 					</CardBody>
+				</Card>
+
+				<Card>
+					<CardFooter>
+						<SaveProjectButton
+							type={ButtonTypes.projectData}
+							payload={{
+								payload: { ...formik.values, customEditorText },
+								project_id: params?.projectId as string,
+								key: keyName,
+							}}></SaveProjectButton>
+
+						<BackToCalculatorsBtn />
+					</CardFooter>
 				</Card>
 			</Page>
 		</PageWrapper>

@@ -14,6 +14,7 @@ import Button from '../../../../components/bootstrap/Button';
 import { useParams, useRouter } from 'next/navigation';
 import { RoutesListWithParams } from '../../../../common/constants/default';
 import { useProjects } from '../../../../services/project/project.service';
+import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculatorsBtn';
 
 const LocationPage = () => {
 	const key = 'geoinformation';
@@ -82,6 +83,9 @@ const LocationPage = () => {
 							</div>
 						</div>
 					</CardBody>
+				</Card>
+
+				<Card>
 					<CardFooter>
 						<SaveProjectButton
 							type={ButtonTypes.projectData}
@@ -90,14 +94,8 @@ const LocationPage = () => {
 								payload: fullInfoData,
 								key: key,
 							}}></SaveProjectButton>
-						<Button
-							icon={'NavigateNext'}
-							color={'link'}
-							onClick={() =>
-								router.push(RoutesListWithParams.project(params?.projectId))
-							}>
-							Regresar a proyecto
-						</Button>
+
+						<BackToCalculatorsBtn />
 					</CardFooter>
 				</Card>
 			</Page>

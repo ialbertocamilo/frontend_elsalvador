@@ -1,7 +1,7 @@
 'use client';
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
-import Card, { CardBody } from '../../../../../components/bootstrap/Card';
+import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
 import React, { useRef } from 'react';
 import Input from '../../../../../components/bootstrap/forms/Input';
 import Button from '../../../../../components/bootstrap/Button';
@@ -13,6 +13,7 @@ import {
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
+import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -64,22 +65,26 @@ const TransmittancePage = () => {
 						</CardBody>
 					</Card>
 				</div>
-				<div className='row'>
-					<Card className='col me-2'>
-						<CardBody>
-							<CustomEditor placeholder='Detalle muro tipo' />
-						</CardBody>
-					</Card>
-				</div>
+				<Card>
+					<CardBody>
+						<CustomEditor placeholder='Detalle muro tipo' />
+					</CardBody>
+				</Card>
 
-				<SaveProjectButton
-					payload={{
-						project_id: params?.projectId || '',
-						payload: {},
-						key: keyName,
-					}}
-					type={ButtonTypes.projectData}
-				/>
+				<Card>
+					<CardFooter>
+						<SaveProjectButton
+							payload={{
+								project_id: params?.projectId || '',
+								payload: {},
+								key: keyName,
+							}}
+							type={ButtonTypes.projectData}
+						/>
+
+						<BackToCalculatorsBtn />
+					</CardFooter>
+				</Card>
 			</Page>
 		</PageWrapper>
 	);

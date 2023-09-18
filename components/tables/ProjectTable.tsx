@@ -11,12 +11,7 @@ import PaginationButtons, { dataPagination, PER_COUNT } from '../PaginationButto
 import Button from '../bootstrap/Button';
 import Icon from '../icon/Icon';
 import Input from '../bootstrap/forms/Input';
-import Dropdown, { DropdownMenu, DropdownToggle } from '../bootstrap/Dropdown';
-import FormGroup from '../bootstrap/forms/FormGroup';
-import Checks, { ChecksGroup } from '../bootstrap/forms/Checks';
 import useSortableData from '../../hooks/useSortableData';
-import InputGroup, { InputGroupText } from '../bootstrap/forms/InputGroup';
-import Popovers from '../bootstrap/Popovers';
 import useDarkMode from '../../hooks/useDarkMode';
 import data from '../../common/data/dummyCustomerData';
 import { IProjectListResponse } from '../../common/types/project.types';
@@ -31,6 +26,7 @@ const ProjectTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(PER_COUNT['10']);
 
+	const project = useProjects();
 	const formik = useFormik({
 		initialValues: {
 			searchInput: '',
@@ -77,6 +73,16 @@ const ProjectTable = () => {
 		total: 0,
 	});
 
+	function findProjects() {
+		project.searchProject(formik.values.searchInput).then((data) => {
+			setProjects(data);
+		});
+	}
+
+	function detectKey(e: any) {
+		if (e.key == 'Enter') findProjects();
+	}
+
 	const goTo = (route: string) => {
 		router.push(route);
 	};
@@ -97,74 +103,13 @@ const ProjectTable = () => {
 						id='searchInput'
 						type='search'
 						className='border-0 shadow-none bg-transparent'
-						placeholder='Buscar proyectos...'
+						placeholder='Buscar proyectos...(Presionar <Enter>)'
 						onChange={formik.handleChange}
 						value={formik.values.searchInput}
+						onKeyDown={detectKey}
 					/>
 				</SubHeaderLeft>
 				<SubHeaderRight>
-					<Dropdown>
-						<DropdownToggle hasIcon={false}>
-							<Button
-								icon='FilterAlt'
-								color='dark'
-								isLight
-								className='btn-only-icon position-relative'
-								aria-label='Filter'>
-								{data.length !== filteredData.length && (
-									<Popovers desc='Filtering applied' trigger='hover'>
-										<span className='position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2'>
-											<span className='visually-hidden'>
-												there is filtering
-											</span>
-										</span>
-									</Popovers>
-								)}
-							</Button>
-						</DropdownToggle>
-						<DropdownMenu isAlignmentEnd size='lg'>
-							<div className='container py-2'>
-								<div className='row g-3'>
-									<FormGroup label='Balance' className='col-12'>
-										<InputGroup>
-											<Input
-												id='minPrice'
-												ariaLabel='Minimum price'
-												placeholder='Min.'
-												onChange={formik.handleChange}
-												value={formik.values.minPrice}
-											/>
-											<InputGroupText>to</InputGroupText>
-											<Input
-												id='maxPrice'
-												ariaLabel='Maximum price'
-												placeholder='Max.'
-												onChange={formik.handleChange}
-												value={formik.values.maxPrice}
-											/>
-										</InputGroup>
-									</FormGroup>
-									<FormGroup label='Payments' className='col-12'>
-										<ChecksGroup>
-											{Object.keys(PAYMENTS).map((payment) => (
-												<Checks
-													key={PAYMENTS[payment].name}
-													id={PAYMENTS[payment].name}
-													label={PAYMENTS[payment].name}
-													name='payment'
-													value={PAYMENTS[payment].name}
-													onChange={formik.handleChange}
-													checked={formik.values.payment.includes(
-														PAYMENTS[payment].name,
-													)}
-												/>
-											))}
-										</ChecksGroup>
-									</FormGroup>
-								</div>
-							</div>
-						</DropdownMenu>
-					</Dropdown>
 					<SubheaderSeparator />
 					<Button
 						icon='PersonAdd'

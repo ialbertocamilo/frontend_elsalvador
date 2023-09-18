@@ -3,7 +3,7 @@ import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import Card, { CardBody } from '../../../../components/bootstrap/Card';
+import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
 import Input from '../../../../components/bootstrap/forms/Input';
@@ -16,6 +16,7 @@ import { useProjects } from '../../../../services/project/project.service';
 import Link from 'next/link';
 import { RoutesListWithParams } from '../../../../common/constants/default';
 import Icon from '../../../../components/icon/Icon';
+import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculatorsBtn';
 
 const GetProject = () => {
 	const param = useParams();
@@ -247,8 +248,8 @@ const GetProject = () => {
 				</div>
 
 				<div className='row'>
-					<Card className='col-12'>
-						<CardBody>
+					<Card>
+						<CardFooter>
 							<div className='row '>
 								<Button
 									className='col-auto mx-2'
@@ -271,25 +272,10 @@ const GetProject = () => {
 									icon='GpsFixed'>
 									Geolocalización
 								</Button>
-								<div className='col-auto'></div>
 							</div>
-						</CardBody>
-					</Card>
-				</div>
-				<div className='row'>
-					<Card className='col-12'>
-						<CardBody>
-							<div className='row '>
-								<Link
-									className='col-auto  mx-2'
-									href={RoutesListWithParams.calculators(param?.projectId)}>
-									<Icon icon='NavigateNext' /> Calculadoras {}
-								</Link>
-								{/*<Link className='col-auto  mx-2' href={RoutesList.calculators}>*/}
-								{/*	<Icon icon='NavigateNext' /> Paquetes*/}
-								{/*</Link>*/}
-							</div>
-						</CardBody>
+							<div className='col-auto'></div>
+							<BackToCalculatorsBtn />
+						</CardFooter>
 					</Card>
 				</div>
 			</Page>

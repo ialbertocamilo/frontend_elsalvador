@@ -94,9 +94,6 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 		map?.on('click', (ev) => {
 			setPoint(ev);
 		});
-		console.log(mapStyle);
-		console.log(mapStyle);
-		console.log(mapStyle);
 	}, [map]);
 
 	function goMyLocation() {
