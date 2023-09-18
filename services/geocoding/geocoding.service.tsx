@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export const useGeocodingService = () => {
 	const apiKey = process.env.MAP_API_KEY as string;
-	const region = process.env.AWS_REGION as string;
+	const region = process.env.AWS_BASE_REGION as string;
 
 	let client: LocationClient;
 	const [geoResults, setGeoResults] = useState({});

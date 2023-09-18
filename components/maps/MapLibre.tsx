@@ -7,16 +7,17 @@ import { SearchForTextResult } from '@aws-sdk/client-location';
 import Button from '../bootstrap/Button';
 import { useGeocodingService } from '../../services/geocoding/geocoding.service';
 import { useParams } from 'next/navigation';
+import { useProjects } from '../../services/project/project.service';
+
+const keyName = 'geoinformation';
 
 interface MapLibreProps {
 	location?: SearchForTextResult;
 	locationInfo?: Function;
-	setLocationMarker?: any;
 }
 
-export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibreProps) => {
+export const MapLibre = ({ location, locationInfo }: MapLibreProps) => {
 	const apiKey = process.env.MAP_API_KEY as string;
-	const region = 'us-west-2';
 	const mapName = 'ElSalvadorProject';
 	const mapStyle = `https://maps.geo.us-west-2.amazonaws.com/maps/v0/maps/${mapName}/style-descriptor?key=${apiKey}`;
 
@@ -31,8 +32,34 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 		longitude: -122.4376, // Longitud inicial
 		zoom: 13, // Nivel de zoom inicial
 	});
-	const [point, setPoint] = useState<any>();
 
+	const project = useProjects();
+
+	const [point, setPoint] = useState<any>();
+	useEffect(() => {
+		project
+			.getProjectData({ key: 'geoinformation', project_id: params?.projectId as string })
+			.then((data: any) => {
+				const result: SearchForTextResult = data?.payload;
+				if (result && locationInfo && map) {
+					locationInfo(data.payload as string);
+					if (result?.Place?.Geometry?.Point) {
+						addMarker(
+							{
+								lng: result?.Place?.Geometry?.Point[0],
+								lat: result?.Place?.Geometry?.Point[1],
+							},
+							map,
+						);
+
+						setMyPosition({
+							lng: result?.Place?.Geometry?.Point[0],
+							lat: result?.Place?.Geometry?.Point[1],
+						});
+					}
+				}
+			});
+	}, [map]);
 	useEffect(() => {
 		if (myPosition) {
 			map?.flyTo({
@@ -54,20 +81,6 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 	}, [location]);
 
 	useEffect(() => {
-		//Detectar cuando quiero setear un marcador en mapa
-		console.log(setLocationMarker);
-		if (map && setLocationMarker)
-			addMarker(
-				{
-					lng: setLocationMarker.Place.Geometry?.Point[0],
-					lat: setLocationMarker.Place.Geometry?.Point[1],
-				},
-				setLocationMarker.Place.Label,
-				map,
-			);
-	}, [setLocationMarker]);
-
-	useEffect(() => {
 		const _map = new maplibregl.Map({
 			container: 'map',
 			style: mapStyle,
@@ -77,7 +90,7 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 		setMap(_map);
 		// Configura el mapa de MapLibre
 		_map?.on('load', () => {
-			goMyLocation();
+			// goMyLocation();
 		});
 		_map?.addControl(new maplibregl.NavigationControl(), 'top-left');
 		_map.addControl(
@@ -92,37 +105,37 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 
 	useEffect(() => {
 		map?.on('click', (ev) => {
+			console.log(ev);
 			setPoint(ev);
 		});
 	}, [map]);
 
-	function goMyLocation() {
-		navigator.geolocation.getCurrentPosition((data) => {
-			let pos: LngLatLike = { lat: data.coords.latitude, lng: data.coords.longitude };
-			setMyPosition(pos);
-		});
-	}
-
 	const [lastMarker, setLastMarker] = useState<Marker | null>(null);
 
-	function addMarker(coord: LngLatLike, text: string, map: Map) {
+	function addMarker(coord: LngLatLike, map: Map) {
 		if (lastMarker) lastMarker.remove();
 		if (map && coord) {
-			const popup = new maplibregl.Popup({ offset: 35 }).setHTML(text).addTo(map);
-			setLastMarker(new maplibregl.Marker()?.setLngLat(coord).setPopup(popup).addTo(map));
+			setLastMarker(new maplibregl.Marker()?.setLngLat(coord).addTo(map));
 		}
 	}
 
+	function saveLocation(position: any[]) {
+		geo.findLocationByPosition(position).then((data) => {
+			if (data) {
+				project.saveProjectData({
+					key: keyName,
+					project_id: params?.projectId as string,
+					payload: data[0],
+				});
+				if (locationInfo) locationInfo(data[0]);
+			}
+		});
+	}
+
 	const activatePointer = () => {
-		if (point && map) {
-			addMarker(
-				{ lng: point.lngLat.lng, lat: point.lngLat.lat },
-				setLocationMarker.Place.Label,
-				map,
-			);
-			geo.findLocationByPosition([point.lngLat.lng, point.lngLat.lat]).then((data) => {
-				if (locationInfo) locationInfo(data);
-			});
+		if (map) {
+			addMarker({ lng: point.lngLat.lng, lat: point.lngLat.lat }, map);
+			saveLocation([point.lngLat.lng, point.lngLat.lat]);
 		}
 	};
 
@@ -132,8 +145,8 @@ export const MapLibre = ({ location, locationInfo, setLocationMarker }: MapLibre
 			<div id='map' className={'mb-4'}></div>
 
 			{params?.projectId && (
-				<Button color={'info'} icon={'GpsNotFixed'} onClick={activatePointer}>
-					Asignar marcador
+				<Button color={'info'} icon={'GpsFixed'} onClick={activatePointer}>
+					Asignar y guardar marcador
 				</Button>
 			)}
 		</div>

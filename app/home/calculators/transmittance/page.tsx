@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { CustomEditor } from '../../../../components/extras/CustomEditor';
 import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';

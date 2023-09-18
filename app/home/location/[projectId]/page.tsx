@@ -1,7 +1,7 @@
 'use client';
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
@@ -9,12 +9,9 @@ import Textarea from '../../../../components/bootstrap/forms/Textarea';
 import MapLibre from '../../../../components/maps/MapLibre';
 import LocationSearch from '../../../../components/search/LocationSearch';
 import { SearchForTextResult } from '@aws-sdk/client-location';
-import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
-import Button from '../../../../components/bootstrap/Button';
 import { useParams, useRouter } from 'next/navigation';
+import Button from '../../../../components/bootstrap/Button';
 import { RoutesListWithParams } from '../../../../common/constants/default';
-import { useProjects } from '../../../../services/project/project.service';
-import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculatorsBtn';
 
 const LocationPage = () => {
 	const key = 'geoinformation';
@@ -22,26 +19,12 @@ const LocationPage = () => {
 	const [location, setLocation] = useState<SearchForTextResult | undefined>();
 
 	const params = useParams();
-	const project = useProjects();
 
 	const router = useRouter();
 
 	const [locationData, setLocationData] = useState('');
 	const [fullInfoData, setFullInfoData] = useState('');
 
-	useEffect(() => {
-		project
-			.getProjectData({ key: 'geoinformation', project_id: params?.projectId as string })
-			.then((data: any) => {
-				if (data.payload) {
-					setFullInfoData(data.payload);
-					setLocationData(data.payload.Label);
-					setTimeout(() => {
-						setLocation({ Place: data.payload });
-					}, 900);
-				}
-			});
-	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -51,7 +34,6 @@ const LocationPage = () => {
 							<LocationSearch
 								placeholder={'Ingresa la direccion o coordenadas del proyecto'}
 								goToPlace={(place: any) => {
-									//{ Place, PlaceId}
 									setLocation(place);
 								}}
 							/>
@@ -66,12 +48,10 @@ const LocationPage = () => {
 								<MapLibre
 									location={location}
 									locationInfo={(data: any) => {
-										if (data) {
-											setLocationData(data[0].Place.Label);
-											setFullInfoData(data[0].Place);
+										if (data?.Place?.Label) {
+											setLocationData(data?.Place?.Label);
 										}
 									}}
-									setLocationMarker={location}
 								/>
 							</div>
 							<div className='col'>
@@ -87,15 +67,15 @@ const LocationPage = () => {
 
 				<Card>
 					<CardFooter>
-						<SaveProjectButton
-							type={ButtonTypes.projectData}
-							payload={{
-								project_id: params?.projectId as string,
-								payload: fullInfoData,
-								key: key,
-							}}></SaveProjectButton>
-
-						<BackToCalculatorsBtn />
+						<div className={'col-auto'}></div>
+						<Button
+							color='link'
+							icon='Info'
+							onClick={() =>
+								router.push(RoutesListWithParams.project(params?.projectId))
+							}>
+							Ir a proyecto
+						</Button>
 					</CardFooter>
 				</Card>
 			</Page>

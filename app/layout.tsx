@@ -5,7 +5,6 @@ import { ClientStorage } from '../common/classes/storage';
 import userStore from '../stores/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-notifications-component/dist/theme.css';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

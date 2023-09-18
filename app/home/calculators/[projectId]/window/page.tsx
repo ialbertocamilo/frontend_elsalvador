@@ -28,28 +28,27 @@ const WindowPage = () => {
 		projects
 			.getProjectData({ project_id: params?.projectId as string, key: keyName })
 			.then((data: any) => {
-				console.log(data);
 				setInitialData(data.payload);
 			});
 	}, []);
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			crystalType: initialData.crystalType,
-			frameType: initialData.frameType,
-			windowUValue: initialData.windowUValue,
-			uValue1: initialData.uValue1,
-			uValue2: initialData.uValue2,
-			gValue: initialData.gValue,
-			csValue: initialData.csValue,
-			calcGValue: initialData.calcGValue,
-			frameWidth: initialData.frameWidth,
-			longVain: initialData.longVain,
-			highVain: initialData.highVain,
-			areaVain: initialData.areaVain,
-			frameArea: initialData.frameArea,
-			crystalArea: initialData.crystalArea,
-			windowDetailText: initialData.windowDetailText,
+			crystalType: initialData?.crystalType,
+			frameType: initialData?.frameType,
+			windowUValue: initialData?.windowUValue,
+			uValue1: initialData?.uValue1,
+			uValue2: initialData?.uValue2,
+			gValue: initialData?.gValue,
+			csValue: initialData?.csValue,
+			calcGValue: initialData?.calcGValue,
+			frameWidth: initialData?.frameWidth,
+			longVain: initialData?.longVain,
+			highVain: initialData?.highVain,
+			areaVain: initialData?.areaVain,
+			frameArea: initialData?.frameArea,
+			crystalArea: initialData?.crystalArea,
+			windowDetailText: initialData?.windowDetailText,
 		},
 		validateOnChange: true,
 		onSubmit: () => {
@@ -128,7 +127,7 @@ const WindowPage = () => {
 				<Card>
 					<CardBody>
 						<div className='row align-items-end'>
-							<FormGroup className='col-5 my-1'>
+							<FormGroup className='col-4 my-1'>
 								<Label className={'border-2'}>Tipo de acristalamiento</Label>
 								<Input
 									type='text'
@@ -137,7 +136,7 @@ const WindowPage = () => {
 									onChange={handleChange}
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									type='number'
@@ -146,7 +145,7 @@ const WindowPage = () => {
 									onChange={handleChange}
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Valor g</Label>
 								<Input
 									name='gValue'
@@ -155,7 +154,7 @@ const WindowPage = () => {
 									onChange={handleChange}
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Valor CS</Label>
 								<Input
 									name='csValue'
@@ -166,7 +165,7 @@ const WindowPage = () => {
 									type='number'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Cálculo valor g</Label>
 								<Input
 									name='calcGValue'
@@ -177,7 +176,7 @@ const WindowPage = () => {
 							</FormGroup>
 						</div>
 						<div className='row align-items-end'>
-							<FormGroup className='col-5 my-1'>
+							<FormGroup className='col-4 my-1'>
 								<Label className={'border-2'}>Tipo de marco</Label>
 								<Input
 									name='frameType'
@@ -186,7 +185,7 @@ const WindowPage = () => {
 									type='text'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									name='uValue2'
@@ -195,7 +194,7 @@ const WindowPage = () => {
 									type='number'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1'>
+							<FormGroup className='col-2 my-1'>
 								<Label className={'border-2'}>Ancho de marco (metros)</Label>
 								<Input
 									name='frameWidth'
@@ -209,7 +208,7 @@ const WindowPage = () => {
 							</FormGroup>
 						</div>
 						<div className='row align-items-end'>
-							<FormGroup className='col-5 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Valor U de ventana</Label>
 								<Input
 									name='windowUValue'
@@ -219,7 +218,7 @@ const WindowPage = () => {
 								/>
 							</FormGroup>
 
-							<FormGroup className='col-1 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Largo vano (metros)</Label>
 								<Input
 									name='longVain'
@@ -231,7 +230,7 @@ const WindowPage = () => {
 									type='number'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Alto vano (metros)</Label>
 								<Input
 									name='highVain'
@@ -243,7 +242,7 @@ const WindowPage = () => {
 									type='number'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Area vano (m2)</Label>
 								<Input
 									name='areaVain'
@@ -255,7 +254,7 @@ const WindowPage = () => {
 									type='text'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Area marco (m2)</Label>
 								<Input
 									name='frameArea'
@@ -264,7 +263,7 @@ const WindowPage = () => {
 									type='text'
 								/>
 							</FormGroup>
-							<FormGroup className='col-1 my-1' id='propietario'>
+							<FormGroup className='col-2 my-1' id='propietario'>
 								<Label className={'border-2'}>Area cristal (m2)</Label>
 								<Input
 									name='crystalArea'
@@ -281,7 +280,7 @@ const WindowPage = () => {
 					<CardBody>
 						<CustomEditor
 							placeholder='Detalle de ventana tipo'
-							initialText={initialData.customEditorText}
+							initialText={initialData?.customEditorText}
 							setText={(e: string) => {
 								setCustomEditorText(e);
 							}}
