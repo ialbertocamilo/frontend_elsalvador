@@ -12,11 +12,17 @@ import {
 import { useParams } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { useProjects } from '../../../../../services/project/project.service';
+import Input from '../../../../../components/bootstrap/forms/Input';
+import { DownloadFileBtn } from '../../../../../components/buttons/DownloadFileBtn';
+import UploadFileBtn from '../../../../../components/buttons/UploadFileBtn';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
 	const params = useParams();
 	const [data, setData] = useState<any>({});
+	function saveFile() {
+		console.log('save file');
+	}
 
 	return (
 		<PageWrapper>
@@ -46,18 +52,13 @@ const ProportionPage = () => {
 						<CardBody>
 							<h4>Documentación entregada</h4>
 							<span>Planos de Fachada con dimensiones de ventanas y generales</span>
-							<div className='align-items-center text-center mt-2'>
-								<Button
-									color='info'
-									isLight
-									tag='a'
-									to='/somefile.txt'
-									target='_blank'
-									icon='AttachFile'
-									download>
-									Adjuntar
-								</Button>
-							</div>
+							<br />
+							<UploadFileBtn
+								projectId={params?.projectId as string}
+								keyName={keyName}
+							/>
+							<br />
+							<DownloadFileBtn urlToFile='' />
 						</CardBody>
 					</Card>
 				</div>

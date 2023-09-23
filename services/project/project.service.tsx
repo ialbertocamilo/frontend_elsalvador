@@ -85,6 +85,21 @@ export function useProjects() {
 		return null;
 	}
 
+	async function uploadFile(projectId: string, file: File, key: string) {
+		const response = await axiosService().post(
+			`/projects/save-file`,
+			{ project_id: projectId, project_file: file, key },
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			},
+		);
+		if (response.data) return response.data;
+
+		return null;
+	}
+
 	return {
 		searchProject,
 		getProject,
@@ -93,5 +108,6 @@ export function useProjects() {
 		saveProject,
 		saveProjectData,
 		getProjectData,
+		uploadFile,
 	};
 }

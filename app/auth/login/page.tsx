@@ -74,9 +74,7 @@ const Login = () => {
 		},
 		validateOnChange: false,
 		onSubmit: async (values) => {
-			console.log('logeando');
 			const result = await login(values.loginUsername, values.loginPassword);
-
 			if (result) {
 				ClientStorage.saveUser(result);
 				router.replace(RoutesList.projects);
@@ -84,6 +82,11 @@ const Login = () => {
 		},
 	});
 
+	function keyPress(ev: KeyboardEvent) {
+		if (ev.code == 'Enter') {
+			formik.submitForm();
+		}
+	}
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	return (
@@ -215,6 +218,7 @@ const Login = () => {
 														isValid={formik.isValid}
 														onChange={formik.handleChange}
 														onBlur={formik.handleBlur}
+														onKeyPress={keyPress}
 													/>
 												</FormGroup>
 											</div>
