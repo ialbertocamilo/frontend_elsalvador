@@ -100,7 +100,16 @@ export function useProjects() {
 		return null;
 	}
 
+	async function getFiles(projectId: string, key: string) {
+		const response = await axiosService().post(`/projects/get-files`, {
+			project_id: projectId,
+			key,
+		});
+		if (response.data) return response.data;
+	}
+
 	return {
+		getFiles,
 		searchProject,
 		getProject,
 		getProjects,

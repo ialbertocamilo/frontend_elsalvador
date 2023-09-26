@@ -6,8 +6,6 @@ import React, { useState } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
 import Button from '../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
-import { CustomEditor } from '../../../../components/extras/CustomEditor';
-import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
 
 const TransmittancePage = () => {
@@ -63,21 +61,6 @@ const TransmittancePage = () => {
 						</CardBody>
 					</Card>
 				</div>
-				<div className='row'>
-					<Card className='col me-2'>
-						<CardBody>
-							<CustomEditor placeholder='Detalle muro tipo' />
-						</CardBody>
-					</Card>
-				</div>
-
-				<SaveProjectButton
-					type={ButtonTypes.projectData}
-					payload={{
-						project_id: params?.projectId as string,
-						payload: {},
-						key: 'key',
-					}}></SaveProjectButton>
 			</Page>
 		</PageWrapper>
 	);

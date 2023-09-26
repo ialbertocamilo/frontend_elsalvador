@@ -15,6 +15,7 @@ import { useProjects } from '../../../../../services/project/project.service';
 import Input from '../../../../../components/bootstrap/forms/Input';
 import { DownloadFileBtn } from '../../../../../components/buttons/DownloadFileBtn';
 import UploadFileBtn from '../../../../../components/buttons/UploadFileBtn';
+import FileUploader from '../../../../../components/extras/FileUploader';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -50,12 +51,10 @@ const ProportionPage = () => {
 							<h4>Documentación entregada</h4>
 							<span>Planos de Fachada con dimensiones de ventanas y generales</span>
 							<br />
-							<UploadFileBtn
+							<FileUploader
 								projectId={params?.projectId as string}
 								keyName={keyName}
 							/>
-							<br />
-							<DownloadFileBtn urlToFile='' />
 						</CardBody>
 					</Card>
 				</div>
