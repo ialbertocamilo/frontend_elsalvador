@@ -20,9 +20,6 @@ const ProportionPage = () => {
 	const keyName = 'proportion';
 	const params = useParams();
 	const [data, setData] = useState<any>({});
-	function saveFile() {
-		console.log('save file');
-	}
 
 	return (
 		<PageWrapper>
