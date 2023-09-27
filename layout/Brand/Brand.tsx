@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Icon from '../../components/icon/Icon';
 import Logo from '../../components/Logo';
 import Link from 'next/link';
+import { RoutesList } from '../../common/constants/default';
 
 interface IBrandProps {
 	asideStatus: boolean;
@@ -13,7 +14,7 @@ const Brand: FC<IBrandProps> = ({ asideStatus, setAsideStatus }) => {
 		<div className='brand'>
 			<div className='brand-logo'>
 				<h1 className='brand-title '>
-					<Link href='../' aria-label='Logo'>
+					<Link href={RoutesList.projects} aria-label='Logo'>
 						<Logo height={32} />
 					</Link>
 				</h1>

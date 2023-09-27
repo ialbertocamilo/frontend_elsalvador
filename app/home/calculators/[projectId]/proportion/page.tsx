@@ -2,8 +2,7 @@
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
 import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
-import React, { useEffect, useState } from 'react';
-import Button from '../../../../../components/bootstrap/Button';
+import React, { useState } from 'react';
 import { ProportionTable } from '../../../../../components/tables/ProportionTable';
 import {
 	ButtonTypes,
@@ -11,10 +10,6 @@ import {
 } from '../../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
-import { useProjects } from '../../../../../services/project/project.service';
-import Input from '../../../../../components/bootstrap/forms/Input';
-import { DownloadFileBtn } from '../../../../../components/buttons/DownloadFileBtn';
-import UploadFileBtn from '../../../../../components/buttons/UploadFileBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 
 const ProportionPage = () => {

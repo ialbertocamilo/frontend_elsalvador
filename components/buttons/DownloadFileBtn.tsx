@@ -3,8 +3,9 @@ import React from 'react';
 
 export interface DownloadFileProps {
 	urlToFile: string;
+	fileName?: string;
 }
-export const DownloadFileBtn = ({ urlToFile }: DownloadFileProps) => {
+export const DownloadFileBtn = ({ urlToFile, fileName }: DownloadFileProps) => {
 	return (
 		<Button
 			color='info'
@@ -14,7 +15,7 @@ export const DownloadFileBtn = ({ urlToFile }: DownloadFileProps) => {
 			target='_blank'
 			icon='Download'
 			download>
-			Descargar
+			Descargar {fileName}
 		</Button>
 	);
 };

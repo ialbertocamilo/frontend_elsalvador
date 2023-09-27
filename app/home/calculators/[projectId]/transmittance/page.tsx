@@ -2,7 +2,7 @@
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
 import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Input from '../../../../../components/bootstrap/forms/Input';
 import Button from '../../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../../components/tables/TransmittanceTable';
@@ -13,11 +13,32 @@ import {
 } from '../../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
+import FileUploader from '../../../../../components/extras/FileUploader';
+import { useProjects } from '../../../../../services/project/project.service';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
 	const params = useParams();
 	const editor = useRef(null);
+	const [wallName, setWallName] = useState('');
+
+	const [data, setData] = useState();
+	const [editorText, setEditorText] = useState('');
+
+	const projects = useProjects();
+	const [initialData, setInitialData] = useState<any>({});
+	useEffect(() => {
+		projects
+			.getProjectData({ project_id: params?.projectId as string, key: keyName })
+			.then((data: any) => {
+				if (data) {
+					setInitialData(data.payload);
+					setData(data?.payload?.data);
+					setWallName(data?.payload?.wallName);
+					setEditorText(data?.payload?.editorText);
+				}
+			});
+	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -34,39 +55,46 @@ const TransmittancePage = () => {
 								<span>Nombre de muro tipo 1</span>
 							</div>
 							<div className='col-md-6 col-sm-12'>
-								<Input placeholder='Ingresa el nombre del muro'></Input>
+								<Input
+									placeholder='Ingresa el nombre del muro'
+									onChange={(e: any) => setWallName(e.target.value)}
+									value={wallName}></Input>
 							</div>
+							RSI 0.13 RSE 0.04
 						</div>
 					</CardBody>
 				</Card>
 				<div className='row align-content-between justify-content-between px-2'>
 					<Card className='col me-2'>
 						<CardBody>
-							<TransmittanceTable />
+							<TransmittanceTable
+								onData={(e: any) => {
+									setData(e);
+								}}
+								data={data}
+							/>
 						</CardBody>
 					</Card>
 					<Card className='col-md-3'>
 						<CardBody>
 							<h4>Documentación entregada</h4>
 							<span>Planos de Fachada con dimensiones de ventanas y generales</span>
-							<div className='align-items-center text-center mt-2'>
-								<Button
-									color='info'
-									isLight
-									tag='a'
-									to='/somefile.txt'
-									target='_blank'
-									icon='AttachFile'
-									download>
-									Adjuntar
-								</Button>
-							</div>
+							<FileUploader
+								projectId={params?.projectId as string}
+								keyName={keyName}
+							/>
 						</CardBody>
 					</Card>
 				</div>
 				<Card>
 					<CardBody>
-						<CustomEditor placeholder='Detalle muro tipo' />
+						<CustomEditor
+							placeholder='Detalle muro tipo'
+							initialText={editorText}
+							setText={(e: string) => {
+								setEditorText(e);
+							}}
+						/>
 					</CardBody>
 				</Card>
 
@@ -75,7 +103,7 @@ const TransmittancePage = () => {
 						<SaveProjectButton
 							payload={{
 								project_id: params?.projectId || '',
-								payload: {},
+								payload: { wallName, data, editorText },
 								key: keyName,
 							}}
 							type={ButtonTypes.projectData}

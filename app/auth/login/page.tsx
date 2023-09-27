@@ -82,7 +82,7 @@ const Login = () => {
 		},
 	});
 
-	function keyPress(ev: KeyboardEvent) {
+	function keyPress(ev: any) {
 		if (ev.code == 'Enter') {
 			formik.submitForm();
 		}

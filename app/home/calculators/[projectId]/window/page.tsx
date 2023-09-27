@@ -14,7 +14,6 @@ import {
 } from '../../../../../components/buttons/SaveProjectButton';
 import { useParams } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
-import Button from '../../../../../components/bootstrap/Button';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 
 const keyName = 'window';
@@ -91,14 +90,7 @@ const WindowPage = () => {
 
 	useEffect(() => {
 		calculateUValue();
-	}, [
-		formik.values.uValue1,
-		formik.values.uValue2,
-		formik.values.longVain,
-		formik.values.highVain,
-		formik.values.frameArea,
-		formik.values.crystalArea,
-	]);
+	}, [formik.values]);
 	const [customEditorText, setCustomEditorText] = useState('');
 
 	function calculateFrameArea() {

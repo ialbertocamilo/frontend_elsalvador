@@ -1,14 +1,15 @@
 import Input from '../bootstrap/forms/Input';
 import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
-import React, { useState } from 'react';
-import { Autosave } from '../extras/Autosave';
+import React, { useEffect, useState } from 'react';
 
-interface Row {
+interface RowProps {
 	data: any;
 	onInputChange: Function;
+	onRemove: Function;
 }
-const Row = ({ data, onInputChange }: Row) => {
+
+const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 	return (
 		<tr>
 			<td className='p-2'>
@@ -71,23 +72,52 @@ const Row = ({ data, onInputChange }: Row) => {
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
-						<Button color='storybook'>-</Button>
+						<Button color='storybook' onClick={(e) => onRemove(e)}>
+							-
+						</Button>
 					</div>
 				</FormGroup>
 			</td>
 		</tr>
 	);
 };
-export const TransmittanceTable = () => {
-	const [row, setRow] = useState([
+
+interface Props {
+	onData?: Function;
+	data?: object;
+}
+
+export const TransmittanceTable = ({ onData, data }: Props) => {
+	const [row, setRow] = useState<any | []>([
 		{ column1: '', column2: '', column3: '', column4: '', column5: '' },
 	]);
-	const handleInputChange = (index: string | number, column: string | number, val: any) => {
+	const [totalThickness, setTotalThickness] = useState(0);
+
+	useEffect(() => {
+		if (data) setRow(data);
+	}, [data]);
+	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
 		// @ts-ignore
 		newRows[index][column] = val;
+		let totalSum = 0;
+		if (column === 'column5') {
+			for (const newRowsKey in newRows) {
+				totalSum += Number(newRows[newRowsKey][column]);
+				setTotalThickness(totalSum);
+			}
+		}
 		setRow(newRows);
+		if (onData) onData(newRows);
 	};
+
+	function handleDelete(id: number) {
+		let result: any = row.map((value: any, index: number) => {
+			if (index != id) return value;
+		});
+		result = result.filter((values: any) => values);
+		setRow(result);
+	}
 
 	function addRow() {
 		setRow([...row, { column1: '', column2: '', column3: '', column4: '', column5: '' }]);
@@ -111,14 +141,59 @@ export const TransmittanceTable = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{row.map((value, index) => (
+					{row.map((value: any, index: number) => (
 						<Row
 							key={index}
 							data={value}
+							onRemove={() => handleDelete(index)}
 							onInputChange={(column: string | number, val: any) =>
 								handleInputChange(index, column, val)
 							}></Row>
 					))}
+					<tr>
+						<td className='p-2'>Porcentaje de superficie parcial</td>
+						<td className='p-2'>
+							<FormGroup>
+								<div className='row'>
+									<Input name='ownerName' type='text' className='col' />
+									<span className='col align-self-center'>%</span>
+								</div>
+							</FormGroup>
+						</td>
+						<td className='p-2'>Porcentaje de superficie parcial 2</td>
+						<td className='p-2'>
+							<FormGroup>
+								<div className='row'>
+									<Input type='text' className='col' />
+									<span className='col align-self-center'>%</span>
+								</div>
+							</FormGroup>
+						</td>
+						<td className='p-2 '>
+							<FormGroup id='width-window'>
+								<div className='row text-center'>
+									<span className='col align-self-center'>{totalThickness}</span>
+									<span className='col align-self-center'>m</span>
+								</div>
+							</FormGroup>
+						</td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td className='p-2'>
+							<FormGroup id='width-window'>
+								<div className='row'>
+									<span>Valor u</span>
+									<Input type='text' className='col bg-info-subtle' />
+									<span className='col align-self-center'>W/m2K</span>
+								</div>
+							</FormGroup>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</>

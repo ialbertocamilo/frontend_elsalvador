@@ -217,6 +217,7 @@ const ProjectsPage = () => {
 									<Input
 										className='my-2'
 										name='levelsNumber'
+										type='number'
 										value={formik.values.levelsNumber}
 										placeholder='Numero de niveles'
 										onChange={formik.handleChange}></Input>
@@ -226,6 +227,7 @@ const ProjectsPage = () => {
 									<Input
 										className='my-2'
 										name='offices'
+										type='number'
 										value={formik.values.offices}
 										placeholder='Numero de oficinas por nivel'
 										onChange={formik.handleChange}></Input>
@@ -235,6 +237,7 @@ const ProjectsPage = () => {
 									<Input
 										className='my-2'
 										name='surface'
+										type='number'
 										value={formik.values.surface}
 										placeholder='Superficie construida m2'
 										onChange={formik.handleChange}></Input>

@@ -2,7 +2,7 @@
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
 import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShadingTable } from '../../../../../components/tables/ShadingTable';
 import { CustomEditor } from '../../../../../components/extras/CustomEditor';
 import Label from '../../../../../components/bootstrap/forms/Label';
@@ -12,10 +12,33 @@ import {
 } from '../../../../../components/buttons/SaveProjectButton';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { useParams } from 'next/navigation';
+import { useProjects } from '../../../../../services/project/project.service';
 
 const keyName = 'shading';
 const ShadingPage = () => {
 	const params = useParams();
+	const projects = useProjects();
+
+	const [textA, setTextA] = useState('');
+	const [textB, setTextB] = useState('');
+	const [textC, setTextC] = useState('');
+	const [textD, setTextD] = useState('');
+	const [data, setData] = useState<any>();
+
+	useEffect(() => {
+		projects
+			.getProjectData({ key: keyName, project_id: params?.projectId as string })
+			.then((data: any) => {
+				if (data.payload) {
+					const payload = data.payload;
+					setTextA(payload.textA);
+					setTextB(payload.textB);
+					setTextC(payload.textC);
+					setTextD(payload.textD);
+					setData(payload.data);
+				}
+			});
+	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -27,7 +50,7 @@ const ShadingPage = () => {
 				</Card>
 				<Card>
 					<CardBody>
-						<ShadingTable />
+						<ShadingTable setData={setData} data={data} />
 					</CardBody>
 				</Card>
 
@@ -39,7 +62,11 @@ const ShadingPage = () => {
 								<Label className={'caption-top '}>
 									Detalle fachada Norte. Sombra en ventanas
 								</Label>
-								<CustomEditor placeholder='Detalle fachada Norte. Sombra en ventanas' />
+								<CustomEditor
+									placeholder='Detalle fachada Norte. Sombra en ventanas'
+									setText={setTextA}
+									initialText={textA}
+								/>
 							</CardBody>
 						</Card>
 						<Card>
@@ -47,23 +74,36 @@ const ShadingPage = () => {
 								<Label className={'caption-top '}>
 									Detalle fachada Este. Sombra en ventanas
 								</Label>
-								<CustomEditor placeholder='Detalle fachada Este. Sombra en ventanas' />
+								<CustomEditor
+									placeholder='Detalle fachada Este. Sombra en ventanas'
+									setText={setTextB}
+									initialText={textB}
+								/>
+								{JSON.stringify(setTextB)}
 							</CardBody>
 						</Card>
 						<Card>
-							<Label className={'caption-top '}>
-								Detalle fachada Sur. Sombra en ventanas
-							</Label>
 							<CardBody>
-								<CustomEditor placeholder='Detalle fachada Sur. Sombra en ventanas' />
+								<Label className={'caption-top '}>
+									Detalle fachada Sur. Sombra en ventanas
+								</Label>
+								<CustomEditor
+									initialText={textC}
+									placeholder='Detalle fachada Sur. Sombra en ventanas'
+									setText={setTextC}
+								/>
 							</CardBody>
 						</Card>
 						<Card>
-							<Label className={'caption-top '}>
-								Detalle fachada Oeste. Sombra en ventanas
-							</Label>
 							<CardBody>
-								<CustomEditor placeholder='Detalle fachada Oeste. Sombra en ventanas' />
+								<Label className={'caption-top '}>
+									Detalle fachada Oeste. Sombra en ventanas
+								</Label>
+								<CustomEditor
+									placeholder='Detalle fachada Oeste. Sombra en ventanas'
+									initialText={textD}
+									setText={setTextD}
+								/>
 							</CardBody>
 						</Card>
 					</CardBody>
@@ -74,7 +114,13 @@ const ShadingPage = () => {
 						<SaveProjectButton
 							payload={{
 								project_id: params?.projectId || '',
-								payload: {},
+								payload: {
+									textA,
+									textB,
+									textC,
+									textD,
+									data,
+								},
 								key: keyName,
 							}}
 							type={ButtonTypes.projectData}

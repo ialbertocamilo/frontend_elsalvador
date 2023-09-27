@@ -12,7 +12,6 @@ interface UploadFileBtnProps {
 export const UploadFileBtn = ({ projectId, keyName }: UploadFileBtnProps) => {
 	const projects = useProjects();
 	function uploadFile(ev: React.ChangeEvent<HTMLInputElement>) {
-		console.log(ev.currentTarget.files);
 		if (ev.currentTarget.files) {
 			const file = ev.currentTarget.files[0];
 			projects.uploadFile(projectId, file, keyName).then((data) => {
