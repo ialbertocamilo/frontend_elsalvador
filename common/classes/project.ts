@@ -12,8 +12,6 @@ export class ProjectRequest {
 	address?: string;
 	municipality?: string;
 	energy_advisor?: string;
-	latitude?: number;
-	longitude?: number;
 	levels?: number;
 	offices?: number;
 	surface?: number;

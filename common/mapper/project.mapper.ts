@@ -17,8 +17,6 @@ export class ProjectMapper {
 			address: form.address,
 			municipality: form.municipality,
 			energy_advisor: form.energyAdvisor,
-			latitude: 41.40338,
-			longitude: 2.17403,
 			levels: form.levelsNumber,
 			offices: form.offices,
 			surface: form.surface,
