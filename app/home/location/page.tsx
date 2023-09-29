@@ -9,11 +9,12 @@ import Textarea from '../../../components/bootstrap/forms/Textarea';
 import MapLibre from '../../../components/maps/MapLibre';
 import LocationSearch from '../../../components/search/LocationSearch';
 import { SearchForTextResult } from '@aws-sdk/client-location';
-import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
+import useGeoposition from '../../../hooks/useGeoposition';
 
 const LocationPage = () => {
 	const [location, setLocation] = useState<SearchForTextResult>();
 
+	const { geojson } = useGeoposition();
 	return (
 		<PageWrapper>
 			<Page>
@@ -34,7 +35,7 @@ const LocationPage = () => {
 					<CardBody>
 						<div className='row'>
 							<div className='col'>
-								<MapLibre location={location} />
+								<MapLibre location={location} geoJson={geojson} />
 							</div>
 							<div className='col'>
 								<Label htmlFor='location'>Datos de ubicaciones encontradas</Label>

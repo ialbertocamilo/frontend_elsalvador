@@ -35,7 +35,8 @@ export function useProjects() {
 			'Se ha guardado correctamente.',
 			'success',
 		);
-		return true;
+		const { data } = response?.data;
+		return new ProjectEntity(data);
 	}
 
 	async function updateProject(params: IProjectFormType) {

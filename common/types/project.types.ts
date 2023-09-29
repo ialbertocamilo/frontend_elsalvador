@@ -3,9 +3,15 @@ import { ProjectEntity } from '../classes/project';
 export interface IProjectFormType {
 	id?: string;
 	ownerName?: string;
+	ownerLastName?: string;
 	projectName?: string;
+	profession?: string;
+	nationality?: string;
 	directorName?: string;
 	designerName?: string;
+	department?: string;
+	phone?: string;
+	email?: string;
 	address?: string;
 	municipality?: string;
 	energyAdvisor?: string;

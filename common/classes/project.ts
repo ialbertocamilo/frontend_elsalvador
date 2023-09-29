@@ -1,6 +1,12 @@
 export class ProjectRequest {
 	project_name?: string;
 	owner_name?: string;
+	owner_lastname?: string;
+	profession?: string;
+	nationality?: string;
+	email?: string;
+	phone?: string;
+	department?: string;
 	designer_name?: string;
 	project_director?: string;
 	address?: string;
@@ -13,21 +19,7 @@ export class ProjectRequest {
 	surface?: number;
 	is_public?: boolean;
 
-	constructor(params: {
-		owner_name?: string;
-		address?: string;
-		surface?: number;
-		latitude?: number;
-		offices?: number;
-		municipality?: string;
-		energy_advisor?: string;
-		designer_name?: string;
-		project_name?: string;
-		project_director?: string;
-		levels?: number;
-		longitude?: number;
-		is_public?: boolean;
-	}) {
+	constructor(params: unknown) {
 		Object.assign(this, params);
 	}
 }
@@ -37,6 +29,12 @@ export class ProjectEntity {
 	user_id?: number;
 	project_name?: string;
 	owner_name?: string;
+	owner_lastname?: string;
+	profession?: string;
+	nationality?: string;
+	email?: string;
+	phone?: string;
+	department?: string;
 	designer_name?: string;
 	project_director?: string;
 	address?: string;

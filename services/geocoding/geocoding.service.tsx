@@ -5,6 +5,7 @@ import {
 	SearchPlaceIndexForTextCommand,
 } from '@aws-sdk/client-location';
 import { useState } from 'react';
+import axiosService from '../../lib/axios';
 
 export const useGeocodingService = () => {
 	const apiKey = process.env.MAP_API_KEY as string;
@@ -59,8 +60,15 @@ export const useGeocodingService = () => {
 		return null;
 	}
 
+	async function getGeoJson() {
+		const response = await axiosService().get(`/map/geojson`);
+		if (response.status === 200) return response.data;
+		return null;
+	}
+
 	return {
 		findLocation,
 		findLocationByPosition,
+		getGeoJson,
 	};
 };
