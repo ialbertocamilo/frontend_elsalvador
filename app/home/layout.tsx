@@ -12,6 +12,7 @@ import steps, { styles } from '../steps';
 import App from '../../layout/App/App';
 import AsideRoutes from '../../layout/Aside/AsideRoutes';
 import Wrapper from '../../layout/Wrapper/Wrapper';
+import { ReactNotifications } from 'react-notifications-component';
 // eslint-disable-next-line react/function-component-definition
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	getOS();
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<ThemeContextProvider>
 			<ThemeProvider theme={theme}>
+				<ReactNotifications />
 				<ToastProvider components={{ ToastContainer, Toast }}>
 					<TourProvider
 						steps={steps}

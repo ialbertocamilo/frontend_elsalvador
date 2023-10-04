@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import showNotification from '../components/extras/showNotification';
 import Icon from '../components/icon/Icon';
 import { ClientStorage } from '../common/classes/storage';
-import { useRouter } from 'next/navigation';
 
 const axiosService = () => {
 	const user = ClientStorage.getUser();
@@ -21,25 +20,31 @@ const axiosService = () => {
 		(value) => value,
 		(error: AxiosError) => {
 			if (error?.response?.status == 400) {
-				showNotification(
-					<span className='d-flex align-items-center'>
-						<Icon icon='Info' size='lg' className='me-1' />
-						<span>Error de validación</span>
-					</span>,
-					JSON.stringify(error.response.data),
-					'danger',
-				);
-			}
-			if (error?.response?.status == 401) {
-				showNotification(
-					<span className='d-flex align-items-center'>
-						<Icon icon='Info' size='lg' className='me-1' />
-						<span>Error de autenticación</span>
-					</span>,
-					'Credenciales incorrectas',
-					'danger',
-				);
-				ClientStorage.deleteAll();
+				if (error?.response?.data) {
+					const dataError = Object.values(error?.response?.data) as unknown as string[];
+					if (dataError.length > 0) {
+						dataError.forEach((value) =>
+							showNotification(
+								<span className='d-flex align-items-center'>
+									<Icon icon='Info' size='lg' className='me-1' />
+									<span>Error de validación</span>
+								</span>,
+								value,
+								'danger',
+							),
+						);
+					} else {
+						showNotification(
+							<span className='d-flex align-items-center'>
+								<Icon icon='Info' size='lg' className='me-1' />
+								<span>Error de validación</span>
+							</span>,
+							JSON.stringify(error.response.data),
+							'danger',
+						);
+					}
+				}
+				return error;
 			}
 			if (error?.response?.status == 500) {
 				showNotification(

@@ -38,7 +38,7 @@ const DefaultAside = () => {
 					</>
 				)}
 
-				{asideStatus && doc && <div className='p-4'>Documentation</div>}
+				{asideStatus && doc}
 			</AsideBody>
 			<AsideFoot>
 				<div className='row '>

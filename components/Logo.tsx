@@ -10,9 +10,10 @@ interface ILogoProps {
 const Logo: FC<ILogoProps> = ({ width, height }) => {
 	return (
 		<Image
-			src='https://elsalvadorpublicfiles.s3.us-west-2.amazonaws.com/WhatsApp+Image+2023-09-05+at+14.41.01.jpg'
+			src='/logo1.png'
 			width={height !== 854 && !!height ? height * (2155 / 854) : width}
 			height={width !== 2155 && !!width ? width * (854 / 2155) : height}
+			className='bg-white'
 			alt='logo'
 		/>
 	);

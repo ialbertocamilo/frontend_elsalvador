@@ -4,7 +4,6 @@ import Page from '../../../../../layout/Page/Page';
 import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
 import React, { useEffect, useRef, useState } from 'react';
 import Input from '../../../../../components/bootstrap/forms/Input';
-import Button from '../../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../../components/tables/TransmittanceTable';
 import { CustomEditor } from '../../../../../components/extras/CustomEditor';
 import {
@@ -23,6 +22,7 @@ const TransmittancePage = () => {
 	const [wallName, setWallName] = useState('');
 
 	const [data, setData] = useState();
+	const [dataResult, setDataResult] = useState();
 	const [editorText, setEditorText] = useState('');
 
 	const projects = useProjects();
@@ -34,6 +34,7 @@ const TransmittancePage = () => {
 				if (data) {
 					setInitialData(data.payload);
 					setData(data?.payload?.data);
+					setDataResult(data?.payload?.dataResult);
 					setWallName(data?.payload?.wallName);
 					setEditorText(data?.payload?.editorText);
 				}
@@ -71,6 +72,11 @@ const TransmittancePage = () => {
 								onData={(e: any) => {
 									setData(e);
 								}}
+								onDataResult={(e: any) => {
+									console.log(e);
+									setDataResult(e);
+								}}
+								dataResult={dataResult}
 								data={data}
 							/>
 						</CardBody>
@@ -103,7 +109,7 @@ const TransmittancePage = () => {
 						<SaveProjectButton
 							payload={{
 								project_id: params?.projectId || '',
-								payload: { wallName, data, editorText },
+								payload: { wallName, data, dataResult, editorText },
 								key: keyName,
 							}}
 							type={ButtonTypes.projectData}

@@ -40,7 +40,17 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	}, []);
 	return (
 		<>
-			<UploadFileBtn projectId={projectId} keyName={keyName} />
+			<UploadFileBtn
+				projectId={projectId}
+				keyName={keyName}
+				checkUpload={(check: { file_name: string; original_url: string }) => {
+					if (check) {
+						setHasDownload(true);
+						setDownloadUrl(check.original_url);
+						setFileName(check.file_name);
+					}
+				}}
+			/>
 			<br />
 			{hasDownload && <DownloadFileBtn urlToFile={downloadUrl} fileName={fileName} />}
 		</>

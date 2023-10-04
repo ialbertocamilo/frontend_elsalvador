@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import classNames from 'classnames';
 import useDarkMode from '../../hooks/useDarkMode';
 import Collapse from '../../components/bootstrap/Collapse';
 import { NavigationLine } from '../Navigation/Navigation';
@@ -8,7 +7,10 @@ import Icon from '../../components/icon/Icon';
 import useNavigationItemHandle from '../../hooks/useNavigationItemHandle';
 
 import { useRouter } from 'next/navigation';
-import Popovers from '../../components/bootstrap/Popovers';
+import { logout } from '../../services/auth/authentication';
+import { ClientStorage } from '../../common/classes/storage';
+import { RoutesList } from '../../common/constants/default';
+import userStore from '../../stores/userStore';
 
 const User = () => {
 	const router = useRouter();
@@ -22,25 +24,29 @@ const User = () => {
 
 	const { t } = useTranslation(['translation', 'menu']);
 
+	const doLogout = useCallback(() => {
+		logout().then((r) => {
+			if (r) {
+				setTimeout(() => {
+					ClientStorage.deleteAll();
+					setUser('');
+					router.replace(RoutesList.login);
+				}, 800);
+			}
+		});
+	}, []);
 	return (
 		<>
 			<Collapse isOpen={collapseStatus} className='user-menu'>
 				<nav aria-label='aside-bottom-user-menu'>
 					<div className='navigation'>
-						<div
-							role='presentation'
-							className='navigation-item cursor-pointer'
-							onClick={() =>
-								router.push(
-									`/`,
-									// @ts-ignore
-									handleItem(),
-								)
-							}>
+						<div role='presentation' className='navigation-item cursor-pointer'>
 							<span className='navigation-link navigation-link-pill'>
 								<span className='navigation-link-info'>
 									<Icon icon='AccountBox' className='navigation-icon' />
-									<span className='navigation-text'>Perfil</span>
+									<span className='navigation-text'>
+										Perfil de {userStore.value.name}
+									</span>
 								</span>
 							</span>
 						</div>
@@ -69,18 +75,13 @@ const User = () => {
 				<NavigationLine />
 				<nav aria-label='aside-bottom-user-menu-2'>
 					<div className='navigation'>
-						<div
-							role='presentation'
-							className='navigation-item cursor-pointer'
-							onClick={() => {
-								if (setUser) {
-									setUser('');
-								}
-							}}>
-							<span className='navigation-link navigation-link-pill'>
+						<div role='presentation' className='navigation-item cursor-pointer'>
+							<span
+								className='navigation-link navigation-link-pill'
+								onClick={doLogout}>
 								<span className='navigation-link-info'>
 									<Icon icon='Logout' className='navigation-icon' />
-									<span className='navigation-text'>Logout</span>
+									<span className='navigation-text'>Cerrar sesión</span>
 								</span>
 							</span>
 						</div>

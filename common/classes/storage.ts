@@ -1,6 +1,6 @@
 import { AuthUser } from './user';
 import { StorageTypes } from '../constants/default';
-import { UserStorage } from '../types/user.types';
+import { IUserStorage } from '../types/user.types';
 import showNotification from '../../components/extras/showNotification';
 
 export class ClientStorage {
@@ -8,9 +8,9 @@ export class ClientStorage {
 		localStorage.setItem(StorageTypes.user, JSON.stringify(user));
 	}
 
-	static getUser(): UserStorage | null {
+	static getUser(): IUserStorage | null {
 		const data = localStorage.getItem(StorageTypes.user);
-		if (data) return JSON.parse(data) as UserStorage;
+		if (data) return JSON.parse(data) as IUserStorage;
 		return null;
 	}
 	static deleteAll() {

@@ -1,14 +1,14 @@
-import { UserStorage } from '../common/types/user.types';
+import { IUserStorage } from '../common/types/user.types';
 import { makeAutoObservable } from 'mobx';
 
 export class UserStore {
-	value: UserStorage = { name: '', email: '', token: '', id: '' };
+	value: IUserStorage = { name: '', email: '', token: '', id: '' };
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	setUser(user: UserStorage) {
+	setUser(user: IUserStorage) {
 		Object.assign(this.value, user);
 	}
 }

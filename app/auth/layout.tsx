@@ -1,6 +1,5 @@
+'use client';
 import React from 'react';
-import PageWrapper from '../../layout/PageWrapper/PageWrapper';
-
 export interface IPageProps {
 	children: any;
 }

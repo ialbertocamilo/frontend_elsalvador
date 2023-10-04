@@ -6,6 +6,7 @@ import userStore from '../stores/userStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';
 import 'react-notifications-component/dist/theme.css';
+import Header from '../layout/Header/Header';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter();

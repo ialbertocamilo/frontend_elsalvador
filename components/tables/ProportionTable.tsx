@@ -25,7 +25,6 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 				<Input
 					placeholder='Ingresar texto'
 					value={data.column1}
-					defaultValue={''}
 					onChange={(e: any) => onInputChange('column1', e.target.value)}></Input>
 			</td>
 			<td className='p-2'>
@@ -53,7 +52,6 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							type='number'
 							className='me-2'
 							value={data.column3}
-							defaultValue={''}
 							onChange={(e: any) => onInputChange('column3', e.target.value)}
 						/>
 						<span className='col align-self-center '>m</span>
@@ -63,7 +61,12 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
-						<Input type='text' className='me-2' value={data.column4} />
+						<Input
+							type='text'
+							className='me-2 bg-info-subtle'
+							value={data.column4}
+							readOnly
+						/>
 						<span className='col align-self-center '>%</span>
 					</div>
 				</FormGroup>
@@ -213,6 +216,7 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 										type='text'
 										className='me-2 bg-info-subtle text-black'
 										value={totalPercentage}
+										readOnly
 									/>
 									<span className='col align-self-center '>%</span>
 								</div>

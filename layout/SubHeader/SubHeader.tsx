@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useMeasure } from 'react-use';
 import useRoot from '../../hooks/useRoot';
+import { ReactNotifications } from 'react-notifications-component';
 
 interface ISubHeaderLeftProps {
 	children: ReactNode;

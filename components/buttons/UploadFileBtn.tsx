@@ -8,8 +8,9 @@ import Icon from '../icon/Icon';
 interface UploadFileBtnProps {
 	projectId: string;
 	keyName: string;
+	checkUpload?: Function;
 }
-export const UploadFileBtn = ({ projectId, keyName }: UploadFileBtnProps) => {
+export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtnProps) => {
 	const projects = useProjects();
 	function uploadFile(ev: React.ChangeEvent<HTMLInputElement>) {
 		if (ev.currentTarget.files) {
@@ -24,6 +25,7 @@ export const UploadFileBtn = ({ projectId, keyName }: UploadFileBtnProps) => {
 						'El archivo se subió exitosamente.',
 						'info',
 					);
+					if (checkUpload) checkUpload(data);
 				}
 			});
 		}

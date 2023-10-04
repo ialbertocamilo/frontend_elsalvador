@@ -11,6 +11,7 @@ export enum RoutesList {
 	calculatorTransmittance = '/home/calculators/transmittance',
 	calculatorWindow = '/home/calculators/window',
 	calculatorShading = '/home/calculators/shading',
+	login = '/auth/login',
 }
 
 export const RoutesListWithParams = {
