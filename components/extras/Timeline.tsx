@@ -31,6 +31,7 @@ export const TimelineItem = forwardRef<HTMLDivElement, ITimelineItemProps>(
 );
 TimelineItem.displayName = 'TimelineItem';
 TimelineItem.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	color: PropTypes.oneOf([
@@ -66,6 +67,7 @@ const Timeline = forwardRef<HTMLDivElement, ITimelineProps>(
 );
 Timeline.displayName = 'Timeline';
 Timeline.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

@@ -56,6 +56,7 @@ export const List = forwardRef<HTMLUListElement, IListProps>(
 List.displayName = 'List';
 List.propTypes = {
 	id: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node,
 	className: PropTypes.string,
 	ariaLabelledby: PropTypes.string,
@@ -313,6 +314,7 @@ export const Item: FC<IItemProps> = ({
 	return <li className='navigation-item'>{WITHOUT_CHILD}</li>;
 };
 Item.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 	to: PropTypes.string,
 	title: PropTypes.string,
@@ -368,6 +370,7 @@ export const NavigationTitle: FC<INavigationTitleProps> = ({ className, children
 	);
 };
 NavigationTitle.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

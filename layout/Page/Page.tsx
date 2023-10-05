@@ -26,6 +26,7 @@ const Page = forwardRef<HTMLDivElement, IPageProps>(
 );
 Page.displayName = 'Page';
 Page.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	// @ts-ignore
 	container: PropTypes.oneOfType([

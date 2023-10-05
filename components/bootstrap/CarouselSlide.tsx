@@ -15,6 +15,7 @@ const CarouselSlide: FC<ICarouselSlideProps> = ({ children, background }) => {
 	);
 };
 CarouselSlide.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 	background: PropTypes.string,
 };

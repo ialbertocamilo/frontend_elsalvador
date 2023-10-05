@@ -52,7 +52,7 @@ export const AvatarGroup: FC<IAvatarGroupProps> = ({ className, children, size }
 };
 AvatarGroup.propTypes = {
 	// @ts-ignore
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 	className: PropTypes.string,
 	size: PropTypes.number,
 };

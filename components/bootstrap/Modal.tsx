@@ -39,6 +39,7 @@ export const ModalTitle = forwardRef<HTMLHeadingElement, IModalTitleProps>(
 ModalTitle.displayName = 'ModalTitle';
 ModalTitle.propTypes = {
 	id: PropTypes.string.isRequired,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span']),
@@ -74,6 +75,7 @@ export const ModalHeader = forwardRef<HTMLDivElement, IModalHeaderProps>(
 );
 ModalHeader.displayName = 'ModalHeader';
 ModalHeader.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	/**
@@ -102,6 +104,7 @@ export const ModalBody = forwardRef<HTMLDivElement, IModalBodyProps>(
 );
 ModalBody.displayName = 'ModalBody';
 ModalBody.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -125,6 +128,7 @@ export const ModalFooter = forwardRef<HTMLDivElement, IModalFooterProps>(
 );
 ModalFooter.displayName = 'ModalFooter';
 ModalFooter.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -264,6 +268,7 @@ Modal.propTypes = {
 	/**
 	 * ModalHeader, ModalBody and ModalFooter
 	 */
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	id: PropTypes.string,

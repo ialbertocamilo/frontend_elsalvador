@@ -112,6 +112,7 @@ const Item: FC<IItemProps> = ({
 		!children &&
 		!hide &&
 		((typeof to === 'string' && ANCHOR_LINK_PATTERN.test(to) && (
+			// @ts-ignore
 			<NavHashLink className={LINK_CLASS} to={to} onClick={linkHandleClick}>
 				{INNER}
 			</NavHashLink>
@@ -254,6 +255,7 @@ const Item: FC<IItemProps> = ({
 	return <li className='navigation-item'>{WITHOUT_CHILD}</li>;
 };
 Item.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 	to: PropTypes.string,
 	title: PropTypes.string,

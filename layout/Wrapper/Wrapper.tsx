@@ -27,6 +27,7 @@ export const WrapperContainer: FC<IWrapperContainerProps> = ({ children, classNa
 	);
 };
 WrapperContainer.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

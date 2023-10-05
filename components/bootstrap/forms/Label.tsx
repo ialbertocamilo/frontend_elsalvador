@@ -49,6 +49,7 @@ const Label: FC<ILabelProps> = ({
 Label.propTypes = {
 	htmlFor: PropTypes.string,
 	className: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node,
 	isColForLabel: PropTypes.bool,
 	isHidden: PropTypes.bool,

@@ -37,6 +37,7 @@ export const ListGroupItem = forwardRef<HTMLDivElement, IListGroupItemProps>(
 );
 ListGroupItem.displayName = 'ListGroupItem';
 ListGroupItem.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.oneOf(['section', 'div', 'li', 'a', 'button', 'label']),
@@ -97,6 +98,7 @@ const ListGroup = forwardRef<HTMLDivElement, IListGroupProps>(
 );
 ListGroup.displayName = 'ListGroup';
 ListGroup.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,

@@ -26,6 +26,7 @@ const ScrollspyNav: FC<IScrollspyNavProps> = ({
 	}, [activeElement]);
 
 	const INNER = (
+		// @ts-ignore
 		<Scrollspy
 			items={items}
 			offset={offset}
@@ -49,6 +50,7 @@ const ScrollspyNav: FC<IScrollspyNavProps> = ({
 ScrollspyNav.propTypes = {
 	// @ts-ignore
 	items: PropTypes.arrayOf(PropTypes.string).isRequired,
+	// @ts-ignore
 	children: PropTypes.node,
 	offset: PropTypes.number,
 	tag: PropTypes.string,

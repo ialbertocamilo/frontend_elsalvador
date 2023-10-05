@@ -27,6 +27,7 @@ FormText.propTypes = {
 	/**
 	 * Here you can use string, component or html element
 	 */
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 };
 FormText.defaultProps = {

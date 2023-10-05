@@ -44,6 +44,7 @@ InputGroupText.displayName = 'InputGroupText';
 InputGroupText.propTypes = {
 	tag: PropTypes.oneOf(['span', 'div', 'label']),
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	id: PropTypes.string,
 	className: PropTypes.string,
@@ -145,6 +146,7 @@ const InputGroup = forwardRef<HTMLDivElement, IInputGroupProps>(
 );
 InputGroup.displayName = 'InputGroup';
 InputGroup.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	id: PropTypes.string,

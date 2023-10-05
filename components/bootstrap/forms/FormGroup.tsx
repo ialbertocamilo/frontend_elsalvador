@@ -82,6 +82,7 @@ const FormGroup: FC<IFormGroupProps> = ({
 };
 FormGroup.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	labelClassName: PropTypes.string,

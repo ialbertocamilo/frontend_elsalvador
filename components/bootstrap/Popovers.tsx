@@ -149,11 +149,13 @@ Popovers.propTypes = {
 	 * String, HTML or React Component (`<Component {...props} />`)
 	 */
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	title: PropTypes.string,
 	/**
 	 * String, HTML or React Component
 	 */
+	// @ts-ignore
 	desc: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	/**
 	 * Position of popovers

@@ -18,6 +18,7 @@ const TagWrapper = forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLFormEleme
 TagWrapper.displayName = 'TagWrapper';
 TagWrapper.propTypes = {
 	tag: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 };
 TagWrapper.defaultProps = {

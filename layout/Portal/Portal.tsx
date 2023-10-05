@@ -23,6 +23,7 @@ const Portal: FC<IPortalProps> = ({ id, children }) => {
 	return null;
 };
 Portal.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	id: PropTypes.string,
 };

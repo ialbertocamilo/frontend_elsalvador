@@ -78,6 +78,7 @@ ChecksGroup.propTypes = {
 	id: PropTypes.string,
 	className: PropTypes.string,
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	isInline: PropTypes.bool,
 	isTouched: PropTypes.bool,
@@ -215,6 +216,7 @@ Checks.propTypes = {
 	className: PropTypes.string,
 	name: PropTypes.string,
 	type: PropTypes.oneOf(['checkbox', 'radio', 'switch']),
+	// @ts-ignore
 	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	// eslint-disable-next-line react/require-default-props
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

@@ -139,6 +139,7 @@ Progress.propTypes = {
 	 * To use more than one `<Progress />`
 	 */
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node,
 	className: PropTypes.string,
 };

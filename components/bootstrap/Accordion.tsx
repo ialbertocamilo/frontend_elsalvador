@@ -84,6 +84,8 @@ AccordionItem.propTypes = {
 	/**
 	 * Item Content
 	 */
+	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	/**
 	 * Item title icon
@@ -172,6 +174,7 @@ Accordion.propTypes = {
 	 * If you don't want any of them to be active, you can give it "false".
 	 */
 	activeItemId: PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.number]),
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	/**

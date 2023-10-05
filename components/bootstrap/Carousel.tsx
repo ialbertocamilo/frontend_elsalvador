@@ -197,6 +197,7 @@ Carousel.propTypes = {
 			captionText: PropTypes.string,
 		}),
 	),
+	// @ts-ignore
 	children: PropTypes.node,
 	/**
 	 * The current active slide of the carousel

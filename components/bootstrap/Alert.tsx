@@ -20,7 +20,10 @@ export const AlertHeading: FC<IAlertHeadingProps> = ({ className, children, tag,
 		</TagWrapper>
 	);
 };
+
 AlertHeading.propTypes = {
+	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
@@ -54,6 +57,7 @@ export const AlertLink: FC<IAlertLinkProps> = ({ className, children, href, to, 
 	);
 };
 AlertLink.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	href: PropTypes.string,
@@ -140,6 +144,7 @@ const Alert: FC<IAlertProps> = ({
 };
 Alert.propTypes = {
 	borderWidth: PropTypes.oneOf([null, 0, 1, 2, 3, 4, 5]),
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	color: PropTypes.oneOf([

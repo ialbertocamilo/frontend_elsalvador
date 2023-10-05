@@ -78,6 +78,7 @@ export const DropdownToggle: FC<IDropdownToggleProps> = ({
 };
 DropdownToggle.displayName = 'DropdownToggle';
 DropdownToggle.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	isOpen: PropTypes.bool,
 	// @ts-ignore
@@ -185,6 +186,7 @@ export const DropdownMenu: FC<IDropdownMenuProps> = ({
 DropdownMenu.propTypes = {
 	isOpen: PropTypes.bool,
 	setIsOpen: PropTypes.func,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	isAlignmentEnd: PropTypes.bool,
@@ -224,6 +226,7 @@ const ItemWrapper = forwardRef<HTMLLIElement, IItemWrapperProps>(
 );
 ItemWrapper.displayName = 'ItemWrapper';
 ItemWrapper.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -300,6 +303,7 @@ export const DropdownItem = forwardRef<HTMLLIElement, IDropdownItemProps>(
 );
 DropdownItem.displayName = 'DropdownItem';
 DropdownItem.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node,
 	isHeader: PropTypes.bool,
@@ -381,6 +385,7 @@ Dropdown.displayName = 'Dropdown';
 Dropdown.propTypes = {
 	// @ts-ignore
 	tag: PropTypes.string,
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	isOpen: PropTypes.bool,

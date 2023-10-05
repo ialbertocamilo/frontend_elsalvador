@@ -18,6 +18,7 @@ export const HeaderLeft: FC<IHeaderLeftProps> = ({ children, className }) => {
 	return <div className={classNames('header-left', 'col-md', className)}>{children}</div>;
 };
 HeaderLeft.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -42,6 +43,7 @@ export const HeaderRight: FC<IHeaderRightProps> = ({ children, className }) => {
 	);
 };
 HeaderRight.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -178,6 +180,7 @@ const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileM
 	);
 };
 Header.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	hasLeftMobileMenu: PropTypes.bool,
 	hasRightMobileMenu: PropTypes.bool,

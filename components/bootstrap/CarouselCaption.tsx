@@ -17,7 +17,9 @@ const CarouselCaption: FC<ICarouselCaptionProps> = (props) => {
 	);
 };
 CarouselCaption.propTypes = {
+	// @ts-ignore
 	captionHeader: PropTypes.node,
+	// @ts-ignore
 	captionText: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

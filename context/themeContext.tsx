@@ -97,6 +97,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 	return <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>;
 };
 ThemeContextProvider.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 };
 

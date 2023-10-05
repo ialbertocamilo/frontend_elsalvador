@@ -129,6 +129,7 @@ Select.propTypes = {
 	 * If the name value is left blank, the id value is assigned.
 	 */
 	name: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node,
 	ariaLabel: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,

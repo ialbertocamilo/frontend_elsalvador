@@ -72,6 +72,7 @@ PaginationItem.propTypes = {
 	isFirst: PropTypes.bool,
 	isNext: PropTypes.bool,
 	isLast: PropTypes.bool,
+	// @ts-ignore
 	children: PropTypes.node,
 	onClick: PropTypes.func,
 };
@@ -112,6 +113,7 @@ const Pagination = forwardRef<HTMLDivElement, IPaginationProps>(
 Pagination.displayName = 'Pagination';
 Pagination.propTypes = {
 	ariaLabel: PropTypes.string.isRequired,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	size: PropTypes.oneOf(['sm', 'lg']),

@@ -66,6 +66,7 @@ const Spinner = forwardRef<HTMLDivElement, ISpinnerProps>(
 );
 Spinner.displayName = 'Spinner';
 Spinner.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 	tag: PropTypes.oneOf(['div', 'span']),
 	color: PropTypes.oneOf([

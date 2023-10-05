@@ -58,6 +58,7 @@ export const CardLabel = forwardRef<HTMLDivElement, ICardLabelProps>(
 CardLabel.displayName = 'CardLabel';
 CardLabel.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -73,6 +74,7 @@ CardLabel.propTypes = {
 		'light',
 		'dark',
 	]),
+	// @ts-ignore
 	pre: PropTypes.node,
 };
 CardLabel.defaultProps = {
@@ -104,6 +106,7 @@ export const CardActions = forwardRef<HTMLDivElement, ICardActionsProps>(
 );
 CardActions.displayName = 'CardActions';
 CardActions.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -134,6 +137,7 @@ export const CardTitle = forwardRef<HTMLDivElement, ICardTitleProps>(
 );
 CardTitle.displayName = 'CardTitle';
 CardTitle.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -164,6 +168,7 @@ export const CardSubTitle = forwardRef<HTMLDivElement, ICardSubTitleProps>(
 );
 CardSubTitle.displayName = 'CardSubTitle';
 CardSubTitle.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -211,6 +216,7 @@ export const CardHeader = forwardRef<HTMLDivElement, ICardHeaderProps>(
 );
 CardHeader.displayName = 'CardHeader';
 CardHeader.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
@@ -263,6 +269,7 @@ export const CardBody = forwardRef<HTMLDivElement, ICardBodyProps>(
 );
 CardBody.displayName = 'CardBody';
 CardBody.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -294,6 +301,7 @@ export const CardCodeView: FC<ICardCodeViewProps> = memo(
 			);
 		}
 		return (
+			// @ts-ignore
 			<SyntaxHighlighter
 				language={language}
 				style={atomOneLight}
@@ -347,6 +355,7 @@ export const CardFooterLeft = forwardRef<HTMLDivElement, ICardFooterLeftProps>(
 );
 CardFooterLeft.displayName = 'CardFooterLeft';
 CardFooterLeft.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -377,6 +386,7 @@ export const CardFooterRight = forwardRef<HTMLDivElement, ICardFooterRightProps>
 );
 CardFooterRight.displayName = 'CardFooterRight';
 CardFooterRight.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -423,6 +433,7 @@ export const CardFooter = forwardRef<HTMLDivElement, ICardFooterProps>(
 CardFooter.displayName = 'CardFooter';
 CardFooter.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.string,
@@ -463,6 +474,7 @@ CardTabItem.propTypes = {
 	id: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	icon: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 };
 CardTabItem.defaultProps = {
@@ -574,6 +586,7 @@ const Card = forwardRef<HTMLDivElement, ICardProps>(
 );
 Card.displayName = 'Card';
 Card.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	shadow: PropTypes.oneOf([null, 'none', 'sm', 'md', 'lg', '3d']),

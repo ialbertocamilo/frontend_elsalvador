@@ -28,6 +28,7 @@ PageWrapper.displayName = 'PageWrapper';
 PageWrapper.propTypes = {
 	isProtected: PropTypes.bool,
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

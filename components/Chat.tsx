@@ -331,6 +331,7 @@ const Chat: FC<IChatProps> = ({ children, className }) => {
 	);
 };
 Chat.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

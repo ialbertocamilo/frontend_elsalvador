@@ -42,6 +42,7 @@ export const OffCanvasTitle = forwardRef<HTMLHeadingElement, IOffCanvasTitleProp
 OffCanvasTitle.displayName = 'OffCanvasTitle';
 OffCanvasTitle.propTypes = {
 	id: PropTypes.string.isRequired,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span']),
@@ -77,6 +78,7 @@ export const OffCanvasHeader = forwardRef<HTMLDivElement, IOffCanvasHeaderProps>
 );
 OffCanvasHeader.displayName = 'OffCanvasHeader';
 OffCanvasHeader.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	setOpen: PropTypes.func,
@@ -108,6 +110,7 @@ export const OffCanvasBody = forwardRef<HTMLDivElement, IOffCanvasBodyProps>(
 );
 OffCanvasBody.displayName = 'OffCanvasBody';
 OffCanvasBody.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	tag: PropTypes.oneOf(['div', 'span', 'section', 'form']),
@@ -242,6 +245,7 @@ const OffCanvas: FC<IOffCanvasProps> = ({
 };
 OffCanvas.propTypes = {
 	id: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	placement: PropTypes.oneOf(['start', 'top', 'end', 'bottom']),
 	titleId: PropTypes.string,

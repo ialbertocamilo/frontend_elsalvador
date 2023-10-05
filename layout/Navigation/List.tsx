@@ -34,6 +34,7 @@ const List = forwardRef<HTMLUListElement, IListProps>(
 List.displayName = 'List';
 List.propTypes = {
 	id: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node,
 	className: PropTypes.string,
 	ariaLabelledby: PropTypes.string,

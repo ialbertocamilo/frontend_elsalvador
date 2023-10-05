@@ -37,6 +37,7 @@ export const WizardItem: FC<IWizardItemProps> = ({ id, title, children, classNam
 };
 WizardItem.propTypes = {
 	id: PropTypes.string.isRequired,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	title: PropTypes.string,
 	className: PropTypes.string,
@@ -169,6 +170,7 @@ const Wizard: FC<IWizardProps> = ({ children, onSubmit, isHeader, color, stretch
 	);
 };
 Wizard.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	color: PropTypes.oneOf([

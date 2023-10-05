@@ -14,6 +14,7 @@ export const SubHeaderLeft: FC<ISubHeaderLeftProps> = ({ children, className }) 
 	return <div className={classNames('subheader-left', 'col-sm', className)}>{children}</div>;
 };
 SubHeaderLeft.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -31,6 +32,7 @@ export const SubHeaderRight: FC<ISubHeaderRightProps> = ({ children, className }
 	);
 };
 SubHeaderRight.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -75,6 +77,7 @@ const SubHeader: FC<ISubHeaderProps> = ({ children, className }) => {
 	);
 };
 SubHeader.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };

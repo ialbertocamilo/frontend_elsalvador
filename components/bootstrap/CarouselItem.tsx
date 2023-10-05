@@ -130,6 +130,7 @@ CarouselItem.propTypes = {
 	...Transition.propTypes,
 	tag: tagPropType,
 	in: PropTypes.bool,
+	// @ts-ignore
 	children: PropTypes.node,
 	slide: PropTypes.bool,
 	className: PropTypes.string,

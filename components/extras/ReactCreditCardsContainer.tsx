@@ -71,6 +71,7 @@ const ReactCreditCardsContainer: FC<IReactCreditCardsContainerProps> = ({
 };
 ReactCreditCardsContainer.propTypes = {
 	className: PropTypes.string,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	is3dShadow: PropTypes.bool,
 	issuer: PropTypes.string,

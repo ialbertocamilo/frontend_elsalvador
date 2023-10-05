@@ -32,6 +32,7 @@ const ToastHeader: FC<IToastHeaderProps> = ({
 		</div>
 	);
 };
+
 ToastHeader.propTypes = {
 	icon: PropTypes.string,
 	iconColor: PropTypes.oneOf([
@@ -45,6 +46,7 @@ ToastHeader.propTypes = {
 		'light',
 		'dark',
 	]),
+	// @ts-ignore
 	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 	time: PropTypes.string,
 	isDismiss: PropTypes.bool,
@@ -63,6 +65,7 @@ const ToastBody: FC<IToastBodyProps> = ({ children }) => {
 	return <div className='toast-body'>{children}</div>;
 };
 ToastBody.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 };
 
@@ -92,6 +95,7 @@ export const Toast: FC<IToastProps> = ({ children, onDismiss }) => {
 	);
 };
 Toast.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	onDismiss: PropTypes.func.isRequired,
 };
@@ -103,6 +107,7 @@ export const ToastContainer: FC<IToastContainerProps> = ({ children }) => {
 	return <div className='toast-container position-fixed top-0 end-0 p-3'>{children}</div>;
 };
 ToastContainer.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 };
 
@@ -142,7 +147,9 @@ const Toasts: FC<IToastsProps> = ({
 	);
 };
 Toasts.propTypes = {
+	// @ts-ignore
 	title: PropTypes.node.isRequired,
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	icon: PropTypes.string,
 	iconColor: PropTypes.oneOf([

@@ -52,6 +52,7 @@ export const BreadcrumbItem: FC<IBreadcrumbItemProps> = ({
 	);
 };
 BreadcrumbItem.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	ariaLabel: PropTypes.string,
 	className: PropTypes.string,
@@ -143,6 +144,7 @@ const Breadcrumb: FC<IBreadcrumbProps> = ({
 };
 Breadcrumb.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node,
 	tag: PropTypes.oneOf(['nav', 'div', 'section']),
 	listTag: PropTypes.oneOf(['div', 'ol', 'ul']),
@@ -162,6 +164,7 @@ Breadcrumb.propTypes = {
 	/**
 	 * Icon component or string
 	 */
+	// @ts-ignore
 	isToHome: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	/**
 	 * Icon component or string

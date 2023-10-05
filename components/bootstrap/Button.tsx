@@ -52,6 +52,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, IButtonGroupProps>(
 ButtonGroup.displayName = 'ButtonGroup';
 ButtonGroup.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	isToolbar: PropTypes.bool,
@@ -239,6 +240,7 @@ const Button = forwardRef<HTMLAnchorElement, IButtonProps>(
 );
 Button.displayName = 'Button';
 Button.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node,
 	/**
 	 * Button HTML tag

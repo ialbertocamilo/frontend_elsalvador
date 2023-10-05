@@ -128,10 +128,12 @@ Tooltips.propTypes = {
 	/**
 	 * String, HTML or React Component (`<Component {...props} />`)
 	 */
-	children: PropTypes.node.isRequired,
+	// @ts-ignore
+	children: PropTypes.node,
 	/**
 	 * String, HTML or React Component
 	 */
+	// @ts-ignore
 	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 	/**
 	 * Position of tooltips

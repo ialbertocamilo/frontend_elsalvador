@@ -60,6 +60,7 @@ const Badge: FC<IBadgeProps> = ({
 	);
 };
 Badge.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	color: PropTypes.oneOf([

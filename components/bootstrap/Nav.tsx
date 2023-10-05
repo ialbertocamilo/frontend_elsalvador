@@ -23,6 +23,7 @@ export const NavLinkDropdown = forwardRef<HTMLSpanElement, INavLinkDropdownProps
 NavLinkDropdown.displayName = 'NavLinkDropdown';
 NavLinkDropdown.propTypes = {
 	// @ts-ignore
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 };
@@ -67,6 +68,7 @@ export const NavItem = forwardRef<HTMLLIElement, INavItemProps>(
 );
 NavItem.displayName = 'NavItem';
 NavItem.propTypes = {
+	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
 	isActive: PropTypes.bool,
@@ -129,6 +131,7 @@ const Nav = forwardRef<HTMLUListElement, INavProps>(
 );
 Nav.displayName = 'Nav';
 Nav.propTypes = {
+	// @ts-ignore
 	// @ts-ignore
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
