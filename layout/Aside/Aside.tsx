@@ -56,7 +56,7 @@ const Aside: FC<IAsideProps> = ({ children }) => {
 		<>
 			<motion.aside
 				style={mounted ? (asideStyle as MotionStyle) : undefined}
-				className={classNames('bg-primary aside', {
+				className={classNames('bg-primary aside ', {
 					open: mounted && asideStatus,
 					'aside-touch-bar': mounted && hasTouchButton && isModernDesign,
 					'aside-touch-bar-close':

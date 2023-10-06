@@ -13,7 +13,7 @@ const Logo: FC<ILogoProps> = ({ width, height }) => {
 			src='/logo1.png'
 			width={height !== 854 && !!height ? height * (2155 / 854) : width}
 			height={width !== 2155 && !!width ? width * (854 / 2155) : height}
-			className='bg-white'
+			className={'logo'}
 			alt='logo'
 		/>
 	);
