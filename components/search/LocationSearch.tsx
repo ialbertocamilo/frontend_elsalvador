@@ -46,7 +46,6 @@ const LocationSearch = ({ placeholder, goToPlace }: LocationSearchProps) => {
 	useEffect(() => {
 		if (lazyText)
 			geo.findLocation(lazyText).then((data) => {
-				console.log(data);
 				setSearchData(data);
 			});
 	}, [lazyText]);

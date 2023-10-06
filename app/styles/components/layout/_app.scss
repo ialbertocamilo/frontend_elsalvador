@@ -20,3 +20,8 @@
 .logo{
 	filter: brightness(0) invert(1);
 }
+.social-icon{
+	@include aside-close {
+		display: none;
+	}
+}

@@ -22,7 +22,7 @@ export interface IProjectFormType {
 }
 
 export interface IProjectListResponse {
-	current_page: string;
+	current_page: number;
 	data: ProjectEntity[];
 	first_page_url: string;
 	from: number;

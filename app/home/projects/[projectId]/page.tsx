@@ -69,7 +69,7 @@ const GetProject = () => {
 		},
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, public: buttonActive, id: param?.projectId });
-			console.log(values);
+
 			await projects.updateProject(values);
 		},
 		enableReinitialize: true,

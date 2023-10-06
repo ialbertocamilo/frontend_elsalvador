@@ -19,7 +19,7 @@ export function useProjects() {
 
 	async function getProjects(pathParams: string) {
 		const response = await axiosService().get(`/projects?${pathParams}`);
-		return (response.data as IProjectListResponse) || null;
+		return (response.data as ProjectEntity[]) || null;
 	}
 
 	async function saveProject(params: IProjectFormType) {

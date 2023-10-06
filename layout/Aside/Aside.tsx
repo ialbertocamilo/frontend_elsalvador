@@ -49,8 +49,6 @@ const Aside: FC<IAsideProps> = ({ children }) => {
 
 	const { mounted } = useMounted();
 
-	const router = useRouter();
-
 	if (withOutAsideRoutes.find((key) => key.path === pathToRoute(pathname))) return null;
 	return (
 		<>

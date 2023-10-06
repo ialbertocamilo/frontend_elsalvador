@@ -72,11 +72,6 @@ const TransmittancePage = () => {
 								onData={(e: any) => {
 									setData(e);
 								}}
-								onDataResult={(e: any) => {
-									console.log(e);
-									setDataResult(e);
-								}}
-								dataResult={dataResult}
 								data={data}
 							/>
 						</CardBody>

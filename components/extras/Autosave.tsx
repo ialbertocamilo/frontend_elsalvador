@@ -21,7 +21,6 @@ export const Autosave = ({ children, time, endpoint }: AutosaveProps) => {
 			if (endpoint) {
 				console.log('Sending data :', newText);
 			}
-			console.log('guardado  data :', newText);
 
 			showNotification(
 				<span className='d-flex align-items-center'>
