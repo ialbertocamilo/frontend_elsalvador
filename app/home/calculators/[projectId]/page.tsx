@@ -24,7 +24,7 @@ const LocationPage = () => {
 						<div className='row justify-content-center '>
 							<Card
 								style={{ width: '175px', height: '100px' }}
-								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover pointer-event'
+								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover cursor-pointer'
 								color='primary'
 								onClick={() =>
 									router.push(
@@ -43,7 +43,7 @@ const LocationPage = () => {
 										),
 									)
 								}
-								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover pointer-event'>
+								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover cursor-pointer'>
 								Calculo de transmitancia termica de muros
 							</Card>
 							<Card
@@ -53,7 +53,7 @@ const LocationPage = () => {
 										RoutesListWithParams.calculatorWindow(param?.projectId),
 									)
 								}
-								className='text-center mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover pointer-event'>
+								className='text-center mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover cursor-pointer'>
 								Calculo de ventanas
 							</Card>
 							<Card
@@ -63,7 +63,7 @@ const LocationPage = () => {
 										RoutesListWithParams.calculatorShading(param?.projectId),
 									)
 								}
-								className='text-center mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover pointer-event'>
+								className='text-center mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover cursor-pointer'>
 								Calculo elementos de sombreado
 							</Card>
 						</div>

@@ -89,7 +89,7 @@ const ProjectTable = () => {
 				<SubHeaderRight>
 					<SubheaderSeparator />
 					<Button
-						icon='PersonAdd'
+						icon='Add'
 						color='primary'
 						isLight
 						onClick={() => goTo(RoutesList.newProject)}>

@@ -67,14 +67,13 @@ const LocationPage = () => {
 
 				<Card>
 					<CardFooter>
-						<div className={'col-auto'}></div>
 						<Button
 							color='link'
 							icon='Info'
 							onClick={() =>
 								router.push(RoutesListWithParams.project(params?.projectId))
 							}>
-							Ir a proyecto
+							Ir a información de proyecto
 						</Button>
 					</CardFooter>
 				</Card>

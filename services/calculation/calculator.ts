@@ -192,6 +192,6 @@ export class Calculator {
 	}
 
 	static calculateVainArea(longVain: number, highVain: number) {
-		return longVain * highVain;
+		return (longVain * highVain).toFixed(2);
 	}
 }

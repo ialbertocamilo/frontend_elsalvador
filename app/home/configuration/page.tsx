@@ -1,14 +1,14 @@
-// generate code sample for tsx
 'use client';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
+import ProjectTable from '../../../components/tables/ProjectTable';
 
-const PackagesPage = () => {
+const ConfigurationPage = () => {
 	return (
 		<PageWrapper>
-			<Page className='mx-3'>Paquetes</Page>
+			<Page>Configuracion</Page>
 		</PageWrapper>
 	);
 };
 
-export default PackagesPage;
+export default ConfigurationPage;

@@ -4,6 +4,7 @@ import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
 import React, { useEffect, useState } from 'react';
 import Select from '../bootstrap/forms/Select';
+import { to2Decimal } from '../../helpers/helpers';
 
 interface Row {
 	data: any;
@@ -47,7 +48,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			</td>
 			<td className='p-2'>
 				<Input
-					type='text'
+					type='number'
 					className='col'
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
@@ -55,15 +56,16 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			</td>
 			<td className='p-2'>
 				<Input
-					type='text'
+					type='number'
 					className='col'
+					inputMode={'numeric'}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
 			</td>
 			<td className='p-2'>
 				<Input
-					type='text'
+					type='number'
 					className='col'
 					value={data.column5}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
@@ -71,7 +73,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			</td>
 			<td className='p-2'>
 				<Input
-					type='text'
+					type='number'
 					className='col'
 					value={data.column6}
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
@@ -229,7 +231,7 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 	}, [row]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-		newRows[index][column] = val;
+		newRows[index][column] = to2Decimal(val);
 		setRow(newRows);
 		manageOperations();
 	};
@@ -275,9 +277,12 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 						<th className='px-2'>Anchura de la ventana(m)</th>
 						<th className='px-2'>Profundidad del alero horizontal(m)</th>
 						<th className='px-2'>Profundidad del alero vertical(m)</th>
-						<th className='px-5'>Horizontal</th>
-						<th className='px-5'>Vertical</th>
-						<th className='px-5'>Combinada</th>
+						<th colSpan={3}>
+							Resultado Sombra (CS)
+							<th className='px-5'>Horizontal</th>
+							<th className='px-5'>Vertical</th>
+							<th className='px-5'>Combinada</th>
+						</th>
 					</tr>
 				</thead>
 				<tbody>

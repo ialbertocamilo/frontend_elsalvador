@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import classNames from 'classnames';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
-import Card, { CardBody } from '../../../components/bootstrap/Card';
 import Button from '../../../components/bootstrap/Button';
 import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
@@ -16,6 +15,8 @@ import { RoutesList } from '../../../common/constants/default';
 import { ReactNotifications } from 'react-notifications-component';
 import showNotification from '../../../components/extras/showNotification';
 import Icon from '../../../components/icon/Icon';
+import Logo from '../../../components/Logo';
+import { SPACE } from '@aws-sdk/middleware-user-agent/dist-types/constants';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
@@ -25,18 +26,18 @@ const LoginHeader: FC<ILoginHeaderProps> = ({ isNewUser }) => {
 	if (isNewUser) {
 		return (
 			<>
-				<div className='text-center h1 fw-bold mt-5'>Crear cuenta</div>
+				<div className='text-center h1 fw-bold mt-5 text-primary'>Crear cuenta</div>
 				<div className='text-center h4 text-muted mb-5'>
-					A continuación ingresa tus datos
+					Por favor, introduce tus credenciales para ingresar.
 				</div>
 			</>
 		);
 	}
 	return (
 		<>
-			<div className='text-center h1 fw-bold mt-5'>¡Bienvenido!</div>
+			<div className='text-center h1 fw-bold mt-5 text-primary'>¡Bienvenido!</div>
 			<div className='text-center h4 text-muted mb-5'>
-				A continuación ingresa con tu usuario
+				Por favor, introduce tus credenciales para ingresar.
 			</div>
 		</>
 	);
@@ -171,293 +172,283 @@ const Login = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	return (
-		<PageWrapper isProtected={false} className={'bg-primary'}>
+		<div className={'bg-primary h-100'}>
 			<ReactNotifications />
-			<Page className='p-0'>
-				<div className='row h-100 align-items-center justify-content-center'>
-					<div className='col-xl-4 col-lg-6 col-md-8 '>
-						<Card
-							stretch={'semi'}
-							style={{ borderRadius: '5px' }}
-							data-tour='login-page'>
-							<CardBody className='py-5'>
-								<div
-									className={classNames('rounded-3', {
-										'bg-l10-dark': !darkModeStatus,
-										'bg-dark': darkModeStatus,
-									})}>
-									<div className='row row-cols-2 g-3 pb-3 px-3 mt-0'>
-										<div className='col'>
-											<Button
-												color={darkModeStatus ? 'light' : 'dark'}
-												isLight={singUpStatus}
-												className='rounded-1 w-100'
-												size='lg'
-												onClick={() => {
-													setSignInPassword(false);
-													setSingUpStatus(!singUpStatus);
-												}}>
-												Ingresar
-											</Button>
+			<div className='row h-100'>
+				<div className='col-xxl-3 col-lg-3 col-12 align-content-center align-self-center justify-content-center text-center'>
+					<Logo height={100} />
+				</div>
+				<div className='col-xxl-9 col-lg-9 col-12 bg-white p-0'>
+					<div className='d-flex justify-content-center align-items-center g-3 h-100'>
+						<div className='align-self-center'>
+							<LoginHeader isNewUser={singUpStatus} />
+							<div
+								className={classNames('rounded-3', {
+									'bg-l10-primary': !darkModeStatus,
+									'bg-dark': darkModeStatus,
+								})}>
+								<div className='row row-cols-2 g-3 pb-3 px-3 mt-0'>
+									<div className='col'>
+										<Button
+											color={'primary'}
+											isLight={singUpStatus}
+											className='rounded-1 w-100'
+											size='lg'
+											onClick={() => {
+												setSignInPassword(false);
+												setSingUpStatus(!singUpStatus);
+											}}>
+											Ingresar
+										</Button>
+									</div>
+									<div className='col'>
+										<Button
+											color={'primary'}
+											isLight={!singUpStatus}
+											className='rounded-1 w-100'
+											size='lg'
+											onClick={() => {
+												setSignInPassword(false);
+												setSingUpStatus(!singUpStatus);
+											}}>
+											Regístrate
+										</Button>
+									</div>
+								</div>
+							</div>
+							<br />
+							<form className='row g-3'>
+								{singUpStatus ? (
+									<div>
+										<div className='col-12 my-1'>
+											<FormGroup id='name' isFloating label='Nombres '>
+												<Input
+													autoComplete='name'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													isTouched={formik1.touched.name}
+													invalidFeedback={formik1.errors.name}
+													value={formik1.values.name}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
 										</div>
-										<div className='col'>
+										<div className='col-12 my-1'>
+											<FormGroup isFloating id='lastname' label='Apellidos'>
+												<Input
+													autoComplete='lastname'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.lastname}
+													isTouched={formik1.touched.lastname}
+													value={formik1.values.lastname}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												id='profession'
+												isFloating
+												label='Profesión u oficio'>
+												<Input
+													autoComplete='profession'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.profession}
+													isTouched={formik1.touched.profession}
+													value={formik1.values.profession}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												id='nationality'
+												isFloating
+												label='Nacionalidad'>
+												<Input
+													autoComplete='nationality'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.nationality}
+													isTouched={formik1.touched.department}
+													value={formik1.values.nationality}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												id='department'
+												isFloating
+												label='Departamento'>
+												<Input
+													autoComplete='department'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.department}
+													isTouched={formik1.touched.department}
+													value={formik1.values.department}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												isFloating
+												id='municipality'
+												label='Municipio'>
+												<Input
+													autoComplete='municipality'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.municipality}
+													isTouched={formik1.touched.municipality}
+													value={formik1.values.municipality}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup isFloating id='address' label='Dirección'>
+												<Input
+													autoComplete='address'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.address}
+													isTouched={formik1.touched.address}
+													value={formik1.values.address}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup isFloating id='phone' label='Teléfono'>
+												<Input
+													autoComplete='phone'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.phone}
+													isTouched={formik1.touched.phone}
+													value={formik1.values.phone}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup isFloating id='email' label='Email'>
+												<Input
+													type='email'
+													autoComplete='email'
+													onBlur={formik.handleBlur}
+													isValid={formik1.isValid}
+													invalidFeedback={formik1.errors.email}
+													isTouched={formik1.touched.email}
+													value={formik1.values.email}
+													onChange={formik1.handleChange}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												isFloating
+												id='password'
+												name='password'
+												label='Contraseña'>
+												<Input
+													type='password'
+													autoComplete='current-password'
+													isTouched={formik1.touched.password}
+													invalidFeedback={formik1.errors.password}
+													value={formik1.values.password}
+													placeholder={'*********'}
+													validFeedback='Se ve bien!'
+													isValid={formik1.isValid}
+													onChange={formik1.handleChange}
+													onBlur={formik1.handleBlur}
+												/>
+											</FormGroup>
+										</div>
+										<br />
+										<div className='col-12'>
 											<Button
-												color={darkModeStatus ? 'light' : 'dark'}
-												isLight={!singUpStatus}
-												className='rounded-1 w-100'
-												size='lg'
-												onClick={() => {
-													setSignInPassword(false);
-													setSingUpStatus(!singUpStatus);
-												}}>
+												color='primary'
+												className='w-100 py-3'
+												onClick={formik1.handleSubmit}>
 												Regístrate
 											</Button>
 										</div>
 									</div>
-								</div>
+								) : (
+									<>
+										<div className='col-12'>
+											<FormGroup
+												id='loginUsername'
+												isFloating
+												label='Correo electrónico o usuario'>
+												<Input
+													autoComplete='username'
+													isTouched={formik.touched.loginUsername}
+													invalidFeedback={formik.errors.loginUsername}
+													placeholder={'john@correo.com'}
+													value={formik.values.loginUsername}
+													isValid={formik.isValid}
+													onChange={formik.handleChange}
+													onBlur={formik.handleBlur}
+													onFocus={() => {
+														formik.setErrors({});
+													}}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12'>
+											<FormGroup
+												id='loginPassword'
+												isFloating
+												label='Contraseña'>
+												<Input
+													type='password'
+													autoComplete='current-password'
+													isTouched={formik.touched.loginPassword}
+													invalidFeedback={formik.errors.loginPassword}
+													value={formik.values.loginPassword}
+													placeholder={'*********'}
+													validFeedback='Looks good!'
+													isValid={formik.isValid}
+													onChange={formik.handleChange}
+													onBlur={formik.handleBlur}
+													onKeyPress={keyPress}
+												/>
+											</FormGroup>
 
-								<LoginHeader isNewUser={singUpStatus} />
-
-								<form className='row g-4'>
-									{singUpStatus ? (
-										<>
-											<div className='col-12'>
-												<FormGroup id='name' isFloating label='Nombres '>
-													<Input
-														autoComplete='name'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														isTouched={formik1.touched.name}
-														invalidFeedback={formik1.errors.name}
-														value={formik1.values.name}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													isFloating
-													id='lastname'
-													label='Apellidos'>
-													<Input
-														autoComplete='lastname'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.lastname}
-														isTouched={formik1.touched.lastname}
-														value={formik1.values.lastname}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													id='profession'
-													isFloating
-													label='Profesión u oficio'>
-													<Input
-														autoComplete='profession'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.profession}
-														isTouched={formik1.touched.profession}
-														value={formik1.values.profession}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													id='nationality'
-													isFloating
-													label='Nacionalidad'>
-													<Input
-														autoComplete='nationality'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.nationality}
-														isTouched={formik1.touched.department}
-														value={formik1.values.nationality}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													id='department'
-													isFloating
-													label='Departamento'>
-													<Input
-														autoComplete='department'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.department}
-														isTouched={formik1.touched.department}
-														value={formik1.values.department}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													isFloating
-													id='municipality'
-													label='Municipio'>
-													<Input
-														autoComplete='municipality'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={
-															formik1.errors.municipality
-														}
-														isTouched={formik1.touched.municipality}
-														value={formik1.values.municipality}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													isFloating
-													id='address'
-													label='Dirección'>
-													<Input
-														autoComplete='address'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.address}
-														isTouched={formik1.touched.address}
-														value={formik1.values.address}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup isFloating id='phone' label='Teléfono'>
-													<Input
-														autoComplete='phone'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.phone}
-														isTouched={formik1.touched.phone}
-														value={formik1.values.phone}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup isFloating id='email' label='Email'>
-													<Input
-														type='email'
-														autoComplete='email'
-														onBlur={formik.handleBlur}
-														isValid={formik1.isValid}
-														invalidFeedback={formik1.errors.email}
-														isTouched={formik1.touched.email}
-														value={formik1.values.email}
-														onChange={formik1.handleChange}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<FormGroup
-													isFloating
-													id='password'
-													name='password'
-													label='Contraseña'>
-													<Input
-														type='password'
-														autoComplete='current-password'
-														isTouched={formik1.touched.password}
-														invalidFeedback={formik1.errors.password}
-														value={formik1.values.password}
-														placeholder={'*********'}
-														validFeedback='Se ve bien!'
-														isValid={formik1.isValid}
-														onChange={formik1.handleChange}
-														onBlur={formik1.handleBlur}
-													/>
-												</FormGroup>
-											</div>
-											<div className='col-12'>
-												<Button
-													color='dark'
-													className='w-100 py-3'
-													onClick={formik1.handleSubmit}>
-													Regístrate
-												</Button>
-											</div>
-										</>
-									) : (
-										<>
-											<div className='col-12'>
-												<FormGroup
-													id='loginUsername'
-													isFloating
-													label='Usuario o email'>
-													<Input
-														autoComplete='username'
-														isTouched={formik.touched.loginUsername}
-														invalidFeedback={
-															formik.errors.loginUsername
-														}
-														placeholder={'john@correo.com'}
-														value={formik.values.loginUsername}
-														isValid={formik.isValid}
-														onChange={formik.handleChange}
-														onBlur={formik.handleBlur}
-														onFocus={() => {
-															formik.setErrors({});
-														}}
-													/>
-												</FormGroup>
-											</div>
-
-											<div className='col-12'>
-												<FormGroup
-													id='loginPassword'
-													isFloating
-													label='Contraseña'>
-													<Input
-														type='password'
-														autoComplete='current-password'
-														isTouched={formik.touched.loginPassword}
-														invalidFeedback={
-															formik.errors.loginPassword
-														}
-														value={formik.values.loginPassword}
-														placeholder={'*********'}
-														validFeedback='Looks good!'
-														isValid={formik.isValid}
-														onChange={formik.handleChange}
-														onBlur={formik.handleBlur}
-														onKeyPress={keyPress}
-													/>
-												</FormGroup>
-
-												{loginError && (
-													<span className='text-danger'>
-														Error credenciales incorrectas
-													</span>
-												)}
-											</div>
-											<div className='col-12'>
-												<Button
-													color='dark'
-													className='w-100 py-3'
-													onClick={formik.handleSubmit}>
-													Continuar
-												</Button>
-											</div>
-										</>
-									)}
-								</form>
-							</CardBody>
-						</Card>
+											{loginError && (
+												<span className='text-danger'>
+													Error credenciales incorrectas
+												</span>
+											)}
+										</div>
+										<div className='col-12 align-items-end'>
+											<Button
+												color='primary'
+												className='w-25 py-3 me-2'
+												onClick={formik.handleSubmit}>
+												Ingresar
+											</Button>
+											<span
+												color='link '
+												className='cursor-pointer text-primary'>
+												¿Olvidaste tu contraseña?
+											</span>
+										</div>
+									</>
+								)}
+							</form>
+						</div>
 					</div>
 				</div>
-			</Page>
-		</PageWrapper>
+			</div>
+		</div>
 	);
 };
 export default Login;

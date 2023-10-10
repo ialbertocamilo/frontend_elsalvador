@@ -114,3 +114,10 @@ export const pathToRoute = (path: string): string => {
 	if (path?.length > 1 && path?.substring(1, 0) === '/') return path?.substring(1, path?.length);
 	return path;
 };
+
+export function to2Decimal(value: unknown): string | number | unknown {
+	if (typeof value === 'string') {
+		if (value.includes('.') && value.split('.')[1].length > 2) return Number(value).toFixed(2);
+	}
+	return value;
+}

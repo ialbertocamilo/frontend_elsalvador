@@ -11,3 +11,5 @@ next.config.js
 
 .env
 .eslintrc.json
+
+.build

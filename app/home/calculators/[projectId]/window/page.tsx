@@ -16,6 +16,7 @@ import { useParams } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { Calculator } from '../../../../../services/calculation/calculator';
+import { to2Decimal } from '../../../../../helpers/helpers';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -65,7 +66,7 @@ const WindowPage = () => {
 		const csValue = Number(formik.values.csValue);
 		const frameArea = Number(Calculator.calculateFrameArea(longVain, highVain, frameWidth));
 		const vainArea = Calculator.calculateVainArea(longVain, highVain);
-		const crystalArea = Number(Calculator.calculateCrystalArea(vainArea, frameArea));
+		const crystalArea = Number(Calculator.calculateCrystalArea(Number(vainArea), frameArea));
 		const windowUValue = Calculator.calculateWindowUValue(
 			uValue1,
 			uValue2,
@@ -75,7 +76,7 @@ const WindowPage = () => {
 			highVain,
 		);
 		const calcGValue = Calculator.calculateGValue(csValue);
-		formik.setFieldValue('areaVain', isNaN(vainArea) ? '' : vainArea);
+		formik.setFieldValue('areaVain', isNaN(Number(vainArea)) ? '' : vainArea);
 		formik.setFieldValue('frameArea', isNaN(Number(frameArea)) ? '' : frameArea);
 		formik.setFieldValue('crystalArea', isNaN(Number(crystalArea)) ? '' : crystalArea);
 		formik.setFieldValue('windowUValue', isNaN(Number(windowUValue)) ? '' : windowUValue);
@@ -85,6 +86,7 @@ const WindowPage = () => {
 	const [customEditorText, setCustomEditorText] = useState('');
 
 	function handleChange(e: any) {
+		e.target.value = to2Decimal(e.target.value);
 		formik.handleChange(e);
 	}
 

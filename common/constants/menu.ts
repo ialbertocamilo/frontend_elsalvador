@@ -14,19 +14,19 @@ export const pagesMenu = {
 		id: 'Projects',
 		text: 'Proyectos',
 		path: 'home',
-		icon: 'FilePresent',
+		icon: 'LibraryBooks',
 		subMenu: {
 			projectList: {
 				id: 'project-list',
 				text: 'Lista de proyectos',
 				path: 'home/projects',
-				icon: 'FilePresent',
+				icon: 'LibraryBooks',
 			},
 			newProject: {
 				id: 'new-project',
 				text: 'Nuevo proyecto',
 				path: 'home/projects/new',
-				icon: 'FilePresent',
+				icon: 'Add',
 			},
 		},
 	},
@@ -46,14 +46,13 @@ export const pagesMenu = {
 		id: 'Configuration',
 		text: 'Configuración',
 		path: 'home/configuration',
-		icon: 'PanTool',
+		icon: 'Settings',
 	},
 	dashboard: {
-		id: 'dashboard',
+		id: 'Dashboard',
 		text: 'Dashboard',
-		path: '/',
+		path: 'home/dashboard',
 		icon: 'Dashboard',
-		subMenu: null,
 	},
 };
 

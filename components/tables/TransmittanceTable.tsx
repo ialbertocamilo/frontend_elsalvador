@@ -3,6 +3,7 @@ import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calculator } from '../../services/calculation/calculator';
+import { to2Decimal } from '../../helpers/helpers';
 
 interface RowProps {
 	data: any;
@@ -21,54 +22,36 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 				/>
 			</td>
 			<td className='p-2'>
-				<FormGroup>
-					<div className='row'>
-						<Input
-							name='ownerName'
-							type='text'
-							className='col'
-							value={data.column2}
-							onChange={(e: any) => onInputChange('column2', e.target.value)}
-						/>
-						<span className='col align-self-center'>W/mk</span>
-					</div>
-				</FormGroup>
+				<Input
+					name='ownerName'
+					type={'number'}
+					className=' text-center'
+					value={data.column2}
+					onChange={(e: any) => onInputChange('column2', e.target.value)}
+				/>
 			</td>
 			<td className='p-2'>
-				<FormGroup>
-					<Input
-						type='text'
-						className='col'
-						value={data.column3}
-						onChange={(e: any) => onInputChange('column3', e.target.value)}
-					/>
-				</FormGroup>
+				<Input
+					type='text'
+					value={data.column3}
+					onChange={(e: any) => onInputChange('column3', e.target.value)}
+				/>
 			</td>
 			<td className='p-2'>
-				<FormGroup>
-					<div className='row'>
-						<Input
-							type='text'
-							className='col'
-							value={data.column4}
-							onChange={(e: any) => onInputChange('column4', e.target.value)}
-						/>
-						<span className='col align-self-center'>W/mk</span>
-					</div>
-				</FormGroup>
+				<Input
+					className='col text-center'
+					inputMode={'decimal'}
+					value={data.column4}
+					onChange={(e: any) => onInputChange('column4', e.target.value)}
+				/>
 			</td>
 			<td className='p-2'>
-				<FormGroup id='width-window'>
-					<div className='row text-center'>
-						<Input
-							type='text'
-							className='col'
-							value={data.column5}
-							onChange={(e: any) => onInputChange('column5', e.target.value)}
-						/>
-						<span className='col align-self-center'>m</span>
-					</div>
-				</FormGroup>
+				<Input
+					className=' text-center'
+					inputMode={'decimal'}
+					value={data.column5}
+					onChange={(e: any) => onInputChange('column5', e.target.value)}
+				/>
 			</td>
 			<td className='p-2'>
 				<FormGroup id='width-window'>
@@ -105,7 +88,10 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 	}, [data]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-		newRows[index][column] = val;
+
+		if (column == 'column2' || column == 'column4' || column == 'column5')
+			newRows[index][column] = to2Decimal(val);
+		else newRows[index][column] = val;
 		const result = Calculator.calculateThickness(newRows, 'column5');
 		setTotalThickness(result);
 		setRow(newRows);
@@ -141,10 +127,10 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 				<thead>
 					<tr className='text-center'>
 						<th className='px-2'>Superficie parcial 1</th>
-						<th className='px-2'>Valor λ</th>
+						<th className='px-2'>Valor λ(W/mk)</th>
 						<th className='px-2'>Superficie parcial 2</th>
-						<th className='px-2'>Valor λ</th>
-						<th className='px-2'>Espesor</th>
+						<th className='px-2 '>Valor λ(W/mk)</th>
+						<th className='px-2 '>Espesor(m)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -159,46 +145,38 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 					))}
 					<tr>
 						<td className='p-2'>Porcentaje de superficie parcial</td>
-						<td className='p-2'>
-							<FormGroup>
-								<div className='row'>
-									<Input
-										name='ownerName'
-										type='text'
-										className='col bg-info-subtle'
-										readOnly
-										value={totalSurface1}
-									/>
-									<span className='col align-self-center'>%</span>
-								</div>
-							</FormGroup>
+						<td className='p-2 align-self-center  text-center'>
+							<span className='col '>{totalSurface1} %</span>
 						</td>
-						<td className='p-2'>Porcentaje de superficie parcial 2</td>
-						<td className='p-2'>
+						<td className='p-2 align-self-center'>
+							Porcentaje de superficie parcial 2
+						</td>
+						<td className='p-2 text-center'>
 							<FormGroup>
-								<div className='row'>
+								<div className='d-flex align-content-between'>
 									<Input
-										type='text'
-										className='col'
 										value={totalSurface2}
+										placeholder='%'
+										className='text-center'
+										inputMode={'decimal'}
 										onChange={(e: any) => {
 											if (
-												e.target.value.length <= 2 ||
+												e.target.value.length <= 10 ||
 												e.target.value == 100
 											) {
 												setTotalSurface2(e.target.value);
 											}
 										}}
+										mask={'99.99'}
 									/>
-									<span className='col align-self-center'>%</span>
+									<span className='align-self-center'>%</span>
 								</div>
 							</FormGroup>
 						</td>
 						<td className='p-2 '>
-							<FormGroup id='width-window'>
+							<FormGroup>
 								<div className='row text-center'>
-									<span className='col align-self-center'>{totalThickness}</span>
-									<span className='col align-self-center'>m</span>
+									<span className='col text-center '>{totalThickness} m</span>
 								</div>
 							</FormGroup>
 						</td>
@@ -208,11 +186,12 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
+						<td>
+							<span>Valor u</span>
+						</td>
 						<td className='p-2'>
-							<FormGroup id='width-window'>
+							<FormGroup>
 								<div className='row'>
-									<span>Valor u</span>
 									<Input
 										type='text'
 										className='col bg-info-subtle'

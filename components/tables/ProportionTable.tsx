@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../bootstrap/Button';
 import { useProjects } from '../../services/project/project.service';
 import { useParams } from 'next/navigation';
+import { to2Decimal } from '../../helpers/helpers';
 
 function calculatePercentage(num1: number, num2: number): string | number {
 	const res = Number((num1 / num2) * 100).toFixed(0);
@@ -35,7 +36,6 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							name='opaque_surface_1'
 							type='number'
 							className='me-2'
-							defaultValue={''}
 							value={data.column2}
 							onChange={(e: any) => onInputChange('column2', e.target.value)}
 						/>
@@ -91,7 +91,9 @@ interface ProportiontableProps {
 }
 
 export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
-	const [row, setRow] = useState([{ column1: '', column2: 0, column3: 0, column4: 0 }]);
+	const [row, setRow] = useState<Record<string, any>[]>([
+		{ column1: '', column2: 0, column3: 0, column4: 0 },
+	]);
 
 	const projects = useProjects();
 	const params = useParams();
@@ -127,13 +129,11 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 	const [totalOpaqueSurface, setTotalOpaqueSurface] = useState(0);
 	const [totalGlazedSurface, setTotalGlazedSurface] = useState(0);
 	const [totalPercentage, setTotalPercentage] = useState<string | number>();
-	const handleInputChange = (index: string | number, column: string | number, val: any) => {
+	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
 
-		// @ts-ignore
-		newRows[index][column] = val;
+		newRows[index][column] = to2Decimal(val);
 		setRow(newRows);
-
 		let sum1 = 0;
 		let sum2 = 0;
 		for (const newRowsKey in newRows) {
