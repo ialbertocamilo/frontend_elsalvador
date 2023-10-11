@@ -115,6 +115,7 @@ const WindowPage = () => {
 								<Input
 									type='number'
 									name='uValue1'
+									className='text-center'
 									value={formik.values.uValue1}
 									onChange={handleChange}
 								/>
@@ -123,6 +124,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Valor g</Label>
 								<Input
 									name='gValue'
+									className='text-center'
 									value={formik.values.gValue}
 									type='number'
 									onChange={handleChange}
@@ -132,6 +134,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Valor CS</Label>
 								<Input
 									name='csValue'
+									className='text-center'
 									value={formik.values.csValue}
 									onChange={handleChange}
 									type='number'
@@ -163,6 +166,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									name='uValue2'
+									className='text-center'
 									value={formik.values.uValue2}
 									onChange={handleChange}
 									type='number'
@@ -172,6 +176,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Ancho de marco (metros)</Label>
 								<Input
 									name='frameWidth'
+									className='text-center'
 									value={formik.values.frameWidth}
 									onChange={handleChange}
 									type='number'
@@ -184,7 +189,7 @@ const WindowPage = () => {
 								<Input
 									name='windowUValue'
 									value={formik.values.windowUValue}
-									className='bg-light'
+									className='bg-light text-center'
 									onChange={handleChange}
 									readOnly
 									type='number'
@@ -195,6 +200,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Largo vano (metros)</Label>
 								<Input
 									name='longVain'
+									className='text-center'
 									value={formik.values.longVain}
 									onChange={handleChange}
 									type='number'
@@ -204,6 +210,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Alto vano (metros)</Label>
 								<Input
 									name='highVain'
+									className='text-center'
 									value={formik.values.highVain}
 									onChange={(e) => {
 										handleChange(e);
@@ -218,7 +225,7 @@ const WindowPage = () => {
 									value={formik.values.areaVain}
 									onChange={handleChange}
 									readOnly
-									className='bg-light'
+									className='bg-light text-center'
 									type='text'
 								/>
 							</FormGroup>
@@ -231,7 +238,7 @@ const WindowPage = () => {
 										handleChange(e);
 									}}
 									readOnly
-									className='bg-light'
+									className='bg-light text-center'
 									type='text'
 								/>
 							</FormGroup>
@@ -244,7 +251,7 @@ const WindowPage = () => {
 										handleChange(e);
 									}}
 									readOnly
-									className='bg-light'
+									className='bg-light text-center'
 									type='text'
 								/>
 							</FormGroup>

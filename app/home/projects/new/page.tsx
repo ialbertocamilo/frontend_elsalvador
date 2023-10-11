@@ -3,7 +3,7 @@
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Card';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
@@ -14,6 +14,9 @@ import classNames from 'classnames';
 import { useProjects } from '../../../../services/project/project.service';
 import { IProjectFormType } from '../../../../common/types/project.types';
 import { RoutesListWithParams } from '../../../../common/constants/default';
+import Select from '../../../../components/bootstrap/forms/Select';
+import { departmentList, municipalityList } from '../../../../common/constants/lists';
+import { arrayToList } from '../../../../helpers/helpers';
 
 const ProjectsPage = () => {
 	const router = useRouter();
@@ -64,6 +67,10 @@ const ProjectsPage = () => {
 		enableReinitialize: true,
 	});
 
+	useEffect(() => {
+		if (formik.values.levelsNumber)
+			formik.setFieldValue('levelsNumber', Math.round(formik.values.levelsNumber));
+	}, [formik.values.levelsNumber]);
 	return (
 		<PageWrapper>
 			<Page container='fluid'>
@@ -243,6 +250,7 @@ const ProjectsPage = () => {
 								<div className='row'>
 									<div className='col-auto'>
 										<div className='row g-1'>
+											<Label>Tipo de edificación</Label>
 											<div className='col-auto'>
 												<Button
 													onClick={() => setButtonActive(true)}
@@ -272,23 +280,23 @@ const ProjectsPage = () => {
 								</div>
 								<div className='row mt-4'>
 									<FormGroup id='lvls'>
-										<Label>Numero de niveles</Label>
+										<Label>Número de niveles</Label>
 										<Input
 											className='my-2'
 											name='levelsNumber'
 											type='number'
 											value={formik.values.levelsNumber}
-											placeholder='Numero de niveles'
+											placeholder='Número de niveles'
 											onChange={formik.handleChange}></Input>
 									</FormGroup>
 									<FormGroup id='offices'>
-										<Label>Numero de oficinas por nivel</Label>
+										<Label>Número de oficinas por nivel</Label>
 										<Input
 											className='my-2'
 											name='offices'
 											type='number'
 											value={formik.values.offices}
-											placeholder='Numero de oficinas por nivel'
+											placeholder='Número de oficinas por nivel'
 											onChange={formik.handleChange}></Input>
 									</FormGroup>
 									<Label>Superficie construida m2</Label>
@@ -327,12 +335,12 @@ const ProjectsPage = () => {
 								</div>
 								<FormGroup>
 									<Label>Departamento</Label>
-									<Input
-										type='text'
+									<Select
 										name='department'
 										value={formik.values.department}
 										onChange={formik.handleChange}
-									/>
+										list={arrayToList(departmentList())}
+										ariaLabel='department'></Select>
 								</FormGroup>
 								<div>
 									{formik.errors?.department && (
@@ -343,12 +351,12 @@ const ProjectsPage = () => {
 								</div>
 								<FormGroup id='municipio'>
 									<Label>Municipio</Label>
-									<Input
-										type='text'
+									<Select
 										name='municipality'
 										value={formik.values.municipality}
 										onChange={formik.handleChange}
-									/>
+										list={arrayToList(municipalityList())}
+										ariaLabel='municipality'></Select>
 								</FormGroup>
 								<div>
 									{formik.errors?.municipality && (

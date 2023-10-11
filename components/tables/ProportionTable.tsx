@@ -35,7 +35,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							id='opaque_surface_1'
 							name='opaque_surface_1'
 							type='number'
-							className='me-2'
+							className='me-2 text-center'
 							value={data.column2}
 							onChange={(e: any) => onInputChange('column2', e.target.value)}
 						/>
@@ -50,7 +50,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							id='glazed_surface_1'
 							name='glazed_surface_1'
 							type='number'
-							className='me-2'
+							className='me-2 text-center'
 							value={data.column3}
 							onChange={(e: any) => onInputChange('column3', e.target.value)}
 						/>
@@ -63,7 +63,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 					<div className='d-flex align-content-between'>
 						<Input
 							type='text'
-							className='me-2 bg-info-subtle'
+							className='me-2 bg-info-subtle text-center'
 							value={data.column4}
 							readOnly
 						/>
@@ -214,7 +214,7 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 										id='ownerName'
 										name='ownerName'
 										type='text'
-										className='me-2 bg-info-subtle text-black'
+										className='me-2 bg-info-subtle text-black text-center'
 										value={totalPercentage}
 										readOnly
 									/>

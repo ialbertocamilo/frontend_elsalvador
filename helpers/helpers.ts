@@ -121,3 +121,9 @@ export function to2Decimal(value: unknown): string | number | unknown {
 	}
 	return value;
 }
+
+export function arrayToList(arr: string[]) {
+	return arr?.map((name, index) => {
+		return { value: index + 1, text: name };
+	});
+}

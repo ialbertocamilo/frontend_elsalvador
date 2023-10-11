@@ -189,17 +189,9 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 							<span>Valor u</span>
 						</td>
 						<td className='p-2'>
-							<FormGroup>
-								<div className='row'>
-									<Input
-										type='text'
-										className='col bg-info-subtle'
-										value={calculateExpensive}
-										readOnly
-									/>
-									<span className='col align-self-center'>W/m2K</span>
-								</div>
-							</FormGroup>
+							<div className=' bg-info-subtle text-center h5'>
+								<span>{calculateExpensive} W/m2K</span>
+							</div>
 						</td>
 					</tr>
 				</tbody>

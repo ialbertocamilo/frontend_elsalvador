@@ -3,8 +3,6 @@ import React, { FC, useCallback, useState } from 'react';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
-import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-import Page from '../../../layout/Page/Page';
 import Button from '../../../components/bootstrap/Button';
 import FormGroup from '../../../components/bootstrap/forms/FormGroup';
 import Input from '../../../components/bootstrap/forms/Input';
@@ -16,7 +14,6 @@ import { ReactNotifications } from 'react-notifications-component';
 import showNotification from '../../../components/extras/showNotification';
 import Icon from '../../../components/icon/Icon';
 import Logo from '../../../components/Logo';
-import { SPACE } from '@aws-sdk/middleware-user-agent/dist-types/constants';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
@@ -66,18 +63,18 @@ const Login = () => {
 				loginUsername?: string;
 				loginPassword?: string;
 			} = {};
-
+			if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.loginUsername))
+				errors.loginUsername = 'Email inválido';
 			if (!values.loginUsername) {
 				errors.loginUsername = 'Requerido';
 			}
-
 			if (!values.loginPassword) {
 				errors.loginPassword = 'Requerido';
 			}
 
 			return errors;
 		},
-		validateOnChange: false,
+		validateOnChange: true,
 		onSubmit: async (values) => {
 			const result = await login(values.loginUsername, values.loginPassword);
 			if (!result) setLoginError(true);
@@ -140,6 +137,8 @@ const Login = () => {
 			// if (!values.phone) {
 			// 	errors.phone = 'Requerido';
 			// }
+			if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email))
+				errors.email = 'Email inválido';
 			if (!values.email) {
 				errors.email = 'Requerido';
 			}
@@ -341,6 +340,7 @@ const Login = () => {
 												<Input
 													type='email'
 													autoComplete='email'
+													inputMode={'email'}
 													onBlur={formik.handleBlur}
 													isValid={formik1.isValid}
 													invalidFeedback={formik1.errors.email}
@@ -392,6 +392,7 @@ const Login = () => {
 													isTouched={formik.touched.loginUsername}
 													invalidFeedback={formik.errors.loginUsername}
 													placeholder={'john@correo.com'}
+													inputMode={'email'}
 													value={formik.values.loginUsername}
 													isValid={formik.isValid}
 													onChange={formik.handleChange}
@@ -414,7 +415,6 @@ const Login = () => {
 													invalidFeedback={formik.errors.loginPassword}
 													value={formik.values.loginPassword}
 													placeholder={'*********'}
-													validFeedback='Looks good!'
 													isValid={formik.isValid}
 													onChange={formik.handleChange}
 													onBlur={formik.handleBlur}
