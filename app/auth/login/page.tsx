@@ -175,7 +175,7 @@ const Login = () => {
 			<ReactNotifications />
 			<div className='row h-100'>
 				<div className='col-xxl-3 col-lg-3 col-12 align-content-center align-self-center justify-content-center text-center'>
-					<Logo height={100} />
+					<Logo height={100} width={200} />
 				</div>
 				<div className='col-xxl-9 col-lg-9 col-12 bg-white p-0'>
 					<div className='d-flex justify-content-center align-items-center g-3 h-100'>
