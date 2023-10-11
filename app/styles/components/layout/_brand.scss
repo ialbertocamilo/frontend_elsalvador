@@ -15,9 +15,15 @@
 		justify-content: center;
 	}
 
+
 	&-logo {
 		@include aside-close {
 			display: none;
+		}
+	}
+	&-logo-min {
+		@include aside-close {
+			display: grid;
 		}
 	}
 

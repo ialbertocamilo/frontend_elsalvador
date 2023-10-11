@@ -4,6 +4,7 @@ import Icon from '../../components/icon/Icon';
 import Logo from '../../components/Logo';
 import Link from 'next/link';
 import { RoutesList } from '../../common/constants/default';
+import Image from 'next/image';
 
 interface IBrandProps {
 	asideStatus: boolean;
@@ -12,6 +13,12 @@ interface IBrandProps {
 const Brand: FC<IBrandProps> = ({ asideStatus, setAsideStatus }) => {
 	return (
 		<div className='brand w-100'>
+			<Image
+				className='brand-logo-min'
+				src='/logo2.png'
+				alt='logo'
+				width={35}
+				height={35}></Image>
 			<div className='brand-logo w-100 mt-4'>
 				<h1 className='brand-title '>
 					<Link href={RoutesList.projects} aria-label='Logo'>

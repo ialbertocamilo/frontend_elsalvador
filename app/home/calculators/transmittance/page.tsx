@@ -4,7 +4,6 @@ import Page from '../../../../layout/Page/Page';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
 import React, { useState } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
-import Button from '../../../../components/bootstrap/Button';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import { useParams } from 'next/navigation';
 
@@ -40,24 +39,6 @@ const TransmittancePage = () => {
 					<Card className='col me-2'>
 						<CardBody>
 							<TransmittanceTable />
-						</CardBody>
-					</Card>
-					<Card className='col-md-3'>
-						<CardBody>
-							<h4>Documentación entregada</h4>
-							<span>Planos de Fachada con dimensiones de ventanas y generales</span>
-							<div className='align-items-center text-center mt-2'>
-								<Button
-									color='info'
-									isLight
-									tag='a'
-									to='/somefile.txt'
-									target='_blank'
-									icon='AttachFile'
-									download>
-									Adjuntar
-								</Button>
-							</div>
 						</CardBody>
 					</Card>
 				</div>

@@ -1,32 +1,41 @@
 'use client';
+
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import Card, { CardBody } from '../../../../components/bootstrap/Card';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Input from '../../../../components/bootstrap/forms/Input';
+import { useParams } from 'next/navigation';
+import { useFormik } from 'formik';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
-import Input from '../../../../components/bootstrap/forms/Input';
-import { useFormik } from 'formik';
-import { CustomEditor } from '../../../../components/extras/CustomEditor';
+import { useProjects } from '../../../../services/project/project.service';
+import { Calculator } from '../../../../services/calculation/calculator';
 
+const keyName = 'window';
 const WindowPage = () => {
+	const projects = useProjects();
+
+	const [initialData, setInitialData] = useState<any>({});
+
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
-			crystalType: '',
-			frameType: '',
-			windowUValue: '',
-			uValue1: '',
-			uValue2: '',
-			gValue: '',
-			csValue: '',
-			calcGValue: '',
-			frameWidth: '',
-			longVain: '',
-			highVain: '',
-			areaVain: '',
-			frameArea: '',
-			crystalArea: '',
+			crystalType: initialData?.crystalType,
+			frameType: initialData?.frameType,
+			windowUValue: initialData?.windowUValue,
+			uValue1: initialData?.uValue1,
+			uValue2: initialData?.uValue2,
+			gValue: initialData?.gValue,
+			csValue: initialData?.csValue,
+			calcGValue: initialData?.calcGValue,
+			frameWidth: initialData?.frameWidth,
+			longVain: initialData?.longVain,
+			highVain: initialData?.highVain,
+			areaVain: initialData?.areaVain,
+			frameArea: initialData?.frameArea,
+			crystalArea: initialData?.crystalArea,
+			windowDetailText: initialData?.windowDetailText,
 		},
 		validateOnChange: true,
 		onSubmit: () => {
@@ -34,59 +43,36 @@ const WindowPage = () => {
 		},
 	});
 
-	const calculateGValue = useCallback(() => {
-		formik.setFieldValue('calcGValue', Number(formik.values.csValue) * 0.87);
-	}, [formik]);
-
-	const calculateCrystalArea = useCallback(() => {
-		let areaVain = Number(formik.values.areaVain);
-		let frameArea = Number(formik.values.frameArea);
-		formik.setFieldValue('crystalArea', areaVain - frameArea);
-	}, [formik]);
-
-	const calculateUValue = useCallback(() => {
-		let uValue = Number(formik.values.uValue1);
-		let uValue2 = Number(formik.values.uValue2);
-		let frameArea = Number(formik.values.frameArea);
-		let crystalArea = Number(formik.values.crystalArea);
-		let longVain = Number(formik.values.longVain);
-		let highVain = Number(formik.values.highVain);
-
-		formik.setFieldValue(
-			'windowUValue',
-			uValue * crystalArea +
-				uValue2 * frameArea +
-				(0.08 * (longVain * 2 + highVain * 2)) / (crystalArea + frameArea),
-		);
-	}, [formik]);
-
 	useEffect(() => {
-		calculateUValue();
-		calculateGValue();
-		calculateCrystalArea();
-	}, [
-		formik.values.uValue1,
-		formik.values.uValue2,
-		formik.values.longVain,
-		formik.values.highVain,
-		formik.values.frameArea,
-		formik.values.crystalArea,
-		calculateUValue,
-		calculateGValue,
-		calculateCrystalArea,
-	]);
-
-	function calculateFrameArea() {
-		const largoVano = Number(formik.values.longVain);
-		const altoVano = Number(formik.values.highVain);
-		const anchoMarco = Number(formik.values.frameWidth);
-		formik.setFieldValue(
-			'frameArea',
-			anchoMarco * largoVano * 2 + (altoVano - anchoMarco * 2) * anchoMarco,
+		const longVain = Number(formik.values.longVain);
+		const highVain = Number(formik.values.highVain);
+		const frameWidth = Number(formik.values.frameWidth);
+		const uValue1 = Number(formik.values.uValue1);
+		const uValue2 = Number(formik.values.uValue2);
+		const csValue = Number(formik.values.csValue);
+		const frameArea = Number(Calculator.calculateFrameArea(longVain, highVain, frameWidth));
+		const vainArea = Calculator.calculateVainArea(longVain, highVain);
+		const crystalArea = Number(Calculator.calculateCrystalArea(Number(vainArea), frameArea));
+		const windowUValue = Calculator.calculateWindowUValue(
+			uValue1,
+			uValue2,
+			frameArea,
+			crystalArea,
+			longVain,
+			highVain,
 		);
-	}
+		const calcGValue = Calculator.calculateGValue(csValue);
+		formik.setFieldValue('areaVain', isNaN(Number(vainArea)) ? '' : vainArea);
+		formik.setFieldValue('frameArea', isNaN(Number(frameArea)) ? '' : frameArea);
+		formik.setFieldValue('crystalArea', isNaN(Number(crystalArea)) ? '' : crystalArea);
+		formik.setFieldValue('windowUValue', isNaN(Number(windowUValue)) ? '' : windowUValue);
+		formik.setFieldValue('calcGValue', isNaN(Number(calcGValue)) ? '' : calcGValue);
+	}, [formik.values]);
+
+	const [customEditorText, setCustomEditorText] = useState('');
 
 	function handleChange(e: any) {
+		// e.target.value = to2Decimal(e.target.value);
 		formik.handleChange(e);
 	}
 
@@ -133,9 +119,7 @@ const WindowPage = () => {
 								<Input
 									name='csValue'
 									value={formik.values.csValue}
-									onChange={(e) => {
-										handleChange(e);
-									}}
+									onChange={handleChange}
 									type='number'
 								/>
 							</FormGroup>
@@ -144,6 +128,8 @@ const WindowPage = () => {
 								<Input
 									name='calcGValue'
 									value={formik.values.calcGValue}
+									onChange={handleChange}
+									readOnly
 									type='number'
 									className='bg-light'
 								/>
@@ -173,10 +159,7 @@ const WindowPage = () => {
 								<Input
 									name='frameWidth'
 									value={formik.values.frameWidth}
-									onChange={(e) => {
-										handleChange(e);
-										calculateFrameArea();
-									}}
+									onChange={handleChange}
 									type='number'
 								/>
 							</FormGroup>
@@ -188,6 +171,8 @@ const WindowPage = () => {
 									name='windowUValue'
 									value={formik.values.windowUValue}
 									className='bg-light'
+									onChange={handleChange}
+									readOnly
 									type='number'
 								/>
 							</FormGroup>
@@ -197,10 +182,7 @@ const WindowPage = () => {
 								<Input
 									name='longVain'
 									value={formik.values.longVain}
-									onChange={(e) => {
-										handleChange(e);
-										calculateFrameArea();
-									}}
+									onChange={handleChange}
 									type='number'
 								/>
 							</FormGroup>
@@ -211,7 +193,6 @@ const WindowPage = () => {
 									value={formik.values.highVain}
 									onChange={(e) => {
 										handleChange(e);
-										calculateFrameArea();
 									}}
 									type='number'
 								/>
@@ -221,10 +202,9 @@ const WindowPage = () => {
 								<Input
 									name='areaVain'
 									value={formik.values.areaVain}
-									onChange={(e) => {
-										handleChange(e);
-										calculateFrameArea();
-									}}
+									onChange={handleChange}
+									readOnly
+									className='bg-light'
 									type='text'
 								/>
 							</FormGroup>
@@ -233,6 +213,10 @@ const WindowPage = () => {
 								<Input
 									name='frameArea'
 									value={formik.values.frameArea}
+									onChange={(e) => {
+										handleChange(e);
+									}}
+									readOnly
 									className='bg-light'
 									type='text'
 								/>
@@ -242,17 +226,15 @@ const WindowPage = () => {
 								<Input
 									name='crystalArea'
 									value={formik.values.crystalArea}
+									onChange={(e) => {
+										handleChange(e);
+									}}
+									readOnly
 									className='bg-light'
 									type='text'
 								/>
 							</FormGroup>
 						</div>
-					</CardBody>
-				</Card>
-
-				<Card>
-					<CardBody>
-						<CustomEditor placeholder='Detalle de ventana tipo' />
 					</CardBody>
 				</Card>
 			</Page>

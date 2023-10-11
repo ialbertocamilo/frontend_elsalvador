@@ -86,7 +86,7 @@ const WindowPage = () => {
 	const [customEditorText, setCustomEditorText] = useState('');
 
 	function handleChange(e: any) {
-		e.target.value = to2Decimal(e.target.value);
+		// e.target.value = to2Decimal(e.target.value);
 		formik.handleChange(e);
 	}
 

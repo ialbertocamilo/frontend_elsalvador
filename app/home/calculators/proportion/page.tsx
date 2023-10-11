@@ -24,7 +24,7 @@ const ProportionPage = () => {
 						</span>
 					</CardBody>
 				</Card>
-				<div className='row align-content-between justify-content-between px-2'>
+				<div className='row  px-2'>
 					<Card className='col me-2'>
 						<CardBody>
 							<ProportionTable
@@ -33,24 +33,6 @@ const ProportionPage = () => {
 								}}
 								keyName={keyName}
 							/>
-						</CardBody>
-					</Card>
-					<Card className='col-md-3'>
-						<CardBody>
-							<h4>Documentación entregada</h4>
-							<span>Planos de Fachada con dimensiones de ventanas y generales</span>
-							<div className='align-items-center text-center mt-2'>
-								<Button
-									color='info'
-									isLight
-									tag='a'
-									to='/somefile.txt'
-									target='_blank'
-									icon='AttachFile'
-									download>
-									Adjuntar
-								</Button>
-							</div>
 						</CardBody>
 					</Card>
 				</div>

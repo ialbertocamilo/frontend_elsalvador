@@ -79,9 +79,10 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
 				/>
 			</td>
-			<td className='text-center'>{data.result1}</td>
-			<td className='text-center'>{data.result2}</td>
-			<td className='text-center'>{data.result3}</td>
+			<td className='text-center bold h4'>{data.result1}</td>
+			<td className='text-center bold h4'>{data.result2}</td>
+			<td className='text-center bold h4'>{data.result3}</td>
+
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
@@ -277,12 +278,9 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 						<th className='px-2'>Anchura de la ventana(m)</th>
 						<th className='px-2'>Profundidad del alero horizontal(m)</th>
 						<th className='px-2'>Profundidad del alero vertical(m)</th>
-						<th colSpan={3}>
-							Resultado Sombra (CS)
-							<th className='px-5'>Horizontal</th>
-							<th className='px-5'>Vertical</th>
-							<th className='px-5'>Combinada</th>
-						</th>
+						<th className='px-5'>Horizontal</th>
+						<th className='px-5'>Vertical</th>
+						<th className='px-5'>Combinada</th>
 					</tr>
 				</thead>
 				<tbody>

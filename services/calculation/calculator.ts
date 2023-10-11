@@ -120,6 +120,7 @@ export class Calculator {
 
 	static transmittanceUValue(rows: any[], totalSurface1: number, totalSurface2: number) {
 		const lambda1 = rows[0].column2;
+		if (!lambda1) return 0;
 		const rtS1 = rows.map((value, index, array) => {
 			const lambda1 = value.column2;
 			const lambda2 = value.column4;

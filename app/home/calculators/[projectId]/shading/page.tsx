@@ -79,7 +79,6 @@ const ShadingPage = () => {
 									setText={setTextB}
 									initialText={textB}
 								/>
-								{JSON.stringify(setTextB)}
 							</CardBody>
 						</Card>
 						<Card>

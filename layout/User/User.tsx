@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import useDarkMode from '../../hooks/useDarkMode';
 import Collapse from '../../components/bootstrap/Collapse';
@@ -50,17 +50,30 @@ const User = () => {
 				<nav aria-label='aside-bottom-user-menu'>
 					<div className='navigation '>
 						<div className='social-icon'>
-							<Button>
-								<SvgFacebook className='cursor-pointer social-icon' height={25} />
+							<Button href='https://facebook.com'>
+								<SvgFacebook
+									className='cursor-pointer social-icon text-white'
+									height={25}
+								/>
 							</Button>
-							<Button>
-								<InstagramIcon className='cursor-pointer social-icon' height={25} />
+							<Button href='https://instagram.com'>
+								<InstagramIcon
+									className='cursor-pointer social-icon text-white'
+									height={25}
+								/>
 							</Button>
-							<Button>
-								<TwitterIcon className=' cursor-pointer social-icon' height={25} />
+
+							<Button href='https://x.com'>
+								<TwitterIcon
+									className=' cursor-pointer social-icon text-white'
+									height={25}
+								/>
 							</Button>
-							<Button>
-								<SvgCircle className=' cursor-pointer social-icon' height={25} />
+							<Button href='https://google.com'>
+								<SvgCircle
+									className=' cursor-pointer social-icon text-white'
+									height={25}
+								/>
 							</Button>
 						</div>
 						<div

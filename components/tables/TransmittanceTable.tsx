@@ -88,11 +88,11 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 	}, [data]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-
 		if (column == 'column2' || column == 'column4' || column == 'column5')
 			newRows[index][column] = to2Decimal(val);
 		else newRows[index][column] = val;
 		const result = Calculator.calculateThickness(newRows, 'column5');
+
 		setTotalThickness(result);
 		setRow(newRows);
 	};
@@ -167,7 +167,6 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 												setTotalSurface2(e.target.value);
 											}
 										}}
-										mask={'99.99'}
 									/>
 									<span className='align-self-center'>%</span>
 								</div>

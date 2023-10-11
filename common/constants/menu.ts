@@ -1,15 +1,10 @@
 export const pagesMenu = {
-	auth: {
-		id: 'menu',
-		text: 'Menu',
-		icon: 'Extension',
-	},
-	location: {
-		id: 'Location',
-		text: 'Ubicación',
-		path: 'home/location',
-		icon: 'EditLocation',
-	},
+	// location: {
+	// 	id: 'Location',
+	// 	text: 'Ubicación',
+	// 	path: 'home/location',
+	// 	icon: 'EditLocation',
+	// },
 	projects: {
 		id: 'Projects',
 		text: 'Proyectos',

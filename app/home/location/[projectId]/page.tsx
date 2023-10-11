@@ -44,6 +44,11 @@ const LocationPage = () => {
 				<Card>
 					<CardBody>
 						<div className='row'>
+							<span className='text-muted'>
+								* Para guardar marcadores primero se debe realizar click en una zona
+								en el mapa, luego presionar el botón "Asignar y guardar marcador"
+							</span>
+							<br />
 							<div className='col'>
 								<MapLibre
 									location={location}
