@@ -61,6 +61,10 @@ const GetProject = () => {
 			if (!values?.nationality) errors.nationality = 'Especificar nacionalidad';
 			if (!values?.projectName) errors.projectName = 'Especificar nombre de proyecto';
 			if (!values?.phone) errors.phone = 'Especificar teléfono';
+			const phoneRegex = /^(?:\+\d{1,3}\s?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+			if (values.phone)
+				if (!phoneRegex.test(values.phone))
+					errors.phone = 'Escribe un teléfono válido ejm. +1 (123) 456-7890';
 			if (!values?.address) errors.address = 'Especificar dirección';
 			if (!values?.municipality) errors.municipality = 'Especificar municipio';
 			if (!values?.department) errors.department = 'Especificar departamento';

@@ -145,19 +145,21 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 					))}
 					<tr>
 						<td className='p-2'>Porcentaje de superficie parcial</td>
-						<td className='p-2 align-self-center  text-center'>
-							<span className='col '>{totalSurface1} %</span>
+						<td className='p-2 align-self-center text-center'>
+							<span className='h4 bold bg-l25-dark px-3 rounded'>
+								{totalSurface1} %
+							</span>
 						</td>
 						<td className='p-2 align-self-center'>
 							Porcentaje de superficie parcial 2
 						</td>
-						<td className='p-2 text-center'>
+						<td className='p-2 text-center   text-center'>
 							<FormGroup>
 								<div className='d-flex align-content-between'>
 									<Input
 										value={totalSurface2}
 										placeholder='%'
-										className='text-center'
+										className='me-2 text-center '
 										inputMode={'decimal'}
 										onChange={(e: any) => {
 											if (
@@ -172,12 +174,10 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 								</div>
 							</FormGroup>
 						</td>
-						<td className='p-2 '>
-							<FormGroup>
-								<div className='row text-center'>
-									<span className='col text-center '>{totalThickness} m</span>
-								</div>
-							</FormGroup>
+						<td className='p-2 align-self-center text-center'>
+							<span className='h4 bold bg-l25-dark px-3 rounded'>
+								{totalThickness} %
+							</span>
 						</td>
 					</tr>
 
@@ -185,13 +185,13 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>
+						<td className='text-center'>
 							<span>Valor u</span>
 						</td>
-						<td className='p-2'>
-							<div className=' bg-info-subtle text-center h5'>
-								<span>{calculateExpensive} W/m2K</span>
-							</div>
+						<td className='p-2  text-center'>
+							<span className='h4 bold bg-l25-dark px-3 rounded'>
+								{calculateExpensive} W/m2K
+							</span>
 						</td>
 					</tr>
 				</tbody>

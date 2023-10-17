@@ -142,6 +142,10 @@ const Login = () => {
 			if (!values.email) {
 				errors.email = 'Requerido';
 			}
+			const phoneRegex = /^(?:\+\d{1,3}\s?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+			if (values.phone)
+				if (!phoneRegex.test(values.phone))
+					errors.phone = 'Escribe un teléfono válido ejm. +1 (123) 456-7890';
 			if (!values.password) {
 				errors.password = 'Requerido';
 			}
@@ -159,6 +163,9 @@ const Login = () => {
 					'Se ha creado el usuario ' + name,
 					'success',
 				);
+
+			setSingUpStatus(false);
+			await formik.setFieldValue('loginUsername', values.email);
 		},
 	});
 

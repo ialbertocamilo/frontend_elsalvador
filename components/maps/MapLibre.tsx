@@ -8,7 +8,7 @@ import Button from '../bootstrap/Button';
 import { useGeocodingService } from '../../services/geocoding/geocoding.service';
 import { useParams, useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
-import { RoutesList, RoutesListWithParams } from '../../common/constants/default';
+import { RoutesListWithParams } from '../../common/constants/default';
 
 const keyName = 'geoinformation';
 
@@ -25,7 +25,6 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 
 	const router = useRouter();
 	const geo = useGeocodingService();
-	const [selectPoint, setSelectPoint] = useState(false);
 	const [myPosition, setMyPosition] = useState<LngLatLike>();
 	const [map, setMap] = useState<Map>();
 	const [viewport, setViewport] = useState({
@@ -36,6 +35,7 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		zoom: 13, // Nivel de zoom inicial
 	});
 
+	(window as any).selectMode = false;
 	const project = useProjects();
 
 	useEffect(() => {
@@ -64,7 +64,6 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		}
 	}, [geoJson, map]);
 
-	const [point, setPoint] = useState<any>();
 	useEffect(() => {
 		project
 			.getProjectData({ key: 'geoinformation', project_id: params?.projectId as string })
@@ -88,58 +87,21 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 					}
 				}
 			});
-	}, [map]);
-	useEffect(() => {
-		if (myPosition) {
-			map?.flyTo({
-				center: myPosition,
-				animate: true,
-				zoom: 15,
-				essential: true,
-				duration: 400,
-			});
-		}
-	}, [myPosition]);
 
-	useEffect(() => {
-		if (location?.Place?.Geometry?.Point)
-			setMyPosition({
-				lng: location.Place?.Geometry?.Point[0],
-				lat: location.Place?.Geometry?.Point[1],
-			});
-	}, [location]);
-
-	useEffect(() => {
-		const _map = new maplibregl.Map({
-			container: 'map',
-			style: mapStyle,
-			center: [viewport.longitude, viewport.latitude],
-			zoom: viewport.zoom,
-		});
-		setMap(_map);
-		// Configura el mapa de MapLibre
-		_map?.on('load', () => {});
-		_map?.addControl(new maplibregl.NavigationControl(), 'top-left');
-		_map.addControl(
-			new maplibregl.GeolocateControl({
-				positionOptions: {
-					enableHighAccuracy: true,
-				},
-				trackUserLocation: true,
-			}),
-		);
-	}, []);
-
-	useEffect(() => {
-		map?.on('click', (ev) => {
-			setPoint(ev);
-		});
 		map?.on('click', 'symbols', (e: any) => {
 			if (e?.features) {
 				map.flyTo({
 					center: e?.features[0].geometry?.coordinates,
 				});
 				router.push(RoutesListWithParams.project(e?.features[0].properties.id));
+			}
+		});
+		map?.on('click', (ev) => {
+			if ((window as any).selectMode) {
+				//Al hacer click en un lugar regresar el mouse a su estado normal y setea el marcador
+				map.getCanvas().style.cursor = '';
+				activateAndSaveMarker(ev.lngLat.lat, ev.lngLat.lng);
+				(window as any).selectMode = false;
 			}
 		});
 		if (geoJson) {
@@ -161,15 +123,10 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 				const coordinates = e.features[0].geometry.coordinates.slice();
 				const description = `Proyecto: <b>${e.features[0].properties.name}</b>`;
 
-				// Ensure that if the map is zoomed out such that multiple
-				// copies of the feature are visible, the popup appears
-				// over the copy being pointed to.
 				while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 					coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 				}
 
-				// Populate the popup and set its coordinates
-				// based on the feature found.
 				popup.setLngLat(coordinates).setHTML(description).addTo(map);
 			});
 
@@ -179,6 +136,44 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 			});
 		}
 	}, [map]);
+	useEffect(() => {
+		if (myPosition) {
+			map?.flyTo({
+				center: myPosition,
+				animate: true,
+				zoom: 15,
+				essential: true,
+				duration: 400,
+			});
+		}
+	}, [myPosition]);
+	useEffect(() => {
+		if (location?.Place?.Geometry?.Point)
+			setMyPosition({
+				lng: location.Place?.Geometry?.Point[0],
+				lat: location.Place?.Geometry?.Point[1],
+			});
+	}, [location]);
+	useEffect(() => {
+		const _map = new maplibregl.Map({
+			container: 'map',
+			style: mapStyle,
+			center: [viewport.longitude, viewport.latitude],
+			zoom: viewport.zoom,
+		});
+		setMap(_map);
+		// Configura el mapa de MapLibre
+		_map?.on('load', () => {});
+		_map?.addControl(new maplibregl.NavigationControl(), 'top-left');
+		_map?.addControl(
+			new maplibregl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true,
+				},
+				trackUserLocation: true,
+			}),
+		);
+	}, []);
 
 	const [lastMarker, setLastMarker] = useState<Marker | null>(null);
 
@@ -202,10 +197,18 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		});
 	}
 
-	const activatePointer = () => {
+	const activateAndSaveMarker = (lat: number, lng: number) => {
 		if (map) {
-			addMarker({ lng: point.lngLat.lng, lat: point.lngLat.lat }, map);
-			saveLocation([point.lngLat.lng, point.lngLat.lat]);
+			addMarker({ lng, lat }, map);
+			saveLocation([lng, lat]);
+		}
+	};
+
+	const activateSelectMode = () => {
+		if (lastMarker) lastMarker.remove();
+		if (map) {
+			(window as any).selectMode = true;
+			map.getCanvas().style.cursor = 'crosshair';
 		}
 	};
 
@@ -214,11 +217,9 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		<div>
 			<div id='map' className={'mb-4'}></div>
 
-			{params?.projectId && (
-				<Button color={'info'} icon={'GpsFixed'} onClick={activatePointer}>
-					Asignar y guardar marcador
-				</Button>
-			)}
+			<Button color={'info'} icon={'GpsFixed'} className='me-2' onClick={activateSelectMode}>
+				Seleccionar ubicación
+			</Button>
 		</div>
 	);
 };

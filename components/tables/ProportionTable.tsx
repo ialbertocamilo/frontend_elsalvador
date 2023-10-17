@@ -191,19 +191,31 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 						</td>
 						<td className='p-2'>
 							<FormGroup id='propietario'>
-								<div className='d-flex align-content-center text-center'>
-									<span className='col align-self-center '>
-										{totalOpaqueSurface} m
-									</span>
+								<div className='d-flex align-content-between'>
+									<Input
+										id='opaque_surface_1'
+										name='opaque_surface_1'
+										type='number'
+										readOnly
+										className='me-2 text-center bg-info-subtle'
+										value={totalOpaqueSurface}
+									/>
+									<span className='align-self-center'> m</span>
 								</div>
 							</FormGroup>
 						</td>
 						<td className='p-2'>
-							<FormGroup id='width-window'>
-								<div className='d-flex align-content-center text-center'>
-									<span className='col align-self-center '>
-										{totalGlazedSurface} m
-									</span>
+							<FormGroup id='propietario'>
+								<div className='d-flex align-content-between'>
+									<Input
+										id='opaque_surface_1'
+										name='opaque_surface_1'
+										type='number'
+										readOnly
+										className='me-2 text-center bg-info-subtle'
+										value={totalGlazedSurface}
+									/>
+									<span className='align-self-center'> m</span>
 								</div>
 							</FormGroup>
 						</td>

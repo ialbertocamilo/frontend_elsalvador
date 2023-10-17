@@ -5,6 +5,7 @@ import Button from '../bootstrap/Button';
 import React, { useEffect, useState } from 'react';
 import Select from '../bootstrap/forms/Select';
 import { to2Decimal } from '../../helpers/helpers';
+import classNames from 'classnames';
 
 interface Row {
 	data: any;
@@ -29,6 +30,17 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 		{ value: 1, text: 'Vertical' },
 		{ value: 2, text: 'Combinada' },
 	];
+
+	const RowIsX = (data: string) => {
+		if (data === 'x')
+			return (
+				<Input
+					className={classNames(data == 'x' ? 'bold bg-l25-dark' : '', 'text-center')}
+					readOnly></Input>
+			);
+
+		return <span>{data}</span>;
+	};
 	return (
 		<tr>
 			<td className='col-2 p-2'>
@@ -49,7 +61,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					className='col'
+					className='col text-center'
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
 				/>
@@ -57,7 +69,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					className='col'
+					className='col text-center'
 					inputMode={'numeric'}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
@@ -66,7 +78,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					className='col'
+					className='col text-center'
 					value={data.column5}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
 				/>
@@ -74,14 +86,14 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					className='col'
+					className='col text-center'
 					value={data.column6}
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
 				/>
 			</td>
-			<td className='text-center bold h4'>{data.result1}</td>
-			<td className='text-center bold h4'>{data.result2}</td>
-			<td className='text-center bold h4'>{data.result3}</td>
+			<td className='bold h4 text-center'>{RowIsX(data.result1)}</td>
+			<td className='bold h4 text-center'>{RowIsX(data.result2)}</td>
+			<td className='bold h4 text-center'>{RowIsX(data.result3)}</td>
 
 			<td className='p-2'>
 				<FormGroup id='width-window'>
