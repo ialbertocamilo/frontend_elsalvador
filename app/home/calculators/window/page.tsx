@@ -97,7 +97,7 @@ const WindowPage = () => {
 								/>
 							</FormGroup>
 							<FormGroup className='col-2 my-1'>
-								<Label className={'border-2'}>Valor U (W/m2K)</Label>
+								<Label className={'border-2'}>Valor U (W/m²K)</Label>
 								<Input
 									type='number'
 									name='uValue1'
@@ -149,7 +149,7 @@ const WindowPage = () => {
 								/>
 							</FormGroup>
 							<FormGroup className='col-2 my-1'>
-								<Label className={'border-2'}>Valor U (W/m2K)</Label>
+								<Label className={'border-2'}>Valor U (W/m²K)</Label>
 								<Input
 									name='uValue2'
 									className='text-center'

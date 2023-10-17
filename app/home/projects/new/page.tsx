@@ -27,7 +27,7 @@ const ProjectsPage = () => {
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
 		initialValues: project,
-		validateOnChange: false,
+		validateOnChange: true,
 		validate: (values) => {
 			const errors: {
 				ownerName?: string;
@@ -63,9 +63,13 @@ const ProjectsPage = () => {
 			if (!values?.directorName) errors.directorName = 'Especificar nombre de director';
 			if (!values?.designerName) errors.designerName = 'Especificar nombre de diseñador';
 			if (!values?.email) errors.email = 'Especificar email';
+			if (values.email)
+				if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email))
+					errors.email = 'Email inválido ejm. john@doe.com';
 
 			return errors;
 		},
+
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, public: buttonActive });
 			const result = await projects.saveProject(values);

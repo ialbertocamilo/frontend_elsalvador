@@ -176,7 +176,7 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 						</td>
 						<td className='p-2 align-self-center text-center'>
 							<span className='h4 bold bg-l25-dark px-3 rounded'>
-								{totalThickness} %
+								{totalThickness} m
 							</span>
 						</td>
 					</tr>
@@ -190,7 +190,7 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 						</td>
 						<td className='p-2  text-center'>
 							<span className='h4 bold bg-l25-dark px-3 rounded'>
-								{calculateExpensive} W/m2K
+								{calculateExpensive} W/m²K
 							</span>
 						</td>
 					</tr>

@@ -138,7 +138,7 @@ const Login = () => {
 			// 	errors.phone = 'Requerido';
 			// }
 			if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email))
-				errors.email = 'Email inválido';
+				errors.email = 'Email inválido ejm. john@doe.com';
 			if (!values.email) {
 				errors.email = 'Requerido';
 			}
