@@ -35,13 +35,11 @@ const TransmittancePage = () => {
 						</div>
 					</CardBody>
 				</Card>
-				<div className='row align-content-between justify-content-between px-2'>
-					<Card className='col me-2'>
-						<CardBody>
-							<TransmittanceTable />
-						</CardBody>
-					</Card>
-				</div>
+				<Card className='col'>
+					<CardBody className='align-self-center'>
+						<TransmittanceTable />
+					</CardBody>
+				</Card>
 			</Page>
 		</PageWrapper>
 	);

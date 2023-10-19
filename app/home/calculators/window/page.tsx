@@ -134,7 +134,7 @@ const WindowPage = () => {
 									onChange={handleChange}
 									readOnly
 									type='number'
-									className='bg-light'
+									className='bg-info-subtle'
 								/>
 							</FormGroup>
 						</div>
@@ -175,7 +175,7 @@ const WindowPage = () => {
 								<Input
 									name='windowUValue'
 									value={formik.values.windowUValue}
-									className='bg-light text-center'
+									className='bg-info-subtle text-center'
 									onChange={handleChange}
 									readOnly
 									type='number'
@@ -211,7 +211,7 @@ const WindowPage = () => {
 									value={formik.values.areaVain}
 									onChange={handleChange}
 									readOnly
-									className='bg-light text-center'
+									className='bg-info-subtle text-center'
 									type='text'
 								/>
 							</FormGroup>
@@ -224,7 +224,7 @@ const WindowPage = () => {
 										handleChange(e);
 									}}
 									readOnly
-									className='bg-light text-center'
+									className='bg-info-subtle text-center'
 									type='text'
 								/>
 							</FormGroup>
@@ -237,7 +237,7 @@ const WindowPage = () => {
 										handleChange(e);
 									}}
 									readOnly
-									className='bg-light text-center'
+									className='bg-info-subtle text-center'
 									type='text'
 								/>
 							</FormGroup>

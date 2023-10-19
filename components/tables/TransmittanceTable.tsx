@@ -146,9 +146,9 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 					<tr>
 						<td className='p-2'>Porcentaje de superficie parcial</td>
 						<td className='p-2 align-self-center text-center'>
-							<span className='h4 bold bg-l25-dark px-3 rounded'>
-								{totalSurface1} %
-							</span>
+							<div className='w-100 bg-info-subtle h4 bold  px-3  py-2 rounded'>
+								<span>{totalSurface1} %</span>
+							</div>
 						</td>
 						<td className='p-2 align-self-center'>
 							Porcentaje de superficie parcial 2
@@ -175,9 +175,9 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 							</FormGroup>
 						</td>
 						<td className='p-2 align-self-center text-center'>
-							<span className='h4 bold bg-l25-dark px-3 rounded'>
-								{totalThickness} m
-							</span>
+							<div className='w-100 bg-info-subtle h4 bold  px-3 py-2 rounded'>
+								<span>{totalThickness} m</span>
+							</div>
 						</td>
 					</tr>
 
@@ -189,9 +189,9 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 							<span>Valor u</span>
 						</td>
 						<td className='p-2  text-center'>
-							<span className='h4 bold bg-l25-dark px-3 rounded'>
-								{calculateExpensive} W/m²K
-							</span>
+							<div className='w-100 bg-info-subtle h4 bold  px-3  py-2 rounded'>
+								<span className=''>{calculateExpensive} W/m²K</span>
+							</div>
 						</td>
 					</tr>
 				</tbody>

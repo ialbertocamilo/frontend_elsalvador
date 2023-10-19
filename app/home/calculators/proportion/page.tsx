@@ -24,18 +24,16 @@ const ProportionPage = () => {
 						</span>
 					</CardBody>
 				</Card>
-				<div className='row  px-2'>
-					<Card className='col me-2'>
-						<CardBody>
-							<ProportionTable
-								onData={(e: any) => {
-									setData(e);
-								}}
-								keyName={keyName}
-							/>
-						</CardBody>
-					</Card>
-				</div>
+				<Card className='col'>
+					<CardBody className='align-self-center'>
+						<ProportionTable
+							onData={(e: any) => {
+								setData(e);
+							}}
+							keyName={keyName}
+						/>
+					</CardBody>
+				</Card>
 			</Page>
 		</PageWrapper>
 	);

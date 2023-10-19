@@ -35,7 +35,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 		if (data === 'x')
 			return (
 				<Input
-					className={classNames(data == 'x' ? 'bold bg-l25-dark' : '', 'text-center')}
+					className={classNames(data == 'x' ? 'bold bg-info-subtle' : '', 'text-center')}
 					readOnly></Input>
 			);
 

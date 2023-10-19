@@ -14,6 +14,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import showNotification from '../../../components/extras/showNotification';
 import Icon from '../../../components/icon/Icon';
 import Logo from '../../../components/Logo';
+import userStore from '../../../stores/userStore';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
@@ -79,7 +80,8 @@ const Login = () => {
 			const result = await login(values.loginUsername, values.loginPassword);
 			if (!result) setLoginError(true);
 			else {
-				ClientStorage.saveUser(result);
+				const user = ClientStorage.saveUser(result);
+				userStore.setUser(user);
 				router.replace(RoutesList.projects);
 				setLoginError(false);
 			}

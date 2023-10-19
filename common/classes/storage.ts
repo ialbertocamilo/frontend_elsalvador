@@ -6,6 +6,7 @@ import showNotification from '../../components/extras/showNotification';
 export class ClientStorage {
 	static saveUser(user: AuthUser) {
 		localStorage.setItem(StorageTypes.user, JSON.stringify(user));
+		return user as IUserStorage;
 	}
 
 	static getUser(): IUserStorage | null {
