@@ -6,6 +6,7 @@ import { useProjects } from '../../services/project/project.service';
 export enum ButtonTypes {
 	projectData,
 	projectInfo,
+	packageConfig,
 }
 
 interface SaveButtonProps {
@@ -28,6 +29,10 @@ export const SaveProjectButton = ({ type, payload }: SaveButtonProps) => {
 
 			case ButtonTypes.projectInfo:
 				setActive(false);
+				break;
+			case ButtonTypes.packageConfig:
+				setActive(false);
+				await projects.saveProjectData(payload);
 				break;
 		}
 	}

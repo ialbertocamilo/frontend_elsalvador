@@ -5,7 +5,6 @@ import {
 	IProjectDataGetterRequest,
 	IProjectDataSavingRequest,
 	IProjectFormType,
-	IProjectListResponse,
 } from '../../common/types/project.types';
 import { ProjectMapper } from '../../common/mapper/project.mapper';
 import { ProjectEntity } from '../../common/classes/project';
@@ -64,8 +63,10 @@ export function useProjects() {
 	}
 
 	async function saveProjectData(params: IProjectDataSavingRequest) {
-		if (!params.project_id || !params.key) return false;
-		const response = await axiosService().post(`/projects/save-data`, params);
+		let response;
+		if (!params.project_id) response = await axiosService().post(`/data`, params);
+		else if (!params.key) return false;
+		else response = await axiosService().post(`/projects/save-data`, params);
 
 		if (!response?.data) return false;
 		showNotification(

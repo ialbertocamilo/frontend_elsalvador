@@ -43,7 +43,7 @@ export interface IProjectDataGetterRequest {
 }
 
 export interface IProjectDataSavingRequest {
-	project_id: string | string[];
+	project_id?: string | string[];
 	key: string;
 	payload: object | string;
 }

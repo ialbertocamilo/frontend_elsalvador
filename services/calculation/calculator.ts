@@ -102,7 +102,6 @@ function calculeUValue(
 		if (percentageRTtotalS1 < 0.1) return 1 / RTtotalS1;
 		else return 1 / (calculeRT * 1.1);
 	}
-	console.log('error calcule u value');
 	return 0;
 }
 
