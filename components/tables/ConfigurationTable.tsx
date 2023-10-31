@@ -183,7 +183,7 @@ export const ConfigurationTable = ({ emitValue }: { emitValue: Function }) => {
 	}>();
 	useEffect(() => {
 		DataService.getPackagesConfig().then((data) => {
-			if (data) setPackages(data);
+			if (data?.config) setPackages(data?.config);
 		});
 	}, []);
 	useEffect(() => {

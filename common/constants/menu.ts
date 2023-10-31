@@ -34,7 +34,7 @@ export const pagesMenu = {
 	packages: {
 		id: 'Packages',
 		text: 'Paquetes',
-		path: 'home/data',
+		path: 'home/packages',
 		icon: 'Backpack',
 	},
 	config: {
