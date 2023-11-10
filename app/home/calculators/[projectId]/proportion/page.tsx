@@ -11,6 +11,10 @@ import {
 import { useParams } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
+import Button from '../../../../../components/bootstrap/Button';
+import Link from 'next/link';
+import { RoutesListWithParams } from '../../../../../common/constants/default';
+import { NextButton } from '../../../../../components/buttons/NextButton';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -66,6 +70,10 @@ const ProportionPage = () => {
 						/>
 
 						<BackToCalculatorsBtn />
+						<NextButton
+							route={RoutesListWithParams.calculatorTransmittance(params?.projectId)}
+							text='Siguiente'
+						/>
 					</CardFooter>
 				</Card>
 			</Page>

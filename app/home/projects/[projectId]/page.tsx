@@ -18,6 +18,8 @@ import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculato
 import Select from '../../../../components/bootstrap/forms/Select';
 import { arrayToList } from '../../../../helpers/helpers';
 import { departmentList, municipalityList } from '../../../../common/constants/lists';
+import { NextButton } from '../../../../components/buttons/NextButton';
+import Icon from '../../../../components/icon/Icon';
 
 const GetProject = () => {
 	const param = useParams();
@@ -263,7 +265,7 @@ const GetProject = () => {
 							</CardBody>
 						</Card>
 					</div>
-					<div className='col-xl-3'>
+					<div className='col-xl-4'>
 						<Card>
 							<CardBody>
 								<div className='row'>
@@ -432,6 +434,36 @@ const GetProject = () => {
 								</div>
 								<div className='col-auto'></div>
 								<BackToCalculatorsBtn />
+								<Button
+									color='link'
+									className='mx-1 col-2 m-0 p-0'
+									onClick={() =>
+										router.push(RoutesListWithParams.packages(param?.projectId))
+									}>
+									<span className='text-start'>
+										<Icon icon='Backpack' />
+										Paquetes
+									</span>
+								</Button>
+								<Button
+									color='link'
+									className=' mx-1 col-2 m-0 p-0'
+									onClick={() =>
+										router.push(
+											RoutesListWithParams.configuration(param?.projectId),
+										)
+									}>
+									<span className='text-start'>
+										<Icon icon='Settings' />
+										Configuración de datos
+									</span>
+								</Button>
+								<NextButton
+									route={RoutesListWithParams.calculatorProportion(
+										param?.projectId,
+									)}
+									text='Siguiente'
+								/>
 							</CardFooter>
 						</Card>
 					</div>

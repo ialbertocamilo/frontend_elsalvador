@@ -1,16 +1,16 @@
 'use client';
-import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-import Page from '../../../layout/Page/Page';
-import Card, { CardBody, CardFooter } from '../../../components/bootstrap/Card';
+import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
+import Page from '../../../../layout/Page/Page';
+import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Card';
 import React, { useEffect, useState } from 'react';
-import { ConfigurationTable } from '../../../components/tables/ConfigurationTable';
-import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
-import { IConfigurationType } from '../../../common/types/configuration.types';
-import Textarea from '../../../components/bootstrap/forms/Textarea';
-import FormText from '../../../components/bootstrap/forms/FormText';
-import Label from '../../../components/bootstrap/forms/Label';
+import { ConfigurationTable } from '../../../../components/tables/ConfigurationTable';
+import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
+import { IConfigurationType } from '../../../../common/types/configuration.types';
+import Textarea from '../../../../components/bootstrap/forms/Textarea';
+import FormText from '../../../../components/bootstrap/forms/FormText';
+import Label from '../../../../components/bootstrap/forms/Label';
 import { useFormik } from 'formik';
-import DataService from '../../../services/data/data.service';
+import DataService from '../../../../services/data/data.service';
 
 const keyName = 'package-configuration';
 
@@ -59,6 +59,7 @@ const ConfigurationPage = () => {
 			if (data?.questions) formik.setValues(data?.questions);
 		});
 	}, []);
+
 	return (
 		<PageWrapper>
 			<Page container='xl'>
@@ -73,7 +74,7 @@ const ConfigurationPage = () => {
 					</CardBody>
 				</Card>
 				<Card>
-					<CardBody className='d-flex align-self-center'>
+					<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
 						<ConfigurationTable emitValue={setValues} />
 					</CardBody>
 				</Card>

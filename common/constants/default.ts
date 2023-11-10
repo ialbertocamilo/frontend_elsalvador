@@ -22,4 +22,6 @@ export const RoutesListWithParams = {
 	geolocation: (value: any) => `/home/location/${value}`,
 	calculators: (value: any) => `/home/calculators/${value}`,
 	project: (value: any) => `/home/projects/${value}`,
+	packages: (value: any) => `/home/packages/${value}`,
+	configuration: (value: any) => `/home/configuration/${value}`,
 };

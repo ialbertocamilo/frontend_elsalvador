@@ -13,6 +13,8 @@ import {
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { useParams } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
+import { NextButton } from '../../../../../components/buttons/NextButton';
+import { RoutesList, RoutesListWithParams } from '../../../../../common/constants/default';
 
 const keyName = 'shading';
 const ShadingPage = () => {
@@ -126,6 +128,10 @@ const ShadingPage = () => {
 						/>
 
 						<BackToCalculatorsBtn />
+						<NextButton
+							route={RoutesListWithParams.packages(params?.projectId)}
+							text='Ir a paquetes'
+						/>
 					</CardFooter>
 				</Card>
 			</Page>

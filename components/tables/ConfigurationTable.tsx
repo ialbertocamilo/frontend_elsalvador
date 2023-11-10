@@ -13,7 +13,7 @@ const PackageItem = ({
 }: {
 	title: string;
 	keyName: string;
-	emitValues: Function;
+	emitValues?: Function;
 	values?: any;
 }) => {
 	const pack = useRef(null);
@@ -40,7 +40,7 @@ const PackageItem = ({
 	}
 
 	useEffect(() => {
-		emitValues(formik.values);
+		if (emitValues) emitValues(formik.values);
 	}, [formik.values]);
 	return (
 		<table className='mx-2'>
@@ -60,7 +60,7 @@ const PackageItem = ({
 									name='proportion_wall_window'
 									value={formik.values.proportion_wall_window}
 									onChange={handleChange}></Input>
-								<Button className='bg-light'>%</Button>
+								<Button className='bg-dark-subtle'>%</Button>
 							</InputGroup>
 						</div>
 					</td>
@@ -85,7 +85,7 @@ const PackageItem = ({
 									name='walls_reflectance'
 									value={formik.values.walls_reflectance}
 									onChange={handleChange}></Input>
-								<Button className='bg-light'>%</Button>
+								<Button className='bg-dark-subtle'>%</Button>
 							</InputGroup>
 						</div>
 					</td>
@@ -109,7 +109,7 @@ const PackageItem = ({
 								name='roofs_reflectance'
 								value={formik.values.roofs_reflectance}
 								onChange={handleChange}></Input>
-							<Button className='bg-light'>%</Button>
+							<Button className='bg-dark-subtle'>%</Button>
 						</InputGroup>
 					</td>
 				</tr>
@@ -162,7 +162,7 @@ const PackageItem = ({
 								name='final_energy_reduction'
 								value={formik.values.final_energy_reduction}
 								onChange={handleChange}></Input>
-							<Button className='bg-light'>%</Button>
+							<Button className='bg-dark-subtle'>%</Button>
 						</InputGroup>
 					</td>
 				</tr>
@@ -172,28 +172,34 @@ const PackageItem = ({
 };
 
 export const ConfigurationTable = ({ emitValue }: { emitValue: Function }) => {
-	const [value1, setValue1] = useState<IConfigurationType>();
-	const [value2, setValue2] = useState<IConfigurationType>();
-	const [value3, setValue3] = useState<IConfigurationType>();
-
-	const [packages, setPackages] = useState<{
-		package_one: {};
-		package_two: {};
-		package_three: {};
-	}>();
+	const packageEmptyData: IConfigurationType = {
+		final_energy_reduction: '',
+		hvac: '',
+		roofs_reflectance: '',
+		roofs_u_value: '',
+		walls_reflectance: '',
+		proportion_wall_window: '',
+		shades: '',
+		shading_coefficient: '',
+		walls_u_value: '',
+		windows_u_value: '',
+	};
+	const [packages, setPackages] = useState<IConfigurationType[]>([packageEmptyData]);
 	useEffect(() => {
 		DataService.getPackagesConfig().then((data) => {
 			if (data?.config) setPackages(data?.config);
 		});
 	}, []);
-	useEffect(() => {
-		const newObj = {
-			package_one: value1 ? value1 : packages?.package_one,
-			package_two: value2 ? value2 : packages?.package_two,
-			package_three: value3 ? value3 : packages?.package_three,
-		};
-		emitValue(newObj);
-	}, [value1, value2, value3]);
+
+	function addPackage() {
+		setPackages([...packages, packageEmptyData]);
+	}
+	function sendData(val: any, key: number) {
+		packages[key] = val;
+		setPackages(packages);
+		emitValue(packages);
+	}
+
 	return (
 		<>
 			<table>
@@ -235,23 +241,21 @@ export const ConfigurationTable = ({ emitValue }: { emitValue: Function }) => {
 					</tr>
 				</tbody>
 			</table>
-			<PackageItem
-				title='Paquete 1'
-				keyName='package_one'
-				emitValues={setValue1}
-				values={packages?.package_one}
-			/>
-			<PackageItem
-				title='Paquete 2'
-				keyName='package_two'
-				emitValues={setValue2}
-				values={packages?.package_two}
-			/>
-			<PackageItem
-				title='Paquete 3'
-				keyName='package_three'
-				emitValues={setValue3}
-				values={packages?.package_three}
+			{packages?.map((value, key) => (
+				<PackageItem
+					title={`Paquete ${key + 1}`}
+					keyName='package_one'
+					emitValues={(e: any) => sendData(e, key)}
+					key={key}
+					values={value}
+				/>
+			))}
+			<Button
+				icon='PlusOne'
+				size='sm'
+				onClick={addPackage}
+				isLight
+				className='bg-primary text-white'
 			/>
 		</>
 	);

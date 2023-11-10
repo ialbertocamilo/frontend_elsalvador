@@ -1,17 +1,21 @@
 // generate code sample for tsx
 'use client';
-import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
-import Page from '../../../layout/Page/Page';
+import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
+import Page from '../../../../layout/Page/Page';
 import React from 'react';
-import Card, { CardBody, CardFooter } from '../../../components/bootstrap/Card';
-import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
-import FormGroup from '../../../components/bootstrap/forms/FormGroup';
-import FormText from '../../../components/bootstrap/forms/FormText';
-import Input from '../../../components/bootstrap/forms/Input';
-import Select from '../../../components/bootstrap/forms/Select';
+import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Card';
+import { ButtonTypes, SaveProjectButton } from '../../../../components/buttons/SaveProjectButton';
+import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
+import Input from '../../../../components/bootstrap/forms/Input';
+import Select from '../../../../components/bootstrap/forms/Select';
+import { NextButton } from '../../../../components/buttons/NextButton';
+import { RoutesListWithParams } from '../../../../common/constants/default';
+import { useParams, useRouter } from 'next/navigation';
+import Button from '../../../../components/bootstrap/Button';
 
 const keyName = 'packages';
 const PackagesPage = () => {
+	const params = useParams();
 	return (
 		<PageWrapper>
 			<Page className='mx-3'>
@@ -84,6 +88,10 @@ const PackagesPage = () => {
 				</Card>
 
 				<Card>
+					<CardBody>dw</CardBody>
+				</Card>
+
+				<Card>
 					<CardFooter>
 						<SaveProjectButton
 							payload={{
@@ -91,6 +99,11 @@ const PackagesPage = () => {
 								key: keyName,
 							}}
 							type={ButtonTypes.packageConfig}
+						/>
+
+						<NextButton
+							route={RoutesListWithParams.configuration(params?.projectId)}
+							text='Siguiente (configuración)'
 						/>
 					</CardFooter>
 				</Card>

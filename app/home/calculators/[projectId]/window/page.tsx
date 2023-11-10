@@ -17,6 +17,8 @@ import { useProjects } from '../../../../../services/project/project.service';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { Calculator } from '../../../../../services/calculation/calculator';
 import { to2Decimal } from '../../../../../helpers/helpers';
+import { NextButton } from '../../../../../components/buttons/NextButton';
+import { RoutesListWithParams } from '../../../../../common/constants/default';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -282,6 +284,10 @@ const WindowPage = () => {
 							}}></SaveProjectButton>
 
 						<BackToCalculatorsBtn />
+						<NextButton
+							route={RoutesListWithParams.calculatorShading(params?.projectId)}
+							text='Siguiente'
+						/>
 					</CardFooter>
 				</Card>
 			</Page>

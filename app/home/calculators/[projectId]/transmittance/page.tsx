@@ -14,6 +14,8 @@ import { useParams } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 import { useProjects } from '../../../../../services/project/project.service';
+import { NextButton } from '../../../../../components/buttons/NextButton';
+import { RoutesListWithParams } from '../../../../../common/constants/default';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -109,8 +111,12 @@ const TransmittancePage = () => {
 							}}
 							type={ButtonTypes.projectData}
 						/>
-
 						<BackToCalculatorsBtn />
+
+						<NextButton
+							route={RoutesListWithParams.calculatorWindow(params?.projectId)}
+							text='Siguiente'
+						/>
 					</CardFooter>
 				</Card>
 			</Page>
