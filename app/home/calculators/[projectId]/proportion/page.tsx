@@ -15,6 +15,8 @@ import Button from '../../../../../components/bootstrap/Button';
 import Link from 'next/link';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import { NextButton } from '../../../../../components/buttons/NextButton';
+import Icon from '../../../../../components/icon/Icon';
+import { router } from 'next/client';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -70,6 +72,17 @@ const ProportionPage = () => {
 						/>
 
 						<BackToCalculatorsBtn />
+						<Button
+							color='link'
+							className='mx-1 col-2 m-0 p-0'
+							onClick={() =>
+								router.push(RoutesListWithParams.packages(params?.projectId))
+							}>
+							<span className='text-start'>
+								<Icon icon='Backpack' />
+								Paquetes
+							</span>
+						</Button>
 						<NextButton
 							route={RoutesListWithParams.calculatorTransmittance(params?.projectId)}
 							text='Siguiente'

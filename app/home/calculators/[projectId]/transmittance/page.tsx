@@ -16,6 +16,9 @@ import FileUploader from '../../../../../components/extras/FileUploader';
 import { useProjects } from '../../../../../services/project/project.service';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
+import Button from '../../../../../components/bootstrap/Button';
+import { router } from 'next/client';
+import Icon from '../../../../../components/icon/Icon';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -113,6 +116,17 @@ const TransmittancePage = () => {
 						/>
 						<BackToCalculatorsBtn />
 
+						<Button
+							color='link'
+							className='mx-1 col-2 m-0 p-0'
+							onClick={() =>
+								router.push(RoutesListWithParams.packages(params?.projectId))
+							}>
+							<span className='text-start'>
+								<Icon icon='Backpack' />
+								Paquetes
+							</span>
+						</Button>
 						<NextButton
 							route={RoutesListWithParams.calculatorWindow(params?.projectId)}
 							text='Siguiente'

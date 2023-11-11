@@ -445,19 +445,6 @@ const GetProject = () => {
 										Paquetes
 									</span>
 								</Button>
-								<Button
-									color='link'
-									className=' mx-1 col-2 m-0 p-0'
-									onClick={() =>
-										router.push(
-											RoutesListWithParams.configuration(param?.projectId),
-										)
-									}>
-									<span className='text-start'>
-										<Icon icon='Settings' />
-										Configuración de datos
-									</span>
-								</Button>
 								<NextButton
 									route={RoutesListWithParams.calculatorProportion(
 										param?.projectId,
