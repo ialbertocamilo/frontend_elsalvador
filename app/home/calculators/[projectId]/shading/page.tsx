@@ -144,7 +144,7 @@ const ShadingPage = () => {
 						</Button>
 						<NextButton
 							route={RoutesListWithParams.packages(params?.projectId)}
-							text='Ir a paquetes'
+							text='Siguiente	'
 						/>
 					</CardFooter>
 				</Card>

@@ -419,20 +419,19 @@ const GetProject = () => {
 										icon='Save'>
 										Guardar datos
 									</Button>
-									<Button
-										className='col-auto  mx-2'
-										color='storybook'
-										isLight
-										onClick={() =>
-											router.push(
-												RoutesListWithParams.geolocation(param?.projectId),
-											)
-										}
-										icon='GpsFixed'>
-										Geolocalización
-									</Button>
 								</div>
-								<div className='col-auto'></div>
+								<Button
+									className='col-auto  mx-2'
+									color='storybook'
+									isLight
+									onClick={() =>
+										router.push(
+											RoutesListWithParams.geolocation(param?.projectId),
+										)
+									}
+									icon='GpsFixed'>
+									Geolocalización
+								</Button>
 								<BackToCalculatorsBtn />
 								<Button
 									color='link'
