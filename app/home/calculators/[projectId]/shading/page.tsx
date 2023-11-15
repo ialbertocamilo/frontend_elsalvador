@@ -11,12 +11,12 @@ import {
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import { RoutesList, RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
-import { router } from 'next/client';
+
 import Icon from '../../../../../components/icon/Icon';
 
 const keyName = 'shading';
@@ -24,6 +24,7 @@ const ShadingPage = () => {
 	const params = useParams();
 	const projects = useProjects();
 
+	const router = useRouter();
 	const [textA, setTextA] = useState('');
 	const [textB, setTextB] = useState('');
 	const [textC, setTextC] = useState('');

@@ -10,14 +10,14 @@ import {
 	ButtonTypes,
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 import { useProjects } from '../../../../../services/project/project.service';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
-import { router } from 'next/client';
+
 import Icon from '../../../../../components/icon/Icon';
 
 const keyName = 'transmittance';
@@ -26,6 +26,7 @@ const TransmittancePage = () => {
 	const editor = useRef(null);
 	const [wallName, setWallName] = useState('');
 
+	const router = useRouter();
 	const [data, setData] = useState();
 	const [dataResult, setDataResult] = useState();
 	const [editorText, setEditorText] = useState('');

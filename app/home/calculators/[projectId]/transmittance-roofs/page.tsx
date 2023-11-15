@@ -10,20 +10,21 @@ import {
 	ButtonTypes,
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 import { useProjects } from '../../../../../services/project/project.service';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
-import { router } from 'next/client';
+
 import Icon from '../../../../../components/icon/Icon';
 import { keyList } from '../../../../../common/constants/lists';
 import { TransmittanceRoofTable } from '../../../../../components/tables/TransmittanceRoofTable';
 
 const keyName = keyList.roofs;
 const TransmittancePage = () => {
+	const router = useRouter();
 	const params = useParams();
 	const editor = useRef(null);
 	const [wallName, setWallName] = useState('');

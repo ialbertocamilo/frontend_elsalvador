@@ -12,21 +12,20 @@ import {
 	ButtonTypes,
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import { Calculator } from '../../../../../services/calculation/calculator';
-import { to2Decimal } from '../../../../../helpers/helpers';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
-import { router } from 'next/client';
+
 import Icon from '../../../../../components/icon/Icon';
 
 const keyName = 'window';
 const WindowPage = () => {
 	const params = useParams();
-
+	const router = useRouter();
 	const projects = useProjects();
 
 	const [initialData, setInitialData] = useState<any>({});

@@ -8,7 +8,7 @@ import {
 	ButtonTypes,
 	SaveProjectButton,
 } from '../../../../../components/buttons/SaveProjectButton';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 import Button from '../../../../../components/bootstrap/Button';
@@ -16,11 +16,12 @@ import Link from 'next/link';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import Icon from '../../../../../components/icon/Icon';
-import { router } from 'next/client';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
 	const params = useParams();
+	const router = useRouter();
+
 	const [data, setData] = useState<any>({});
 
 	return (

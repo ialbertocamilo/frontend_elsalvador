@@ -33,8 +33,9 @@ const PackagesPage = () => {
 	useEffect(() => {
 		DataService.getPackagesConfig().then((data) => {
 			const packages = data?.config as IConfigurationType[];
+
 			setPackagesSelect(
-				packages.map((val, index) => {
+				packages?.map((val, index) => {
 					return { value: index, text: `Paquete ${index + 1}` };
 				}),
 			);
@@ -44,16 +45,10 @@ const PackagesPage = () => {
 	}, []);
 
 	const reportedValues = {
-		proportion_wall_window: '',
-		walls_u_value: '',
 		walls_reflectance: '',
-		roofs_u_value: '',
 		roofs_reflectance: '',
-		windows_u_value: '',
-		windows_g_value: '',
 		shades: '',
 		cop: '',
-		final_energy_reduction: '',
 	};
 	const formik = useFormik({
 		initialValues: reportedValues,
@@ -100,6 +95,32 @@ const PackagesPage = () => {
 		{ value: 1, text: 'Certificado producto' },
 		{ value: 2, text: 'Ficha técnica' },
 	];
+
+	function requestResults() {
+		if (totalCalculatedValues) {
+			if (
+				Object.keys(totalCalculatedValues).length ==
+					Object.values(totalCalculatedValues).length &&
+				Object.keys(formik.values).length ==
+					Object.values(formik.values).filter((val) => val).length
+			) {
+				if (
+					formik.values.walls_reflectance == packageInfo?.walls_reflectance &&
+					formik.values.roofs_reflectance == packageInfo?.roofs_reflectance &&
+					formik.values.shades == packageInfo?.shades &&
+					formik.values.cop == packageInfo?.hvac &&
+					totalCalculatedValues.roof_u_value == packageInfo?.roofs_u_value &&
+					totalCalculatedValues.wall_u_value == packageInfo?.walls_u_value &&
+					totalCalculatedValues.wall_window_proportion ==
+						packageInfo?.proportion_wall_window &&
+					totalCalculatedValues.window_g_value == packageInfo?.shading_coefficient &&
+					totalCalculatedValues.window_u_value == packageInfo?.windows_u_value
+				)
+					setModalStatus({ visible: true });
+			}
+		}
+	}
+
 	return (
 		<PageWrapper>
 			<Page className='mx-3'>
@@ -579,10 +600,7 @@ const PackagesPage = () => {
 				<Card>
 					<CardFooter className='justify-content-center'>
 						<div>
-							<Button
-								color='primary'
-								icon='CheckCircle'
-								onClick={() => setModalStatus({ visible: true })}>
+							<Button color='primary' icon='CheckCircle' onClick={requestResults}>
 								Solicitar resultados
 							</Button>
 							<Button color='storybook' icon='Analytics' className='ms-2'>
