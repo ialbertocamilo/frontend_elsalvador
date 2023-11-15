@@ -12,7 +12,7 @@ export const BackToCalculatorsBtn = () => {
 			className='mx-1 col-2 m-0 p-0'
 			icon='MenuBook'
 			onClick={() => router.push(RoutesListWithParams.calculators(params?.projectId))}>
-			Ir a calculadoras
+			Calculadoras
 		</Button>
 	);
 };

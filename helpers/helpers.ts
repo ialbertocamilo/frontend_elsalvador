@@ -1,3 +1,5 @@
+import { municipalityList } from '../common/constants/lists';
+
 export function test() {
 	return null;
 }
@@ -126,4 +128,8 @@ export function arrayToList(arr: string[]) {
 	return arr?.map((name, index) => {
 		return { value: index + 1, text: name };
 	});
+}
+
+export function getItemFromMunicipalityList(municipalityIndex: number) {
+	return municipalityList[municipalityIndex];
 }

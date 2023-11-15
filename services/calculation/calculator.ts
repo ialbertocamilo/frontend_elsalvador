@@ -58,7 +58,7 @@ function calculeTotalRTSX(totalRTSX: any[]) {
 	return totalRTSX.reduce((previousValue, currentValue) => previousValue + currentValue);
 }
 
-function calculeRT(totalrtsx: number, totalrts2: number) {
+function calculeRTFunction(totalrtsx: number, totalrts2: number, rsi: number, rse: number) {
 	return Number((totalrts2 + totalrtsx + rsi + rse).toFixed(2));
 }
 
@@ -105,11 +105,16 @@ function calculeUValue(
 	return 0;
 }
 
-const rsi = 0.13;
-const rse = 0.04;
-
 export class Calculator {
-	static calculateThickness(rows: any[], columnName: string | number) {
+	private rsi: number;
+	private rse: number;
+
+	constructor(rsi: number, rse: number) {
+		this.rsi = rsi;
+		this.rse = rse;
+	}
+
+	calculateThickness(rows: any[], columnName: string | number) {
 		let totalSum = 0;
 		for (const newRowsKey in rows) {
 			totalSum += Number(rows[newRowsKey][columnName]);
@@ -117,7 +122,7 @@ export class Calculator {
 		return totalSum;
 	}
 
-	static transmittanceUValue(rows: any[], totalSurface1: number, totalSurface2: number) {
+	transmittanceUValue(rows: any[], totalSurface1: number, totalSurface2: number) {
 		const lambda1 = rows[0].column2;
 		if (!lambda1) return 0;
 		const rtS1 = rows.map((value, index, array) => {
@@ -155,9 +160,9 @@ export class Calculator {
 		const totalRTSX = calculeTotalRTSX(rtSX);
 		calculeTotalRTS1(rtS1 as number[]);
 		const totalRTS2 = calculeTotalRTS2(rtS2 as number[]);
-		const totalS1 = calculeTotalS1(s1, rsi, rse);
-		const totalS2 = calculeTotalS2(s2, rsi, rse);
-		const rt = calculeRT(totalRTSX, totalRTS2);
+		const totalS1 = calculeTotalS1(s1, this.rsi, this.rse);
+		const totalS2 = calculeTotalS2(s2, this.rsi, this.rse);
+		const rt = calculeRTFunction(totalRTSX, totalRTS2, this.rsi, this.rse);
 		const RTtotalS2 = calculeRTtotalS2(lambda1, totalS1, totalS2, totalSurface1, totalSurface2);
 		const RTtotalS1 = calculeRTtotalS1(lambda1, RTtotalS2, rt);
 		const percentage = percentageRTtotalS1(lambda1, rt, RTtotalS1, RTtotalS2);

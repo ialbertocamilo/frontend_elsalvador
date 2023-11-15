@@ -128,7 +128,9 @@ const TransmittancePage = () => {
 							</span>
 						</Button>
 						<NextButton
-							route={RoutesListWithParams.calculatorWindow(params?.projectId)}
+							route={RoutesListWithParams.calculatorTransmittanceRoofs(
+								params?.projectId,
+							)}
 							text='Siguiente'
 						/>
 					</CardFooter>

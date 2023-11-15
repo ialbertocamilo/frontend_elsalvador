@@ -47,3 +47,14 @@ export interface IProjectDataSavingRequest {
 	key: string;
 	payload: object | string;
 }
+
+export interface IProjectData extends IProjectDataSavingRequest {
+	payload: Record<string, any>;
+}
+export interface IProjectDataTotalValues {
+	wall_window_proportion: string;
+	wall_u_value: string;
+	roof_u_value: string;
+	window_u_value: string;
+	window_g_value: string;
+}

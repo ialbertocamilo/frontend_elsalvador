@@ -17,6 +17,7 @@ export enum RoutesList {
 export const RoutesListWithParams = {
 	calculatorProportion: (value: any) => `/home/calculators/${value}/proportion`,
 	calculatorTransmittance: (value: any) => `/home/calculators/${value}/transmittance`,
+	calculatorTransmittanceRoofs: (value: any) => `/home/calculators/${value}/transmittance-roofs`,
 	calculatorWindow: (value: any) => `/home/calculators/${value}/window`,
 	calculatorShading: (value: any) => `/home/calculators/${value}/shading`,
 	geolocation: (value: any) => `/home/location/${value}`,

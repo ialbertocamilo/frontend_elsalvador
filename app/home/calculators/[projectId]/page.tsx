@@ -47,6 +47,19 @@ const LocationPage = () => {
 								Calculo de transmitancia termica de muros
 							</Card>
 							<Card
+								style={{ width: '175px', height: '100px ' }}
+								color='bg-primary'
+								onClick={() =>
+									router.push(
+										RoutesListWithParams.calculatorTransmittanceRoofs(
+											param?.projectId,
+										),
+									)
+								}
+								className='text-center p-2 mx-2 justify-content-center bg-dark-subtle shadow-3d-up-hover cursor-pointer'>
+								Calculo de transmitancia termica de techos
+							</Card>
+							<Card
 								style={{ width: '175px', height: '100px' }}
 								onClick={() =>
 									router.push(

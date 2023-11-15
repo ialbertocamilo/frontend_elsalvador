@@ -350,7 +350,7 @@ const ProjectsPage = () => {
 										name='department'
 										value={formik.values.department}
 										onChange={formik.handleChange}
-										list={arrayToList(departmentList())}
+										list={arrayToList(departmentList)}
 										ariaLabel='department'></Select>
 								</FormGroup>
 								<div>
@@ -366,7 +366,7 @@ const ProjectsPage = () => {
 										name='municipality'
 										value={formik.values.municipality}
 										onChange={formik.handleChange}
-										list={arrayToList(municipalityList())}
+										list={arrayToList(municipalityList)}
 										ariaLabel='municipality'></Select>
 								</FormGroup>
 								<div>

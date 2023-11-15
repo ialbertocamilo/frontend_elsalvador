@@ -19,8 +19,10 @@ import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
 import { router } from 'next/client';
 import Icon from '../../../../../components/icon/Icon';
+import { keyList } from '../../../../../common/constants/lists';
+import { TransmittanceRoofTable } from '../../../../../components/tables/TransmittanceRoofTable';
 
-const keyName = 'transmittance';
+const keyName = keyList.roofs;
 const TransmittancePage = () => {
 	const params = useParams();
 	const editor = useRef(null);
@@ -50,7 +52,7 @@ const TransmittancePage = () => {
 			<Page>
 				<Card>
 					<CardBody>
-						<h4 className='fw-bold'>Cálculo de transmitancia térmica de muros</h4>
+						<h4 className='fw-bold'>Cálculo de transmitancia térmica de techos</h4>
 					</CardBody>
 				</Card>
 
@@ -58,22 +60,22 @@ const TransmittancePage = () => {
 					<CardBody>
 						<div className='row'>
 							<div className='flex-column col-md-2 col-sm-12 align-self-center'>
-								<span>Nombre de muro tipo 1</span>
+								<span>Nombre de techo tipo 1</span>
 							</div>
 							<div className='col-md-6 col-sm-12'>
 								<Input
-									placeholder='Ingresa el nombre del muro'
+									placeholder='Ingresa el nombre del techo'
 									onChange={(e: any) => setWallName(e.target.value)}
 									value={wallName}></Input>
 							</div>
-							RSI 0.13 RSE 0.04
+							RSI 0.17 RSE 0.04
 						</div>
 					</CardBody>
 				</Card>
 				<div className='row align-content-between justify-content-between px-2'>
 					<Card className='col me-2'>
 						<CardBody>
-							<TransmittanceTable
+							<TransmittanceRoofTable
 								onData={(e: any) => {
 									setData(e);
 								}}
@@ -95,7 +97,7 @@ const TransmittancePage = () => {
 				<Card>
 					<CardBody>
 						<CustomEditor
-							placeholder='Detalle muro tipo'
+							placeholder='Detalle techo tipo'
 							initialText={editorText}
 							setText={(e: string) => {
 								setEditorText(e);

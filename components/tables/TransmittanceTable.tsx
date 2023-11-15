@@ -74,6 +74,7 @@ interface Props {
 }
 
 export const TransmittanceTable = ({ onData, data }: Props) => {
+	const calculator = new Calculator(0.13, 0.04);
 	const [row, setRow] = useState<any | []>([
 		{ column1: '', column2: '', column3: '', column4: '', column5: '' },
 	]);
@@ -91,17 +92,19 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 		if (column == 'column2' || column == 'column4' || column == 'column5')
 			newRows[index][column] = to2Decimal(val);
 		else newRows[index][column] = val;
-		const result = Calculator.calculateThickness(newRows, 'column5');
+		const result = calculator.calculateThickness(newRows, 'column5');
 
 		setTotalThickness(result);
 		setRow(newRows);
 	};
 
 	const calculateExpensive = useMemo(() => {
-		setTotalSurface1(100 - totalSurface2);
-		if (onData) onData({ rows: row, result: { surface2: totalSurface2 } });
-		setTotalThickness(Calculator.calculateThickness(row, 'column5'));
-		return Calculator.transmittanceUValue(row, totalSurface1, totalSurface2);
+		const surface1 = 100 - totalSurface2;
+		setTotalSurface1(surface1);
+		setTotalThickness(calculator.calculateThickness(row, 'column5'));
+		const result = calculator.transmittanceUValue(row, surface1, totalSurface2);
+		if (onData) onData({ rows: row, result: { surface2: totalSurface2, u_value: result } });
+		return result;
 	}, [row, totalSurface2]);
 
 	function handleDelete(id: number) {
