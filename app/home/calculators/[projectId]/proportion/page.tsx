@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import Icon from '../../../../../components/icon/Icon';
+import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -29,7 +30,12 @@ const ProportionPage = () => {
 			<Page>
 				<Card>
 					<CardBody>
-						<h4 className='fw-bold'>Proporción muro ventana</h4>
+						<div className='d-flex justify-content-between'>
+							<h4 className='fw-bold'> Cálculo elementos de sombreado</h4>
+							<div className='col-6 text-end'>
+								<GoProjectButton />
+							</div>
+						</div>
 						<span>
 							Ingresar Información requerida en las celdas indicadas. Considerar que
 							la información introducida es responsabilidad de quien la reporta y será

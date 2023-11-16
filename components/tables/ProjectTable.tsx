@@ -19,6 +19,7 @@ import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
 import { RoutesList } from '../../common/constants/default';
+import { getItemFromMunicipalityList } from '../../helpers/helpers';
 
 const ProjectTable = () => {
 	const { darkModeStatus } = useDarkMode();
@@ -153,7 +154,11 @@ const ProjectTable = () => {
 													<div>{i.address}</div>
 												</td>
 												<td>
-													<div>{i.municipality}</div>
+													<div>
+														{getItemFromMunicipalityList(
+															Number(i.municipality) - 1,
+														)}
+													</div>
 												</td>
 												<td>
 													<Button

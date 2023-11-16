@@ -13,7 +13,7 @@ const DefaultHeader = observer(() => {
 	const { themeStatus } = useDarkMode();
 	return (
 		<Header>
-			<HeaderLeft>Proyecto El salvador</HeaderLeft>
+			<HeaderLeft>Proyecto El Salvador</HeaderLeft>
 			<HeaderRight>
 				<span className={themeStatus == 'dark' ? 'text-white-50' : 'text-black-50'}>
 					Usuario:

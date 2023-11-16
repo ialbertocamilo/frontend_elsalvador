@@ -9,6 +9,7 @@ export enum RoutesList {
 	calculators = '/home/calculators',
 	calculatorProportion = '/home/calculators/proportion',
 	calculatorTransmittance = '/home/calculators/transmittance',
+	calculatorTransmittanceRoofs = '/home/calculators/transmittance-roofs',
 	calculatorWindow = '/home/calculators/window',
 	calculatorShading = '/home/calculators/shading',
 	login = '/auth/login',

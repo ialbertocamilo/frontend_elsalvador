@@ -21,6 +21,7 @@ import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
+import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -99,7 +100,12 @@ const WindowPage = () => {
 			<Page>
 				<Card>
 					<CardBody>
-						<h4 className='fw-bold'>Cálculo de ventanas</h4>
+						<div className='d-flex justify-content-between'>
+							<h4 className='fw-bold'>Cálculo de ventanas</h4>
+							<div className='col-6 text-end'>
+								<GoProjectButton />
+							</div>
+						</div>
 					</CardBody>
 				</Card>
 				<Card>

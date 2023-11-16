@@ -286,6 +286,7 @@ export const keyList = {
 	transmittance: 'transmittance',
 	window: 'window',
 	packageConfiguration: 'package-configuration',
+	package: 'package',
 	proportion: 'proportion',
 	shading: 'shading',
 	roofs: 'roofs',

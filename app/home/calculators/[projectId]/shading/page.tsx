@@ -18,6 +18,7 @@ import { RoutesList, RoutesListWithParams } from '../../../../../common/constant
 import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
+import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 
 const keyName = 'shading';
 const ShadingPage = () => {
@@ -50,7 +51,12 @@ const ShadingPage = () => {
 			<Page>
 				<Card>
 					<CardBody>
-						<h4 className='fw-bold'>Cálculo elementos de sombreado</h4>
+						<div className='d-flex justify-content-between'>
+							<h4 className='fw-bold'> Cálculo elementos de sombreado</h4>
+							<div className='col-6 text-end'>
+								<GoProjectButton />
+							</div>
+						</div>
 						<span>Horizontales, verticales o combinados</span>
 					</CardBody>
 				</Card>

@@ -21,6 +21,7 @@ import Button from '../../../../../components/bootstrap/Button';
 import Icon from '../../../../../components/icon/Icon';
 import { keyList } from '../../../../../common/constants/lists';
 import { TransmittanceRoofTable } from '../../../../../components/tables/TransmittanceRoofTable';
+import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 
 const keyName = keyList.roofs;
 const TransmittancePage = () => {
@@ -53,7 +54,12 @@ const TransmittancePage = () => {
 			<Page>
 				<Card>
 					<CardBody>
-						<h4 className='fw-bold'>Cálculo de transmitancia térmica de techos</h4>
+						<div className='d-flex justify-content-between'>
+							<h4 className='fw-bold'> Cálculo de transmitancia térmica de techos</h4>
+							<div className='col-6 text-end'>
+								<GoProjectButton />
+							</div>
+						</div>
 					</CardBody>
 				</Card>
 
