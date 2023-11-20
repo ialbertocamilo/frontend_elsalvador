@@ -78,7 +78,7 @@ const ConfigurationPage = () => {
 					</CardBody>
 				</Card>
 				<Card>
-					<CardBody className='d-flex align-self-center'>
+					<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
 						<ConfigurationTable emitValue={setValues} />
 					</CardBody>
 				</Card>

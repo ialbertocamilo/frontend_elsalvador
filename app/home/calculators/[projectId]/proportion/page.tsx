@@ -31,7 +31,7 @@ const ProportionPage = () => {
 				<Card>
 					<CardBody>
 						<div className='d-flex justify-content-between'>
-							<h4 className='fw-bold'> Cálculo elementos de sombreado</h4>
+							<h4 className='fw-bold'> Cálculo de proporción muro ventana</h4>
 							<div className='col-6 text-end'>
 								<GoProjectButton />
 							</div>
