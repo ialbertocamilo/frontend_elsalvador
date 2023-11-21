@@ -11,6 +11,7 @@ import FormText from '../../../components/bootstrap/forms/FormText';
 import Label from '../../../components/bootstrap/forms/Label';
 import DataService from '../../../services/data/data.service';
 import { IQuestion } from '../../../common/types/question.types';
+import CommonDashboardUserIssue from '../../../components/CommonDashboardUserIssue';
 
 const keyName = 'package-configuration';
 
@@ -80,6 +81,7 @@ const ConfigurationPage = () => {
 				<Card>
 					<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
 						<ConfigurationTable emitValue={setValues} />
+						<CommonDashboardUserIssue />
 					</CardBody>
 				</Card>
 				<Card>

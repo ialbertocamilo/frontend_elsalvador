@@ -30,7 +30,7 @@ export const ToggleYesNoButton = ({
 			size='sm'
 			style={{ width: '5em' }}
 			className={toggle ? 'col-sm bg-primary text-white' : 'bg-primary-subtle text-black-50'}>
-			{toggle ? 'Yes' : 'No'}
+			{toggle ? 'Si' : 'No'}
 		</Button>
 	);
 };

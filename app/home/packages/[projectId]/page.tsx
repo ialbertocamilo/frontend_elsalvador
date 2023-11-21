@@ -101,6 +101,13 @@ const PackagesPage = () => {
 			text: 'Certificado producto (U)',
 		},
 	];
+	const selection6 = [
+		{ value: 0, text: '' },
+		{
+			value: 1,
+			text: 'Calculado por asesor ',
+		},
+	];
 	const selection5 = [
 		{ value: 0, text: '' },
 		{
@@ -694,7 +701,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection1}
+														list={selection6}
 														disabled={globalReadOnly}
 														value={
 															originQuestions.wall_window_proportion
@@ -729,7 +736,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection2}
+														list={selection5}
 														disabled={globalReadOnly}
 														value={originQuestions.wall_reflectance}
 														onChange={(e: any) =>

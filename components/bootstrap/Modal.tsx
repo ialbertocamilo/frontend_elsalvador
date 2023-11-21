@@ -1,11 +1,11 @@
 import React, {
-	forwardRef,
 	FC,
+	forwardRef,
+	HTMLAttributes,
+	ReactElement,
 	ReactNode,
 	useEffect,
 	useRef,
-	ReactElement,
-	HTMLAttributes,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -21,6 +21,7 @@ interface IModalTitleProps extends HTMLAttributes<HTMLElement> {
 	className?: string;
 	tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'span';
 }
+
 export const ModalTitle = forwardRef<HTMLHeadingElement, IModalTitleProps>(
 	({ tag, id, children, className, ...props }, ref) => {
 		return (
@@ -52,8 +53,10 @@ ModalTitle.defaultProps = {
 interface IModalHeaderProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactElement<IModalTitleProps> | ReactNode;
 	className?: string;
+
 	setIsOpen?(...args: unknown[]): unknown | undefined;
 }
+
 export const ModalHeader = forwardRef<HTMLDivElement, IModalHeaderProps>(
 	({ children, className, setIsOpen, ...props }, ref) => {
 		return (
@@ -92,6 +95,7 @@ interface IModalBodyProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactNode;
 	className?: string;
 }
+
 export const ModalBody = forwardRef<HTMLDivElement, IModalBodyProps>(
 	({ children, className, ...props }, ref) => {
 		return (
@@ -116,6 +120,7 @@ interface IModalFooterProps extends HTMLAttributes<HTMLDivElement> {
 	children: ReactNode;
 	className?: string;
 }
+
 export const ModalFooter = forwardRef<HTMLDivElement, IModalFooterProps>(
 	({ children, className, ...props }, ref) => {
 		return (
@@ -142,7 +147,9 @@ interface IModalProps extends Record<string, any> {
 		| ReactElement<IModalBodyProps>[]
 		| ReactElement<IModalFooterProps>[];
 	isOpen: boolean;
+
 	setIsOpen(...args: unknown[]): unknown;
+
 	id?: string | undefined;
 	titleId?: string;
 	isStaticBackdrop?: boolean;
@@ -152,6 +159,7 @@ interface IModalProps extends Record<string, any> {
 	fullScreen?: TModalFullScreen;
 	isAnimation?: boolean;
 }
+
 const Modal: FC<IModalProps> = ({
 	children,
 	isOpen,
@@ -220,46 +228,42 @@ const Modal: FC<IModalProps> = ({
 		: null;
 
 	return (
-		<Portal>
-			<AnimatePresence mode='wait'>
-				{isOpen && (
-					<>
-						<motion.div
-							ref={refModal}
-							key='modal'
-							className={classNames('modal', { fade: isAnimation }, 'show')}
-							role='dialog'
-							style={{ display: 'block' }}
-							id={id}
-							tabIndex={-1}
-							aria-labelledby={titleId}
-							aria-hidden='true'
-							data-bs-backdrop={isStaticBackdrop ? 'static' : null}
-							data-bs-keyboard={isStaticBackdrop ? 'false' : null}
-							// eslint-disable-next-line react/jsx-props-no-spreading
-							{...ANIMATION_PROPS}
-							// eslint-disable-next-line react/jsx-props-no-spreading
-							{...props}>
-							<div
-								ref={ref}
-								className={classNames('modal-dialog', {
-									'modal-dialog-scrollable': isScrollable,
-									'modal-dialog-centered': isCentered,
-									[`modal-${size}`]: size,
-									[`modal-fullscreen${
-										typeof fullScreen === 'string' ? `-${fullScreen}-down` : ''
-									}`]: fullScreen,
-								})}>
-								<div className='modal-content'>{children}</div>
-							</div>
-						</motion.div>
+		<AnimatePresence mode='wait'>
+			{isOpen && (
+				<>
+					<motion.div
+						ref={refModal}
+						key='modal'
+						className={classNames('modal', { fade: isAnimation }, 'show')}
+						role='dialog'
+						style={{ display: 'block' }}
+						id={id}
+						tabIndex={-1}
+						aria-labelledby={titleId}
+						aria-hidden='true'
+						data-bs-backdrop={isStaticBackdrop ? 'static' : null}
+						data-bs-keyboard={isStaticBackdrop ? 'false' : null}
+						// eslint-disable-next-line react/jsx-props-no-spreading
+						{...ANIMATION_PROPS}
+						// eslint-disable-next-line react/jsx-props-no-spreading
+						{...props}>
 						<div
-							className={classNames('modal-backdrop', { fade: isAnimation }, 'show')}
-						/>
-					</>
-				)}
-			</AnimatePresence>
-		</Portal>
+							ref={ref}
+							className={classNames('modal-dialog', {
+								'modal-dialog-scrollable': isScrollable,
+								'modal-dialog-centered': isCentered,
+								[`modal-${size}`]: size,
+								[`modal-fullscreen${
+									typeof fullScreen === 'string' ? `-${fullScreen}-down` : ''
+								}`]: fullScreen,
+							})}>
+							<div className='modal-content'>{children}</div>
+						</div>
+					</motion.div>
+					<div className={classNames('modal-backdrop', { fade: isAnimation }, 'show')} />
+				</>
+			)}
+		</AnimatePresence>
 	);
 };
 Modal.propTypes = {
