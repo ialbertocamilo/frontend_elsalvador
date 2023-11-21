@@ -19,12 +19,12 @@ const TodoPropTypes = {
 interface ITodoItemProps {
 	list: IQuestion[];
 	index: number;
-
+	toggleModal: Function;
 	setList(...args: unknown[]): unknown;
 }
 
 export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
-	({ index, list, setList, ...props }, ref) => {
+	({ index, list, setList, toggleModal, ...props }, ref) => {
 		const itemData = list[index];
 
 		const handleChange = (_index: number) => {
@@ -48,9 +48,12 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 				</div>
 				<div className='todo-extras'>
 					<span className='me-2'>
-						<Button size='sm' color='brand' isLight>
-							Modificar
-						</Button>
+						<Button
+							size='sm'
+							color='brand'
+							isLight
+							onClick={() => toggleModal(index)}
+							icon='Edit'></Button>
 					</span>
 					<span>
 						<Dropdown>
@@ -87,17 +90,23 @@ TodoItem.defaultProps = {};
 export interface ITodoProps {
 	list: IQuestion[];
 	className?: string;
-
+	toggleModal: Function;
 	setList(...args: unknown[]): unknown;
 }
 
 const Todo = forwardRef<HTMLDivElement, ITodoProps>(
-	({ className, list, setList, ...props }, ref) => {
+	({ className, list, setList, toggleModal, ...props }, ref) => {
 		return (
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<div ref={ref} className={classNames('todo', className)} {...props}>
 				{list.map((i, index) => (
-					<TodoItem key={i.id} index={index} list={list} setList={setList} />
+					<TodoItem
+						key={i.id}
+						index={index}
+						list={list}
+						setList={setList}
+						toggleModal={toggleModal}
+					/>
 				))}
 			</div>
 		);
@@ -109,6 +118,7 @@ Todo.propTypes = {
 	// @ts-ignore
 	list: TodoPropTypes.list.isRequired,
 	setList: PropTypes.func.isRequired,
+	toggleModal: PropTypes.func.isRequired,
 };
 Todo.defaultProps = {
 	className: undefined,

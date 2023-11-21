@@ -89,12 +89,21 @@ const ConfigurationPage = () => {
 						</span>
 					</CardBody>
 				</Card>
-				<Card>
-					<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
-						<ConfigurationTable emitValue={setValues} />
-					</CardBody>
-				</Card>
-				<SelectQuestionsConfiguration questions={questions} emitValue={setQuestions} />
+				<div className='row g-3'>
+					<div className='col col-7'>
+						<Card>
+							<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
+								<ConfigurationTable emitValue={setValues} />
+							</CardBody>
+						</Card>
+					</div>
+					<div className='col'>
+						<SelectQuestionsConfiguration
+							questions={questions}
+							emitValue={setQuestions}
+						/>
+					</div>
+				</div>
 				<Card>
 					<CardFooter>
 						<SaveProjectButton

@@ -316,7 +316,7 @@ const PackagesPage = () => {
 
 	function saveQuestionsResponse(index: number, state: boolean) {
 		if (questions) {
-			questions[index].value = state;
+			questions[index]['value'] = state;
 			setQuestions([...questions]);
 		}
 	}
@@ -338,7 +338,6 @@ const PackagesPage = () => {
 			);
 		}
 	};
-
 	const ShowButtons = () => {
 		if (globalReadOnly)
 			return (
@@ -365,6 +364,30 @@ const PackagesPage = () => {
 					Solicitar Informe Técnico
 				</Button>
 			</div>
+		);
+	};
+
+	const Questions = () => {
+		const activated = questions?.filter((value) => !value.deactivated);
+
+		return (
+			<>
+				{activated?.map((value, key) => (
+					<tr key={key}>
+						<th className='text-start pe-5'>
+							<p>{value.title}</p>
+						</th>
+						<th>
+							<ToggleYesNoButton
+								blocked={globalReadOnly}
+								keyName={value.id}
+								forceYes={value?.value}
+								emitValue={saveQuestionsResponse}
+							/>
+						</th>
+					</tr>
+				))}
+			</>
 		);
 	};
 	return (
@@ -934,21 +957,7 @@ const PackagesPage = () => {
 							<CardBody>
 								<div className='d-flex justify-content-center'>
 									<table>
-										{questions?.map((value, key) => (
-											<tr key={key}>
-												<th className='text-start pe-5'>
-													<p>{value.text}</p>
-												</th>
-												<th>
-													<ToggleYesNoButton
-														blocked={globalReadOnly}
-														keyName={value.index}
-														forceYes={value?.value}
-														emitValue={saveQuestionsResponse}
-													/>
-												</th>
-											</tr>
-										))}
+										<Questions />
 									</table>
 								</div>
 							</CardBody>

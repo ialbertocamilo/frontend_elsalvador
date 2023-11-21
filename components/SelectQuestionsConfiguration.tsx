@@ -38,12 +38,6 @@ const SelectQuestionsConfiguration = ({
 		CONTROL: { text: 'Control', color: 'primary' },
 		MEETING: { text: 'Meeting', color: 'secondary' },
 	};
-	const getBadgeWithText = (text: string): string => {
-		return TODO_BADGES[
-			// @ts-ignore
-			Object.keys(TODO_BADGES).filter((key) => TODO_BADGES[key].text === text)
-		];
-	};
 
 	/**
 	 * To/Do List
@@ -62,6 +56,11 @@ const SelectQuestionsConfiguration = ({
 		setList(todo);
 	};
 
+	const editTodo = (index: number, title: string) => {
+		list[index].title = title;
+		setList(list);
+	};
+
 	const validate = (values: { todoTitle: string }) => {
 		const errors: { todoTitle: string } = {
 			todoTitle: '',
@@ -75,8 +74,6 @@ const SelectQuestionsConfiguration = ({
 		initialValues: {
 			todoTitle: '',
 		},
-		validate,
-		validateOnChange: true,
 		onSubmit: (values, { resetForm }) => {},
 	});
 
@@ -88,9 +85,24 @@ const SelectQuestionsConfiguration = ({
 	}, [questions]);
 
 	function doChange() {
-		addTodo(formik.values.todoTitle);
+		if (isEditable && editableIndex >= 0) {
+			editTodo(editableIndex, formik.values.todoTitle);
+		} else {
+			addTodo(formik.values.todoTitle);
+		}
+		setIsEditable(false);
 		formik.setFieldValue('todoTitle', '');
 		setModalStatus(false);
+	}
+
+	const [isEditable, setIsEditable] = useState(false);
+	const [editableIndex, setEditableIndex] = useState(0);
+
+	function toggleModal(val: number) {
+		setEditableIndex(val);
+		formik.setFieldValue('todoTitle', list[val].title);
+		setModalStatus(true);
+		setIsEditable(true);
 	}
 
 	return (
@@ -105,7 +117,7 @@ const SelectQuestionsConfiguration = ({
 							height={8}
 							max={listLength}
 							value={completeTaskLength}
-							color={completeTaskLength === listLength ? 'success' : 'primary'}
+							color={completeTaskLength === listLength ? 'danger' : 'storybook'}
 						/>
 					</CardSubTitle>
 				</CardLabel>
@@ -119,7 +131,7 @@ const SelectQuestionsConfiguration = ({
 					</Button>
 					<Modal setIsOpen={setModalStatus} isOpen={modalStatus} titleId='new-todo-modal'>
 						<ModalHeader setIsOpen={setModalStatus}>
-							<ModalTitle id='new-todo-modal'>Nueva pregunta</ModalTitle>
+							<ModalTitle id='new-todo-modal'>Pregunta</ModalTitle>
 						</ModalHeader>
 						<ModalBody>
 							<form className='row g-3' onSubmit={formik.handleSubmit}>
@@ -139,7 +151,7 @@ const SelectQuestionsConfiguration = ({
 								<div className='col' />
 								<div className='col-auto'>
 									<Button onClick={doChange} color='info' isLight>
-										Agregar pregunta
+										Guardar pregunta
 									</Button>
 								</div>
 							</form>
@@ -148,7 +160,7 @@ const SelectQuestionsConfiguration = ({
 				</CardActions>
 			</CardHeader>
 			<CardBody isScrollable>
-				<Todo list={list} setList={setList} />
+				<Todo list={list} setList={setList} toggleModal={toggleModal} />
 			</CardBody>
 		</Card>
 	);
