@@ -1,72 +1,35 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import dayjs from 'dayjs';
-import Checks from '../bootstrap/forms/Checks';
-import Badge from '../bootstrap/Badge';
 import Button from '../bootstrap/Button';
 import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '../bootstrap/Dropdown';
 import useDarkMode from '../../hooks/useDarkMode';
-import { TColor } from '../../type/color-type';
+import { IQuestion } from '../../common/types/question.types';
 
-/**
- * Prop Types
- * @type {{list: Requireable<(InferPropsInner<Pick<{date: Requireable<object>, badge: Requireable<InferProps<{color: Requireable<string>, text: Requireable<string>}>>, id: Requireable<NonNullable<InferType<Requireable<string>|Requireable<number>>>>, title: Requireable<NonNullable<InferType<Requireable<string>|Requireable<number>>>>, status: Requireable<boolean>}, never>> & Partial<InferPropsInner<Pick<{date: Requireable<object>, badge: Requireable<InferProps<{color: Requireable<string>, text: Requireable<string>}>>, id: Requireable<NonNullable<InferType<Requireable<string>|Requireable<number>>>>, title: Requireable<NonNullable<InferType<Requireable<string>|Requireable<number>>>>, status: Requireable<boolean>}, "date" | "badge" | "id" | "title" | "status">>>)[]>}}
- */
 const TodoPropTypes = {
 	list: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-			status: PropTypes.bool,
+			deactivated: PropTypes.bool,
 			title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-			// eslint-disable-next-line react/forbid-prop-types
-			date: PropTypes.object,
-			badge: PropTypes.shape({
-				text: PropTypes.string,
-				color: PropTypes.oneOf([
-					'primary',
-					'secondary',
-					'success',
-					'info',
-					'warning',
-					'danger',
-					'light',
-					'dark',
-				]),
-			}),
 		}),
 	),
 };
 
-export interface ITodoListItem {
-	id?: string | number;
-	status?: boolean;
-	title?: string | number;
-	date?: dayjs.ConfigType;
-	badge?: {
-		text?: string;
-		color?: TColor;
-	};
+interface ITodoItemProps {
+	list: IQuestion[];
+	index: number;
+
+	setList(...args: unknown[]): unknown;
 }
 
-interface ITodoItemProps {
-	list: ITodoListItem[];
-	setList(...args: unknown[]): unknown;
-	index: number;
-}
 export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 	({ index, list, setList, ...props }, ref) => {
 		const itemData = list[index];
 
 		const handleChange = (_index: number) => {
 			const newTodos = [...list];
-			newTodos[_index].status = !newTodos[_index].status;
-			setList(newTodos);
-		};
-
-		const removeTodo = (_index: number) => {
-			const newTodos = [...list];
-			newTodos.splice(_index, 1);
+			newTodos[_index].deactivated = !newTodos[_index].deactivated;
 			setList(newTodos);
 		};
 
@@ -75,37 +38,20 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 		return (
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<div ref={ref} className={classNames('todo-item')} {...props}>
-				<div className='todo-bar'>
-					<div
-						className={classNames('h-100 w-100', 'rounded', {
-							[`bg-${itemData?.badge?.color}`]: itemData?.badge,
-						})}
-					/>
-				</div>
-				<div className='todo-check'>
-					<Checks checked={list[index].status} onChange={() => handleChange(index)} />
-				</div>
 				<div className='todo-content'>
 					<div
 						className={classNames('todo-title', {
-							'text-decoration-line-through': list[index].status,
+							'text-decoration-line-through': list[index].deactivated,
 						})}>
 						{itemData.title}
 					</div>
-					{itemData.date && (
-						<div className='todo-subtitle text-muted small'>
-							{dayjs(itemData.date).fromNow()}
-						</div>
-					)}
 				</div>
 				<div className='todo-extras'>
-					{itemData?.badge && (
-						<span className='me-2'>
-							<Badge isLight color={itemData.badge.color}>
-								{itemData.badge.text}
-							</Badge>
-						</span>
-					)}
+					<span className='me-2'>
+						<Button size='sm' color='brand' isLight>
+							Modificar
+						</Button>
+					</span>
 					<span>
 						<Dropdown>
 							<DropdownToggle hasIcon={false}>
@@ -113,8 +59,12 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 							</DropdownToggle>
 							<DropdownMenu isAlignmentEnd>
 								<DropdownItem>
-									<Button onClick={() => removeTodo(index)} icon='Delete'>
-										Delete
+									<Button
+										size='sm'
+										isLight
+										color={list[index].deactivated ? 'success' : 'danger'}
+										onClick={() => handleChange(index)}>
+										{list[index].deactivated ? 'Activar' : 'Desactivar'}
 									</Button>
 								</DropdownItem>
 							</DropdownMenu>
@@ -135,10 +85,12 @@ TodoItem.propTypes = {
 TodoItem.defaultProps = {};
 
 export interface ITodoProps {
-	list: ITodoListItem[];
+	list: IQuestion[];
 	className?: string;
+
 	setList(...args: unknown[]): unknown;
 }
+
 const Todo = forwardRef<HTMLDivElement, ITodoProps>(
 	({ className, list, setList, ...props }, ref) => {
 		return (

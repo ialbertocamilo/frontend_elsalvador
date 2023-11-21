@@ -11,7 +11,7 @@ import FormText from '../../../components/bootstrap/forms/FormText';
 import Label from '../../../components/bootstrap/forms/Label';
 import DataService from '../../../services/data/data.service';
 import { IQuestion } from '../../../common/types/question.types';
-import CommonDashboardUserIssue from '../../../components/CommonDashboardUserIssue';
+import SelectQuestionsConfiguration from '../../../components/SelectQuestionsConfiguration';
 
 const keyName = 'package-configuration';
 
@@ -20,45 +20,56 @@ const ConfigurationPage = () => {
 
 	const [questions, setQuestions] = useState<IQuestion[]>([
 		{
-			text: 'Los planos indican claramente la composición y valores de los muros exteriores',
-			index: 0,
+			title: 'Los planos indican claramente la composición y valores de los muros exteriores',
+			id: 1,
+			deactivated: false,
 		},
 		{
-			text: 'Los planos indican claramente los elementos de sombreado en ventanas Sur',
-			index: 1,
+			title: 'Los planos indican claramente los elementos de sombreado en ventanas Sur',
+			id: 2,
+			deactivated: false,
 		},
 		{
-			text: 'Los planos indican claramente los elementos de sombreado en ventanas Oeste',
-			index: 2,
+			title: 'Los planos indican claramente los elementos de sombreado en ventanas Oeste',
+			id: 3,
+			deactivated: false,
 		},
 		{
-			text: 'Los planos indican claramente el área de elementos opacos y transparentes',
-			index: 3,
-		},
-		{ text: 'Los planos indican claramente la composición y valores del techo', index: 4 },
-		{ text: 'Los planos indican claramente la instalación del equipo de HVAC', index: 5 },
-		{
-			text: 'Se entregan certificados y/o fichas técnicas de los materiales que componen los muros',
-			index: 6,
+			title: 'Los planos indican claramente el área de elementos opacos y transparentes',
+			id: 4,
+			deactivated: false,
 		},
 		{
-			text: 'Se entregan certificados y/o fichas técnicas de los materiales que componen las ventanas',
-			index: 7,
+			title: 'Los planos indican claramente la composición y valores del techo',
+			id: 5,
+			deactivated: false,
 		},
 		{
-			text: 'Se entregan certificados y/o fichas técnicas de los materiales que componen el techo',
-			index: 8,
+			title: 'Los planos indican claramente la instalación del equipo de HVAC',
+			id: 6,
+			deactivated: false,
 		},
 		{
-			text: 'Se entregan certificados y/o fichas técnicas del sistema de aire acondicionado',
-			index: 9,
+			title: 'Se entregan certificados y/o fichas técnicas de los materiales que componen los muros',
+			id: 7,
+			deactivated: false,
+		},
+		{
+			title: 'Se entregan certificados y/o fichas técnicas de los materiales que componen las ventanas',
+			id: 8,
+			deactivated: false,
+		},
+		{
+			title: 'Se entregan certificados y/o fichas técnicas de los materiales que componen el techo',
+			id: 9,
+			deactivated: false,
+		},
+		{
+			title: 'Se entregan certificados y/o fichas técnicas del sistema de aire acondicionado',
+			id: 10,
+			deactivated: false,
 		},
 	]);
-
-	function handleChange(value: any, key: number) {
-		questions[key].text = value;
-		setQuestions([...questions]);
-	}
 
 	useEffect(() => {
 		DataService.getPackagesConfig().then((data) => {
@@ -81,21 +92,9 @@ const ConfigurationPage = () => {
 				<Card>
 					<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
 						<ConfigurationTable emitValue={setValues} />
-						<CommonDashboardUserIssue />
 					</CardBody>
 				</Card>
-				<Card>
-					<CardBody className='row gx-2'>
-						{questions?.map((values, key) => (
-							<FormText className='mb-2 ' key={key}>
-								<Label>Pregunta {key + 1}</Label>
-								<Textarea
-									onChange={(e: any) => handleChange(e.target.value, key)}
-									value={values.text}></Textarea>
-							</FormText>
-						))}
-					</CardBody>
-				</Card>
+				<SelectQuestionsConfiguration questions={questions} emitValue={setQuestions} />
 				<Card>
 					<CardFooter>
 						<SaveProjectButton

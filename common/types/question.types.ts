@@ -1,5 +1,6 @@
 export interface IQuestion {
-	index: number;
-	text: string;
+	id: number;
+	deactivated: boolean;
+	title: string;
 	value?: any;
 }
