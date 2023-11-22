@@ -32,7 +32,7 @@ const PackagesPage = () => {
 	const [packagesSelect, setPackagesSelect] = useState<any[]>();
 	const [packages, setPackages] = useState<any[]>();
 	const [packageInfo, setPackageInfo] = useState<IConfigurationType>();
-	const [questions, setQuestions] = useState<IQuestion[]>();
+	const [questions, setQuestions] = useState<IQuestion[]>([]);
 	const params = useParams();
 
 	const { projectEntity, totalCalculatedValues, setTotalCalculatedValues, setProjectData } =
@@ -47,8 +47,10 @@ const PackagesPage = () => {
 			if (data.length > 0) {
 				if (data[0]) {
 					const packages = data[0]?.config as IConfigurationType[];
+					const questions = data[0]?.questions as IQuestion[];
 
-					console.log(data[0]?.config);
+					const activated = questions?.filter((value) => !value.deactivated);
+
 					setPackagesSelect(
 						packages?.map((val, index) => {
 							return {
@@ -58,7 +60,7 @@ const PackagesPage = () => {
 						}),
 					);
 					setPackages(packages);
-					setQuestions(data[0]?.questions);
+					setQuestions(activated);
 				}
 				if (data[1]) {
 					const packageFinded = data[1] as ITechnicalSupport;
@@ -69,7 +71,7 @@ const PackagesPage = () => {
 						roofs_reflectance: packageFinded.reportedValue.roof_reflectance.toString(),
 					});
 					setOriginQuestions(packageFinded?.valueOrigin);
-					setQuestions(packageFinded?.questions);
+					if (packageFinded?.questions) setQuestions(packageFinded?.questions);
 				}
 				setGlobalReadOnly(Boolean(data[1]));
 			}
@@ -305,12 +307,25 @@ const PackagesPage = () => {
 		router.push(RoutesList.projects);
 	}
 
+	const [questionsResponse, setQuestionsResponse] = useState<IQuestion[]>();
+
+	useEffect(() => {
+		if (questions) setQuestionsResponse(questions);
+	}, [questions]);
+
 	function saveQuestionsResponse(index: number, state: boolean) {
 		if (questions) {
 			console.log('emit');
-			console.log(questions);
-			questions[index]['value'] = state;
-			setQuestions([...questions]);
+			if (questionsResponse) {
+				const newQuestionsResponse = questionsResponse.map((val, ind) => {
+					if (ind == index) val.response = state;
+					return val;
+				});
+				setQuestionsResponse(newQuestionsResponse);
+			}
+			console.log(index);
+			console.log(state);
+			console.log(questionsResponse);
 		}
 	}
 
@@ -357,29 +372,6 @@ const PackagesPage = () => {
 					Solicitar Informe Técnico
 				</Button>
 			</div>
-		);
-	};
-
-	const Questions = () => {
-		const activated = questions?.filter((value) => !value.deactivated);
-
-		return (
-			<>
-				{activated?.map((value, key) => (
-					<tr key={key}>
-						<th className='text-start pe-5'>
-							<p>{value.title}</p>
-						</th>
-						<th>
-							<ToggleYesNoButton
-								blocked={globalReadOnly}
-								keyName={value.id}
-								emitValue={saveQuestionsResponse}
-							/>
-						</th>
-					</tr>
-				))}
-			</>
 		);
 	};
 	return (
@@ -949,7 +941,22 @@ const PackagesPage = () => {
 							<CardBody>
 								<div className='d-flex justify-content-center'>
 									<table>
-										<Questions />
+										{questions?.map((value, key) => (
+											<tr key={key}>
+												<th className='text-start pe-5'>
+													<p>{value.title}</p>
+												</th>
+												<th>
+													<ToggleYesNoButton
+														blocked={globalReadOnly}
+														keyName={key}
+														emitValue={(index: any, val: any) =>
+															saveQuestionsResponse(index, val)
+														}
+													/>
+												</th>
+											</tr>
+										))}
 									</table>
 								</div>
 							</CardBody>

@@ -3,4 +3,5 @@ export interface IQuestion {
 	deactivated: boolean;
 	title: string;
 	value?: boolean;
+	response?: boolean;
 }
