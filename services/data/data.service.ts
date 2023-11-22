@@ -3,7 +3,6 @@ import { IConfigurationType } from '../../common/types/configuration.types';
 import { keyList } from '../../common/constants/lists';
 import { ITechnicalSupport } from '../../common/types/package.types';
 import { IQuestion } from '../../common/types/question.types';
-import { ProjectStatus } from '../../common/constants/default';
 
 export default class DataService {
 	static async getPackagesConfig() {
@@ -39,11 +38,17 @@ export default class DataService {
 		return !!result?.data;
 	}
 
-	// static async setProjectStatus(projectId: string, status: ProjectStatus) {
-	// 	const result = await axiosService().post('/data', {
-	// 		key: keyList.packageConfiguration,
-	// 		payload: { questions: payload },
-	// 	});
-	// 	return !!result?.data;
-	// }
+	static async setProjectStatus(projectId: string, status: number) {
+		const result = await axiosService().post('/projects/set-status', {
+			project_id: projectId,
+			status,
+		});
+		return !!result?.data;
+	}
+	static async getProjectStatus(projectId: string): Promise<number> {
+		const result = await axiosService().post('/projects/get-status', {
+			project_id: projectId,
+		});
+		return result?.data?.result;
+	}
 }

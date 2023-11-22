@@ -3,6 +3,7 @@ export interface IUserStorage {
 	name: string;
 	email: string;
 	token: string;
+	role: number;
 }
 export interface IUserRegister {
 	name?: string;

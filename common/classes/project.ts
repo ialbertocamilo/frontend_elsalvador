@@ -45,6 +45,7 @@ export class ProjectEntity {
 	surface?: number;
 	extra?: string;
 	is_public?: boolean;
+	status?: number;
 	created_at?: Date;
 	updated_at?: Date;
 

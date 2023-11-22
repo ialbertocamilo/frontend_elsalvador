@@ -293,3 +293,9 @@ export const keyList = {
 };
 
 export const codePackagePrefix = 'PACK';
+export const ProjectStatus = {
+	inProgress: 0,
+	inRevision: 1,
+	accepted: 2,
+	denied: 3,
+};

@@ -25,7 +25,7 @@ const User = () => {
 	const handleItem = useNavigationItemHandle();
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
 
-	const [user, setUser] = useState<any>({ name: '', email: '', id: '' });
+	const [user, setUser] = useState<any>({ name: '', email: '', id: '', role: '' });
 
 	const [collapseStatus, setCollapseStatus] = useState<boolean>(true);
 
@@ -42,8 +42,6 @@ const User = () => {
 			}
 		});
 	}, []);
-	const { asideStatus } = useContext(ThemeContext);
-
 	return (
 		<>
 			<Collapse isOpen={collapseStatus} className='user-menu'>

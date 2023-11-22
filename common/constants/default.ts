@@ -27,9 +27,3 @@ export const RoutesListWithParams = {
 	packages: (value: any) => `/home/packages/${value}`,
 	configuration: (value: any) => `/home/configuration/${value}`,
 };
-
-export type ProjectStatus = {
-	progress: 0;
-	accepted: 1;
-	denied: 0;
-};

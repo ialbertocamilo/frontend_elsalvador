@@ -62,8 +62,8 @@ export const useProjectData = (projectId: string) => {
 		}
 	}
 
-	function setProjectData(projectId: string | string[], keyName: string, payload: object) {
-		projects.saveProjectData({ payload, project_id: projectId, key: keyName });
+	async function setProjectData(projectId: string | string[], keyName: string, payload: object) {
+		await projects.saveProjectData({ payload, project_id: projectId, key: keyName });
 	}
 
 	return {

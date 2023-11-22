@@ -31,12 +31,6 @@ export const pagesMenu = {
 		path: 'home/calculators',
 		icon: 'ConfirmationNumber',
 	},
-	// packages: {
-	// 	id: 'Packages',
-	// 	text: 'Paquetes',
-	// 	path: 'home/packages',
-	// 	icon: 'Backpack',
-	// },
 	config: {
 		id: 'Configuration',
 		text: 'Configuración',

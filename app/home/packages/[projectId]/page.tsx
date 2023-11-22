@@ -23,7 +23,7 @@ import { IPackageOriginQuestions, ITechnicalSupport } from '../../../../common/t
 import { TechnicalSupportInfoModal } from '../../../../components/modals/TechnicalSupportInfoModal';
 import { RoutesList } from '../../../../common/constants/default';
 import Spinner from '../../../../components/bootstrap/Spinner';
-import { keyList } from '../../../../common/constants/lists';
+import { keyList, ProjectStatus } from '../../../../common/constants/lists';
 import { IQuestion } from '../../../../common/types/question.types';
 
 const keyName = keyList.package;
@@ -42,6 +42,7 @@ const PackagesPage = () => {
 		Promise.all([
 			DataService.getPackagesConfig(),
 			DataService.loadPackageByProjectId(params?.projectId as string), // Cargar paquete previamente guardado
+			DataService.getProjectStatus(params?.projectId as string),
 		]).then((data) => {
 			setLoading(false);
 			if (data.length > 0) {
@@ -73,11 +74,18 @@ const PackagesPage = () => {
 					setOriginQuestions(packageFinded?.valueOrigin);
 					if (packageFinded?.questions) setQuestions(packageFinded?.questions);
 				}
-				setGlobalReadOnly(Boolean(data[1]));
+				if (data[2]) {
+					if (data[2] === ProjectStatus.accepted) setGlobalReadOnly(true);
+					else if (data[2] === ProjectStatus.denied) setGlobalReadOnly(true);
+					else if (data[2] === ProjectStatus.inProgress) setGlobalReadOnly(false);
+					else if (data[2] === ProjectStatus.inRevision) setGlobalReadOnly(true);
+					setProjectStatus(data[2]);
+				}
 			}
 		});
 	}, []);
 
+	const [projectStatus, setProjectStatus] = useState(0);
 	useEffect(() => {
 		selectPackage(0);
 	}, [packages]);
@@ -297,9 +305,13 @@ const PackagesPage = () => {
 
 	const router = useRouter();
 
-	function proceedToFinish() {
+	async function proceedToFinish() {
 		if (params?.projectId) {
-			setProjectData(params.projectId, keyName, lastResults);
+			await DataService.setProjectStatus(
+				params.projectId as string,
+				ProjectStatus.inRevision,
+			);
+			await setProjectData(params.projectId, keyName, lastResults);
 		}
 		router.push(RoutesList.projects);
 	}
@@ -340,12 +352,25 @@ const PackagesPage = () => {
 		}
 	};
 	const ShowButtons = () => {
-		if (globalReadOnly)
+		if (projectStatus === ProjectStatus.accepted)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					<Spinner color={'danger'} inButton /> Esperando validación de supervisor...
+					El proyecto ha sido aprobado ✔...
 				</div>
 			);
+		else if (projectStatus === ProjectStatus.denied)
+			return (
+				<div className='justify-content-center text-center align-content-center'>
+					El proyecto ya sido rechazado ❌...
+				</div>
+			);
+		else if (projectStatus === ProjectStatus.inRevision)
+			return (
+				<div className='justify-content-center text-center align-content-center'>
+					<Spinner color={'danger'} inButton /> El proyecto está siendo evaluado ...
+				</div>
+			);
+
 		return (
 			<div>
 				<Button

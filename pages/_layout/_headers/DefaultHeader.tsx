@@ -17,7 +17,7 @@ const DefaultHeader = observer(() => {
 			<HeaderRight>
 				<span className={themeStatus == 'dark' ? 'text-white-50' : 'text-black-50'}>
 					Usuario:
-				</span>{' '}
+				</span>
 				<b> {userStore.value.name}</b>
 			</HeaderRight>
 		</Header>

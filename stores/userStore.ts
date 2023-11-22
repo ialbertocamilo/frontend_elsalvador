@@ -2,7 +2,7 @@ import { IUserStorage } from '../common/types/user.types';
 import { makeAutoObservable } from 'mobx';
 
 export class UserStore {
-	value: IUserStorage = { name: '', email: '', token: '', id: '' };
+	value: IUserStorage = { name: '', email: '', token: '', id: '', role: 0 };
 
 	constructor() {
 		makeAutoObservable(this);

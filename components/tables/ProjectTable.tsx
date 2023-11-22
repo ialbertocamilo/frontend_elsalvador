@@ -11,15 +11,15 @@ import PaginationButtons, { dataPagination, PER_COUNT } from '../PaginationButto
 import Button from '../bootstrap/Button';
 import Icon from '../icon/Icon';
 import Input from '../bootstrap/forms/Input';
-import useSortableData from '../../hooks/useSortableData';
 import useDarkMode from '../../hooks/useDarkMode';
-import data from '../../common/data/dummyCustomerData';
-import { IProjectListResponse } from '../../common/types/project.types';
 import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
 import { RoutesList } from '../../common/constants/default';
 import { getItemFromMunicipalityList } from '../../helpers/helpers';
+import { ProjectStatus } from '../../common/constants/lists';
+import { ClientStorage } from '../../common/classes/storage';
+import DataService from '../../services/data/data.service';
 
 const ProjectTable = () => {
 	const { darkModeStatus } = useDarkMode();
@@ -68,6 +68,42 @@ const ProjectTable = () => {
 	}, []);
 
 	useEffect(() => {}, [perPage]);
+
+	const user = ClientStorage.getUser();
+
+	const Status = ({ status }: { status?: number }) => {
+		if (status == ProjectStatus.inRevision)
+			return <span className='text-info'>En revisión</span>;
+		if (status == ProjectStatus.accepted)
+			return <span className='text-success'>✅ Aceptado</span>;
+		if (status == ProjectStatus.denied)
+			return <span className='text-danger'>❌ Rechazado </span>;
+		return <span className='text-muted'>En progreso</span>;
+	};
+
+	async function projectEnable(projectId: string, status: number) {
+		await DataService.setProjectStatus(projectId, status);
+		findProjects();
+	}
+
+	const ActionSupervisor = ({ project }: { project: any }) => {
+		return (
+			<div className='row'>
+				<Button
+					size='sm'
+					className='text-success'
+					onClick={() => projectEnable(project.id, ProjectStatus.accepted)}>
+					Aprobar
+				</Button>
+				<Button
+					size='sm'
+					className='text-danger'
+					onClick={() => projectEnable(project.id, ProjectStatus.denied)}>
+					Desaprobar
+				</Button>
+			</div>
+		);
+	};
 	return (
 		<>
 			<SubHeader>
@@ -110,6 +146,9 @@ const ProjectTable = () => {
 											<Icon size='lg' icon='FilterList' />
 										</th>
 										<th className='text-decoration-underline'>
+											Estado de proyecto{' '}
+										</th>
+										<th className='text-decoration-underline'>
 											Nombre del proyecto
 										</th>
 										<th className='text-decoration-underline'>
@@ -121,9 +160,11 @@ const ProjectTable = () => {
 										<th className='text-decoration-underline'>
 											Director responsable de obra{' '}
 										</th>
-										<th className='text-decoration-underline'>Dirección </th>
-										<th className='text-decoration-underline'>Municipio </th>
-										<th className='text-decoration-underline'>Acciones</th>
+										<th className='text-decoration-underline'>Dirección</th>
+										<th className='text-decoration-underline'>Municipio</th>
+										<th className='text-decoration-underline text-center'>
+											Acciones
+										</th>
 										<td />
 									</tr>
 								</thead>
@@ -132,6 +173,9 @@ const ProjectTable = () => {
 										(i: ProjectEntity) => (
 											<tr key={i.id}>
 												<td>{i.id}</td>
+												<td>
+													<Status status={i.status} />
+												</td>
 												<td className='bold h5'>{i.project_name}</td>
 												<td>
 													<div>{i.owner_name}</div>
@@ -161,12 +205,16 @@ const ProjectTable = () => {
 													</div>
 												</td>
 												<td>
-													<Button
-														onClick={() => {
-															if (i.id) goToProject(i.id);
-														}}>
-														Ir <Icon icon='ArrowRight'></Icon>
-													</Button>
+													<div className='row'>
+														<ActionSupervisor project={i} />
+														<Button
+															className='col text-center'
+															onClick={() => {
+																if (i.id) goToProject(i.id);
+															}}>
+															Ir <Icon icon='ArrowRight'></Icon>
+														</Button>
+													</div>
 												</td>
 											</tr>
 										),

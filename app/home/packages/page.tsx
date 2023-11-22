@@ -6,7 +6,6 @@ import React from 'react';
 import Card, { CardBody, CardFooter } from '../../../components/bootstrap/Card';
 import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
 import FormGroup from '../../../components/bootstrap/forms/FormGroup';
-import FormText from '../../../components/bootstrap/forms/FormText';
 import Input from '../../../components/bootstrap/forms/Input';
 import Select from '../../../components/bootstrap/forms/Select';
 
