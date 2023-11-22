@@ -15,7 +15,7 @@ import useDarkMode from '../../hooks/useDarkMode';
 import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
-import { RoutesList } from '../../common/constants/default';
+import { Roles, RoutesList } from '../../common/constants/default';
 import { getItemFromMunicipalityList } from '../../helpers/helpers';
 import { ProjectStatus } from '../../common/constants/lists';
 import { ClientStorage } from '../../common/classes/storage';
@@ -54,6 +54,8 @@ const ProjectTable = () => {
 		});
 	}
 
+	const user = ClientStorage.getUser();
+
 	function detectKey(e: any) {
 		if (e.key == 'Enter') findProjects();
 	}
@@ -68,8 +70,6 @@ const ProjectTable = () => {
 	}, []);
 
 	useEffect(() => {}, [perPage]);
-
-	const user = ClientStorage.getUser();
 
 	const Status = ({ status }: { status?: number }) => {
 		if (status == ProjectStatus.inRevision)
@@ -87,22 +87,24 @@ const ProjectTable = () => {
 	}
 
 	const ActionSupervisor = ({ project }: { project: any }) => {
-		return (
-			<div className='row'>
-				<Button
-					size='sm'
-					className='text-success'
-					onClick={() => projectEnable(project.id, ProjectStatus.accepted)}>
-					Aprobar
-				</Button>
-				<Button
-					size='sm'
-					className='text-danger'
-					onClick={() => projectEnable(project.id, ProjectStatus.denied)}>
-					Desaprobar
-				</Button>
-			</div>
-		);
+		if (user?.role == Roles?.supervisor)
+			return (
+				<div className='row'>
+					<Button
+						size='sm'
+						className='text-success'
+						onClick={() => projectEnable(project.id, ProjectStatus.accepted)}>
+						Aprobar
+					</Button>
+					<Button
+						size='sm'
+						className='text-danger'
+						onClick={() => projectEnable(project.id, ProjectStatus.denied)}>
+						Rechazar
+					</Button>
+				</div>
+			);
+		return <></>;
 	};
 	return (
 		<>
@@ -193,6 +195,11 @@ const ProjectTable = () => {
 												</td>
 												<td>
 													<div>{i.project_director}</div>
+													<div>
+														<small className='text-muted'>
+															Director
+														</small>
+													</div>
 												</td>
 												<td>
 													<div>{i.address}</div>

@@ -217,6 +217,7 @@ const PackagesPage = () => {
 
 	function requestResults() {
 		if (checkResults()) {
+			console.log(checkResults());
 			setCanRequestTechnicalReport(checkResults());
 			setModalStatus(true);
 			return;
@@ -355,19 +356,19 @@ const PackagesPage = () => {
 		if (projectStatus === ProjectStatus.accepted)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					El proyecto ha sido aprobado ✔...
+					✔ El proyecto ha sido aprobado ...
 				</div>
 			);
 		else if (projectStatus === ProjectStatus.denied)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					El proyecto ya sido rechazado ❌...
+					❌ El proyecto ya sido rechazado ...
 				</div>
 			);
 		else if (projectStatus === ProjectStatus.inRevision)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					<Spinner color={'danger'} inButton /> El proyecto está siendo evaluado ...
+					ℹ️ El proyecto está siendo evaluado ...
 				</div>
 			);
 
@@ -383,10 +384,9 @@ const PackagesPage = () => {
 				<Button
 					color='storybook'
 					icon='Analytics'
-					hidden={globalReadOnly}
+					hidden={!canRequestTechnicalReport}
 					className='ms-2'
-					onClick={requestTechnicalSupport}
-					isDisable={!canRequestTechnicalReport}>
+					onClick={requestTechnicalSupport}>
 					Solicitar Informe Técnico
 				</Button>
 			</div>
