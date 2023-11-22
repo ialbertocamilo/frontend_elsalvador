@@ -139,17 +139,19 @@ const PackagesPage = () => {
 		cop: false,
 	});
 
-	const [originQuestions, setOriginQuestions] = useState<IPackageOriginQuestions>({
-		wall_window_proportion: '',
-		wall_u_value: '',
-		wall_reflectance: '',
-		roof_u_value: '',
-		roof_reflectance: '',
-		window_u_value: '',
-		window_g_value: '',
-		shades: '',
-		cop: '',
-	});
+	const initialOriginQuestions = {
+		wall_window_proportion: '1',
+		wall_u_value: '1',
+		wall_reflectance: '1',
+		roof_u_value: '1',
+		roof_reflectance: '1',
+		window_u_value: '1',
+		window_g_value: '1',
+		shades: '1',
+		cop: '1',
+	};
+	const [originQuestions, setOriginQuestions] =
+		useState<IPackageOriginQuestions>(initialOriginQuestions);
 	const [modalError, setModalError] = useState(false);
 
 	const [canRequestTechnicalReport, setCanRequestTechnicalReport] = useState(false);
@@ -177,17 +179,7 @@ const PackagesPage = () => {
 			shades: 0,
 			cop: 0,
 		},
-		valueOrigin: {
-			wall_window_proportion: '',
-			wall_u_value: '',
-			wall_reflectance: '',
-			roof_u_value: '',
-			roof_reflectance: '',
-			window_u_value: '',
-			window_g_value: '',
-			shades: '',
-			cop: '',
-		},
+		valueOrigin: initialOriginQuestions,
 		questions: [],
 		meets: {},
 	});
@@ -225,6 +217,9 @@ const PackagesPage = () => {
 	}
 
 	function checkResults() {
+		const resultQuestions = questionsResponse?.filter((val) => val.value !== val.response);
+
+		if (resultQuestions && resultQuestions?.length > 0) return false;
 		return (
 			Number(formik.values.walls_reflectance) === Number(packageInfo?.walls_reflectance) &&
 			Number(formik.values.roofs_reflectance) == Number(packageInfo?.roofs_reflectance) &&
@@ -273,7 +268,7 @@ const PackagesPage = () => {
 		setLastResults({
 			valueOrigin: originQuestions,
 			packageName: projectEntity?.project_name as string,
-			questions: questions,
+			questions: questionsResponse,
 			metaValue: {
 				wall_window_proportion: Number(packageInfo?.proportion_wall_window),
 				wall_u_value: Number(packageInfo?.walls_u_value),
@@ -303,7 +298,9 @@ const PackagesPage = () => {
 	const router = useRouter();
 
 	function proceedToFinish() {
-		if (params?.projectId) setProjectData(params.projectId, keyName, lastResults);
+		if (params?.projectId) {
+			setProjectData(params.projectId, keyName, lastResults);
+		}
 		router.push(RoutesList.projects);
 	}
 
@@ -315,7 +312,6 @@ const PackagesPage = () => {
 
 	function saveQuestionsResponse(index: number, state: boolean) {
 		if (questions) {
-			console.log('emit');
 			if (questionsResponse) {
 				const newQuestionsResponse = questionsResponse.map((val, ind) => {
 					if (ind == index) val.response = state;
@@ -323,9 +319,6 @@ const PackagesPage = () => {
 				});
 				setQuestionsResponse(newQuestionsResponse);
 			}
-			console.log(index);
-			console.log(state);
-			console.log(questionsResponse);
 		}
 	}
 
@@ -713,13 +706,14 @@ const PackagesPage = () => {
 														value={
 															originQuestions.wall_window_proportion
 														}
-														onChange={(e: any) =>
+														onChange={(e: any) => {
+															console.log(e.target.value);
 															setOriginQuestions({
 																...originQuestions,
 																wall_window_proportion:
 																	e.target.value,
-															})
-														}
+															});
+														}}
 													/>
 												</td>
 											</tr>
