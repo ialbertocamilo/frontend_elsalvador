@@ -732,7 +732,6 @@ const PackagesPage = () => {
 															originQuestions.wall_window_proportion
 														}
 														onChange={(e: any) => {
-															console.log(e.target.value);
 															setOriginQuestions({
 																...originQuestions,
 																wall_window_proportion:
