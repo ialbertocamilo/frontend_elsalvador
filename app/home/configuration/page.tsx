@@ -6,18 +6,15 @@ import React, { useEffect, useState } from 'react';
 import { ConfigurationTable } from '../../../components/tables/ConfigurationTable';
 import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
 import { IConfigurationType } from '../../../common/types/configuration.types';
-import Textarea from '../../../components/bootstrap/forms/Textarea';
-import FormText from '../../../components/bootstrap/forms/FormText';
-import Label from '../../../components/bootstrap/forms/Label';
 import DataService from '../../../services/data/data.service';
 import { IQuestion } from '../../../common/types/question.types';
 import SelectQuestionsConfiguration from '../../../components/SelectQuestionsConfiguration';
+import CreatePackagesConfiguration from '../../../components/CreatePackagesConfiguration';
 
 const keyName = 'package-configuration';
 
 const ConfigurationPage = () => {
 	const [values, setValues] = useState<IConfigurationType[]>([]);
-
 	const [questions, setQuestions] = useState<IQuestion[]>([
 		{
 			title: 'Los planos indican claramente la composición y valores de los muros exteriores',
@@ -70,9 +67,10 @@ const ConfigurationPage = () => {
 			deactivated: false,
 		},
 	]);
-
+	const [packages, setPackages] = useState<IConfigurationType[]>([]);
 	useEffect(() => {
-		DataService.getPackagesConfig().then((data) => {
+		DataService.getPackagesConfig().then((data: { questions: any; config: any }) => {
+			if (data?.config) setPackages(data.config);
 			if (data?.questions) setQuestions(data?.questions);
 		});
 	}, []);
@@ -89,13 +87,9 @@ const ConfigurationPage = () => {
 						</span>
 					</CardBody>
 				</Card>
-				<div className='row g-3'>
-					<div className='col col-7'>
-						<Card>
-							<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>
-								<ConfigurationTable emitValue={setValues} />
-							</CardBody>
-						</Card>
+				<div className='row g-3 h-100'>
+					<div className='col '>
+						<CreatePackagesConfiguration values={packages} emitValue={setValues} />
 					</div>
 					<div className='col'>
 						<SelectQuestionsConfiguration
@@ -104,17 +98,22 @@ const ConfigurationPage = () => {
 						/>
 					</div>
 				</div>
-				<Card>
-					<CardFooter>
-						<SaveProjectButton
-							payload={{
-								payload: { config: values, questions },
-								key: keyName,
-							}}
-							type={ButtonTypes.packageConfig}
-						/>
-					</CardFooter>
-				</Card>
+				{/*<Card>*/}
+				{/*	<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>*/}
+				{/*		<ConfigurationTable emitValue={setValues} />*/}
+				{/*	</CardBody>*/}
+				{/*</Card>*/}
+				{/*<Card>*/}
+				{/*	<CardFooter>*/}
+				{/*		<SaveProjectButton*/}
+				{/*			payload={{*/}
+				{/*				payload: { config: values, questions },*/}
+				{/*				key: keyName,*/}
+				{/*			}}*/}
+				{/*			type={ButtonTypes.packageConfig}*/}
+				{/*		/>*/}
+				{/*	</CardFooter>*/}
+				{/*</Card>*/}
 			</Page>
 		</PageWrapper>
 	);

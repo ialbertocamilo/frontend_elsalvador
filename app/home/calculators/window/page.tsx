@@ -38,9 +38,7 @@ const WindowPage = () => {
 			windowDetailText: initialData?.windowDetailText,
 		},
 		validateOnChange: true,
-		onSubmit: () => {
-			console.log('some');
-		},
+		onSubmit: () => {},
 	});
 
 	useEffect(() => {

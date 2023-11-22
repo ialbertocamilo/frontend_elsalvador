@@ -16,6 +16,7 @@ import Modal, { ModalBody, ModalHeader, ModalTitle } from './bootstrap/Modal';
 import FormGroup from './bootstrap/forms/FormGroup';
 import Input from './bootstrap/forms/Input';
 import { IQuestion } from '../common/types/question.types';
+import DataService from '../services/data/data.service';
 
 const SelectQuestionsConfiguration = ({
 	questions,
@@ -52,24 +53,17 @@ const SelectQuestionsConfiguration = ({
 	const [modalStatus, setModalStatus] = useState(false);
 
 	const addTodo = (title: string) => {
-		const todo = [{ id: list.length + 1, title, deactivated: false }, ...list];
+		const todo = [...list, { id: list.length + 1, title, deactivated: false }];
 		setList(todo);
+		return todo;
 	};
 
 	const editTodo = (index: number, title: string) => {
 		list[index].title = title;
 		setList(list);
+		return list;
 	};
 
-	const validate = (values: { todoTitle: string }) => {
-		const errors: { todoTitle: string } = {
-			todoTitle: '',
-		};
-		if (!values.todoTitle) errors.todoTitle = 'Requerido';
-		if (values.todoTitle.length < 5) errors.todoTitle = 'Debe contener al menos 5 caracteres';
-
-		return errors;
-	};
 	const formik = useFormik({
 		initialValues: {
 			todoTitle: '',
@@ -84,15 +78,17 @@ const SelectQuestionsConfiguration = ({
 		setList(questions);
 	}, [questions]);
 
-	function doChange() {
-		if (isEditable && editableIndex >= 0) {
-			editTodo(editableIndex, formik.values.todoTitle);
-		} else {
-			addTodo(formik.values.todoTitle);
-		}
+	async function doChange() {
+		let questions: IQuestion[] = [];
+		if (isEditable && editableIndex >= 0)
+			questions = editTodo(editableIndex, formik.values.todoTitle);
+		else questions = addTodo(formik.values.todoTitle);
+
 		setIsEditable(false);
 		formik.setFieldValue('todoTitle', '');
 		setModalStatus(false);
+
+		await DataService.saveQuestionsConfig(questions);
 	}
 
 	const [isEditable, setIsEditable] = useState(false);
@@ -103,6 +99,9 @@ const SelectQuestionsConfiguration = ({
 		formik.setFieldValue('todoTitle', list[val].title);
 		setModalStatus(true);
 		setIsEditable(true);
+	}
+	async function deactivate(index: number) {
+		await DataService.saveQuestionsConfig(list);
 	}
 
 	return (
@@ -160,7 +159,12 @@ const SelectQuestionsConfiguration = ({
 				</CardActions>
 			</CardHeader>
 			<CardBody isScrollable>
-				<Todo list={list} setList={setList} toggleModal={toggleModal} />
+				<Todo
+					list={list}
+					setList={setList}
+					toggleModal={toggleModal}
+					emitDeactivate={deactivate}
+				/>
 			</CardBody>
 		</Card>
 	);

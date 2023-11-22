@@ -9,4 +9,7 @@ export interface IConfigurationType {
 	shades: string;
 	hvac: string;
 	final_energy_reduction: string;
+	package_name?: string;
+	package_id?: string;
+	package_status?: boolean;
 }

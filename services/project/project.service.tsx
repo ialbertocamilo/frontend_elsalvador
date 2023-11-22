@@ -26,14 +26,6 @@ export function useProjects() {
 		const response = await axiosService().post('/projects', payload);
 
 		if (!response?.data) return false;
-		showNotification(
-			<span className='d-flex align-items-center'>
-				<Icon icon='Info' size='lg' className='me-1' />
-				<span>Proyecto</span>
-			</span>,
-			'Se ha guardado correctamente.',
-			'success',
-		);
 		const { data } = response?.data;
 		return new ProjectEntity(data);
 	}
@@ -46,9 +38,9 @@ export function useProjects() {
 		showNotification(
 			<span className='d-flex align-items-center'>
 				<Icon icon='Info' size='lg' className='me-1' />
-				<span>Proyecto</span>
+				<span>Información almacenada</span>
 			</span>,
-			'Se ha guardado correctamente.',
+			'Los datos se han guardado exitosamente.',
 			'success',
 		);
 		return true;

@@ -291,3 +291,5 @@ export const keyList = {
 	shading: 'shading',
 	roofs: 'roofs',
 };
+
+export const codePackagePrefix = 'PACK';

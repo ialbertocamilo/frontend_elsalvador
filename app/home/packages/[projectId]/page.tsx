@@ -48,9 +48,13 @@ const PackagesPage = () => {
 				if (data[0]) {
 					const packages = data[0]?.config as IConfigurationType[];
 
+					console.log(data[0]?.config);
 					setPackagesSelect(
 						packages?.map((val, index) => {
-							return { value: index, text: `Paquete ${index + 1}` };
+							return {
+								value: index,
+								text: `${val.package_id} - ${val.package_name}`,
+							};
 						}),
 					);
 					setPackages(packages);
@@ -86,8 +90,7 @@ const PackagesPage = () => {
 		onSubmit: async (values) => {},
 	});
 
-	const selection1 = [
-		{ value: 0, text: '' },
+	const selection = [
 		{
 			value: 1,
 			text: 'Calculado por asesor ',
@@ -100,38 +103,26 @@ const PackagesPage = () => {
 			value: 3,
 			text: 'Certificado producto (U)',
 		},
-	];
-	const selection6 = [
-		{ value: 0, text: '' },
 		{
-			value: 1,
-			text: 'Calculado por asesor ',
-		},
-	];
-	const selection5 = [
-		{ value: 0, text: '' },
-		{
-			value: 1,
-			text: 'Calculado por asesor ',
+			value: 4,
+			text: 'Certificado producto (%)',
 		},
 		{
-			value: 2,
-			text: 'Certificado producto (U)',
+			value: 5,
+			text: 'Certificado producto (g)',
 		},
-	];
-	const selection2 = [
-		{ value: 0, text: '' },
-		{ value: 1, text: 'Certificado producto (%)' },
-	];
-	const selection3 = [
-		{ value: 0, text: '' },
-		{ value: 1, text: 'Certificado producto (g)' },
-		{ value: 2, text: 'Certificado producto (CS)' },
-	];
-	const selection4 = [
-		{ value: 0, text: '' },
-		{ value: 1, text: 'Certificado producto' },
-		{ value: 2, text: 'Ficha técnica' },
+		{
+			value: 6,
+			text: 'Certificado producto (CS)',
+		},
+		{
+			value: 7,
+			text: 'Certificado producto (CS)',
+		},
+		{
+			value: 8,
+			text: 'Ficha técnica',
+		},
 	];
 
 	const [complies, setComplies] = useState({
@@ -316,6 +307,8 @@ const PackagesPage = () => {
 
 	function saveQuestionsResponse(index: number, state: boolean) {
 		if (questions) {
+			console.log('emit');
+			console.log(questions);
 			questions[index]['value'] = state;
 			setQuestions([...questions]);
 		}
@@ -381,7 +374,6 @@ const PackagesPage = () => {
 							<ToggleYesNoButton
 								blocked={globalReadOnly}
 								keyName={value.id}
-								forceYes={value?.value}
 								emitValue={saveQuestionsResponse}
 							/>
 						</th>
@@ -724,7 +716,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection6}
+														list={selection}
 														disabled={globalReadOnly}
 														value={
 															originQuestions.wall_window_proportion
@@ -743,7 +735,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection1}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.wall_u_value}
 														onChange={(e: any) =>
@@ -759,7 +751,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection5}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.wall_reflectance}
 														onChange={(e: any) =>
@@ -775,7 +767,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection1}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.roof_u_value}
 														onChange={(e: any) =>
@@ -791,7 +783,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection2}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.roof_reflectance}
 														onChange={(e: any) =>
@@ -807,7 +799,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection5}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.window_u_value}
 														onChange={(e: any) =>
@@ -823,7 +815,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection3}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.window_g_value}
 														onChange={(e: any) =>
@@ -840,7 +832,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														disabled={globalReadOnly}
-														list={selection4}
+														list={selection}
 														value={originQuestions.shades}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -855,7 +847,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														list={selection4}
+														list={selection}
 														disabled={globalReadOnly}
 														value={originQuestions.cop}
 														onChange={(e: any) =>

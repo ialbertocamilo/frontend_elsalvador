@@ -123,23 +123,21 @@ const Popovers: FC<IPopoversProps> = ({
 				},
 			)}
 			{popoverOpen && (
-				<Portal>
-					<div
-						ref={setPopperElement}
-						role='tooltip'
-						className={classNames('popover', 'bs-popover-auto', className)}
-						style={styles.popper}
-						// eslint-disable-next-line react/jsx-props-no-spreading
-						{...props}
-						// eslint-disable-next-line react/jsx-props-no-spreading
-						{...attributes.popper}>
-						<div ref={setArrowElement} className='popover-arrow' style={styles.arrow} />
-						{title && <h3 className='popover-header'>{title}</h3>}
-						{desc && (
-							<div className={classNames('popover-body', bodyClassName)}>{desc}</div>
-						)}
-					</div>
-				</Portal>
+				<div
+					ref={setPopperElement}
+					role='tooltip'
+					className={classNames('popover', 'bs-popover-auto', className)}
+					style={styles.popper}
+					// eslint-disable-next-line react/jsx-props-no-spreading
+					{...props}
+					// eslint-disable-next-line react/jsx-props-no-spreading
+					{...attributes.popper}>
+					<div ref={setArrowElement} className='popover-arrow' style={styles.arrow} />
+					{title && <h3 className='popover-header'>{title}</h3>}
+					{desc && (
+						<div className={classNames('popover-body', bodyClassName)}>{desc}</div>
+					)}
+				</div>
 			)}
 		</>
 	);

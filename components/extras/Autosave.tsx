@@ -18,10 +18,6 @@ export const Autosave = ({ children, time, endpoint }: AutosaveProps) => {
 	function save(newText: string) {
 		if (timeRetarded) clearTimeout(timeRetarded);
 		const nuevoTimeout = setTimeout(() => {
-			if (endpoint) {
-				console.log('Sending data :', newText);
-			}
-
 			showNotification(
 				<span className='d-flex align-items-center'>
 					<Icon icon='Info' size='lg' className='me-1' />

@@ -17,7 +17,23 @@ const axiosService = () => {
 		withCredentials: false,
 	});
 	axiosInstance.interceptors.response.use(
-		(value) => value,
+		(value) => {
+			switch (value?.status) {
+				case 201:
+					showNotification(
+						<span className='d-flex align-items-center'>
+							<Icon icon='Info' size='lg' className='me-1' />
+							<span>Información almacenada</span>
+						</span>,
+						'Los datos se han guardado exitosamente.',
+						'success',
+					);
+					break;
+				default:
+					break;
+			}
+			return value;
+		},
 		(error: AxiosError) => {
 			if (error?.response?.status == 400) {
 				if (error?.response?.data) {

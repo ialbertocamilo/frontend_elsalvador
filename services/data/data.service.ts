@@ -2,6 +2,7 @@ import axiosService from '../../lib/axios';
 import { IConfigurationType } from '../../common/types/configuration.types';
 import { keyList } from '../../common/constants/lists';
 import { ITechnicalSupport } from '../../common/types/package.types';
+import { IQuestion } from '../../common/types/question.types';
 
 export default class DataService {
 	static async getPackagesConfig() {
@@ -19,5 +20,21 @@ export default class DataService {
 		});
 		if (!result?.data?.payload) return false;
 		if (result?.data) return result?.data?.payload as ITechnicalSupport;
+	}
+
+	static async savePackageConfig(payload: IConfigurationType[]) {
+		const result = await axiosService().post('/data', {
+			key: keyList.packageConfiguration,
+			payload: { config: payload },
+		});
+		return !!result?.data;
+	}
+
+	static async saveQuestionsConfig(payload: IQuestion[]) {
+		const result = await axiosService().post('/data', {
+			key: keyList.packageConfiguration,
+			payload: { questions: payload },
+		});
+		return !!result?.data;
 	}
 }

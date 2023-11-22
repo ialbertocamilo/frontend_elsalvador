@@ -28,7 +28,7 @@ export const ToggleYesNoButton = ({
 			isDisable={blocked}
 			onClick={() => saveToggle(!toggle, keyName)}
 			size='sm'
-			style={{ width: '5em' }}
+			style={{ width: '4em' }}
 			className={toggle ? 'col-sm bg-primary text-white' : 'bg-primary-subtle text-black-50'}>
 			{toggle ? 'Si' : 'No'}
 		</Button>

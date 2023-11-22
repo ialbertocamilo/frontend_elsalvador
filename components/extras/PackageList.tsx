@@ -4,11 +4,9 @@ import classNames from 'classnames';
 import Button from '../bootstrap/Button';
 import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '../bootstrap/Dropdown';
 import useDarkMode from '../../hooks/useDarkMode';
-import { IQuestion } from '../../common/types/question.types';
-import { ToggleYesNoButton } from '../buttons/ToggleYesNoButton';
-import Popovers from '../bootstrap/Popovers';
+import { IConfigurationType } from '../../common/types/configuration.types';
 
-const TodoPropTypes = {
+const PackagePropTypes = {
 	list: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -18,32 +16,25 @@ const TodoPropTypes = {
 	),
 };
 
-interface ITodoItemProps {
-	list: IQuestion[];
-	index: number;
+interface IPackageItemProps {
+	list: IConfigurationType[];
 	toggleModal: Function;
-	emitChange: Function;
-
+	index: number;
+	emitDeactivate: Function;
 	setList(...args: unknown[]): unknown;
 }
 
-export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
-	({ index, emitChange, list, setList, toggleModal, ...props }, ref) => {
+export const PackageItem = forwardRef<HTMLDivElement, IPackageItemProps>(
+	({ index, list, emitDeactivate, setList, toggleModal, ...props }, ref) => {
 		const itemData = list[index];
 
 		const handleChange = (_index: number) => {
+			list[_index].package_status = !list[_index].package_status;
 			const newTodos = [...list];
-			newTodos[_index].deactivated = !newTodos[_index].deactivated;
 			setList(newTodos);
-			emitChange(_index);
+			emitDeactivate(_index);
 		};
 
-		function emitYesNo(keyName: number, val: unknown) {
-			const newTodos = [...list];
-			newTodos[keyName].value = !newTodos[keyName].value;
-			setList(newTodos);
-			emitChange(keyName);
-		}
 		const { themeStatus } = useDarkMode();
 
 		return (
@@ -52,9 +43,9 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 				<div className='todo-content'>
 					<div
 						className={classNames('todo-title', {
-							'text-decoration-line-through': list[index].deactivated,
+							'text-decoration-line-through': !list[index]?.package_status,
 						})}>
-						{itemData.title}
+						{itemData?.package_id} - {itemData?.package_name}
 					</div>
 				</div>
 				<div className='todo-extras'>
@@ -66,17 +57,6 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 							onClick={() => toggleModal(index)}
 							icon='Edit'></Button>
 					</span>
-					<Popovers
-						desc={'Indicar si la pregunta se evaluará como: Si o No'}
-						trigger='hover'>
-						<span className='me-2'>
-							<ToggleYesNoButton
-								keyName={index}
-								emitValue={emitYesNo}
-								forceYes={itemData?.value}
-							/>
-						</span>
-					</Popovers>
 					<span>
 						<Dropdown>
 							<DropdownToggle hasIcon={false}>
@@ -87,9 +67,9 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 									<Button
 										size='sm'
 										isLight
-										color={list[index].deactivated ? 'success' : 'danger'}
+										color={list[index]?.package_status ? 'success' : 'danger'}
 										onClick={() => handleChange(index)}>
-										{list[index].deactivated ? 'Activar' : 'Desactivar'}
+										{list[index]?.package_status ? 'Desactivar' : 'Activar'}
 									</Button>
 								</DropdownItem>
 							</DropdownMenu>
@@ -100,35 +80,42 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 		);
 	},
 );
-TodoItem.displayName = 'TodoItem';
-TodoItem.propTypes = {
+PackageItem.displayName = 'PackageItem';
+PackageItem.propTypes = {
 	// @ts-ignore
-	list: TodoPropTypes.list.isRequired,
+	list: PackagePropTypes.list.isRequired,
 	setList: PropTypes.func.isRequired,
 	index: PropTypes.number.isRequired,
 };
-TodoItem.defaultProps = {};
+PackageItem.defaultProps = {};
 
-export interface ITodoProps {
-	list: IQuestion[];
+export interface IPackageListProps {
+	list: IConfigurationType[];
 	className?: string;
 	toggleModal: Function;
 	emitDeactivate: Function;
-
 	setList(...args: unknown[]): unknown;
 }
 
-const Todo = forwardRef<HTMLDivElement, ITodoProps>(
+const PackageList = forwardRef<HTMLDivElement, IPackageListProps>(
 	({ className, emitDeactivate, list, setList, toggleModal, ...props }, ref) => {
+		if (list?.length == 0) {
+			return (
+				<div>
+					<span>No hay paquetes que mostrar</span>
+				</div>
+			);
+		}
+
 		return (
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<div ref={ref} className={classNames('todo', className)} {...props}>
 				{list.map((i, index) => (
-					<TodoItem
-						key={i.id}
+					<PackageItem
+						key={index}
 						index={index}
 						list={list}
-						emitChange={emitDeactivate}
+						emitDeactivate={emitDeactivate}
 						setList={setList}
 						toggleModal={toggleModal}
 					/>
@@ -137,16 +124,16 @@ const Todo = forwardRef<HTMLDivElement, ITodoProps>(
 		);
 	},
 );
-Todo.displayName = 'Todo';
-Todo.propTypes = {
+PackageList.displayName = 'PackageList';
+PackageList.propTypes = {
 	className: PropTypes.string,
 	// @ts-ignore
-	list: TodoPropTypes.list.isRequired,
+	list: PackagePropTypes.list.isRequired,
 	setList: PropTypes.func.isRequired,
 	toggleModal: PropTypes.func.isRequired,
 };
-Todo.defaultProps = {
+PackageList.defaultProps = {
 	className: undefined,
 };
 
-export default Todo;
+export default PackageList;

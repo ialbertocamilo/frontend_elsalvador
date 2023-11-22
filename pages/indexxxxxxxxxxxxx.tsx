@@ -38,7 +38,6 @@ const Indexxxxxxxxxxxxx: NextPage = () => {
 
 	const { themeStatus } = useDarkMode();
 
-	console.log('INDEX');
 	return (
 		<PageWrapper>
 			<Head>
