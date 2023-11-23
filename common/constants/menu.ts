@@ -1,3 +1,5 @@
+import { Roles } from './default';
+
 export const pagesMenu = {
 	// location: {
 	// 	id: 'Location',
@@ -24,24 +26,35 @@ export const pagesMenu = {
 				icon: 'Add',
 			},
 		},
+		role: '*',
 	},
 	calc: {
 		id: 'Calculator',
 		text: 'Calculadoras',
 		path: 'home/calculators',
 		icon: 'ConfirmationNumber',
+		role: '*',
 	},
 	config: {
 		id: 'Configuration',
 		text: 'Configuración',
 		path: 'home/configuration',
 		icon: 'Settings',
+		role: Roles.supervisor,
 	},
 	dashboard: {
 		id: 'Dashboard',
 		text: 'Dashboard',
 		path: 'home/dashboard',
 		icon: 'Dashboard',
+		role: Roles.supervisor,
+	},
+	manageUsers: {
+		id: 'Access',
+		text: 'Control de accesos',
+		path: 'home/access',
+		icon: 'Approval',
+		role: Roles.supervisor,
 	},
 };
 

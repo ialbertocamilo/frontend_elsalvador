@@ -14,11 +14,13 @@ import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalcul
 import { useParams, useRouter } from 'next/navigation';
 import { useProjects } from '../../../../../services/project/project.service';
 import { NextButton } from '../../../../../components/buttons/NextButton';
-import { RoutesList, RoutesListWithParams } from '../../../../../common/constants/default';
+import { RoutesListWithParams } from '../../../../../common/constants/default';
 import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
+import { ClientStorage } from '../../../../../common/classes/storage';
+import { RoleType } from '../../../../../common/types/role.types';
 
 const keyName = 'shading';
 const ShadingPage = () => {
@@ -31,7 +33,9 @@ const ShadingPage = () => {
 	const [textC, setTextC] = useState('');
 	const [textD, setTextD] = useState('');
 	const [data, setData] = useState<any>();
+	const [result, setResult] = useState();
 
+	const user = ClientStorage.getUser();
 	useEffect(() => {
 		projects
 			.getProjectData({ key: keyName, project_id: params?.projectId as string })
@@ -46,6 +50,7 @@ const ShadingPage = () => {
 				}
 			});
 	}, []);
+
 	return (
 		<PageWrapper>
 			<Page>
@@ -62,7 +67,7 @@ const ShadingPage = () => {
 				</Card>
 				<Card>
 					<CardBody>
-						<ShadingTable setData={setData} data={data} />
+						<ShadingTable setData={setData} data={data} setResult={setResult} />
 					</CardBody>
 				</Card>
 
@@ -122,20 +127,25 @@ const ShadingPage = () => {
 
 				<Card>
 					<CardFooter>
-						<SaveProjectButton
-							payload={{
-								project_id: params?.projectId || '',
-								payload: {
-									textA,
-									textB,
-									textC,
-									textD,
-									data,
-								},
-								key: keyName,
-							}}
-							type={ButtonTypes.projectData}
-						/>
+						<>
+							{user?.role == RoleType.agent && (
+								<SaveProjectButton
+									payload={{
+										project_id: params?.projectId || '',
+										payload: {
+											textA,
+											textB,
+											textC,
+											textD,
+											data,
+											result,
+										},
+										key: keyName,
+									}}
+									type={ButtonTypes.projectData}
+								/>
+							)}
+						</>
 
 						<BackToCalculatorsBtn />
 						<Button

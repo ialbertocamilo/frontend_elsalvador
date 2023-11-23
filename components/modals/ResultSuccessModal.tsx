@@ -27,7 +27,7 @@ export const ResultSuccessModal = ({
 					aprobado.
 				</span>
 			</Alert>
-			<div>
+			<div className='text-black-50'>
 				<h5>Detalles</h5>
 				<p>
 					Nombre del propietario:{' '}
@@ -43,7 +43,7 @@ export const ResultSuccessModal = ({
 					Director de obra:{' '}
 					<span className='bold h5'>{projectEntity?.project_director}</span>
 				</p>
-				<span className='text-muted'>
+				<span>
 					El proyecto ha sido aprobado según los parametros registrados en la plataforma.
 				</span>
 			</div>

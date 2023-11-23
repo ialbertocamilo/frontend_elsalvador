@@ -66,7 +66,7 @@ export const TechnicalSupportInfoModal = ({
 				El Proyecto <span className='bold h5'>{projectEntity?.project_name}</span> está
 				preparado para su aprobación, tomar en cuenta los siguiente puntos.
 			</span>
-			<ul>
+			<ul className='text-black-50'>
 				<li>
 					El proyecto cambiará su estado a solo visible y no se podrá editar por el
 					usuario.

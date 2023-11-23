@@ -1,4 +1,4 @@
-import { municipalityList } from '../common/constants/lists';
+import { departmentList, municipalityList } from '../common/constants/lists';
 
 export function test() {
 	return null;
@@ -130,6 +130,10 @@ export function arrayToList(arr: string[]) {
 	});
 }
 
-export function getItemFromMunicipalityList(municipalityIndex: number) {
-	return municipalityList[municipalityIndex];
+export function getItemFromMunicipalityList(index: number) {
+	return municipalityList[index - 1];
+}
+
+export function getItemFromDepartmentList(index: number) {
+	return departmentList[index - 1];
 }

@@ -57,4 +57,5 @@ export interface IProjectDataTotalValues {
 	roof_u_value: string;
 	window_u_value: string;
 	window_g_value: string;
+	shades: string;
 }
