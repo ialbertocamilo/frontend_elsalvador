@@ -1,5 +1,5 @@
 import { departmentList, municipalityList } from '../common/constants/lists';
-import { ClientStorage } from '../common/classes/storage';
+import { IUserStorage } from '../common/types/user.types';
 
 export function test() {
 	return null;
@@ -138,12 +138,11 @@ export function getItemFromMunicipalityList(index: number) {
 export function getItemFromDepartmentList(index: number) {
 	return departmentList[index - 1];
 }
-const user = ClientStorage.getUser();
 
-export function filterByRole(value: any): any {
+export function filterByRole(value: any, user: IUserStorage): any {
 	if (value)
-		return Object.values(value).filter((item: any, index: any) => {
-			item['subMenu'] = filterByRole(item?.subMenu);
+		return Object.values(value).filter((item: any) => {
+			item['subMenu'] = filterByRole(item?.subMenu, user);
 			return item?.role === user?.role || item?.role == '*';
 		});
 }

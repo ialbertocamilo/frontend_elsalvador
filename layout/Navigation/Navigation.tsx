@@ -22,7 +22,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
 import { filterByRole, pathRetouch } from '../../helpers/helpers';
-import { RoleType } from '../../common/types/role.types';
 import { ClientStorage } from '../../common/classes/storage';
 
 interface IListProps extends HTMLAttributes<HTMLUListElement> {
@@ -410,7 +409,14 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 
 		const { t } = useTranslation('menu');
 
-		const menuFiltered = filterByRole(menu);
+		const user = ClientStorage.getUser();
+		let menuFiltered;
+		if (user) menuFiltered = filterByRole(menu, user);
+		else {
+			menuFiltered = menu;
+		}
+		console.log(menuFiltered);
+
 		function fillMenu(
 			data:
 				| {
