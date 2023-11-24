@@ -21,7 +21,6 @@ const DefaultAside = () => {
 	const { t } = useTranslation(['common', 'menu']);
 
 	const { darkModeStatus } = useDarkMode();
-
 	return (
 		<Aside>
 			<AsideHead>

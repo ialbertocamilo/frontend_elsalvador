@@ -21,7 +21,7 @@ import { TIcons } from '../../type/icons-type';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
-import { pathRetouch } from '../../helpers/helpers';
+import { filterByRole, pathRetouch } from '../../helpers/helpers';
 import { RoleType } from '../../common/types/role.types';
 import { ClientStorage } from '../../common/classes/storage';
 
@@ -410,10 +410,8 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 
 		const { t } = useTranslation('menu');
 
-		const user = ClientStorage.getUser();
-		const menuFiltered = Object.values(menu).filter(
-			(item: any) => item?.role === user?.role || item?.role == '*',
-		);
+		const menuFiltered = filterByRole(menu);
+		console.log(menuFiltered);
 
 		function fillMenu(
 			data:
@@ -494,6 +492,7 @@ Navigation.propTypes = {
 		path: PropTypes.string,
 		icon: PropTypes.string,
 		isDisable: PropTypes.bool,
+		role: PropTypes.string,
 		subMenu: PropTypes.arrayOf(
 			PropTypes.shape({
 				id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -501,9 +500,10 @@ Navigation.propTypes = {
 				path: PropTypes.string,
 				icon: PropTypes.string,
 				isDisable: PropTypes.bool,
+				role: PropTypes.string,
 			}),
 		),
-	}).isRequired,
+	}),
 	id: PropTypes.string.isRequired,
 	className: PropTypes.string,
 };

@@ -68,9 +68,7 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 							onClick={() => toggleModal(index)}
 							icon='Edit'></Button>
 					</span>
-					<Popovers
-						desc={'Indicar si la pregunta se evaluará como: Si o No'}
-						trigger='hover'>
+					<Popovers desc={'VALOR DE LA RESPUESTA CORRECTA'} trigger='hover'>
 						<span className='me-2'>
 							<ToggleYesNoButton
 								keyName={index}

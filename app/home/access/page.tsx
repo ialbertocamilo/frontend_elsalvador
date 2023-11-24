@@ -43,7 +43,7 @@ const AccessTable = () => {
 
 	const initRoles = [
 		{ value: RoleType.agent.toString(), text: 'Operador' },
-		{ value: RoleType.supervisor.toString(), text: 'Supervisor' },
+		{ value: RoleType.supervisor.toString(), text: 'Administrador' },
 	];
 
 	async function changeRole(userId: string, roleId: RoleType) {

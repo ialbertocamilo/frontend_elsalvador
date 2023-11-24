@@ -1,4 +1,5 @@
 import { departmentList, municipalityList } from '../common/constants/lists';
+import { ClientStorage } from '../common/classes/storage';
 
 export function test() {
 	return null;
@@ -136,4 +137,13 @@ export function getItemFromMunicipalityList(index: number) {
 
 export function getItemFromDepartmentList(index: number) {
 	return departmentList[index - 1];
+}
+const user = ClientStorage.getUser();
+
+export function filterByRole(value: any): any {
+	if (value)
+		return Object.values(value).filter((item: any, index: any) => {
+			item['subMenu'] = filterByRole(item?.subMenu);
+			return item?.role === user?.role || item?.role == '*';
+		});
 }
