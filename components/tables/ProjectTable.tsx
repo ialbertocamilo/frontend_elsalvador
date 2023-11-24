@@ -84,27 +84,37 @@ const ProjectTable = () => {
 		findProjects();
 	}
 
-	const ActionSupervisor = ({ project }: { project: any }) => {
+	const ActionSupervisor = ({ project }: { project: ProjectEntity }) => {
+		if (project.status == ProjectStatus.accepted)
+			return <div className='row text-success'>Aceptado</div>;
+		if (project.status == ProjectStatus.denied)
+			return <div className='row text-danger'>Rechazado</div>;
 		if (user?.role == Roles?.supervisor)
 			return (
 				<div className='row'>
 					<Button
 						size='sm'
-						className='text-success'
-						onClick={() => projectEnable(project.id, ProjectStatus.accepted)}>
+						className='text-success '
+						onClick={() => projectEnable(String(project?.id), ProjectStatus.accepted)}>
 						Aprobar
 					</Button>
 					<Button
 						size='sm'
 						className='text-danger'
-						onClick={() => projectEnable(project.id, ProjectStatus.denied)}>
+						onClick={() => projectEnable(String(project.id), ProjectStatus.denied)}>
 						Rechazar
 					</Button>
 				</div>
 			);
 		return (
 			<div className='row align-self-center'>
-				<span className='text-center'>Ver</span>
+				<span
+					className='text-center'
+					onClick={() => {
+						if (project.id) goToProject(project.id);
+					}}>
+					Ver
+				</span>
 			</div>
 		);
 	};

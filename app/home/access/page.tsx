@@ -92,7 +92,6 @@ const AccessTable = () => {
 							<table className='table table-modern table-hover'>
 								<thead>
 									<tr>
-										<th className=''>Id</th>
 										<th>Nombres y apellidos</th>
 										<th>Profesión</th>
 										<th>Nacionalidad</th>
@@ -106,7 +105,6 @@ const AccessTable = () => {
 									{dataPagination(users, currentPage, perPage)?.map(
 										(i: IUser) => (
 											<tr key={i.id} style={{ cursor: 'pointer' }}>
-												<td>USR{i.id}</td>
 												<td className='fw-semibold'>
 													{i.name} {i.lastname}
 												</td>
