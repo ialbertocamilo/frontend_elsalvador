@@ -412,10 +412,7 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 		const user = ClientStorage.getUser();
 		let menuFiltered;
 		if (user) menuFiltered = filterByRole(menu, user);
-		else {
-			menuFiltered = menu;
-		}
-		console.log(menuFiltered);
+		else menuFiltered = menu;
 
 		function fillMenu(
 			data:
