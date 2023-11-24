@@ -411,8 +411,6 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 		const { t } = useTranslation('menu');
 
 		const menuFiltered = filterByRole(menu);
-		console.log(menuFiltered);
-
 		function fillMenu(
 			data:
 				| {

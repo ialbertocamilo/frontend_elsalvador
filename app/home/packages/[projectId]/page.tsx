@@ -250,12 +250,14 @@ const PackagesPage = () => {
 				Number(packageInfo?.proportion_wall_window),
 			wall_u_value:
 				Number(totalCalculatedValues?.wall_u_value) <= Number(packageInfo?.walls_u_value),
-			wall_reflectance:
-				Number(formik.values.walls_reflectance) <= Number(packageInfo?.walls_reflectance),
+			wall_reflectance: formik.values.walls_reflectance
+				? Number(formik.values.walls_reflectance) <= Number(packageInfo?.walls_reflectance)
+				: false,
 			roof_u_value:
 				Number(totalCalculatedValues?.roof_u_value) <= Number(packageInfo?.roofs_u_value),
-			roof_reflectance:
-				Number(formik.values.roofs_reflectance) <= Number(packageInfo?.roofs_reflectance),
+			roof_reflectance: formik.values.roofs_reflectance
+				? Number(formik.values.roofs_reflectance) <= Number(packageInfo?.roofs_reflectance)
+				: false,
 			window_u_value:
 				Number(totalCalculatedValues?.window_u_value) <=
 				Number(packageInfo?.windows_u_value),
@@ -263,7 +265,7 @@ const PackagesPage = () => {
 				Number(totalCalculatedValues?.window_g_value) <=
 				Number(packageInfo?.shading_coefficient),
 			shades: Number(totalCalculatedValues?.shades) <= Number(packageInfo?.shades),
-			cop: Number(formik.values.cop) <= Number(packageInfo?.hvac),
+			cop: formik.values.cop ? Number(formik.values.cop) <= Number(packageInfo?.hvac) : false,
 		});
 		setCanRequestTechnicalReport(checkResults());
 	}
