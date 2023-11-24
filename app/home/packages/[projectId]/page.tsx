@@ -983,6 +983,7 @@ const PackagesPage = () => {
 													<ToggleYesNoButton
 														blocked={globalReadOnly}
 														keyName={key}
+														forceYes={value?.response}
 														emitValue={(index: any, val: any) =>
 															saveQuestionsResponse(index, val)
 														}
