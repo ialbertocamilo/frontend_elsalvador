@@ -175,7 +175,7 @@ const Login = () => {
 	return (
 		<div className={'bg-primary h-100'}>
 			<ReactNotifications />
-			<div className='row h-100'>
+			<div className='row h-100 overflow-scroll'>
 				<div className='col-xxl-3 col-lg-3 col-12 align-content-center align-self-center justify-content-center text-center'>
 					<Logo height={100} width={200} />
 				</div>
