@@ -17,6 +17,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
 		if (navi !== '/auth/login')
 			checkAuth().then((data) => {
+				// if (data) ClientStorage.saveUser(data);
 				if (!data) router.replace('/auth/login');
 			});
 	}, []);

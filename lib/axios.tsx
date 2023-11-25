@@ -60,7 +60,32 @@ const axiosService = () => {
 						);
 					}
 				}
-				return error;
+			}
+			if (error?.response?.status == 401) {
+				if (error?.response?.data) {
+					const dataError = Object.values(error?.response?.data) as unknown as string[];
+					if (dataError.length > 0) {
+						dataError.forEach((value) =>
+							showNotification(
+								<span className='d-flex align-items-center'>
+									<Icon icon='Info' size='lg' className='me-1' />
+									<span>Error de autorización</span>
+								</span>,
+								value,
+								'danger',
+							),
+						);
+					} else {
+						showNotification(
+							<span className='d-flex align-items-center'>
+								<Icon icon='Info' size='lg' className='me-1' />
+								<span>Error de validación</span>
+							</span>,
+							JSON.stringify(error.response.data),
+							'danger',
+						);
+					}
+				}
 			}
 			if (error?.response?.status == 500) {
 				showNotification(
