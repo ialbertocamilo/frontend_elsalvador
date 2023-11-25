@@ -12,7 +12,6 @@ export const GoProjectButton = () => {
 	return (
 		<Button
 			color='link'
-			className='col-4 m-0 p-0'
 			onClick={() => router.push(RoutesListWithParams.project(params?.projectId))}>
 			<span>
 				<Icon icon='Link' />

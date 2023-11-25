@@ -398,19 +398,14 @@ const PackagesPage = () => {
 			<Page className='mx-3'>
 				{CheckLoad()}
 				{!loading && (
-					<div className='flex-row  justify-content-center text-center'>
-						<Card>
-							<CardBody>
-								<div className='d-flex justify-content-between'>
-									<h4 className='fw-bold'>
-										Paquetes de Medidas de Eficiencias Energéticas
-									</h4>
-									<div className='col-6 text-end'>
-										<GoProjectButton />
-									</div>
-								</div>
-							</CardBody>
-						</Card>
+					<div>
+						<GoProjectButton />
+						<div className='row '>
+							<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+								Paquetes de Medidas de Eficiencias Energéticas
+							</div>
+						</div>
+
 						<Card>
 							<CardBody className='m-1'>
 								<div className='row mb-1 row-cols-2  align-baseline align-items-center center justify-content-center '>

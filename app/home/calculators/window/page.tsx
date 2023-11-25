@@ -11,6 +11,7 @@ import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
 import { useProjects } from '../../../../services/project/project.service';
 import { Calculator } from '../../../../services/calculation/calculator';
+import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -77,11 +78,13 @@ const WindowPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<h4 className='fw-bold'>Cálculo de ventanas</h4>
-					</CardBody>
-				</Card>
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo de ventanas
+					</div>
+				</div>
+				<br />
 				<Card>
 					<CardBody>
 						<div className='row align-items-end'>

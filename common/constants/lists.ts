@@ -299,3 +299,9 @@ export const ProjectStatus = {
 	accepted: 2,
 	denied: 3,
 };
+
+export const RoleNames = {
+	Operator: 'Operador',
+	Admin: 'Administrador',
+	SuperAdmin: 'SuperAdministrador',
+};

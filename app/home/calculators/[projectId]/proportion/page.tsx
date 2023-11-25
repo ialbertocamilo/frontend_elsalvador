@@ -35,21 +35,18 @@ const ProportionPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<div className='d-flex justify-content-between'>
-							<h4 className='fw-bold'> Cálculo de proporción muro ventana</h4>
-							<div className='col-6 text-end'>
-								<GoProjectButton />
-							</div>
-						</div>
-						<span>
-							Ingresar Información requerida en las celdas indicadas. Considerar que
-							la información introducida es responsabilidad de quien la reporta y será
-							verificada por la entidad correspondiente.
-						</span>
-					</CardBody>
-				</Card>
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo de proporción muro ventana
+					</div>
+					<span>
+						Ingresar Información requerida en las celdas indicadas. Considerar que la
+						información introducida es responsabilidad de quien la reporta y será
+						verificada por la entidad correspondiente.
+					</span>
+				</div>
+				<br />
 				<div className='row align-content-between justify-content-between px-2'>
 					<Card className='col me-2'>
 						<CardBody>

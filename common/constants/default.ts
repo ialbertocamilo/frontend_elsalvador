@@ -26,6 +26,7 @@ export const RoutesListWithParams = {
 	project: (value: any) => `/home/projects/${value}`,
 	packages: (value: any) => `/home/packages/${value}`,
 	configuration: (value: any) => `/home/configuration/${value}`,
+	access: (value: any) => `/home/access/${value}`,
 };
 
 export const Roles = {

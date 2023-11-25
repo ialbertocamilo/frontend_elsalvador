@@ -20,6 +20,7 @@ import { ClientStorage } from '../../common/classes/storage';
 import DataService from '../../services/data/data.service';
 import { RoutesList } from '../../common/constants/default';
 import { Roles } from '../../common/types/role.types';
+import Popovers from '../bootstrap/Popovers';
 
 const ProjectTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,7 +40,7 @@ const ProjectTable = () => {
 	const projectService = useProjects();
 	const router = useRouter();
 	const goToProject = (id: number) => {
-		router.replace(`/home/projects/${id}`);
+		router.push(`/home/projects/${id}`);
 	};
 
 	const [editModalStatus, setEditModalStatus] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const ProjectTable = () => {
 		router.push(route);
 	};
 	useEffect(() => {
-		projectService.getProjects('').then((result) => {
+		projectService.searchProject(formik.values.searchInput).then((result) => {
 			setProjects(result);
 		});
 	}, []);
@@ -85,10 +86,17 @@ const ProjectTable = () => {
 	}
 
 	const ActionSupervisor = ({ project }: { project: ProjectEntity }) => {
-		if (project.status == ProjectStatus.accepted)
-			return <div className='row text-success'>Aceptado</div>;
-		if (project.status == ProjectStatus.denied)
-			return <div className='row text-danger'>Rechazado</div>;
+		if (project.status == ProjectStatus.accepted || project.status == ProjectStatus.denied)
+			return (
+				<div
+					className='text-center'
+					onClick={() => {
+						if (project.id) goToProject(project.id);
+					}}>
+					-
+				</div>
+			);
+
 		if (user?.role == Roles?.supervisor)
 			return (
 				<div className='row'>
@@ -113,7 +121,7 @@ const ProjectTable = () => {
 					onClick={() => {
 						if (project.id) goToProject(project.id);
 					}}>
-					Ver
+					-
 				</span>
 			</div>
 		);
@@ -157,86 +165,90 @@ const ProjectTable = () => {
 							<table className='table table-modern table-hover'>
 								<thead>
 									<tr>
-										<th className=''>
-											Id
-											<Icon size='lg' icon='FilterList' />
+										<th className='text-primary'>Id</th>
+										<th className='text-primary'>Estado de proyecto</th>
+										<th className='text-primary'>Nombre del proyecto</th>
+										<th className='text-primary'>Nombre del propietario</th>
+										<th className='text-primary'>Nombre del Diseñador</th>
+										<th className='text-primary'>
+											Director responsable de obra
 										</th>
-										<th>Estado de proyecto</th>
-										<th>Nombre del proyecto</th>
-										<th>Nombre del propietario</th>
-										<th>Nombre del Diseñador</th>
-										<th>Director responsable de obra</th>
-										<th>Dirección</th>
-										<th>Municipio</th>
-										<th className='text-center'>Acciones</th>
+										<th className='text-primary'>Dirección</th>
+										<th className='text-primary'>Municipio</th>
+										<th className='text-primary text-center'>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
 									{dataPagination(projects, currentPage, perPage)?.map(
 										(i: ProjectEntity) => (
-											<tr key={i.id} style={{ cursor: 'pointer' }}>
-												<td>{i.id}</td>
-												<td>
-													<Status status={i.status} />
-												</td>
-												<td
-													className='bold h5'
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													{i.project_name}
-												</td>
-												<td
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													<div>{i.owner_name}</div>
-													<small className='text-muted'>
-														Propietario
-													</small>
-												</td>
-												<td
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													<div>{i.designer_name}</div>
-													<div>
+											<Popovers
+												desc={'Entrar al proyecto ' + i.project_name}
+												trigger='hover'
+												key={i.id}>
+												<tr key={i.id} style={{ cursor: 'pointer' }}>
+													<td>{i.id}</td>
+													<td>
+														<Status status={i.status} />
+													</td>
+													<td
+														className='bold h5'
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														{i.project_name}
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>{i.owner_name}</div>
 														<small className='text-muted'>
-															Diseñador
+															Propietario
 														</small>
-													</div>
-												</td>
-												<td
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													<div>{i.project_director}</div>
-													<div>
-														<small className='text-muted'>
-															Director
-														</small>
-													</div>
-												</td>
-												<td
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													<div>{i.address}</div>
-												</td>
-												<td
-													onClick={() => {
-														if (i.id) goToProject(i.id);
-													}}>
-													<div>
-														{getItemFromMunicipalityList(
-															Number(i.municipality) - 1,
-														)}
-													</div>
-												</td>
-												<td>
-													<ActionSupervisor project={i} />
-												</td>
-											</tr>
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>{i.designer_name}</div>
+														<div>
+															<small className='text-muted'>
+																Diseñador
+															</small>
+														</div>
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>{i.project_director}</div>
+														<div>
+															<small className='text-muted'>
+																Director
+															</small>
+														</div>
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>{i.address}</div>
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>
+															{getItemFromMunicipalityList(
+																Number(i.municipality) - 1,
+															)}
+														</div>
+													</td>
+													<td>
+														<ActionSupervisor project={i} />
+													</td>
+												</tr>
+											</Popovers>
 										),
 									)}
 								</tbody>

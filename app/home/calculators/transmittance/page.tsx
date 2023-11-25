@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Input from '../../../../components/bootstrap/forms/Input';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import { useParams } from 'next/navigation';
+import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
 
 const TransmittancePage = () => {
 	const [wallName, setWallName] = useState('');
@@ -14,11 +15,13 @@ const TransmittancePage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<h4 className='fw-bold'>Cálculo de transmitancia térmica de muros</h4>
-					</CardBody>
-				</Card>
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo de transmitancia térmica de muros
+					</div>
+				</div>
+				<br />
 
 				<Card>
 					<CardBody>

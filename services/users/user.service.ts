@@ -25,4 +25,16 @@ export class UserService {
 		});
 		return result?.data as boolean;
 	}
+
+	static async getOne(userId: string) {
+		const result = await axiosService().post('/users/get-one', {
+			user_id: userId,
+		});
+		return result?.data as IUser;
+	}
+	static async updateUser(user: IUser) {
+		console.log(user);
+		const result = await axiosService().post('/users/update-user', user);
+		return result?.data as IUser;
+	}
 }

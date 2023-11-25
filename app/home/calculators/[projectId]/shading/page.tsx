@@ -54,17 +54,14 @@ const ShadingPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<div className='d-flex justify-content-between'>
-							<h4 className='fw-bold'> Cálculo elementos de sombreado</h4>
-							<div className='col-6 text-end'>
-								<GoProjectButton />
-							</div>
-						</div>
-						<span>Horizontales, verticales o combinados</span>
-					</CardBody>
-				</Card>
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo elementos de sombreado
+					</div>
+					<span>Horizontales, verticales o combinados</span>
+				</div>
+				<br />
 				<Card>
 					<CardBody>
 						<ShadingTable setData={setData} data={data} setResult={setResult} />

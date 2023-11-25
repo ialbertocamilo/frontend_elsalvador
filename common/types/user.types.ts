@@ -33,9 +33,9 @@ export interface IUser {
 	address: string;
 	phone: string;
 	email: string;
-	email_verified_at: Date;
+	email_verified_at?: Date;
 	role: { id: RoleType; name: string; code: string };
 	active: boolean;
-	created_at: Date;
-	updated_at: Date;
+	created_at?: Date;
+	updated_at?: Date;
 }

@@ -55,17 +55,13 @@ const TransmittancePage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<div className='d-flex justify-content-between'>
-							<h4 className='fw-bold'> Cálculo de transmitancia térmica de techos</h4>
-							<div className='col-6 text-end'>
-								<GoProjectButton />
-							</div>
-						</div>
-					</CardBody>
-				</Card>
-
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo de transmitancia térmica de techos
+					</div>
+				</div>
+				<br />
 				<Card>
 					<CardBody>
 						<div className='row'>

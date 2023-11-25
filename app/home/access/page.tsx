@@ -10,7 +10,7 @@ import SubHeader, {
 import PAYMENTS from '../../../common/data/enumPaymentMethod';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../../services/project/project.service';
-import { RoutesList } from '../../../common/constants/default';
+import { RoutesList, RoutesListWithParams } from '../../../common/constants/default';
 import { getItemFromDepartmentList, getItemFromMunicipalityList } from '../../../helpers/helpers';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
@@ -92,36 +92,72 @@ const AccessTable = () => {
 							<table className='table table-modern table-hover'>
 								<thead>
 									<tr>
-										<th>Nombres y apellidos</th>
-										<th>Profesión</th>
-										<th>Nacionalidad</th>
-										<th>Departamento</th>
-										<th>Municipalidad</th>
-										<th>Rol</th>
-										<th>Activar</th>
+										<th className='text-primary'>Correo electrónico</th>
+										<th className='text-primary'>Nombres y apellidos</th>
+										<th className='text-primary'>Profesión</th>
+										<th className='text-primary'>Nacio`nalidad</th>
+										<th className='text-primary'>Departamento</th>
+										<th className='text-primary'>Municipalidad</th>
+										<th className='text-primary'>Rol</th>
+										<th className='text-primary'>Habilitar usuario</th>
 									</tr>
 								</thead>
 								<tbody>
 									{dataPagination(users, currentPage, perPage)?.map(
 										(i: IUser) => (
 											<tr key={i.id} style={{ cursor: 'pointer' }}>
-												<td className='fw-semibold'>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}
+													className='fw-semibold'>
+													{i.email}
+												</td>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}
+													className='fw-semibold'>
 													{i.name} {i.lastname}
 												</td>
-												<td>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}>
 													<div>{i.profession || '-'}</div>
 												</td>
-												<td>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}>
 													<div>{i.nationality || '-'}</div>
 												</td>
-												<td>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}>
 													<div>
 														{getItemFromDepartmentList(
 															Number(i.department),
 														)}
 													</div>
 												</td>
-												<td>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}>
 													<div>
 														{getItemFromMunicipalityList(
 															Number(i.municipality),
@@ -164,7 +200,7 @@ const AccessTable = () => {
 		</>
 	);
 };
-const ProjectsPage = () => {
+const AccessPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
@@ -174,4 +210,4 @@ const ProjectsPage = () => {
 	);
 };
 
-export default ProjectsPage;
+export default AccessPage;

@@ -105,12 +105,10 @@ const GetProject = () => {
 			<Page container='fluid'>
 				<div className='row'>
 					<div className='col-12'>
-						<Card>
-							<CardBody>
-								<h4 className='fw-bold'>Información de proyecto</h4>
-								<span>{formik.values.projectName}</span>
-							</CardBody>
-						</Card>
+						<div className='display-4 fw-bold py-3 text-primary-emphasis'>
+							Información de proyecto
+						</div>
+						<span>{formik.values.projectName}</span>
 					</div>
 					<div className='col-xl-8'>
 						<Card>

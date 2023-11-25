@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Button from '../../../../components/bootstrap/Button';
 import { ProportionTable } from '../../../../components/tables/ProportionTable';
 import { useParams } from 'next/navigation';
+import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -14,16 +15,18 @@ const ProportionPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<Card>
-					<CardBody>
-						<h4 className='fw-bold'>Proporción muro ventana</h4>
-						<span>
-							Ingresar Información requerida en las celdas indicadas. Considerar que
-							la información introducida es responsabilidad de quien la reporta y será
-							verificada por la entidad correspondiente.
-						</span>
-					</CardBody>
-				</Card>
+				<GoProjectButton />
+				<div className='row '>
+					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
+						Cálculo de proporción muro ventana
+					</div>
+					<span>
+						Ingresar Información requerida en las celdas indicadas. Considerar que la
+						información introducida es responsabilidad de quien la reporta y será
+						verificada por la entidad correspondiente.
+					</span>
+				</div>
+				<br />
 				<Card className='col'>
 					<CardBody className='align-self-center'>
 						<ProportionTable

@@ -1,5 +1,6 @@
-import { departmentList, municipalityList } from '../common/constants/lists';
+import { departmentList, municipalityList, RoleNames } from '../common/constants/lists';
 import { IUserStorage } from '../common/types/user.types';
+import { RoleType } from '../common/types/role.types';
 
 export function test() {
 	return null;
@@ -145,4 +146,10 @@ export function filterByRole(value: any, user: IUserStorage): any {
 			item['subMenu'] = filterByRole(item?.subMenu, user);
 			return item?.role === user?.role || item?.role == '*';
 		});
+}
+
+export function selectRoleName(roleType: number) {
+	if (roleType == RoleType.agent) return RoleNames.Operator;
+	if (roleType == RoleType.supervisor) return RoleNames.Admin;
+	if (roleType == RoleType.admin) return RoleNames.SuperAdmin;
 }
