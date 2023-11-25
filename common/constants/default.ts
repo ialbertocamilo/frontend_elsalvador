@@ -27,3 +27,9 @@ export const RoutesListWithParams = {
 	packages: (value: any) => `/home/packages/${value}`,
 	configuration: (value: any) => `/home/configuration/${value}`,
 };
+
+export const Roles = {
+	agent: 1,
+	supervisor: 2,
+	admin: 3,
+};

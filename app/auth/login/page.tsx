@@ -15,6 +15,9 @@ import showNotification from '../../../components/extras/showNotification';
 import Icon from '../../../components/icon/Icon';
 import Logo from '../../../components/Logo';
 import userStore from '../../../stores/userStore';
+import Select from '../../../components/bootstrap/forms/Select';
+import { arrayToList } from '../../../helpers/helpers';
+import { departmentList, municipalityList } from '../../../common/constants/lists';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
@@ -94,12 +97,13 @@ const Login = () => {
 			lastname: '',
 			profession: '',
 			nationality: '',
-			department: '',
-			municipality: '',
+			department: '1',
+			municipality: '1',
 			address: '',
 			phone: '',
 			email: '',
 			password: '',
+			password2: '',
 		},
 		validate: (values) => {
 			const errors: {
@@ -113,6 +117,7 @@ const Login = () => {
 				phone?: string;
 				email?: string;
 				password?: string;
+				password2?: string;
 			} = {};
 
 			if (!values.name) {
@@ -121,24 +126,6 @@ const Login = () => {
 			if (!values.lastname) {
 				errors.lastname = 'Requerido';
 			}
-			// if (!values.profession) {
-			// 	errors.profession = 'Requerido';
-			// }
-			// if (!values.nationality) {
-			// 	errors.nationality = 'Requerido';
-			// }
-			// if (!values.department) {
-			// 	errors.department = 'Requerido';
-			// }
-			// if (!values.municipality) {
-			// 	errors.municipality = 'Requerido';
-			// }
-			// if (!values.address) {
-			// 	errors.address = 'Requerido';
-			// }
-			// if (!values.phone) {
-			// 	errors.phone = 'Requerido';
-			// }
 			if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email))
 				errors.email = 'Email inválido ejm. john@doe.com';
 			if (!values.email) {
@@ -150,6 +137,12 @@ const Login = () => {
 					errors.phone = 'Escribe un teléfono válido ejm. +1 (123) 456-7890';
 			if (!values.password) {
 				errors.password = 'Requerido';
+			}
+			if (values.password.length < 6) {
+				errors.password = 'El password debe tener al menos 6 carateres.';
+			}
+			if (values.password != values.password2 || !values.password) {
+				errors.password2 = 'Las contraseñas no son iguales.';
 			}
 			return errors;
 		},
@@ -182,7 +175,7 @@ const Login = () => {
 	return (
 		<div className={'bg-primary h-100'}>
 			<ReactNotifications />
-			<div className='row h-100'>
+			<div className='row h-100 overflow-scroll'>
 				<div className='col-xxl-3 col-lg-3 col-12 align-content-center align-self-center justify-content-center text-center'>
 					<Logo height={100} width={200} />
 				</div>
@@ -262,9 +255,6 @@ const Login = () => {
 												<Input
 													autoComplete='profession'
 													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.profession}
-													isTouched={formik1.touched.profession}
 													value={formik1.values.profession}
 													onChange={formik1.handleChange}
 												/>
@@ -278,9 +268,6 @@ const Login = () => {
 												<Input
 													autoComplete='nationality'
 													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.nationality}
-													isTouched={formik1.touched.department}
 													value={formik1.values.nationality}
 													onChange={formik1.handleChange}
 												/>
@@ -291,31 +278,25 @@ const Login = () => {
 												id='department'
 												isFloating
 												label='Departamento'>
-												<Input
-													autoComplete='department'
-													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.department}
-													isTouched={formik1.touched.department}
+												<Select
+													name='department'
 													value={formik1.values.department}
 													onChange={formik1.handleChange}
-												/>
+													list={arrayToList(departmentList)}
+													ariaLabel='department'></Select>
 											</FormGroup>
 										</div>
 										<div className='col-12 my-1'>
 											<FormGroup
-												isFloating
 												id='municipality'
+												isFloating
 												label='Municipio'>
-												<Input
-													autoComplete='municipality'
-													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.municipality}
-													isTouched={formik1.touched.municipality}
+												<Select
+													name='municipality'
 													value={formik1.values.municipality}
 													onChange={formik1.handleChange}
-												/>
+													list={arrayToList(municipalityList)}
+													ariaLabel='municipality'></Select>
 											</FormGroup>
 										</div>
 										<div className='col-12 my-1'>
@@ -323,9 +304,6 @@ const Login = () => {
 												<Input
 													autoComplete='address'
 													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.address}
-													isTouched={formik1.touched.address}
 													value={formik1.values.address}
 													onChange={formik1.handleChange}
 												/>
@@ -336,9 +314,6 @@ const Login = () => {
 												<Input
 													autoComplete='phone'
 													onBlur={formik.handleBlur}
-													isValid={formik1.isValid}
-													invalidFeedback={formik1.errors.phone}
-													isTouched={formik1.touched.phone}
 													value={formik1.values.phone}
 													onChange={formik1.handleChange}
 												/>
@@ -371,6 +346,26 @@ const Login = () => {
 													isTouched={formik1.touched.password}
 													invalidFeedback={formik1.errors.password}
 													value={formik1.values.password}
+													placeholder={'*********'}
+													validFeedback='Se ve bien!'
+													isValid={formik1.isValid}
+													onChange={formik1.handleChange}
+													onBlur={formik1.handleBlur}
+												/>
+											</FormGroup>
+										</div>
+										<div className='col-12 my-1'>
+											<FormGroup
+												isFloating
+												id='password2'
+												name='password2'
+												label='Repetir Contraseña'>
+												<Input
+													type='password'
+													autoComplete='current-password'
+													isTouched={formik1.touched.password2}
+													invalidFeedback={formik1.errors.password2}
+													value={formik1.values.password2}
 													placeholder={'*********'}
 													validFeedback='Se ve bien!'
 													isValid={formik1.isValid}

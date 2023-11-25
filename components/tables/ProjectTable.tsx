@@ -11,19 +11,17 @@ import PaginationButtons, { dataPagination, PER_COUNT } from '../PaginationButto
 import Button from '../bootstrap/Button';
 import Icon from '../icon/Icon';
 import Input from '../bootstrap/forms/Input';
-import useDarkMode from '../../hooks/useDarkMode';
 import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
-import { RoutesList } from '../../common/constants/default';
 import { getItemFromMunicipalityList } from '../../helpers/helpers';
 import { ProjectStatus } from '../../common/constants/lists';
 import { ClientStorage } from '../../common/classes/storage';
 import DataService from '../../services/data/data.service';
+import { RoutesList } from '../../common/constants/default';
+import { Roles } from '../../common/types/role.types';
 
 const ProjectTable = () => {
-	const { darkModeStatus } = useDarkMode();
-
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(PER_COUNT['50']);
 
@@ -54,6 +52,8 @@ const ProjectTable = () => {
 		});
 	}
 
+	const user = ClientStorage.getUser();
+
 	function detectKey(e: any) {
 		if (e.key == 'Enter') findProjects();
 	}
@@ -68,8 +68,6 @@ const ProjectTable = () => {
 	}, []);
 
 	useEffect(() => {}, [perPage]);
-
-	const user = ClientStorage.getUser();
 
 	const Status = ({ status }: { status?: number }) => {
 		if (status == ProjectStatus.inRevision)
@@ -86,21 +84,37 @@ const ProjectTable = () => {
 		findProjects();
 	}
 
-	const ActionSupervisor = ({ project }: { project: any }) => {
+	const ActionSupervisor = ({ project }: { project: ProjectEntity }) => {
+		if (project.status == ProjectStatus.accepted)
+			return <div className='row text-success'>Aceptado</div>;
+		if (project.status == ProjectStatus.denied)
+			return <div className='row text-danger'>Rechazado</div>;
+		if (user?.role == Roles?.supervisor)
+			return (
+				<div className='row'>
+					<Button
+						size='sm'
+						className='text-success '
+						onClick={() => projectEnable(String(project?.id), ProjectStatus.accepted)}>
+						Aprobar
+					</Button>
+					<Button
+						size='sm'
+						className='text-danger'
+						onClick={() => projectEnable(String(project.id), ProjectStatus.denied)}>
+						Rechazar
+					</Button>
+				</div>
+			);
 		return (
-			<div className='row'>
-				<Button
-					size='sm'
-					className='text-success'
-					onClick={() => projectEnable(project.id, ProjectStatus.accepted)}>
-					Aprobar
-				</Button>
-				<Button
-					size='sm'
-					className='text-danger'
-					onClick={() => projectEnable(project.id, ProjectStatus.denied)}>
-					Desaprobar
-				</Button>
+			<div className='row align-self-center'>
+				<span
+					className='text-center'
+					onClick={() => {
+						if (project.id) goToProject(project.id);
+					}}>
+					Ver
+				</span>
 			</div>
 		);
 	};
@@ -125,13 +139,15 @@ const ProjectTable = () => {
 				</SubHeaderLeft>
 				<SubHeaderRight>
 					<SubheaderSeparator />
-					<Button
-						icon='Add'
-						color='primary'
-						isLight
-						onClick={() => goTo(RoutesList.newProject)}>
-						Nuevo proyecto
-					</Button>
+					{user?.role == Roles.agent && (
+						<Button
+							icon='Add'
+							color='primary'
+							isLight
+							onClick={() => goTo(RoutesList.newProject)}>
+							Nuevo proyecto
+						</Button>
+					)}
 				</SubHeaderRight>
 			</SubHeader>
 			<div className='row h-100'>
@@ -141,49 +157,48 @@ const ProjectTable = () => {
 							<table className='table table-modern table-hover'>
 								<thead>
 									<tr>
-										<th className='text-decoration-underline'>
+										<th className=''>
 											Id
 											<Icon size='lg' icon='FilterList' />
 										</th>
-										<th className='text-decoration-underline'>
-											Estado de proyecto{' '}
-										</th>
-										<th className='text-decoration-underline'>
-											Nombre del proyecto
-										</th>
-										<th className='text-decoration-underline'>
-											Nombre del propietario{' '}
-										</th>
-										<th className='text-decoration-underline'>
-											Nombre del Diseñador{' '}
-										</th>
-										<th className='text-decoration-underline'>
-											Director responsable de obra{' '}
-										</th>
-										<th className='text-decoration-underline'>Dirección</th>
-										<th className='text-decoration-underline'>Municipio</th>
-										<th className='text-decoration-underline text-center'>
-											Acciones
-										</th>
-										<td />
+										<th>Estado de proyecto</th>
+										<th>Nombre del proyecto</th>
+										<th>Nombre del propietario</th>
+										<th>Nombre del Diseñador</th>
+										<th>Director responsable de obra</th>
+										<th>Dirección</th>
+										<th>Municipio</th>
+										<th className='text-center'>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
 									{dataPagination(projects, currentPage, perPage)?.map(
 										(i: ProjectEntity) => (
-											<tr key={i.id}>
+											<tr key={i.id} style={{ cursor: 'pointer' }}>
 												<td>{i.id}</td>
 												<td>
 													<Status status={i.status} />
 												</td>
-												<td className='bold h5'>{i.project_name}</td>
-												<td>
+												<td
+													className='bold h5'
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
+													{i.project_name}
+												</td>
+												<td
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
 													<div>{i.owner_name}</div>
 													<small className='text-muted'>
 														Propietario
 													</small>
 												</td>
-												<td>
+												<td
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
 													<div>{i.designer_name}</div>
 													<div>
 														<small className='text-muted'>
@@ -191,13 +206,27 @@ const ProjectTable = () => {
 														</small>
 													</div>
 												</td>
-												<td>
+												<td
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
 													<div>{i.project_director}</div>
+													<div>
+														<small className='text-muted'>
+															Director
+														</small>
+													</div>
 												</td>
-												<td>
+												<td
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
 													<div>{i.address}</div>
 												</td>
-												<td>
+												<td
+													onClick={() => {
+														if (i.id) goToProject(i.id);
+													}}>
 													<div>
 														{getItemFromMunicipalityList(
 															Number(i.municipality) - 1,
@@ -205,16 +234,7 @@ const ProjectTable = () => {
 													</div>
 												</td>
 												<td>
-													<div className='row'>
-														<ActionSupervisor project={i} />
-														<Button
-															className='col text-center'
-															onClick={() => {
-																if (i.id) goToProject(i.id);
-															}}>
-															Ir <Icon icon='ArrowRight'></Icon>
-														</Button>
-													</div>
+													<ActionSupervisor project={i} />
 												</td>
 											</tr>
 										),

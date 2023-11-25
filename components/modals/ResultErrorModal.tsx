@@ -23,24 +23,23 @@ export const ResultErrorModal = ({
 					iguales.
 				</span>
 			</Alert>
-			<div>
+			<div className='text-black-50'>
 				<h4 className='bold'>Detalles</h4>
-				<br />
 				<p>
-					Nombre del propietario:{' '}
+					Nombre del propietario:
 					<span className='bold h5'>
 						{projectEntity?.owner_name} {projectEntity?.owner_lastname}
 					</span>
 				</p>
 				<p>
-					Nombre del diseñador:{' '}
-					<span className='bold h5'>{projectEntity?.designer_name}</span>
+					Nombre del diseñador:
+					<span className='bold h5 text-black-50'>{projectEntity?.designer_name}</span>
 				</p>
 				<p>
-					Director de obra:{' '}
-					<span className='bold h5'>{projectEntity?.project_director}</span>
+					Director de obra:
+					<span className='bold h5 text-black-50'>{projectEntity?.project_director}</span>
 				</p>
-				<span className='text-muted'>
+				<span>
 					El proyecto ha sido rechazado según los parametros registrados en la plataforma.
 				</span>
 			</div>

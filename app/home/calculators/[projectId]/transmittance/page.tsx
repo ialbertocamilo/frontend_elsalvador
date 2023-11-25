@@ -20,6 +20,8 @@ import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
+import { ClientStorage } from '../../../../../common/classes/storage';
+import { RoleType } from '../../../../../common/types/role.types';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -32,6 +34,7 @@ const TransmittancePage = () => {
 	const [dataResult, setDataResult] = useState();
 	const [editorText, setEditorText] = useState('');
 
+	const user = ClientStorage.getUser();
 	const projects = useProjects();
 	const [initialData, setInitialData] = useState<any>({});
 	useEffect(() => {
@@ -113,14 +116,19 @@ const TransmittancePage = () => {
 
 				<Card>
 					<CardFooter>
-						<SaveProjectButton
-							payload={{
-								project_id: params?.projectId || '',
-								payload: { wallName, data, dataResult, editorText },
-								key: keyName,
-							}}
-							type={ButtonTypes.projectData}
-						/>
+						<>
+							{user?.role === RoleType.agent && (
+								<SaveProjectButton
+									payload={{
+										project_id: params?.projectId || '',
+										payload: { wallName, data, dataResult, editorText },
+										key: keyName,
+									}}
+									type={ButtonTypes.projectData}
+								/>
+							)}
+						</>
+
 						<BackToCalculatorsBtn />
 
 						<Button

@@ -35,8 +35,9 @@ const PackagesPage = () => {
 	const [questions, setQuestions] = useState<IQuestion[]>([]);
 	const params = useParams();
 
-	const { projectEntity, totalCalculatedValues, setTotalCalculatedValues, setProjectData } =
-		useProjectData(params?.projectId as string);
+	const { projectEntity, totalCalculatedValues, setProjectData } = useProjectData(
+		params?.projectId as string,
+	);
 	const [globalReadOnly, setGlobalReadOnly] = useState(false);
 	useEffect(() => {
 		Promise.all([
@@ -50,23 +51,23 @@ const PackagesPage = () => {
 					const packages = data[0]?.config as IConfigurationType[];
 					const questions = data[0]?.questions as IQuestion[];
 
-					const activated = questions?.filter((value) => !value.deactivated);
+					const questionsActivated = questions?.filter((value) => !value.deactivated);
+					const packagesActivated = packages?.filter((value) => value.package_status);
 
 					setPackagesSelect(
-						packages?.map((val, index) => {
+						packagesActivated?.map((val, index) => {
 							return {
 								value: index,
 								text: `${val.package_id} - ${val.package_name}`,
 							};
 						}),
 					);
-					setPackages(packages);
-					setQuestions(activated);
+					setPackages(packagesActivated);
+					setQuestions(questionsActivated);
 				}
 				if (data[1]) {
 					const packageFinded = data[1] as ITechnicalSupport;
 					formik.setValues({
-						shades: packageFinded.reportedValue.shades.toString(),
 						cop: packageFinded.reportedValue.cop.toString(),
 						walls_reflectance: packageFinded.reportedValue.wall_reflectance.toString(),
 						roofs_reflectance: packageFinded.reportedValue.roof_reflectance.toString(),
@@ -92,7 +93,6 @@ const PackagesPage = () => {
 	const reportedValues = {
 		walls_reflectance: '',
 		roofs_reflectance: '',
-		shades: '',
 		cop: '',
 	};
 	const formik = useFormik({
@@ -229,41 +229,43 @@ const PackagesPage = () => {
 
 		if (resultQuestions && resultQuestions?.length > 0) return false;
 		return (
-			Number(formik.values.walls_reflectance) === Number(packageInfo?.walls_reflectance) &&
-			Number(formik.values.roofs_reflectance) == Number(packageInfo?.roofs_reflectance) &&
-			Number(formik.values.shades) == Number(packageInfo?.shades) &&
-			Number(formik.values.cop) == Number(packageInfo?.hvac) &&
-			Number(totalCalculatedValues?.roof_u_value) == Number(packageInfo?.roofs_u_value) &&
-			Number(totalCalculatedValues?.wall_u_value) == Number(packageInfo?.walls_u_value) &&
-			Number(totalCalculatedValues?.wall_window_proportion) ==
+			Number(formik.values.walls_reflectance) <= Number(packageInfo?.walls_reflectance) &&
+			Number(formik.values.roofs_reflectance) <= Number(packageInfo?.roofs_reflectance) &&
+			Number(totalCalculatedValues?.shades) <= Number(packageInfo?.shades) &&
+			Number(formik.values.cop) <= Number(packageInfo?.hvac) &&
+			Number(totalCalculatedValues?.roof_u_value) <= Number(packageInfo?.roofs_u_value) &&
+			Number(totalCalculatedValues?.wall_u_value) <= Number(packageInfo?.walls_u_value) &&
+			Number(totalCalculatedValues?.wall_window_proportion) <=
 				Number(packageInfo?.proportion_wall_window) &&
-			Number(totalCalculatedValues?.window_g_value) ==
+			Number(totalCalculatedValues?.window_g_value) <=
 				Number(packageInfo?.shading_coefficient) &&
-			Number(totalCalculatedValues?.window_u_value) == Number(packageInfo?.windows_u_value)
+			Number(totalCalculatedValues?.window_u_value) <= Number(packageInfo?.windows_u_value)
 		);
 	}
 
 	function verifyIfComplies() {
 		setComplies({
 			wall_window_proportion:
-				Number(totalCalculatedValues?.wall_window_proportion) ===
+				Number(totalCalculatedValues?.wall_window_proportion) <=
 				Number(packageInfo?.proportion_wall_window),
 			wall_u_value:
-				Number(totalCalculatedValues?.wall_u_value) == Number(packageInfo?.walls_u_value),
-			wall_reflectance:
-				Number(formik.values.walls_reflectance) === Number(packageInfo?.walls_reflectance),
+				Number(totalCalculatedValues?.wall_u_value) <= Number(packageInfo?.walls_u_value),
+			wall_reflectance: formik.values.walls_reflectance
+				? Number(formik.values.walls_reflectance) <= Number(packageInfo?.walls_reflectance)
+				: false,
 			roof_u_value:
-				Number(totalCalculatedValues?.roof_u_value) == Number(packageInfo?.roofs_u_value),
-			roof_reflectance:
-				Number(formik.values.roofs_reflectance) == Number(packageInfo?.roofs_reflectance),
+				Number(totalCalculatedValues?.roof_u_value) <= Number(packageInfo?.roofs_u_value),
+			roof_reflectance: formik.values.roofs_reflectance
+				? Number(formik.values.roofs_reflectance) <= Number(packageInfo?.roofs_reflectance)
+				: false,
 			window_u_value:
-				Number(totalCalculatedValues?.window_u_value) ==
+				Number(totalCalculatedValues?.window_u_value) <=
 				Number(packageInfo?.windows_u_value),
 			window_g_value:
-				Number(totalCalculatedValues?.window_g_value) ==
+				Number(totalCalculatedValues?.window_g_value) <=
 				Number(packageInfo?.shading_coefficient),
-			shades: Number(formik.values.shades) == Number(packageInfo?.shades),
-			cop: Number(formik.values.cop) == Number(packageInfo?.hvac),
+			shades: Number(totalCalculatedValues?.shades) <= Number(packageInfo?.shades),
+			cop: formik.values.cop ? Number(formik.values.cop) <= Number(packageInfo?.hvac) : false,
 		});
 		setCanRequestTechnicalReport(checkResults());
 	}
@@ -296,7 +298,7 @@ const PackagesPage = () => {
 				roof_reflectance: Number(formik.values?.roofs_reflectance),
 				window_u_value: Number(totalCalculatedValues?.window_u_value),
 				window_g_value: Number(totalCalculatedValues?.window_g_value),
-				shades: Number(formik.values?.shades),
+				shades: Number(totalCalculatedValues?.shades),
 				cop: Number(formik.values?.cop),
 			},
 			meets: complies,
@@ -355,19 +357,19 @@ const PackagesPage = () => {
 		if (projectStatus === ProjectStatus.accepted)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					El proyecto ha sido aprobado ✔...
+					✔ El proyecto ha sido aprobado ...
 				</div>
 			);
 		else if (projectStatus === ProjectStatus.denied)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					El proyecto ya sido rechazado ❌...
+					❌ El proyecto ya sido rechazado ...
 				</div>
 			);
 		else if (projectStatus === ProjectStatus.inRevision)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					<Spinner color={'danger'} inButton /> El proyecto está siendo evaluado ...
+					ℹ️ El proyecto está en revisión ...
 				</div>
 			);
 
@@ -383,10 +385,9 @@ const PackagesPage = () => {
 				<Button
 					color='storybook'
 					icon='Analytics'
-					hidden={globalReadOnly}
+					hidden={!canRequestTechnicalReport}
 					className='ms-2'
-					onClick={requestTechnicalSupport}
-					isDisable={!canRequestTechnicalReport}>
+					onClick={requestTechnicalSupport}>
 					Solicitar Informe Técnico
 				</Button>
 			</div>
@@ -402,7 +403,7 @@ const PackagesPage = () => {
 							<CardBody>
 								<div className='d-flex justify-content-between'>
 									<h4 className='fw-bold'>
-										Paquetes de medidas EE para oficinas
+										Paquetes de Medidas de Eficiencias Energéticas
 									</h4>
 									<div className='col-6 text-end'>
 										<GoProjectButton />
@@ -457,7 +458,7 @@ const PackagesPage = () => {
 												type='text'
 												className='text-center bg-info-subtle'
 												value={getItemFromMunicipalityList(
-													Number(projectEntity?.municipality) - 1,
+													Number(projectEntity?.municipality),
 												)}
 											/>
 										</FormGroup>
@@ -501,90 +502,96 @@ const PackagesPage = () => {
 									<table>
 										<thead>
 											<tr>
-												<th className='text-center'>Concepto</th>
+												<th className='text-center '>Concepto</th>
+												<th className='text-center px-2'>Valor meta</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td className='p-4'>Proporcion muro ventana</td>
-											</tr>
-											<tr>
-												<td className='p-4'>Valor U de muro (W/m2K)</td>
-											</tr>
-											<tr>
-												<td className='p-4'>
-													Reflectancia Muros (%) coeficiente absortividad
+												<td className='p-4 text-start'>
+													Proporcion muro ventana
 												</td>
-											</tr>
-											<tr>
-												<td className='p-4'>Valor U de techo (W/m2K)</td>
-											</tr>
-											<tr>
-												<td className='p-4'>
-													Reflectancia Techos (%) coeficiente absortividad
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4'>Valor U de ventana (W/m2K)</td>
-											</tr>
-											<tr>
-												<td className='p-4'>Valor g de ventana</td>
-											</tr>
-											<tr>
-												<td className='p-4'>
-													Sombras (Ventanas exteriores)
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4'>Aire acondicionado COP</td>
-											</tr>
-										</tbody>
-									</table>
-									<table>
-										<thead>
-											<tr>
-												<th className='text-center px-2'>Valor meta</th>
-											</tr>
-										</thead>
-										<tbody className='text-center bold h5'>
-											<tr>
-												<td>
+												<td className='h5 text-success fw-bold'>
 													{packageInfo?.proportion_wall_window
 														? packageInfo?.proportion_wall_window + '%'
 														: '-'}
 												</td>
 											</tr>
 											<tr>
-												<td>{packageInfo?.walls_u_value || '-'}</td>
+												<td className='p-4 text-start'>
+													Valor U de muro (W/m2K)
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.walls_u_value || '-'}
+												</td>
 											</tr>
 											<tr>
-												<td>
+												<td className='p-4 text-start'>
+													Reflectancia Muros (%) coeficiente absortividad
+												</td>
+
+												<td className='h5 text-success fw-bold'>
 													{packageInfo?.walls_reflectance
 														? packageInfo?.walls_reflectance + '%'
 														: '-'}
 												</td>
 											</tr>
 											<tr>
-												<td>{packageInfo?.roofs_u_value || '-'}</td>
+												<td className='p-4 text-start'>
+													Valor U de techo (W/m2K)
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.roofs_u_value || '-'}
+												</td>
 											</tr>
 											<tr>
-												<td>
+												<td className='p-4 text-start'>
+													Reflectancia Techos (%) coeficiente absortividad
+												</td>
+
+												<td className='h5 text-success fw-bold'>
 													{packageInfo?.roofs_reflectance
 														? packageInfo?.roofs_reflectance + '%'
 														: '-'}
 												</td>
 											</tr>
 											<tr>
-												<td>{packageInfo?.windows_u_value || '-'}</td>
+												<td className='p-4 text-start'>
+													Valor U de ventana (W/m2K)
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.windows_u_value || '-'}
+												</td>
 											</tr>
 											<tr>
-												<td>{packageInfo?.shading_coefficient || '-'}</td>
+												<td className='p-4 text-start'>
+													Valor g de ventana
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.shading_coefficient || '-'}
+												</td>
 											</tr>
 											<tr>
-												<td>{packageInfo?.shades || '-'}</td>
+												<td className='p-4 text-start'>
+													Sombras (Ventanas exteriores)
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.shades || '-'}
+												</td>
 											</tr>
-											<tr className='p-4'>
-												<td>{packageInfo?.hvac || '-'}</td>
+											<tr>
+												<td className='p-4 text-start'>
+													Aire acondicionado COP
+												</td>
+
+												<td className='h5 text-success fw-bold'>
+													{packageInfo?.hvac || '-'}
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -607,7 +614,9 @@ const PackagesPage = () => {
 															value={
 																totalCalculatedValues?.wall_window_proportion
 															}></Input>
-														<Button className='bg-light'>%</Button>
+														<Button className='bg-dark-subtle'>
+															%
+														</Button>
 													</InputGroup>
 												</td>
 											</tr>
@@ -635,7 +644,9 @@ const PackagesPage = () => {
 															value={
 																formik.values.walls_reflectance
 															}></Input>
-														<Button className='bg-light'>%</Button>
+														<Button className='bg-dark-subtle' isLight>
+															%
+														</Button>
 													</InputGroup>
 												</td>
 											</tr>
@@ -663,7 +674,9 @@ const PackagesPage = () => {
 															value={
 																formik.values.roofs_reflectance
 															}></Input>
-														<Button className='bg-light'>%</Button>
+														<Button className='bg-dark-subtle'>
+															%
+														</Button>
 													</InputGroup>
 												</td>
 											</tr>
@@ -693,11 +706,13 @@ const PackagesPage = () => {
 												<td width='150'>
 													<Input
 														type='number'
-														className='text-center'
+														className='text-center bg-info-subtle'
 														name='shades'
-														readOnly={globalReadOnly}
+														readOnly
 														onChange={formik.handleChange}
-														value={formik.values.shades}></Input>
+														value={
+															totalCalculatedValues?.shades
+														}></Input>
 												</td>
 											</tr>
 											<tr className='p-4'>
@@ -968,6 +983,7 @@ const PackagesPage = () => {
 													<ToggleYesNoButton
 														blocked={globalReadOnly}
 														keyName={key}
+														forceYes={value?.response}
 														emitValue={(index: any, val: any) =>
 															saveQuestionsResponse(index, val)
 														}

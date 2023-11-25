@@ -22,6 +22,8 @@ import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
+import { RoleType } from '../../../../../common/types/role.types';
+import { ClientStorage } from '../../../../../common/classes/storage';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -29,6 +31,7 @@ const WindowPage = () => {
 	const router = useRouter();
 	const projects = useProjects();
 
+	const user = ClientStorage.getUser();
 	const [initialData, setInitialData] = useState<any>({});
 	useEffect(() => {
 		projects
@@ -281,13 +284,17 @@ const WindowPage = () => {
 
 				<Card>
 					<CardFooter>
-						<SaveProjectButton
-							type={ButtonTypes.projectData}
-							payload={{
-								payload: { ...formik.values, customEditorText },
-								project_id: params?.projectId as string,
-								key: keyName,
-							}}></SaveProjectButton>
+						<>
+							{user?.role === RoleType.agent && (
+								<SaveProjectButton
+									type={ButtonTypes.projectData}
+									payload={{
+										payload: { ...formik.values, customEditorText },
+										project_id: params?.projectId as string,
+										key: keyName,
+									}}></SaveProjectButton>
+							)}
+						</>
 
 						<BackToCalculatorsBtn />
 						<Button

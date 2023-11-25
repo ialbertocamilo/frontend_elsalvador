@@ -1,10 +1,8 @@
 'use client';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
-import Card, { CardBody, CardFooter } from '../../../components/bootstrap/Card';
+import Card, { CardBody } from '../../../components/bootstrap/Card';
 import React, { useEffect, useState } from 'react';
-import { ConfigurationTable } from '../../../components/tables/ConfigurationTable';
-import { ButtonTypes, SaveProjectButton } from '../../../components/buttons/SaveProjectButton';
 import { IConfigurationType } from '../../../common/types/configuration.types';
 import DataService from '../../../services/data/data.service';
 import { IQuestion } from '../../../common/types/question.types';
@@ -88,32 +86,16 @@ const ConfigurationPage = () => {
 					</CardBody>
 				</Card>
 				<div className='row g-3 h-100'>
-					<div className='col '>
+					<div className='col-6'>
 						<CreatePackagesConfiguration values={packages} emitValue={setValues} />
 					</div>
-					<div className='col'>
+					<div className='col-6'>
 						<SelectQuestionsConfiguration
 							questions={questions}
 							emitValue={setQuestions}
 						/>
 					</div>
 				</div>
-				{/*<Card>*/}
-				{/*	<CardBody className='d-flex row-cols-auto overflow-scroll align-self-center'>*/}
-				{/*		<ConfigurationTable emitValue={setValues} />*/}
-				{/*	</CardBody>*/}
-				{/*</Card>*/}
-				{/*<Card>*/}
-				{/*	<CardFooter>*/}
-				{/*		<SaveProjectButton*/}
-				{/*			payload={{*/}
-				{/*				payload: { config: values, questions },*/}
-				{/*				key: keyName,*/}
-				{/*			}}*/}
-				{/*			type={ButtonTypes.packageConfig}*/}
-				{/*		/>*/}
-				{/*	</CardFooter>*/}
-				{/*</Card>*/}
 			</Page>
 		</PageWrapper>
 	);

@@ -50,12 +50,14 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<div ref={ref} className={classNames('todo-item')} {...props}>
 				<div className='todo-content'>
-					<div
-						className={classNames('todo-title', {
-							'text-decoration-line-through': list[index].deactivated,
-						})}>
-						{itemData.title}
-					</div>
+					<Popovers trigger='hover' title={itemData.title}>
+						<div
+							className={classNames('todo-title', {
+								'text-decoration-line-through': list[index].deactivated,
+							})}>
+							{itemData.title}
+						</div>
+					</Popovers>
 				</div>
 				<div className='todo-extras'>
 					<span className='me-2'>
@@ -66,9 +68,7 @@ export const TodoItem = forwardRef<HTMLDivElement, ITodoItemProps>(
 							onClick={() => toggleModal(index)}
 							icon='Edit'></Button>
 					</span>
-					<Popovers
-						desc={'Indicar si la pregunta se evaluará como: Si o No'}
-						trigger='hover'>
+					<Popovers desc={'VALOR DE LA RESPUESTA CORRECTA'} trigger='hover'>
 						<span className='me-2'>
 							<ToggleYesNoButton
 								keyName={index}

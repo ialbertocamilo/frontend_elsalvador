@@ -20,12 +20,17 @@ import { arrayToList } from '../../../../helpers/helpers';
 import { departmentList, municipalityList } from '../../../../common/constants/lists';
 import { NextButton } from '../../../../components/buttons/NextButton';
 import Icon from '../../../../components/icon/Icon';
+import { ClientStorage } from '../../../../common/classes/storage';
+import { RoleType } from '../../../../common/types/role.types';
 
 const GetProject = () => {
 	const param = useParams();
 	const router = useRouter();
 	const projects = useProjects();
 
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+
+	const user = ClientStorage.getUser();
 	const [project, setProject] = useState<IProjectFormType>({});
 	useEffect(() => {
 		const projectId = param?.projectId as string;
@@ -37,6 +42,9 @@ const GetProject = () => {
 		});
 	}, [param?.projectId]);
 
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
 		initialValues: project,
@@ -114,6 +122,7 @@ const GetProject = () => {
 											id='ownerName'
 											name='ownerName'
 											type='text'
+											disabled={globalReadonly}
 											invalidFeedback={formik.errors?.ownerName}
 											value={formik.values.ownerName}
 											onChange={formik.handleChange}
@@ -133,6 +142,7 @@ const GetProject = () => {
 										<Input
 											name='ownerLastName'
 											type='text'
+											disabled={globalReadonly}
 											invalidFeedback={formik.errors?.ownerLastName}
 											value={formik.values.ownerLastName}
 											onChange={formik.handleChange}
@@ -150,6 +160,7 @@ const GetProject = () => {
 										<Input
 											type='text'
 											name='profession'
+											disabled={globalReadonly}
 											value={formik.values.profession}
 											onChange={formik.handleChange}
 										/>
@@ -165,6 +176,7 @@ const GetProject = () => {
 										<Label>Nacionalidad</Label>
 										<Input
 											type='text'
+											disabled={globalReadonly}
 											name='nationality'
 											value={formik.values.nationality}
 											onChange={formik.handleChange}
@@ -181,6 +193,7 @@ const GetProject = () => {
 										<Label>Director Responsable de la Obra</Label>
 										<Input
 											type='text'
+											disabled={globalReadonly}
 											name='directorName'
 											value={formik.values.directorName}
 											onChange={formik.handleChange}
@@ -200,6 +213,7 @@ const GetProject = () => {
 										<Input
 											type='text'
 											name='phone'
+											disabled={globalReadonly}
 											value={formik.values.phone}
 											onChange={formik.handleChange}
 										/>
@@ -216,6 +230,7 @@ const GetProject = () => {
 										<Input
 											type='text'
 											name='email'
+											disabled={globalReadonly}
 											value={formik.values.email}
 											onChange={formik.handleChange}
 										/>
@@ -233,6 +248,7 @@ const GetProject = () => {
 										<Label>Nombre del Proyecto</Label>
 										<Input
 											type='text'
+											disabled={globalReadonly}
 											name='projectName'
 											value={formik.values.projectName}
 											onChange={formik.handleChange}
@@ -250,6 +266,7 @@ const GetProject = () => {
 										<Input
 											type='text'
 											name='designerName'
+											disabled={globalReadonly}
 											value={formik.values.designerName}
 											onChange={formik.handleChange}
 										/>
@@ -274,6 +291,7 @@ const GetProject = () => {
 											<Label>Tipo de edificación</Label>
 											<div className='col-auto'>
 												<Button
+													isDisable={globalReadonly}
 													onClick={() => setButtonActive(true)}
 													className={classNames(
 														'me-3 ',
@@ -286,6 +304,7 @@ const GetProject = () => {
 											</div>
 											<div className='col-auto'>
 												<Button
+													isDisable={globalReadonly}
 													onClick={() => setButtonActive(false)}
 													className={classNames(
 														'me-3 ',
@@ -306,6 +325,7 @@ const GetProject = () => {
 											className='my-2'
 											name='levelsNumber'
 											type='number'
+											readOnly={globalReadonly}
 											value={formik.values.levelsNumber}
 											placeholder='Número de niveles'
 											onChange={formik.handleChange}></Input>
@@ -315,6 +335,7 @@ const GetProject = () => {
 										<Input
 											className='my-2'
 											name='offices'
+											readOnly={globalReadonly}
 											type='number'
 											value={formik.values.offices}
 											placeholder='Número de oficinas por nivel'
@@ -325,6 +346,7 @@ const GetProject = () => {
 										<Input
 											className='my-2'
 											name='surface'
+											readOnly={globalReadonly}
 											type='number'
 											value={formik.values.surface}
 											placeholder='Superficie construida m2'
@@ -342,6 +364,7 @@ const GetProject = () => {
 									<Label>Dirección</Label>
 									<Input
 										type='text'
+										readOnly={globalReadonly}
 										name='address'
 										value={formik.values.address}
 										onChange={formik.handleChange}
@@ -358,6 +381,7 @@ const GetProject = () => {
 									<Label>Departamento</Label>
 									<Select
 										name='department'
+										disabled={globalReadonly}
 										value={formik.values.department}
 										onChange={formik.handleChange}
 										list={arrayToList(departmentList)}
@@ -374,6 +398,7 @@ const GetProject = () => {
 									<Label>Municipio</Label>
 									<Select
 										name='municipality'
+										disabled={globalReadonly}
 										value={formik.values.municipality}
 										onChange={formik.handleChange}
 										list={arrayToList(municipalityList)}
@@ -398,6 +423,7 @@ const GetProject = () => {
 									<Input
 										type='text'
 										name='energyAdvisor'
+										disabled={globalReadonly}
 										value={formik.values.energyAdvisor}
 										onChange={formik.handleChange}
 									/>
@@ -409,17 +435,19 @@ const GetProject = () => {
 					<div className='col-xxl-12'>
 						<Card>
 							<CardFooter>
-								<div className='row '>
-									<Button
-										className='col-auto mx-2'
-										color='info'
-										isLight
-										type='submit'
-										onClick={formik.handleSubmit}
-										icon='Save'>
-										Guardar datos
-									</Button>
-								</div>
+								<>
+									{user?.role === RoleType.agent && (
+										<Button
+											className='col-auto mx-2'
+											color='info'
+											isLight
+											type='submit'
+											onClick={formik.handleSubmit}
+											icon='Save'>
+											Guardar datos
+										</Button>
+									)}
+								</>
 								<Button
 									className='col-auto  mx-2'
 									color='storybook'

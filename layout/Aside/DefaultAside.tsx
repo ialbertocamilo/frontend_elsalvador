@@ -8,9 +8,6 @@ import ThemeContext from '../../context/themeContext';
 import useDarkMode from '../../hooks/useDarkMode';
 import { GetStaticProps } from 'next';
 import Aside, { AsideBody, AsideFoot, AsideHead } from './Aside';
-import Button from '../../components/bootstrap/Button';
-import { types } from 'sass';
-import Image from 'next/image';
 
 const DefaultAside = () => {
 	const { asideStatus, setAsideStatus } = useContext(ThemeContext);
@@ -24,7 +21,6 @@ const DefaultAside = () => {
 	const { t } = useTranslation(['common', 'menu']);
 
 	const { darkModeStatus } = useDarkMode();
-
 	return (
 		<Aside>
 			<AsideHead>

@@ -2,6 +2,8 @@ import UploadFileBtn from '../buttons/UploadFileBtn';
 import { DownloadFileBtn } from '../buttons/DownloadFileBtn';
 import React, { useEffect, useState } from 'react';
 import { useProjects } from '../../services/project/project.service';
+import { ClientStorage } from '../../common/classes/storage';
+import { RoleType } from '../../common/types/role.types';
 
 interface FileUploaderProps {
 	keyName: string;
@@ -24,6 +26,7 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	const [hasDownload, setHasDownload] = useState(false);
 	const [downloadUrl, setDownloadUrl] = useState('');
 
+	const user = ClientStorage.getUser();
 	const [fileName, setFileName] = useState('');
 	useEffect(() => {
 		getFiles(projectId, keyName).then((data: []) => {
@@ -40,17 +43,20 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	}, []);
 	return (
 		<>
-			<UploadFileBtn
-				projectId={projectId}
-				keyName={keyName}
-				checkUpload={(check: { file_name: string; original_url: string }) => {
-					if (check) {
-						setHasDownload(true);
-						setDownloadUrl(check.original_url);
-						setFileName(check.file_name);
-					}
-				}}
-			/>
+			{user?.role == RoleType.agent && (
+				<UploadFileBtn
+					projectId={projectId}
+					keyName={keyName}
+					checkUpload={(check: { file_name: string; original_url: string }) => {
+						if (check) {
+							setHasDownload(true);
+							setDownloadUrl(check.original_url);
+							setFileName(check.file_name);
+						}
+					}}
+				/>
+			)}
+
 			<br />
 			{hasDownload && <DownloadFileBtn urlToFile={downloadUrl} fileName={fileName} />}
 		</>

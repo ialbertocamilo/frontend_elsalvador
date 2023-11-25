@@ -1,4 +1,5 @@
-import { municipalityList } from '../common/constants/lists';
+import { departmentList, municipalityList } from '../common/constants/lists';
+import { IUserStorage } from '../common/types/user.types';
 
 export function test() {
 	return null;
@@ -130,6 +131,18 @@ export function arrayToList(arr: string[]) {
 	});
 }
 
-export function getItemFromMunicipalityList(municipalityIndex: number) {
-	return municipalityList[municipalityIndex];
+export function getItemFromMunicipalityList(index: number) {
+	return municipalityList[index - 1];
+}
+
+export function getItemFromDepartmentList(index: number) {
+	return departmentList[index - 1];
+}
+
+export function filterByRole(value: any, user: IUserStorage): any {
+	if (value)
+		return Object.values(value).filter((item: any) => {
+			item['subMenu'] = filterByRole(item?.subMenu, user);
+			return item?.role === user?.role || item?.role == '*';
+		});
 }

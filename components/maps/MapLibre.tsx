@@ -9,6 +9,8 @@ import { useGeocodingService } from '../../services/geocoding/geocoding.service'
 import { useParams, useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
 import { RoutesListWithParams } from '../../common/constants/default';
+import { RoleType } from '../../common/types/role.types';
+import { ClientStorage } from '../../common/classes/storage';
 
 const keyName = 'geoinformation';
 
@@ -175,6 +177,7 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		);
 	}, []);
 
+	const user = ClientStorage.getUser();
 	const [lastMarker, setLastMarker] = useState<Marker | null>(null);
 
 	function addMarker(coord: LngLatLike, map: Map) {
@@ -217,9 +220,15 @@ export const MapLibre = ({ location, locationInfo, geoJson }: MapLibreProps) => 
 		<div>
 			<div id='map' className={'mb-4'}></div>
 
-			<Button color={'info'} icon={'GpsFixed'} className='me-2' onClick={activateSelectMode}>
-				Seleccionar ubicación
-			</Button>
+			{user?.role === RoleType.agent && (
+				<Button
+					color={'info'}
+					icon={'GpsFixed'}
+					className='me-2'
+					onClick={activateSelectMode}>
+					Seleccionar ubicación
+				</Button>
+			)}
 		</div>
 	);
 };

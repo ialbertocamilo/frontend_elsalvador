@@ -18,10 +18,11 @@ import ThemeContext from '../../context/themeContext';
 import Collapse from '../../components/bootstrap/Collapse';
 import useDarkMode from '../../hooks/useDarkMode';
 import { TIcons } from '../../type/icons-type';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
-import { pathRetouch } from '../../helpers/helpers';
+import { filterByRole, pathRetouch } from '../../helpers/helpers';
+import { ClientStorage } from '../../common/classes/storage';
 
 interface IListProps extends HTMLAttributes<HTMLUListElement> {
 	id?: string;
@@ -408,6 +409,11 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 
 		const { t } = useTranslation('menu');
 
+		const user = ClientStorage.getUser();
+		let menuFiltered;
+		if (user) menuFiltered = filterByRole(menu, user);
+		else menuFiltered = menu;
+
 		function fillMenu(
 			data:
 				| {
@@ -471,7 +477,7 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<nav ref={ref} aria-label={id} className={className} {...props}>
 				<List id={id} horizontal={horizontal}>
-					{fillMenu(menu, id, id, horizontal, undefined)}
+					{fillMenu(menuFiltered, id, id, horizontal, undefined)}
 				</List>
 			</nav>
 		);
@@ -487,6 +493,7 @@ Navigation.propTypes = {
 		path: PropTypes.string,
 		icon: PropTypes.string,
 		isDisable: PropTypes.bool,
+		role: PropTypes.string,
 		subMenu: PropTypes.arrayOf(
 			PropTypes.shape({
 				id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -494,9 +501,10 @@ Navigation.propTypes = {
 				path: PropTypes.string,
 				icon: PropTypes.string,
 				isDisable: PropTypes.bool,
+				role: PropTypes.string,
 			}),
 		),
-	}).isRequired,
+	}),
 	id: PropTypes.string.isRequired,
 	className: PropTypes.string,
 };

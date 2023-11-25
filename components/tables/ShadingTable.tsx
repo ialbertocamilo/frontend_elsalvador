@@ -32,10 +32,10 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 	];
 
 	const RowIsX = (data: string) => {
-		if (data === 'x')
+		if (data === '')
 			return (
 				<Input
-					className={classNames(data == 'x' ? 'bold bg-info-subtle' : '', 'text-center')}
+					className={classNames(data == '' ? 'bold bg-info-subtle' : '', 'text-center')}
 					readOnly></Input>
 			);
 
@@ -111,9 +111,10 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 interface ShadingProps {
 	setData?: Function;
 	data?: any;
+	setResult?: Function;
 }
 
-export const ShadingTable = ({ setData, data }: ShadingProps) => {
+export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 	const initialValueObj = {
 		column1: '0',
 		column2: '0',
@@ -200,9 +201,10 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 	}
 
 	function manageOperations() {
+		let newRows: any[] = [];
 		for (const rowKey in row) {
 			if (row[rowKey]['column3'] && row[rowKey]['column5']) {
-				const newRows = [...row];
+				newRows = [...row];
 				let resultType = 'result1';
 				let number1 = Number(row[rowKey]['column3']);
 				let number2 = Number(row[rowKey]['column5']);
@@ -210,22 +212,22 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 					newRows[rowKey]['column2'] //Verificar tipo de sombra horizontal, vertical, combinada
 				) {
 					case '0': // Horizontal
-						newRows[rowKey]['result2'] = 'x';
-						newRows[rowKey]['result3'] = 'x';
+						newRows[rowKey]['result2'] = '';
+						newRows[rowKey]['result3'] = '';
 						resultType = 'result1';
 						number1 = Number(row[rowKey]['column3']);
 						number2 = Number(row[rowKey]['column5']);
 						break;
 					case '1': // Vertical
-						newRows[rowKey]['result1'] = 'x';
-						newRows[rowKey]['result3'] = 'x';
+						newRows[rowKey]['result1'] = '';
+						newRows[rowKey]['result3'] = '';
 						resultType = 'result2';
 						number1 = Number(row[rowKey]['column4']);
 						number2 = Number(row[rowKey]['column6']);
 						break;
 					case '2': // Combinada
-						newRows[rowKey]['result1'] = 'x';
-						newRows[rowKey]['result2'] = 'x';
+						newRows[rowKey]['result1'] = '';
+						newRows[rowKey]['result2'] = '';
 						resultType = 'result3';
 						number1 = Number(row[rowKey]['column3']) + Number(row[rowKey]['column4']);
 						number2 = Number(row[rowKey]['column5']) + Number(row[rowKey]['column6']);
@@ -237,6 +239,7 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 				setRow(newRows);
 			}
 		}
+		calculateAverage(newRows);
 	}
 
 	useEffect(() => {
@@ -259,11 +262,22 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 				column4: '',
 				column5: '',
 				column6: '',
-				result1: 'x',
-				result2: 'x',
-				result3: 'x',
+				result1: '',
+				result2: '',
+				result3: '',
 			},
 		]);
+	}
+
+	function calculateAverage(data: any[]) {
+		let sum = 0;
+		data.forEach(
+			(value) =>
+				(sum += Number(value.result1) + Number(value.result2) + Number(value.result3)),
+		);
+		const result = (sum / data.length).toFixed(2).toString();
+		setAverageResult(result);
+		if (setResult) setResult(result);
 	}
 
 	function handleDelete(id: number) {
@@ -274,6 +288,7 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 		setRow(result);
 	}
 
+	const [averageResult, setAverageResult] = useState('');
 	return (
 		<>
 			<div className='m-2 my-4'>
@@ -305,6 +320,18 @@ export const ShadingTable = ({ setData, data }: ShadingProps) => {
 								handleInputChange(index, column, val)
 							}></Row>
 					))}
+					<tr>
+						<th className='p-2'>
+							<FormGroup isFloating label='Promedio de resultados'>
+								<Input
+									type='number'
+									readOnly
+									className='bg-info-subtle'
+									value={averageResult}
+									onChange={(e: any) => setAverageResult(e.target.value)}></Input>
+							</FormGroup>
+						</th>
+					</tr>
 				</tbody>
 			</table>
 		</>

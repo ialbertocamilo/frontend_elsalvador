@@ -1,3 +1,6 @@
+import { Roles } from './default';
+import { filterByRole } from '../../helpers/helpers';
+
 export const pagesMenu = {
 	// location: {
 	// 	id: 'Location',
@@ -8,7 +11,7 @@ export const pagesMenu = {
 	projects: {
 		id: 'Projects',
 		text: 'Proyectos',
-		path: 'home',
+		path: 'home/projects',
 		icon: 'LibraryBooks',
 		subMenu: {
 			projectList: {
@@ -16,32 +19,45 @@ export const pagesMenu = {
 				text: 'Lista de proyectos',
 				path: 'home/projects',
 				icon: 'LibraryBooks',
+				role: '*',
 			},
 			newProject: {
 				id: 'new-project',
 				text: 'Nuevo proyecto',
 				path: 'home/projects/new',
 				icon: 'Add',
+				role: Roles.agent,
 			},
 		},
+		role: '*',
 	},
 	calc: {
 		id: 'Calculator',
 		text: 'Calculadoras',
 		path: 'home/calculators',
 		icon: 'ConfirmationNumber',
+		role: '*',
 	},
 	config: {
 		id: 'Configuration',
 		text: 'Configuración',
 		path: 'home/configuration',
 		icon: 'Settings',
+		role: Roles.supervisor,
 	},
 	dashboard: {
 		id: 'Dashboard',
 		text: 'Dashboard',
 		path: 'home/dashboard',
 		icon: 'Dashboard',
+		role: Roles.supervisor,
+	},
+	manageUsers: {
+		id: 'Access',
+		text: 'Control de accesos',
+		path: 'home/access',
+		icon: 'Approval',
+		role: Roles.supervisor,
 	},
 };
 
