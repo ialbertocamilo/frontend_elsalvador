@@ -22,6 +22,7 @@ import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
+import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -36,11 +37,8 @@ const TransmittancePage = () => {
 
 	const projects = useProjects();
 	const [initialData, setInitialData] = useState<any>({});
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	const user = ClientStorage.getUser();
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
+
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	useEffect(() => {
 		projects
 			.getProjectData({ project_id: params?.projectId as string, key: keyName })
@@ -89,6 +87,7 @@ const TransmittancePage = () => {
 									setData(e);
 								}}
 								data={data}
+								readOnly={globalReadonly}
 							/>
 						</CardBody>
 					</Card>
@@ -106,6 +105,7 @@ const TransmittancePage = () => {
 				<Card>
 					<CardBody>
 						<CustomEditor
+							readOnly={globalReadonly}
 							placeholder='Detalle muro tipo'
 							initialText={editorText}
 							setText={(e: string) => {
@@ -118,7 +118,7 @@ const TransmittancePage = () => {
 				<Card>
 					<CardFooter>
 						<>
-							{user?.role === RoleType.agent && (
+							{!globalReadonly && (
 								<SaveProjectButton
 									payload={{
 										project_id: params?.projectId || '',

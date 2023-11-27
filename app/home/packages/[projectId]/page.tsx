@@ -25,6 +25,7 @@ import { RoutesList } from '../../../../common/constants/default';
 import Spinner from '../../../../components/bootstrap/Spinner';
 import { keyList, ProjectStatus } from '../../../../common/constants/lists';
 import { IQuestion } from '../../../../common/types/question.types';
+import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
 
 const keyName = keyList.package;
 const PackagesPage = () => {
@@ -38,7 +39,8 @@ const PackagesPage = () => {
 	const { projectEntity, totalCalculatedValues, setProjectData } = useProjectData(
 		params?.projectId as string,
 	);
-	const [globalReadOnly, setGlobalReadOnly] = useState(false);
+
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	useEffect(() => {
 		Promise.all([
 			DataService.getPackagesConfig(),
@@ -76,10 +78,6 @@ const PackagesPage = () => {
 					if (packageFinded?.questions) setQuestions(packageFinded?.questions);
 				}
 				if (data[2]) {
-					if (data[2] === ProjectStatus.accepted) setGlobalReadOnly(true);
-					else if (data[2] === ProjectStatus.denied) setGlobalReadOnly(true);
-					else if (data[2] === ProjectStatus.inProgress) setGlobalReadOnly(false);
-					else if (data[2] === ProjectStatus.inRevision) setGlobalReadOnly(true);
 					setProjectStatus(data[2]);
 				}
 			}
@@ -225,8 +223,9 @@ const PackagesPage = () => {
 	}
 
 	function checkResults() {
-		const resultQuestions = questionsResponse?.filter((val) => val.value !== val.response);
-
+		const resultQuestions = questionsResponse?.filter(
+			(val) => Boolean(val?.value) != Boolean(val.response),
+		);
 		if (resultQuestions && resultQuestions?.length > 0) return false;
 		return (
 			Number(formik.values.walls_reflectance) <= Number(packageInfo?.walls_reflectance) &&
@@ -267,7 +266,7 @@ const PackagesPage = () => {
 			shades: Number(totalCalculatedValues?.shades) <= Number(packageInfo?.shades),
 			cop: formik.values.cop ? Number(formik.values.cop) <= Number(packageInfo?.hvac) : false,
 		});
-		setCanRequestTechnicalReport(checkResults());
+		setCanRequestTechnicalReport(false);
 	}
 
 	const [technicalSupportModal, setTechnicalSupportModal] = useState(false);
@@ -332,6 +331,7 @@ const PackagesPage = () => {
 					return val;
 				});
 				setQuestionsResponse(newQuestionsResponse);
+				setCanRequestTechnicalReport(false);
 			}
 		}
 	}
@@ -377,7 +377,7 @@ const PackagesPage = () => {
 			<div>
 				<Button
 					color='success'
-					hidden={globalReadOnly}
+					hidden={globalReadonly}
 					icon='CheckCircle'
 					onClick={requestResults}>
 					Solicitar resultados
@@ -418,7 +418,7 @@ const PackagesPage = () => {
 												ariaLabel='packages'
 												list={packagesSelect}
 												className='text-center'
-												disabled={globalReadOnly}
+												disabled={globalReadonly}
 												onChange={(e: any) => selectPackage(e.target.value)}
 											/>
 										</FormGroup>
@@ -497,15 +497,13 @@ const PackagesPage = () => {
 									<table>
 										<thead>
 											<tr>
-												<th className='text-center '>Concepto</th>
-												<th className='text-center px-2'>Valor meta</th>
+												<th className='text-center'>Concepto</th>
+												<th className='text-center '>Valor meta</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td className='p-4 text-start'>
-													Proporcion muro ventana
-												</td>
+												<td className='p-4'>Proporcion muro ventana</td>
 												<td className='h5 text-success fw-bold'>
 													{packageInfo?.proportion_wall_window
 														? packageInfo?.proportion_wall_window + '%'
@@ -590,10 +588,10 @@ const PackagesPage = () => {
 											</tr>
 										</tbody>
 									</table>
-									<table className=' px-5 mx-2'>
+									<table className=' px-5 mx-3'>
 										<thead>
 											<tr>
-												<th className='text-center'>Valor Reportado</th>
+												<th>Valor Reportado</th>
 											</tr>
 										</thead>
 										<tbody className='text-center bold h5  px-5 container'>
@@ -634,7 +632,7 @@ const PackagesPage = () => {
 															type='number'
 															className='text-center'
 															name='walls_reflectance'
-															readOnly={globalReadOnly}
+															readOnly={globalReadonly}
 															onChange={formik.handleChange}
 															value={
 																formik.values.walls_reflectance
@@ -664,7 +662,7 @@ const PackagesPage = () => {
 															type='number'
 															className='text-center'
 															name='roofs_reflectance'
-															readOnly={globalReadOnly}
+															readOnly={globalReadonly}
 															onChange={formik.handleChange}
 															value={
 																formik.values.roofs_reflectance
@@ -716,7 +714,7 @@ const PackagesPage = () => {
 														type='number'
 														className='text-center'
 														name='cop'
-														readOnly={globalReadOnly}
+														readOnly={globalReadonly}
 														onChange={formik.handleChange}
 														value={formik.values.cop}></Input>
 												</td>
@@ -726,9 +724,7 @@ const PackagesPage = () => {
 									<table className=' px-5 mx-2'>
 										<thead>
 											<tr>
-												<th className='text-center'>
-													Origen de los valores
-												</th>
+												<th>Origen de los valores</th>
 											</tr>
 										</thead>
 										<tbody className='align-items-baseline'>
@@ -737,7 +733,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={
 															originQuestions.wall_window_proportion
 														}
@@ -756,7 +752,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.wall_u_value}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -772,7 +768,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.wall_reflectance}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -788,7 +784,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.roof_u_value}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -804,7 +800,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.roof_reflectance}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -820,7 +816,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.window_u_value}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -836,7 +832,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.window_g_value}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -851,7 +847,7 @@ const PackagesPage = () => {
 												<td>
 													<Select
 														ariaLabel={'selection'}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														list={selection}
 														value={originQuestions.shades}
 														onChange={(e: any) =>
@@ -868,7 +864,7 @@ const PackagesPage = () => {
 													<Select
 														ariaLabel={'selection'}
 														list={selection}
-														disabled={globalReadOnly}
+														disabled={globalReadonly}
 														value={originQuestions.cop}
 														onChange={(e: any) =>
 															setOriginQuestions({
@@ -976,7 +972,7 @@ const PackagesPage = () => {
 												</th>
 												<th>
 													<ToggleYesNoButton
-														blocked={globalReadOnly}
+														blocked={globalReadonly}
 														keyName={key}
 														forceYes={value?.response}
 														emitValue={(index: any, val: any) =>

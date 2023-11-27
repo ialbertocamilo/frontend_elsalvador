@@ -13,9 +13,10 @@ interface Row {
 	data: any;
 	onInputChange: Function;
 	onRemove: Function;
+	readOnly: boolean;
 }
 
-const Row = ({ data, onInputChange, onRemove }: Row) => {
+const Row = ({ data, onInputChange, onRemove, readOnly }: Row) => {
 	const windowOrientation = [
 		{ value: 0, text: 'Norte' },
 		{ value: 1, text: 'Noreste' },
@@ -43,16 +44,11 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 
 		return <span>{data}</span>;
 	};
-	const user = ClientStorage.getUser();
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
 	return (
 		<tr>
 			<td className='col-2 p-2'>
 				<Select
-					disabled={globalReadonly}
+					disabled={readOnly}
 					ariaLabel={'Seleccionar'}
 					list={windowOrientation}
 					value={data.column1}
@@ -60,7 +56,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			</td>
 			<td className='col-2 p-2'>
 				<Select
-					disabled={globalReadonly}
+					disabled={readOnly}
 					ariaLabel={'Seleccionar'}
 					list={shadowType}
 					value={data.column2}
@@ -71,7 +67,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 				<Input
 					type='number'
 					className='col text-center'
-					disabled={globalReadonly}
+					disabled={readOnly}
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
 				/>
@@ -81,7 +77,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 					type='number'
 					className='col text-center'
 					inputMode={'numeric'}
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
@@ -89,7 +85,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					className='col text-center'
 					value={data.column5}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
@@ -98,7 +94,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					className='col text-center'
 					value={data.column6}
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
@@ -111,10 +107,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
-						<Button
-							color='storybook'
-							isDisable={globalReadonly}
-							onClick={(e) => onRemove(e)}>
+						<Button color='storybook' isDisable={readOnly} onClick={(e) => onRemove(e)}>
 							-
 						</Button>
 					</div>
@@ -128,9 +121,10 @@ interface ShadingProps {
 	setData?: Function;
 	data?: any;
 	setResult?: Function;
+	readOnly: boolean;
 }
 
-export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
+export const ShadingTable = ({ setData, data, setResult, readOnly }: ShadingProps) => {
 	const initialValueObj = {
 		column1: '0',
 		column2: '0',
@@ -306,23 +300,17 @@ export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 		result = result.filter((values: any) => values);
 		setRow(result);
 	}
-
-	const user = ClientStorage.getUser();
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
 	const [averageResult, setAverageResult] = useState('');
 	return (
 		<>
 			<div className='m-2 my-4'>
-				<Button color='primary' isDisable={globalReadonly} onClick={addRow}>
+				<Button color='primary' isDisable={readOnly} onClick={addRow}>
 					Agregar fila
 				</Button>
 			</div>
 			<table>
 				<thead>
-					<tr className='text-center'>
+					<tr>
 						<th className='px-2'>Orientación ventana</th>
 						<th className='px-2'>Tipo sombra</th>
 						<th className='px-2'>Altura de la ventana(m)</th>
@@ -339,6 +327,7 @@ export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 						<Row
 							key={index}
 							data={value}
+							readOnly={readOnly}
 							onRemove={() => handleDelete(index)}
 							onInputChange={(column: string | number, val: any) =>
 								handleInputChange(index, column, val)

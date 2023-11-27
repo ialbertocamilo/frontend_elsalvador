@@ -39,7 +39,7 @@ const TransmittancePage = () => {
 				</Card>
 				<Card className='col'>
 					<CardBody className='align-self-center'>
-						<TransmittanceTable />
+						<TransmittanceTable readOnly={false} />
 					</CardBody>
 				</Card>
 			</Page>

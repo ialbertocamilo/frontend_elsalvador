@@ -29,6 +29,7 @@ const ProportionPage = () => {
 				<Card className='col'>
 					<CardBody className='align-self-center'>
 						<ProportionTable
+							readOnly={false}
 							onData={(e: any) => {
 								setData(e);
 							}}

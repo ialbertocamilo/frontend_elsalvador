@@ -2,7 +2,7 @@
 import PageWrapper from '../../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../../layout/Page/Page';
 import Card, { CardBody, CardFooter } from '../../../../../components/bootstrap/Card';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ProportionTable } from '../../../../../components/tables/ProportionTable';
 import {
 	ButtonTypes,
@@ -12,13 +12,11 @@ import { useParams, useRouter } from 'next/navigation';
 import BackToCalculatorsBtn from '../../../../../components/buttons/BackToCalculatorsBtn';
 import FileUploader from '../../../../../components/extras/FileUploader';
 import Button from '../../../../../components/bootstrap/Button';
-import Link from 'next/link';
 import { RoutesListWithParams } from '../../../../../common/constants/default';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
-import { RoleType } from '../../../../../common/types/role.types';
-import { ClientStorage } from '../../../../../common/classes/storage';
+import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -26,11 +24,7 @@ const ProportionPage = () => {
 	const router = useRouter();
 
 	const [data, setData] = useState<any>({});
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	const user = ClientStorage.getUser();
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>
@@ -50,6 +44,7 @@ const ProportionPage = () => {
 					<Card className='col me-2'>
 						<CardBody>
 							<ProportionTable
+								readOnly={globalReadonly}
 								onData={(e: any) => {
 									setData(e);
 								}}
@@ -73,7 +68,7 @@ const ProportionPage = () => {
 				<Card>
 					<CardFooter>
 						<>
-							{user?.role === RoleType.agent && (
+							{!globalReadonly && (
 								<SaveProjectButton
 									payload={{
 										project_id: params?.projectId || '',

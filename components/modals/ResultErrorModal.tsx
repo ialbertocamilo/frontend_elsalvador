@@ -26,17 +26,17 @@ export const ResultErrorModal = ({
 			<div className='text-black-50'>
 				<h4 className='bold'>Detalles</h4>
 				<p>
-					Nombre del propietario:
+					Nombre del propietario:{' '}
 					<span className='bold h5'>
 						{projectEntity?.owner_name} {projectEntity?.owner_lastname}
 					</span>
 				</p>
 				<p>
-					Nombre del diseñador:
+					Nombre del diseñador:{' '}
 					<span className='bold h5 text-black-50'>{projectEntity?.designer_name}</span>
 				</p>
 				<p>
-					Director de obra:
+					Director de obra:{' '}
 					<span className='bold h5 text-black-50'>{projectEntity?.project_director}</span>
 				</p>
 				<span>

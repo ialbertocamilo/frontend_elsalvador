@@ -24,6 +24,7 @@ import { TransmittanceRoofTable } from '../../../../../components/tables/Transmi
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
+import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
 
 const keyName = keyList.roofs;
 const TransmittancePage = () => {
@@ -52,10 +53,8 @@ const TransmittancePage = () => {
 				}
 			});
 	}, []);
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
+
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>
@@ -91,6 +90,7 @@ const TransmittancePage = () => {
 									setData(e);
 								}}
 								data={data}
+								readOnly={globalReadonly}
 							/>
 						</CardBody>
 					</Card>
@@ -108,6 +108,7 @@ const TransmittancePage = () => {
 				<Card>
 					<CardBody>
 						<CustomEditor
+							readOnly={globalReadonly}
 							placeholder='Detalle techo tipo'
 							initialText={editorText}
 							setText={(e: string) => {
@@ -120,7 +121,7 @@ const TransmittancePage = () => {
 				<Card>
 					<CardFooter>
 						<>
-							{user?.role === RoleType.agent && (
+							{!globalReadonly && (
 								<SaveProjectButton
 									payload={{
 										project_id: params?.projectId || '',

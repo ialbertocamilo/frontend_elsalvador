@@ -56,25 +56,25 @@ export const TechnicalSupportInfoModal = ({
 	};
 
 	return (
-		<Rodal visible={modalStatus} height={350} onClose={() => setModalStatus(false)}>
+		<Rodal visible={modalStatus} height={270} onClose={() => setModalStatus(false)}>
 			<Alert icon='InfoOutline' isLight color='info' className=''>
 				<AlertHeading tag='h2' className='h4'>
 					Importante!
 				</AlertHeading>
 			</Alert>
 			<span>
-				Para el proyecto <span className='bold h5'>{projectEntity?.project_name}</span>{' '}
+				Para el proyecto <span className='fw-bold'>{projectEntity?.project_name}</span>{' '}
 				tomar en cuenta lo siguiente.
 			</span>
-			<ul className='text-black-50'>
+			<br />
+			<br />
+			<ul className='fw-semibold'>
 				<li>
 					El proyecto no se podrá editar salvo habilitación del responsable de la
 					evaluación técnica.
 				</li>
 			</ul>
 			<AcceptDeclineButton />
-
-			<br />
 		</Rodal>
 	);
 };

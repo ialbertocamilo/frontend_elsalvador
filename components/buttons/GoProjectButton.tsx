@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { RoutesListWithParams } from '../../common/constants/default';
 
 export const GoProjectButton = () => {
-	// use only if exist param /{projectId} in route param
 	const params = useParams();
 	const router = useRouter();
 

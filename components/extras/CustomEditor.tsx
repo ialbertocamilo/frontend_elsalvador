@@ -9,9 +9,15 @@ interface CustomEditorProps {
 	placeholder?: string;
 	setText?: (e: any) => void;
 	initialText?: string;
+	readOnly?: boolean;
 }
 
-export const CustomEditor = ({ placeholder, setText, initialText }: CustomEditorProps) => {
+export const CustomEditor = ({
+	placeholder,
+	setText,
+	initialText,
+	readOnly,
+}: CustomEditorProps) => {
 	const [value, setValue] = useState(initialText ? initialText : '');
 
 	useEffect(() => {
@@ -23,5 +29,13 @@ export const CustomEditor = ({ placeholder, setText, initialText }: CustomEditor
 		}
 	}, [value]);
 
-	return <ReactQuill theme='snow' value={value} onChange={setValue} placeholder={placeholder} />;
+	return (
+		<ReactQuill
+			readOnly={readOnly}
+			theme='snow'
+			value={value}
+			onChange={setValue}
+			placeholder={placeholder}
+		/>
+	);
 };

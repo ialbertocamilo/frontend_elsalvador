@@ -6,19 +6,19 @@ import { Calculator } from '../../services/calculation/calculator';
 import { to2Decimal } from '../../helpers/helpers';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
+import { useGlobalReadOnly } from '../../hooks/useGlobalReadOnly';
+import { useParams } from 'next/navigation';
 
 interface RowProps {
 	data: any;
 	onInputChange: Function;
 	onRemove: Function;
+	readOnly: boolean;
 }
 
-const Row = ({ data, onInputChange, onRemove }: RowProps) => {
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	const user = ClientStorage.getUser();
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
+const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
+	const params = useParams();
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<tr>
 			<td className='p-2'>
@@ -68,7 +68,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
-						<Button color='storybook' onClick={(e) => onRemove(e)}>
+						<Button color='storybook' onClick={(e) => onRemove(e)} isDisable={readOnly}>
 							-
 						</Button>
 					</div>
@@ -83,9 +83,10 @@ interface Props {
 	data?: { rows: []; result: { surface2: number } };
 	onDataResult?: Function;
 	dataResult?: { totalSurface1: number; totalSurface2: number; totalThickness: number };
+	readOnly: boolean;
 }
 
-export const TransmittanceTable = ({ onData, data }: Props) => {
+export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 	const calculator = new Calculator(0.13, 0.04);
 	const [row, setRow] = useState<any | []>([
 		{ column1: '', column2: '', column3: '', column4: '', column5: '' },
@@ -130,21 +131,16 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 	function addRow() {
 		setRow([...row, { column1: '', column2: '', column3: '', column4: '', column5: '' }]);
 	}
-	const [globalReadonly, setGlobalReadonly] = useState(false);
-	const user = ClientStorage.getUser();
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
 	return (
 		<>
 			<div className='m-2 my-4'>
-				<Button color='primary' onClick={addRow}>
+				<Button color='primary' onClick={addRow} isDisable={readOnly}>
 					Agregar fila
 				</Button>
 			</div>
 			<table>
 				<thead>
-					<tr className='text-center'>
+					<tr>
 						<th className='px-2'>Superficie parcial 1</th>
 						<th className='px-2'>Valor λ(W/mk)</th>
 						<th className='px-2'>Superficie parcial 2</th>
@@ -157,6 +153,7 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 						<Row
 							key={index}
 							data={value}
+							readOnly={readOnly}
 							onRemove={() => handleDelete(index)}
 							onInputChange={(column: string | number, val: any) =>
 								handleInputChange(index, column, val)
@@ -178,7 +175,7 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 									<Input
 										value={totalSurface2}
 										placeholder='%'
-										readOnly={globalReadonly}
+										readOnly={readOnly}
 										className='me-2 text-center '
 										inputMode={'decimal'}
 										onChange={(e: any) => {

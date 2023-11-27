@@ -1,3 +1,4 @@
+'use client';
 import { AuthUser } from './user';
 import { StorageTypes } from '../constants/default';
 import { IUserStorage } from '../types/user.types';

@@ -22,8 +22,8 @@ import Button from '../../../../../components/bootstrap/Button';
 
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
-import { RoleType } from '../../../../../common/types/role.types';
 import { ClientStorage } from '../../../../../common/classes/storage';
+import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -31,7 +31,6 @@ const WindowPage = () => {
 	const router = useRouter();
 	const projects = useProjects();
 
-	const user = ClientStorage.getUser();
 	const [initialData, setInitialData] = useState<any>({});
 	useEffect(() => {
 		projects
@@ -95,11 +94,8 @@ const WindowPage = () => {
 		// e.target.value = to2Decimal(e.target.value);
 		formik.handleChange(e);
 	}
-	const [globalReadonly, setGlobalReadonly] = useState(false);
 
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>
@@ -283,6 +279,7 @@ const WindowPage = () => {
 				<Card>
 					<CardBody>
 						<CustomEditor
+							readOnly={globalReadonly}
 							placeholder='Detalle de ventana tipo'
 							initialText={initialData?.customEditorText}
 							setText={(e: string) => {
@@ -295,7 +292,7 @@ const WindowPage = () => {
 				<Card>
 					<CardFooter>
 						<>
-							{user?.role === RoleType.agent && (
+							{!globalReadonly && (
 								<SaveProjectButton
 									type={ButtonTypes.projectData}
 									payload={{

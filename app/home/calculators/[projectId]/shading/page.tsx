@@ -21,6 +21,7 @@ import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
+import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
 
 const keyName = 'shading';
 const ShadingPage = () => {
@@ -52,6 +53,7 @@ const ShadingPage = () => {
 			});
 	}, []);
 
+	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>
@@ -65,7 +67,12 @@ const ShadingPage = () => {
 				<br />
 				<Card>
 					<CardBody>
-						<ShadingTable setData={setData} data={data} setResult={setResult} />
+						<ShadingTable
+							setData={setData}
+							data={data}
+							setResult={setResult}
+							readOnly={globalReadonly}
+						/>
 					</CardBody>
 				</Card>
 
@@ -80,6 +87,7 @@ const ShadingPage = () => {
 								<CustomEditor
 									placeholder='Detalle fachada Norte. Sombra en ventanas'
 									setText={setTextA}
+									readOnly={globalReadonly}
 									initialText={textA}
 								/>
 							</CardBody>
@@ -92,6 +100,7 @@ const ShadingPage = () => {
 								<CustomEditor
 									placeholder='Detalle fachada Este. Sombra en ventanas'
 									setText={setTextB}
+									readOnly={globalReadonly}
 									initialText={textB}
 								/>
 							</CardBody>
@@ -103,6 +112,7 @@ const ShadingPage = () => {
 								</Label>
 								<CustomEditor
 									initialText={textC}
+									readOnly={globalReadonly}
 									placeholder='Detalle fachada Sur. Sombra en ventanas'
 									setText={setTextC}
 								/>
@@ -116,6 +126,7 @@ const ShadingPage = () => {
 								<CustomEditor
 									placeholder='Detalle fachada Oeste. Sombra en ventanas'
 									initialText={textD}
+									readOnly={globalReadonly}
 									setText={setTextD}
 								/>
 							</CardBody>
@@ -126,7 +137,7 @@ const ShadingPage = () => {
 				<Card>
 					<CardFooter>
 						<>
-							{user?.role == RoleType.agent && (
+							{!globalReadonly && (
 								<SaveProjectButton
 									payload={{
 										project_id: params?.projectId || '',

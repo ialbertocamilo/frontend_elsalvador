@@ -17,21 +17,26 @@ import { RoutesListWithParams } from '../../../../common/constants/default';
 import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculatorsBtn';
 import Select from '../../../../components/bootstrap/forms/Select';
 import { arrayToList } from '../../../../helpers/helpers';
-import { departmentList, municipalityList } from '../../../../common/constants/lists';
+import {
+	departmentList,
+	municipalityList,
+	ProjectStatus,
+} from '../../../../common/constants/lists';
 import { NextButton } from '../../../../components/buttons/NextButton';
 import Icon from '../../../../components/icon/Icon';
 import { ClientStorage } from '../../../../common/classes/storage';
 import { RoleType } from '../../../../common/types/role.types';
+import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
 
 const GetProject = () => {
 	const param = useParams();
 	const router = useRouter();
 	const projects = useProjects();
 
-	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const { globalReadonly } = useGlobalReadOnly(param?.projectId as string);
 
-	const user = ClientStorage.getUser();
 	const [project, setProject] = useState<IProjectFormType>({});
+
 	useEffect(() => {
 		const projectId = param?.projectId as string;
 		projects.getProject(projectId).then((result) => {
@@ -40,11 +45,9 @@ const GetProject = () => {
 				setProject(projectTransform);
 			}
 		});
+		// DataService.setProjectStatus()
 	}, [param?.projectId]);
 
-	useEffect(() => {
-		setGlobalReadonly(user?.role === RoleType.supervisor);
-	}, []);
 	const [buttonActive, setButtonActive] = useState(true);
 	const formik = useFormik({
 		initialValues: project,
@@ -434,7 +437,7 @@ const GetProject = () => {
 						<Card>
 							<CardFooter>
 								<>
-									{user?.role === RoleType.agent && (
+									{!globalReadonly && (
 										<Button
 											className='col-auto mx-2'
 											color='info'

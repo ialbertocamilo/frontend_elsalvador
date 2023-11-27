@@ -7,11 +7,11 @@ import Input from '../../../../components/bootstrap/forms/Input';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import { useParams } from 'next/navigation';
 import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
+import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
 
 const TransmittancePage = () => {
 	const [wallName, setWallName] = useState('');
 
-	const params = useParams();
 	return (
 		<PageWrapper>
 			<Page>
@@ -26,7 +26,7 @@ const TransmittancePage = () => {
 					<CardBody>
 						<div className='row'>
 							<div className='flex-column col-md-2 col-sm-12 align-self-center'>
-								<span>Nombre de muro tipo 1</span>
+								<span>Nombre de muro tipo asdad1</span>
 							</div>
 							<div className='col-md-6 col-sm-12'>
 								<Input
@@ -39,7 +39,7 @@ const TransmittancePage = () => {
 				</Card>
 				<Card className='col'>
 					<CardBody className='align-self-center'>
-						<TransmittanceTable />
+						<TransmittanceTable readOnly={false} />
 					</CardBody>
 				</Card>
 			</Page>

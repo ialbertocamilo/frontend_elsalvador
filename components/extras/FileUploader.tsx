@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useProjects } from '../../services/project/project.service';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
+import DataService from '../../services/data/data.service';
+import { ProjectStatus } from '../../common/constants/lists';
+import { useGlobalReadOnly } from '../../hooks/useGlobalReadOnly';
 
 interface FileUploaderProps {
 	keyName: string;
@@ -28,6 +31,8 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 
 	const user = ClientStorage.getUser();
 	const [fileName, setFileName] = useState('');
+
+	const { globalReadonly } = useGlobalReadOnly(projectId);
 	useEffect(() => {
 		getFiles(projectId, keyName).then((data: []) => {
 			if (data.length <= 0) {
@@ -43,7 +48,7 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	}, []);
 	return (
 		<>
-			{user?.role == RoleType.agent && (
+			{!globalReadonly && (
 				<UploadFileBtn
 					projectId={projectId}
 					keyName={keyName}
