@@ -63,20 +63,14 @@ export const TechnicalSupportInfoModal = ({
 				</AlertHeading>
 			</Alert>
 			<span>
-				El Proyecto <span className='bold h5'>{projectEntity?.project_name}</span> está
-				preparado para su aprobación, tomar en cuenta los siguiente puntos.
+				Para el proyecto <span className='bold h5'>{projectEntity?.project_name}</span>{' '}
+				tomar en cuenta lo siguiente.
 			</span>
 			<ul className='text-black-50'>
 				<li>
-					El proyecto cambiará su estado a solo visible y no se podrá editar por el
-					usuario.
+					El proyecto no se podrá editar salvo habilitación del responsable de la
+					evaluación técnica.
 				</li>
-				<li>El proyecto se permitirá visualizar por el supervisor.</li>
-				<li>
-					El proyecto se aparecerá en la bandeja de proyectos por aprobar por el
-					supervisor.
-				</li>
-				<li>El supervisor podrá desbloquear el proyecto para la edición del usuario.</li>
 			</ul>
 			<AcceptDeclineButton />
 

@@ -99,7 +99,7 @@ const AccessTable = () => {
 										<th className='text-primary'>Departamento</th>
 										<th className='text-primary'>Municipalidad</th>
 										<th className='text-primary'>Rol</th>
-										<th className='text-primary'>Habilitar usuario</th>
+										<th className='text-primary'>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>

@@ -4,6 +4,8 @@ import Button from '../bootstrap/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calculator } from '../../services/calculation/calculator';
 import { to2Decimal } from '../../helpers/helpers';
+import { ClientStorage } from '../../common/classes/storage';
+import { RoleType } from '../../common/types/role.types';
 
 interface RowProps {
 	data: any;
@@ -12,11 +14,17 @@ interface RowProps {
 }
 
 const Row = ({ data, onInputChange, onRemove }: RowProps) => {
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const user = ClientStorage.getUser();
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<tr>
 			<td className='p-2'>
 				<Input
 					type='text'
+					readOnly={globalReadonly}
 					value={data.column1}
 					onChange={(e: any) => onInputChange('column1', e.target.value)}
 				/>
@@ -24,6 +32,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					name='ownerName'
+					readOnly={globalReadonly}
 					type={'number'}
 					className=' text-center'
 					value={data.column2}
@@ -33,6 +42,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					type='text'
+					readOnly={globalReadonly}
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
 				/>
@@ -41,6 +51,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 				<Input
 					className='col text-center'
 					inputMode={'decimal'}
+					readOnly={globalReadonly}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
@@ -50,6 +61,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 					className=' text-center'
 					inputMode={'decimal'}
 					value={data.column5}
+					readOnly={globalReadonly}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
 				/>
 			</td>
@@ -118,7 +130,11 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 	function addRow() {
 		setRow([...row, { column1: '', column2: '', column3: '', column4: '', column5: '' }]);
 	}
-
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const user = ClientStorage.getUser();
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<>
 			<div className='m-2 my-4'>
@@ -162,6 +178,7 @@ export const TransmittanceTable = ({ onData, data }: Props) => {
 									<Input
 										value={totalSurface2}
 										placeholder='%'
+										readOnly={globalReadonly}
 										className='me-2 text-center '
 										inputMode={'decimal'}
 										onChange={(e: any) => {

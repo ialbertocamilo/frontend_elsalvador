@@ -15,7 +15,6 @@ const TransmittancePage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<GoProjectButton />
 				<div className='row '>
 					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
 						Cálculo de transmitancia térmica de techos

@@ -52,6 +52,10 @@ const TransmittancePage = () => {
 				}
 			});
 	}, []);
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -70,6 +74,7 @@ const TransmittancePage = () => {
 							</div>
 							<div className='col-md-6 col-sm-12'>
 								<Input
+									readOnly={globalReadonly}
 									placeholder='Ingresa el nombre del techo'
 									onChange={(e: any) => setWallName(e.target.value)}
 									value={wallName}></Input>

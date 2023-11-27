@@ -5,6 +5,8 @@ import Button from '../bootstrap/Button';
 import { useProjects } from '../../services/project/project.service';
 import { useParams } from 'next/navigation';
 import { to2Decimal } from '../../helpers/helpers';
+import { ClientStorage } from '../../common/classes/storage';
+import { RoleType } from '../../common/types/role.types';
 
 function calculatePercentage(num1: number, num2: number): string | number {
 	const res = Number((num1 / num2) * 100).toFixed(0);
@@ -20,12 +22,18 @@ interface RowProps {
 }
 
 const Row = ({ data, onInputChange, onRemove }: RowProps) => {
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const user = ClientStorage.getUser();
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<tr>
 			<td className='p-2'>
 				<Input
 					placeholder='Ingresar texto'
 					value={data.column1}
+					readOnly={globalReadonly}
 					onChange={(e: any) => onInputChange('column1', e.target.value)}></Input>
 			</td>
 			<td className='p-2'>
@@ -35,6 +43,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							id='opaque_surface_1'
 							name='opaque_surface_1'
 							type='number'
+							readOnly={globalReadonly}
 							className='me-2 text-center'
 							value={data.column2}
 							onChange={(e: any) => onInputChange('column2', e.target.value)}
@@ -50,6 +59,7 @@ const Row = ({ data, onInputChange, onRemove }: RowProps) => {
 							id='glazed_surface_1'
 							name='glazed_surface_1'
 							type='number'
+							readOnly={globalReadonly}
 							className='me-2 text-center'
 							value={data.column3}
 							onChange={(e: any) => onInputChange('column3', e.target.value)}
@@ -94,7 +104,11 @@ export const ProportionTable = ({ onData, keyName }: ProportiontableProps) => {
 	const [row, setRow] = useState<Record<string, any>[]>([
 		{ column1: '', column2: 0, column3: 0, column4: 0 },
 	]);
-
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const user = ClientStorage.getUser();
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	const projects = useProjects();
 	const params = useParams();
 	useEffect(() => {

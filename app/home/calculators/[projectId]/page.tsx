@@ -32,7 +32,7 @@ const LocationPage = () => {
 				<div className='row '>
 					<div className='col-md-3 h-50'>
 						<Card
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'
 							onClick={() =>
 								router.push(
 									RoutesListWithParams.calculatorProportion(param?.projectId),
@@ -58,7 +58,7 @@ const LocationPage = () => {
 									RoutesListWithParams.calculatorTransmittance(param?.projectId),
 								)
 							}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo de transmitancia termica de muros</CardTitle>
@@ -81,7 +81,7 @@ const LocationPage = () => {
 									),
 								)
 							}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>
@@ -102,7 +102,7 @@ const LocationPage = () => {
 							onClick={() =>
 								router.push(RoutesListWithParams.calculatorWindow(param?.projectId))
 							}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo de ventanas</CardTitle>
@@ -123,7 +123,7 @@ const LocationPage = () => {
 									RoutesListWithParams.calculatorShading(param?.projectId),
 								)
 							}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo elementos de sombreado</CardTitle>

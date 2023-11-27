@@ -30,7 +30,7 @@ const LocationPage = () => {
 				<div className='row '>
 					<div className='col-md-3 h-50'>
 						<Card
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'
 							onClick={() => router.push(RoutesList.calculatorProportion)}>
 							<CardHeader>
 								<CardLabel>
@@ -48,7 +48,7 @@ const LocationPage = () => {
 					<div className='col-md-3 h-50'>
 						<Card
 							onClick={() => router.push(RoutesList.calculatorTransmittance)}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo de transmitancia termica de muros</CardTitle>
@@ -65,7 +65,7 @@ const LocationPage = () => {
 					<div className='col-md-3 h-50'>
 						<Card
 							onClick={() => router.push(RoutesList.calculatorTransmittanceRoofs)}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>
@@ -84,7 +84,7 @@ const LocationPage = () => {
 					<div className='col-md-3 h-50'>
 						<Card
 							onClick={() => router.push(RoutesList.calculatorWindow)}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo de ventanas</CardTitle>
@@ -101,7 +101,7 @@ const LocationPage = () => {
 					<div className='col-md-3 h-50'>
 						<Card
 							onClick={() => router.push(RoutesList.calculatorShading)}
-							className='bg-transparent shadow-3d-up-hover cursor-pointer card-stretch-full'>
+							className='shadow-3d-up-hover cursor-pointer card-stretch-full'>
 							<CardHeader>
 								<CardLabel>
 									<CardTitle>Calculo elementos de sombreado</CardTitle>

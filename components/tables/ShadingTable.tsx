@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import Select from '../bootstrap/forms/Select';
 import { to2Decimal } from '../../helpers/helpers';
 import classNames from 'classnames';
+import { ClientStorage } from '../../common/classes/storage';
+import { RoleType } from '../../common/types/role.types';
 
 interface Row {
 	data: any;
@@ -41,10 +43,16 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 
 		return <span>{data}</span>;
 	};
+	const user = ClientStorage.getUser();
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<tr>
 			<td className='col-2 p-2'>
 				<Select
+					disabled={globalReadonly}
 					ariaLabel={'Seleccionar'}
 					list={windowOrientation}
 					value={data.column1}
@@ -52,6 +60,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			</td>
 			<td className='col-2 p-2'>
 				<Select
+					disabled={globalReadonly}
 					ariaLabel={'Seleccionar'}
 					list={shadowType}
 					value={data.column2}
@@ -62,6 +71,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 				<Input
 					type='number'
 					className='col text-center'
+					disabled={globalReadonly}
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
 				/>
@@ -71,6 +81,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 					type='number'
 					className='col text-center'
 					inputMode={'numeric'}
+					readOnly={globalReadonly}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
@@ -78,6 +89,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
+					readOnly={globalReadonly}
 					className='col text-center'
 					value={data.column5}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
@@ -86,6 +98,7 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<Input
 					type='number'
+					readOnly={globalReadonly}
 					className='col text-center'
 					value={data.column6}
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
@@ -98,7 +111,10 @@ const Row = ({ data, onInputChange, onRemove }: Row) => {
 			<td className='p-2'>
 				<FormGroup id='width-window'>
 					<div className='d-flex align-content-between'>
-						<Button color='storybook' onClick={(e) => onRemove(e)}>
+						<Button
+							color='storybook'
+							isDisable={globalReadonly}
+							onClick={(e) => onRemove(e)}>
 							-
 						</Button>
 					</div>
@@ -122,13 +138,16 @@ export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 		column4: '',
 		column5: '',
 		column6: '',
-		result1: 'x',
-		result2: 'x',
-		result3: 'x',
+		result1: '',
+		result2: '',
+		result3: '',
 	};
 
 	useEffect(() => {
-		if (data) setRow(data);
+		if (data) {
+			setRow(data);
+			calculateAverage(data);
+		}
 	}, [data]);
 
 	const [row, setRow] = useState<any[]>(data ? data : [initialValueObj]);
@@ -288,11 +307,16 @@ export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 		setRow(result);
 	}
 
+	const user = ClientStorage.getUser();
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	const [averageResult, setAverageResult] = useState('');
 	return (
 		<>
 			<div className='m-2 my-4'>
-				<Button color='primary' onClick={addRow}>
+				<Button color='primary' isDisable={globalReadonly} onClick={addRow}>
 					Agregar fila
 				</Button>
 			</div>
@@ -322,7 +346,7 @@ export const ShadingTable = ({ setData, data, setResult }: ShadingProps) => {
 					))}
 					<tr>
 						<th className='p-2'>
-							<FormGroup isFloating label='Promedio de resultados'>
+							<FormGroup label='Promedio de resultados'>
 								<Input
 									type='number'
 									readOnly

@@ -22,9 +22,7 @@ const DefaultHeader = observer(() => {
 	return (
 		<Header>
 			<HeaderLeft>
-				<b>
-					<h4>Proyecto El Salvador</h4>
-				</b>
+				<b>Plataforma electrónica para la certificación de Construcción Sostenible</b>
 			</HeaderLeft>
 			<HeaderRight>
 				<span className={themeStatus == 'dark' ? 'text-white-50' : 'text-black-50'}></span>
@@ -40,7 +38,9 @@ const DefaultHeader = observer(() => {
 					<div className='col-auto'>
 						<ul style={{ listStyleType: 'none' }}>
 							<li>
-								<b>{userStore.value?.name}</b>
+								<b>
+									{userStore.value?.name} {userStore.value?.lastname}
+								</b>
 							</li>
 							<li>
 								<RoleIcon /> {selectRoleName(userStore.value?.role)}

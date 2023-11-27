@@ -3,6 +3,7 @@ import { RoleType } from './role.types';
 export interface IUserStorage {
 	id: string;
 	name: string;
+	lastname: string;
 	email: string;
 	token: string;
 	role: number;

@@ -95,7 +95,11 @@ const WindowPage = () => {
 		// e.target.value = to2Decimal(e.target.value);
 		formik.handleChange(e);
 	}
+	const [globalReadonly, setGlobalReadonly] = useState(false);
 
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	return (
 		<PageWrapper>
 			<Page>
@@ -113,6 +117,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Tipo de acristalamiento</Label>
 								<Input
 									type='text'
+									readOnly={globalReadonly}
 									name='crystalType'
 									value={formik.values.crystalType}
 									onChange={handleChange}
@@ -122,6 +127,7 @@ const WindowPage = () => {
 								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									type='number'
+									readOnly={globalReadonly}
 									name='uValue1'
 									className='text-center'
 									value={formik.values.uValue1}
@@ -134,6 +140,7 @@ const WindowPage = () => {
 									name='gValue'
 									className='text-center'
 									value={formik.values.gValue}
+									readOnly={globalReadonly}
 									type='number'
 									onChange={handleChange}
 								/>
@@ -144,6 +151,7 @@ const WindowPage = () => {
 									name='csValue'
 									className='text-center'
 									value={formik.values.csValue}
+									readOnly={globalReadonly}
 									onChange={handleChange}
 									type='number'
 								/>
@@ -167,6 +175,7 @@ const WindowPage = () => {
 									name='frameType'
 									value={formik.values.frameType}
 									onChange={handleChange}
+									readOnly={globalReadonly}
 									type='text'
 								/>
 							</FormGroup>
@@ -177,6 +186,7 @@ const WindowPage = () => {
 									className='text-center'
 									value={formik.values.uValue2}
 									onChange={handleChange}
+									readOnly={globalReadonly}
 									type='number'
 								/>
 							</FormGroup>
@@ -187,6 +197,7 @@ const WindowPage = () => {
 									className='text-center'
 									value={formik.values.frameWidth}
 									onChange={handleChange}
+									readOnly={globalReadonly}
 									type='number'
 								/>
 							</FormGroup>
@@ -210,6 +221,7 @@ const WindowPage = () => {
 									name='longVain'
 									className='text-center'
 									value={formik.values.longVain}
+									readOnly={globalReadonly}
 									onChange={handleChange}
 									type='number'
 								/>
@@ -220,6 +232,7 @@ const WindowPage = () => {
 									name='highVain'
 									className='text-center'
 									value={formik.values.highVain}
+									readOnly={globalReadonly}
 									onChange={(e) => {
 										handleChange(e);
 									}}

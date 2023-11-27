@@ -34,9 +34,13 @@ const TransmittancePage = () => {
 	const [dataResult, setDataResult] = useState();
 	const [editorText, setEditorText] = useState('');
 
-	const user = ClientStorage.getUser();
 	const projects = useProjects();
 	const [initialData, setInitialData] = useState<any>({});
+	const [globalReadonly, setGlobalReadonly] = useState(false);
+	const user = ClientStorage.getUser();
+	useEffect(() => {
+		setGlobalReadonly(user?.role === RoleType.supervisor);
+	}, []);
 	useEffect(() => {
 		projects
 			.getProjectData({ project_id: params?.projectId as string, key: keyName })
@@ -68,6 +72,7 @@ const TransmittancePage = () => {
 							</div>
 							<div className='col-md-6 col-sm-12'>
 								<Input
+									readOnly={globalReadonly}
 									placeholder='Ingresa el nombre del muro'
 									onChange={(e: any) => setWallName(e.target.value)}
 									value={wallName}></Input>

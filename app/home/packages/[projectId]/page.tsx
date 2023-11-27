@@ -363,7 +363,7 @@ const PackagesPage = () => {
 		else if (projectStatus === ProjectStatus.denied)
 			return (
 				<div className='justify-content-center text-center align-content-center'>
-					❌ El proyecto ya sido rechazado ...
+					❌ El proyecto ha sido rechazado ...
 				</div>
 			);
 		else if (projectStatus === ProjectStatus.inRevision)

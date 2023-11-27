@@ -12,14 +12,19 @@ const ShadingPage = () => {
 	return (
 		<PageWrapper>
 			<Page>
-				<GoProjectButton />
 				<div className='row '>
 					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
-						Cálculo elementos de sombreado
+						Total de elementos de sombreado
 					</div>
 					<span>Horizontales, verticales o combinados</span>
 				</div>
 				<br />
+				<Card>
+					<CardBody>
+						<ShadingTable />
+					</CardBody>
+				</Card>
+
 				<Card>
 					<CardBody>
 						<h5 className='fw-bold'>Detalles de los elementos de sombreado</h5>

@@ -27,7 +27,6 @@ const ProportionPage = () => {
 
 	const [data, setData] = useState<any>({});
 	const [globalReadonly, setGlobalReadonly] = useState(false);
-
 	const user = ClientStorage.getUser();
 	useEffect(() => {
 		setGlobalReadonly(user?.role === RoleType.supervisor);
