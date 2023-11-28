@@ -25,7 +25,7 @@ import { RoutesList } from '../../../../common/constants/default';
 import Spinner from '../../../../components/bootstrap/Spinner';
 import { keyList, ProjectStatus } from '../../../../common/constants/lists';
 import { IQuestion } from '../../../../common/types/question.types';
-import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../hooks/useGlobalStatus';
 
 const keyName = keyList.package;
 const PackagesPage = () => {
@@ -40,7 +40,7 @@ const PackagesPage = () => {
 		params?.projectId as string,
 	);
 
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	useEffect(() => {
 		Promise.all([
 			DataService.getPackagesConfig(),

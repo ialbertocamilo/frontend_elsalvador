@@ -6,7 +6,7 @@ import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
 import DataService from '../../services/data/data.service';
 import { ProjectStatus } from '../../common/constants/lists';
-import { useGlobalReadOnly } from '../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../hooks/useGlobalStatus';
 
 interface FileUploaderProps {
 	keyName: string;
@@ -32,7 +32,7 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	const user = ClientStorage.getUser();
 	const [fileName, setFileName] = useState('');
 
-	const { globalReadonly } = useGlobalReadOnly(projectId);
+	const { globalReadonly } = useGlobalStatus(projectId);
 	useEffect(() => {
 		getFiles(projectId, keyName).then((data: []) => {
 			if (data.length <= 0) {

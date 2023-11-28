@@ -5,6 +5,7 @@ import React, {
 	ReactNode,
 	useCallback,
 	useContext,
+	useEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -409,8 +410,8 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 
 		const { t } = useTranslation('menu');
 
-		const user = ClientStorage.getUser();
 		let menuFiltered;
+		const user = ClientStorage.getUser();
 		if (user) menuFiltered = filterByRole(menu, user);
 		else menuFiltered = menu;
 

@@ -43,6 +43,7 @@ export class ProjectMapper {
 			offices: projectEntity.offices,
 			surface: projectEntity.surface,
 			public: projectEntity.is_public,
+			status: projectEntity?.status,
 		};
 	}
 }

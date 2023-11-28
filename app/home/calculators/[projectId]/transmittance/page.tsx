@@ -22,7 +22,7 @@ import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
-import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
 
 const keyName = 'transmittance';
 const TransmittancePage = () => {
@@ -38,7 +38,7 @@ const TransmittancePage = () => {
 	const projects = useProjects();
 	const [initialData, setInitialData] = useState<any>({});
 
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	useEffect(() => {
 		projects
 			.getProjectData({ project_id: params?.projectId as string, key: keyName })

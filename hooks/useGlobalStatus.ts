@@ -4,7 +4,7 @@ import { RoleType } from '../common/types/role.types';
 import { ProjectStatus } from '../common/constants/lists';
 import { ClientStorage } from '../common/classes/storage';
 
-export const useGlobalReadOnly = (projectId: string) => {
+export const useGlobalStatus = (projectId: string) => {
 	const [globalReadonly, setGlobalReadonly] = useState(false);
 
 	const user = ClientStorage.getUser();

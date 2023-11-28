@@ -29,3 +29,20 @@
 .brand-logo-min{
 	display: none;
 }
+
+.scrollable-table {
+	width: 100%;
+	overflow: auto;
+	max-height: 300px; /* Establece la altura máxima para la tabla */
+	border-collapse: collapse;
+}
+
+.scrollable-table th,
+.scrollable-table td {
+	padding: 8px;
+}
+
+.scrollable-table thead th {
+	position: sticky;
+	top: 0;
+}

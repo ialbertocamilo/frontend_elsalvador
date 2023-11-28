@@ -6,7 +6,7 @@ import { Calculator } from '../../services/calculation/calculator';
 import { to2Decimal } from '../../helpers/helpers';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
-import { useGlobalReadOnly } from '../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../hooks/useGlobalStatus';
 import { useParams } from 'next/navigation';
 
 interface RowProps {
@@ -17,14 +17,12 @@ interface RowProps {
 }
 
 const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
-	const params = useParams();
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
 	return (
 		<tr>
 			<td className='p-2'>
 				<Input
 					type='text'
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					value={data.column1}
 					onChange={(e: any) => onInputChange('column1', e.target.value)}
 				/>
@@ -32,7 +30,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					name='ownerName'
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					type={'number'}
 					className=' text-center'
 					value={data.column2}
@@ -42,7 +40,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					type='text'
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					value={data.column3}
 					onChange={(e: any) => onInputChange('column3', e.target.value)}
 				/>
@@ -51,7 +49,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 				<Input
 					className='col text-center'
 					inputMode={'decimal'}
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
@@ -61,7 +59,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 					className=' text-center'
 					inputMode={'decimal'}
 					value={data.column5}
-					readOnly={globalReadonly}
+					readOnly={readOnly}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
 				/>
 			</td>

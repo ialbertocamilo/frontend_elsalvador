@@ -162,7 +162,7 @@ const ProjectTable = () => {
 				<div className='col-12 mx-0 px-0'>
 					<Card stretch isCompact>
 						<CardBody isScrollable className='table-responsive'>
-							<table className='table table-modern table-hover'>
+							<table className='table table-modern table-hover scrollable-table'>
 								<thead>
 									<tr>
 										<th className='text-primary'>Id</th>

@@ -21,7 +21,7 @@ import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
-import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
 
 const keyName = 'shading';
 const ShadingPage = () => {
@@ -53,7 +53,7 @@ const ShadingPage = () => {
 			});
 	}, []);
 
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>

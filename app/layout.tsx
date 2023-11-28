@@ -28,7 +28,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					rel='stylesheet'
 					href='https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css'
 				/>
-				<title>El Salvador APP</title>
+				<title>
+					Plataforma electrónica para la certificación de Construcción Sostenible
+				</title>
 			</head>
 			<body>{children}</body>
 		</html>

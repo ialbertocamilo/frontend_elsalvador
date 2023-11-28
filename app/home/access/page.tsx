@@ -1,16 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik';
 import SubHeader, {
 	SubHeaderLeft,
 	SubHeaderRight,
 	SubheaderSeparator,
 } from '../../../layout/SubHeader/SubHeader';
-import PAYMENTS from '../../../common/data/enumPaymentMethod';
 import { useRouter } from 'next/navigation';
-import { useProjects } from '../../../services/project/project.service';
-import { RoutesList, RoutesListWithParams } from '../../../common/constants/default';
+import { RoutesListWithParams } from '../../../common/constants/default';
 import { getItemFromDepartmentList, getItemFromMunicipalityList } from '../../../helpers/helpers';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
@@ -27,12 +24,14 @@ import { IUser } from '../../../common/types/user.types';
 import { UserService } from '../../../services/users/user.service';
 import Select from '../../../components/bootstrap/forms/Select';
 import { RoleType } from '../../../common/types/role.types';
+import search from '../../../components/icon/material-icons/Search';
 
 const AccessTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(PER_COUNT['50']);
 
-	const { users, setUsers, getAllUsers } = useUsers();
+	const [value, setValue] = useState('');
+	const { users, setUsers, getAllUsers, setSearchValue, searchValue } = useUsers();
 	const router = useRouter();
 	useEffect(() => {}, [perPage]);
 
@@ -83,19 +82,49 @@ const AccessTable = () => {
 		);
 	};
 
+	function detectKey(e: any) {
+		if (e.key == 'Enter') setSearchValue(value);
+	}
+
 	return (
 		<>
+			<div className='col-12'>
+				<div className='display-4 fw-bold py-3 text-primary-emphasis'>
+					Lista de usuarios
+				</div>
+			</div>
+			<SubHeader>
+				<SubHeaderLeft>
+					<label
+						className='border-0 bg-transparent cursor-pointer me-0'
+						htmlFor='searchInput'>
+						<Icon icon='Search' size='2x' color='primary' />
+					</label>
+					<Input
+						id='searchInput'
+						type='search'
+						className='border-0 shadow-none bg-transparent'
+						placeholder='Buscar usuarios...(Presionar <Enter>)'
+						value={value}
+						onChange={(e: any) => setValue(e.target.value)}
+						onKeyDown={detectKey}
+					/>
+				</SubHeaderLeft>
+				<SubHeaderRight>
+					<SubheaderSeparator />
+				</SubHeaderRight>
+			</SubHeader>
 			<div className='row h-100'>
 				<div className='col-12 mx-0 px-0'>
 					<Card stretch isCompact>
 						<CardBody isScrollable className='table-responsive'>
-							<table className='table table-modern table-hover'>
+							<table className='table table-modern table-hover scrollable-table'>
 								<thead>
 									<tr>
 										<th className='text-primary'>Correo electrónico</th>
 										<th className='text-primary'>Nombres y apellidos</th>
 										<th className='text-primary'>Profesión</th>
-										<th className='text-primary'>Nacio`nalidad</th>
+										<th className='text-primary'>Nacionalidad</th>
 										<th className='text-primary'>Departamento</th>
 										<th className='text-primary'>Municipalidad</th>
 										<th className='text-primary'>Rol</th>

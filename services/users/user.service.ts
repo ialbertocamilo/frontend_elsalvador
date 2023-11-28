@@ -33,8 +33,12 @@ export class UserService {
 		return result?.data as IUser;
 	}
 	static async updateUser(user: IUser) {
-		console.log(user);
 		const result = await axiosService().post('/users/update-user', user);
 		return result?.data as IUser;
+	}
+
+	static async search(value: unknown) {
+		const result = await axiosService().post('/users/search', { value });
+		return result?.data as IUser[];
 	}
 }

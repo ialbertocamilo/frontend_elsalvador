@@ -23,7 +23,7 @@ import Button from '../../../../../components/bootstrap/Button';
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
-import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -95,7 +95,7 @@ const WindowPage = () => {
 		formik.handleChange(e);
 	}
 
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>

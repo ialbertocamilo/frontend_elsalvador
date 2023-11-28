@@ -7,6 +7,7 @@ import Input from '../../../../components/bootstrap/forms/Input';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import { useParams } from 'next/navigation';
 import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
+import { TransmittanceRoofTable } from '../../../../components/tables/TransmittanceRoofTable';
 
 const TransmittancePage = () => {
 	const [wallName, setWallName] = useState('');
@@ -39,7 +40,7 @@ const TransmittancePage = () => {
 				</Card>
 				<Card className='col'>
 					<CardBody className='align-self-center'>
-						<TransmittanceTable readOnly={false} />
+						<TransmittanceRoofTable readOnly={false} />
 					</CardBody>
 				</Card>
 			</Page>

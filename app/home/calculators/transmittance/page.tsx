@@ -7,7 +7,7 @@ import Input from '../../../../components/bootstrap/forms/Input';
 import { TransmittanceTable } from '../../../../components/tables/TransmittanceTable';
 import { useParams } from 'next/navigation';
 import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
-import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../hooks/useGlobalStatus';
 
 const TransmittancePage = () => {
 	const [wallName, setWallName] = useState('');

@@ -19,6 +19,7 @@ export interface IProjectFormType {
 	offices?: number;
 	surface?: number;
 	public?: boolean;
+	status?: number;
 }
 
 export interface IProjectListResponse {

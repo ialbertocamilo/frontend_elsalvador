@@ -17,23 +17,18 @@ import { RoutesListWithParams } from '../../../../common/constants/default';
 import BackToCalculatorsBtn from '../../../../components/buttons/BackToCalculatorsBtn';
 import Select from '../../../../components/bootstrap/forms/Select';
 import { arrayToList } from '../../../../helpers/helpers';
-import {
-	departmentList,
-	municipalityList,
-	ProjectStatus,
-} from '../../../../common/constants/lists';
+import { departmentList, municipalityList } from '../../../../common/constants/lists';
 import { NextButton } from '../../../../components/buttons/NextButton';
 import Icon from '../../../../components/icon/Icon';
-import { ClientStorage } from '../../../../common/classes/storage';
-import { RoleType } from '../../../../common/types/role.types';
-import { useGlobalReadOnly } from '../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../hooks/useGlobalStatus';
+import { ProjectStatusAlert } from '../../../../components/alert/ProjectStatusAlert';
 
 const GetProject = () => {
 	const param = useParams();
 	const router = useRouter();
 	const projects = useProjects();
 
-	const { globalReadonly } = useGlobalReadOnly(param?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(param?.projectId as string);
 
 	const [project, setProject] = useState<IProjectFormType>({});
 
@@ -45,7 +40,6 @@ const GetProject = () => {
 				setProject(projectTransform);
 			}
 		});
-		// DataService.setProjectStatus()
 	}, [param?.projectId]);
 
 	const [buttonActive, setButtonActive] = useState(true);
@@ -106,6 +100,7 @@ const GetProject = () => {
 	return (
 		<PageWrapper>
 			<Page container='fluid'>
+				<ProjectStatusAlert status={project.status as number} />
 				<div className='row'>
 					<div className='col-12'>
 						<div className='display-4 fw-bold py-3 text-primary-emphasis'>

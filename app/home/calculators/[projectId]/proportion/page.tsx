@@ -16,7 +16,7 @@ import { RoutesListWithParams } from '../../../../../common/constants/default';
 import { NextButton } from '../../../../../components/buttons/NextButton';
 import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
-import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
 
 const ProportionPage = () => {
 	const keyName = 'proportion';
@@ -24,7 +24,7 @@ const ProportionPage = () => {
 	const router = useRouter();
 
 	const [data, setData] = useState<any>({});
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>

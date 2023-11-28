@@ -24,7 +24,7 @@ import { TransmittanceRoofTable } from '../../../../../components/tables/Transmi
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { RoleType } from '../../../../../common/types/role.types';
-import { useGlobalReadOnly } from '../../../../../hooks/useGlobalReadOnly';
+import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
 
 const keyName = keyList.roofs;
 const TransmittancePage = () => {
@@ -54,7 +54,7 @@ const TransmittancePage = () => {
 			});
 	}, []);
 
-	const { globalReadonly } = useGlobalReadOnly(params?.projectId as string);
+	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
 	return (
 		<PageWrapper>
 			<Page>
