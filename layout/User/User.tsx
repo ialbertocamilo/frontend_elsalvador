@@ -17,6 +17,7 @@ import SvgFacebook from '../../components/icon/material-icons/Facebook';
 import ThemeContext from '../../context/themeContext';
 import useAsideTouch from '../../hooks/useAsideTouch';
 import SvgCircle from '../../components/icon/material-icons/Circle';
+import Link from 'next/link';
 
 const User = () => {
 	const router = useRouter();
@@ -47,32 +48,41 @@ const User = () => {
 			<Collapse isOpen={collapseStatus} className='user-menu'>
 				<nav aria-label='aside-bottom-user-menu'>
 					<div className='navigation '>
-						<div className='social-icon'>
-							<Button href='https://facebook.com'>
+						<div className='social-icon '>
+							<Link
+								className='m-2'
+								target='_blank'
+								href='https://www.facebook.com/DGEHMSV/'>
 								<SvgFacebook
 									className='cursor-pointer social-icon text-white'
 									height={25}
 								/>
-							</Button>
-							<Button href='https://instagram.com'>
+							</Link>
+							<Link
+								className='m-2'
+								target='_blank'
+								href='https://www.instagram.com/dgehm_sv/'>
 								<InstagramIcon
 									className='cursor-pointer social-icon text-white'
 									height={25}
 								/>
-							</Button>
+							</Link>
 
-							<Button href='https://x.com'>
+							<Link
+								className='m-2'
+								target='_blank'
+								href='https://twitter.com/DGEHMSV'>
 								<TwitterIcon
 									className=' cursor-pointer social-icon text-white'
 									height={25}
 								/>
-							</Button>
-							<Button href='https://google.com'>
+							</Link>
+							<Link className='m-2' target='_blank' href='https://www.dgehm.gob.sv/'>
 								<SvgCircle
 									className=' cursor-pointer social-icon text-white'
 									height={25}
 								/>
-							</Button>
+							</Link>
 						</div>
 						<div
 							role='presentation'

@@ -1,13 +1,34 @@
 import { Roles } from './default';
-import { filterByRole } from '../../helpers/helpers';
-
+export const operatorMenu = {
+	projects: {
+		id: 'Projects',
+		text: 'Proyectos',
+		path: 'home/projects',
+		icon: 'LibraryBooks',
+		subMenu: {
+			projectList: {
+				id: 'project-list',
+				text: 'Lista de proyectos',
+				path: 'home/projects',
+				icon: 'LibraryBooks',
+			},
+			newProject: {
+				id: 'new-project',
+				text: 'Nuevo proyecto',
+				path: 'home/projects/new',
+				icon: 'Add',
+			},
+		},
+	},
+	calc: {
+		id: 'Calculator',
+		text: 'Calculadoras',
+		path: 'home/calculators',
+		icon: 'ConfirmationNumber',
+		role: '*',
+	},
+};
 export const pagesMenu = {
-	// location: {
-	// 	id: 'Location',
-	// 	text: 'Ubicación',
-	// 	path: 'home/location',
-	// 	icon: 'EditLocation',
-	// },
 	projects: {
 		id: 'Projects',
 		text: 'Proyectos',
@@ -20,13 +41,6 @@ export const pagesMenu = {
 				path: 'home/projects',
 				icon: 'LibraryBooks',
 				role: '*',
-			},
-			newProject: {
-				id: 'new-project',
-				text: 'Nuevo proyecto',
-				path: 'home/projects/new',
-				icon: 'Add',
-				role: Roles.agent,
 			},
 		},
 		role: '*',

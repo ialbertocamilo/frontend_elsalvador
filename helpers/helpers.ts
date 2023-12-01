@@ -1,6 +1,7 @@
 import { departmentList, municipalityList, RoleNames } from '../common/constants/lists';
 import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
+import { operatorMenu, pagesMenu } from '../common/constants/menu';
 
 export function test() {
 	return null;
@@ -140,12 +141,10 @@ export function getItemFromDepartmentList(index: number) {
 	return departmentList[index - 1];
 }
 
-export function filterByRole(value: any, user: IUserStorage): any {
-	if (value)
-		return Object.values(value).filter((item: any) => {
-			item['subMenu'] = filterByRole(item?.subMenu, user);
-			return item?.role === user?.role || item?.role == '*';
-		});
+export function menuByRole(user: IUserStorage): any {
+	if (user.role == RoleType.agent) return operatorMenu;
+
+	return pagesMenu;
 }
 
 export function selectRoleName(roleType: number) {

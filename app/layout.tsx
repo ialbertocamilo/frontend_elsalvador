@@ -7,10 +7,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import { checkAuth } from '../services/auth/authentication';
 import 'react-notifications-component/dist/theme.css';
 import 'rodal/lib/rodal.css';
+import 'moment/locale/es';
+import moment from 'moment/moment';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter();
 	const navi = usePathname();
+	moment.locale('es');
 	useEffect(() => {
 		const user = ClientStorage.getUser();
 		if (user) userStore.setUser(user);

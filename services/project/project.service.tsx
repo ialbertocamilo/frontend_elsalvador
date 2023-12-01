@@ -72,8 +72,18 @@ export function useProjects() {
 		return true;
 	}
 
-	async function searchProject(value: string) {
-		const response = await axiosService().post(`/projects/search?value=${value}`);
+	async function searchProject(
+		value: string,
+		created_at_filter = false,
+		updated_at_filter = false,
+		id_filter = false,
+	) {
+		const response = await axiosService().post(
+			`/projects/search?value=${value}
+			&created_at_filter=${created_at_filter}
+			&updated_at_filter=${updated_at_filter}
+			&id_filter=${id_filter}`,
+		);
 		if (response.data) return response.data;
 
 		return null;

@@ -21,6 +21,7 @@ import DataService from '../../services/data/data.service';
 import { RoutesList } from '../../common/constants/default';
 import { Roles } from '../../common/types/role.types';
 import Popovers from '../bootstrap/Popovers';
+import moment from 'moment';
 
 const ProjectTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -36,7 +37,6 @@ const ProjectTable = () => {
 		},
 		onSubmit: (values) => {},
 	});
-
 	const projectService = useProjects();
 	const router = useRouter();
 	const goToProject = (id: number) => {
@@ -48,10 +48,20 @@ const ProjectTable = () => {
 	const [projects, setProjects] = useState<ProjectEntity[]>([]);
 
 	function findProjects() {
-		project.searchProject(formik.values.searchInput).then((data) => {
-			setProjects(data);
-		});
+		project
+			.searchProject(formik.values.searchInput, createdAtFilter, updatedAtFilter, idFilter)
+			.then((data) => {
+				setProjects(data);
+			});
 	}
+
+	const [createdAtFilter, setCreatedAtFilter] = useState(false);
+	const [updatedAtFilter, setUpdatedAtFilter] = useState(false);
+
+	const [idFilter, setIdFilter] = useState(false);
+	useEffect(() => {
+		findProjects();
+	}, [createdAtFilter, updatedAtFilter, idFilter]);
 
 	const user = ClientStorage.getUser();
 
@@ -68,8 +78,6 @@ const ProjectTable = () => {
 		});
 	}, []);
 
-	useEffect(() => {}, [perPage]);
-
 	const Status = ({ status }: { status?: number }) => {
 		if (status == ProjectStatus.inRevision)
 			return <span className='text-info'>En revisión</span>;
@@ -83,6 +91,20 @@ const ProjectTable = () => {
 	async function projectEnable(projectId: string, status: number) {
 		await DataService.setProjectStatus(projectId, status);
 		findProjects();
+	}
+
+	function orderBy(element: string) {
+		switch (element) {
+			case 'updated_at':
+				setUpdatedAtFilter(!updatedAtFilter);
+				break;
+			case 'created_at':
+				setCreatedAtFilter(!createdAtFilter);
+				break;
+			case 'id':
+				setIdFilter(!idFilter);
+				break;
+		}
 	}
 
 	const ActionSupervisor = ({ project }: { project: ProjectEntity }) => {
@@ -165,7 +187,13 @@ const ProjectTable = () => {
 							<table className='table table-modern table-hover scrollable-table'>
 								<thead>
 									<tr>
-										<th className='text-primary'>Id</th>
+										<th
+											className='text-primary'
+											style={{ cursor: 'pointer' }}
+											onClick={() => orderBy('id')}>
+											ID
+											<Icon size='lg' icon='FilterList'></Icon>
+										</th>
 										<th className='text-primary'>Estado de proyecto</th>
 										<th className='text-primary'>Nombre del proyecto</th>
 										<th className='text-primary'>Nombre del propietario</th>
@@ -175,6 +203,20 @@ const ProjectTable = () => {
 										</th>
 										<th className='text-primary'>Dirección</th>
 										<th className='text-primary'>Municipio</th>
+										<th
+											className='text-primary'
+											style={{ cursor: 'pointer' }}
+											onClick={() => orderBy('created_at')}>
+											Fecha de creación
+											<Icon size='lg' icon='FilterList'></Icon>
+										</th>
+										<th
+											className='text-primary'
+											style={{ cursor: 'pointer' }}
+											onClick={() => orderBy('updated_at')}>
+											Ultima modificación
+											<Icon size='lg' icon='FilterList'></Icon>
+										</th>
 										<th className='text-primary text-center'>Acciones</th>
 									</tr>
 								</thead>
@@ -244,6 +286,8 @@ const ProjectTable = () => {
 															)}
 														</div>
 													</td>
+													<td>{moment(i.created_at).format('LLLL')}</td>
+													<td>{moment(i.updated_at).calendar()}</td>
 													<td>
 														<ActionSupervisor project={i} />
 													</td>

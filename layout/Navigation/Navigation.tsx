@@ -410,11 +410,6 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 
 		const { t } = useTranslation('menu');
 
-		let menuFiltered;
-		const user = ClientStorage.getUser();
-		if (user) menuFiltered = filterByRole(menu, user);
-		else menuFiltered = menu;
-
 		function fillMenu(
 			data:
 				| {
@@ -478,7 +473,7 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 			// eslint-disable-next-line react/jsx-props-no-spreading
 			<nav ref={ref} aria-label={id} className={className} {...props}>
 				<List id={id} horizontal={horizontal}>
-					{fillMenu(menuFiltered, id, id, horizontal, undefined)}
+					{fillMenu(menu, id, id, horizontal, undefined)}
 				</List>
 			</nav>
 		);
