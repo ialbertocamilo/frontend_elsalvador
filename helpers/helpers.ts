@@ -120,9 +120,14 @@ export const pathToRoute = (path: string): string => {
 	return path;
 };
 
-export function to2Decimal(value: unknown): string | number | unknown {
+export function toDecimal(value: unknown, decimal = 3): string | number | unknown {
 	if (typeof value === 'string') {
-		if (value.includes('.') && value.split('.')[1].length > 2) return Number(value).toFixed(2);
+		if (value.includes('.') && value.split('.')[1].length > decimal) {
+			const numberValue = Number(value);
+			const formattedValue = numberValue.toFixed(decimal);
+			return parseFloat(formattedValue).toString();
+		}
+		return parseFloat(value).toString();
 	}
 	return value;
 }

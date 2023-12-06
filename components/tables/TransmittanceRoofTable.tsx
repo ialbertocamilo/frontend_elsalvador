@@ -3,7 +3,7 @@ import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calculator } from '../../services/calculation/calculator';
-import { to2Decimal } from '../../helpers/helpers';
+import { toDecimal } from '../../helpers/helpers';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
 import { useGlobalStatus } from '../../hooks/useGlobalStatus';
@@ -100,8 +100,8 @@ export const TransmittanceRoofTable = ({ onData, data, readOnly }: Props) => {
 	}, [data]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-		if (column == 'column2' || column == 'column4' || column == 'column5')
-			newRows[index][column] = to2Decimal(val);
+		if (column == 'column2' || column == 'column4') newRows[index][column] = toDecimal(val);
+		else if (column == 'column5') newRows[index][column] = toDecimal(val, 5);
 		else newRows[index][column] = val;
 		const result = calculator.calculateThickness(newRows, 'column5');
 

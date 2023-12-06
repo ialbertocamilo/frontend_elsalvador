@@ -15,19 +15,21 @@ export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtn
 	function uploadFile(ev: React.ChangeEvent<HTMLInputElement>) {
 		if (ev.currentTarget.files) {
 			const file = ev.currentTarget.files[0];
-			projects.uploadFile(projectId, file, keyName).then((data) => {
-				if (data) {
-					showNotification(
-						<span className='d-flex align-items-center'>
-							<Icon icon='Info' size='lg' className='me-1' />
-							<span>Archivo</span>
-						</span>,
-						'El archivo se subió exitosamente.',
-						'info',
-					);
-					if (checkUpload) checkUpload(data);
-				}
-			});
+			if (file && file.type === 'application/pdf') {
+				projects.uploadFile(projectId, file, keyName).then((data) => {
+					if (data) {
+						showNotification(
+							<span className='d-flex align-items-center'>
+								<Icon icon='Info' size='lg' className='me-1' />
+								<span>Archivo</span>
+							</span>,
+							'El archivo se subió exitosamente.',
+							'info',
+						);
+						if (checkUpload) checkUpload(data);
+					}
+				});
+			}
 		}
 	}
 	return (
@@ -35,6 +37,7 @@ export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtn
 			type='file'
 			autoComplete='photo'
 			ariaLabel='Adjuntar archivo'
+			accept='.pdf'
 			color='info'
 			onInput={uploadFile}
 		/>

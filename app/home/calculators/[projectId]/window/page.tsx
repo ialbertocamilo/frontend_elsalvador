@@ -24,6 +24,7 @@ import Icon from '../../../../../components/icon/Icon';
 import { GoProjectButton } from '../../../../../components/buttons/GoProjectButton';
 import { ClientStorage } from '../../../../../common/classes/storage';
 import { useGlobalStatus } from '../../../../../hooks/useGlobalStatus';
+import { toDecimal } from '../../../../../helpers/helpers';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -90,8 +91,8 @@ const WindowPage = () => {
 
 	const [customEditorText, setCustomEditorText] = useState('');
 
-	function handleChange(e: any) {
-		// e.target.value = to2Decimal(e.target.value);
+	function handleChange(e: any, nDecimals = 3) {
+		e.target.value = toDecimal(e.target.value, nDecimals);
 		formik.handleChange(e);
 	}
 
@@ -192,7 +193,9 @@ const WindowPage = () => {
 									name='frameWidth'
 									className='text-center'
 									value={formik.values.frameWidth}
-									onChange={handleChange}
+									onChange={(e) => {
+										handleChange(e, 5);
+									}}
 									readOnly={globalReadonly}
 									type='number'
 								/>
@@ -218,7 +221,9 @@ const WindowPage = () => {
 									className='text-center'
 									value={formik.values.longVain}
 									readOnly={globalReadonly}
-									onChange={handleChange}
+									onChange={(e) => {
+										handleChange(e, 5);
+									}}
 									type='number'
 								/>
 							</FormGroup>
@@ -230,7 +235,7 @@ const WindowPage = () => {
 									value={formik.values.highVain}
 									readOnly={globalReadonly}
 									onChange={(e) => {
-										handleChange(e);
+										handleChange(e, 5);
 									}}
 									type='number'
 								/>

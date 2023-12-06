@@ -14,7 +14,7 @@ import { ToggleYesNoButton } from '../../../../components/buttons/ToggleYesNoBut
 import Button from '../../../../components/bootstrap/Button';
 import { useProjectData } from '../../../../hooks/useProjectData';
 import { useFormik } from 'formik';
-import { getItemFromMunicipalityList } from '../../../../helpers/helpers';
+import { getItemFromMunicipalityList, toDecimal } from '../../../../helpers/helpers';
 import InputGroup from '../../../../components/bootstrap/forms/InputGroup';
 import { ResultSuccessModal } from '../../../../components/modals/ResultSuccessModal';
 import { ResultErrorModal } from '../../../../components/modals/ResultErrorModal';
@@ -633,7 +633,12 @@ const PackagesPage = () => {
 															className='text-center'
 															name='walls_reflectance'
 															readOnly={globalReadonly}
-															onChange={formik.handleChange}
+															onChange={(e: any) => {
+																e.target.value = toDecimal(
+																	e.target.value,
+																);
+																formik.handleChange(e);
+															}}
 															value={
 																formik.values.walls_reflectance
 															}></Input>
@@ -663,7 +668,12 @@ const PackagesPage = () => {
 															className='text-center'
 															name='roofs_reflectance'
 															readOnly={globalReadonly}
-															onChange={formik.handleChange}
+															onChange={(e: any) => {
+																e.target.value = toDecimal(
+																	e.target.value,
+																);
+																formik.handleChange(e);
+															}}
 															value={
 																formik.values.roofs_reflectance
 															}></Input>
@@ -702,7 +712,12 @@ const PackagesPage = () => {
 														className='text-center bg-info-subtle'
 														name='shades'
 														readOnly
-														onChange={formik.handleChange}
+														onChange={(e: any) => {
+															e.target.value = toDecimal(
+																e.target.value,
+															);
+															formik.handleChange(e);
+														}}
 														value={
 															totalCalculatedValues?.shades
 														}></Input>
@@ -715,7 +730,12 @@ const PackagesPage = () => {
 														className='text-center'
 														name='cop'
 														readOnly={globalReadonly}
-														onChange={formik.handleChange}
+														onChange={(e: any) => {
+															e.target.value = toDecimal(
+																e.target.value,
+															);
+															formik.handleChange(e);
+														}}
 														value={formik.values.cop}></Input>
 												</td>
 											</tr>

@@ -4,7 +4,7 @@ import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
 import React, { useEffect, useState } from 'react';
 import Select from '../bootstrap/forms/Select';
-import { to2Decimal } from '../../helpers/helpers';
+import { toDecimal } from '../../helpers/helpers';
 import classNames from 'classnames';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
@@ -260,7 +260,7 @@ export const ShadingTable = ({ setData, data, setResult, readOnly }: ShadingProp
 	}, [row]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-		newRows[index][column] = to2Decimal(val);
+		newRows[index][column] = toDecimal(val, 5);
 		setRow(newRows);
 		manageOperations();
 	};
