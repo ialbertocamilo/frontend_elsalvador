@@ -5,7 +5,6 @@ import React, {
 	ReactNode,
 	useCallback,
 	useContext,
-	useEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -22,8 +21,7 @@ import { TIcons } from '../../type/icons-type';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useEventOutside from '../../hooks/useEventOutside';
-import { filterByRole, pathRetouch } from '../../helpers/helpers';
-import { ClientStorage } from '../../common/classes/storage';
+import { pathRetouch } from '../../helpers/helpers';
 
 interface IListProps extends HTMLAttributes<HTMLUListElement> {
 	id?: string;
@@ -57,8 +55,7 @@ export const List = forwardRef<HTMLUListElement, IListProps>(
 );
 List.displayName = 'List';
 List.propTypes = {
-	id: PropTypes.string,
-	// @ts-ignore
+	id: PropTypes.string, // @ts-ignore
 	children: PropTypes.node,
 	className: PropTypes.string,
 	ariaLabelledby: PropTypes.string,
@@ -481,8 +478,7 @@ const Navigation = forwardRef<HTMLElement, INavigationProps>(
 );
 Navigation.displayName = 'Navigation';
 Navigation.propTypes = {
-	horizontal: PropTypes.bool,
-	// @ts-ignore
+	horizontal: PropTypes.bool, // @ts-ignore
 	menu: PropTypes.shape({
 		id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		text: PropTypes.string,
