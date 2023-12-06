@@ -37,7 +37,7 @@ export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtn
 			type='file'
 			autoComplete='photo'
 			ariaLabel='Adjuntar archivo'
-			accept='.pdf'
+			accept='.pdf,image/*'
 			color='info'
 			onInput={uploadFile}
 		/>

@@ -48,7 +48,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					className='col text-center'
-					inputMode={'decimal'}
+					type={'number'}
 					readOnly={readOnly}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
@@ -57,7 +57,7 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					className=' text-center'
-					inputMode={'decimal'}
+					type={'number'}
 					readOnly={readOnly}
 					value={data.column5}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}

@@ -4,10 +4,6 @@ import Button from '../bootstrap/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calculator } from '../../services/calculation/calculator';
 import { toDecimal } from '../../helpers/helpers';
-import { ClientStorage } from '../../common/classes/storage';
-import { RoleType } from '../../common/types/role.types';
-import { useGlobalStatus } from '../../hooks/useGlobalStatus';
-import { useParams } from 'next/navigation';
 
 interface RowProps {
 	data: any;
@@ -48,8 +44,8 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					className='col text-center'
-					inputMode={'decimal'}
 					readOnly={readOnly}
+					type={'number'}
 					value={data.column4}
 					onChange={(e: any) => onInputChange('column4', e.target.value)}
 				/>
@@ -57,8 +53,8 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: RowProps) => {
 			<td className='p-2'>
 				<Input
 					className=' text-center'
-					inputMode={'decimal'}
 					value={data.column5}
+					type={'number'}
 					readOnly={readOnly}
 					onChange={(e: any) => onInputChange('column5', e.target.value)}
 				/>
@@ -100,9 +96,12 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 	}, [data]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
-		if (column == 'column2' || column == 'column4') newRows[index][column] = toDecimal(val);
-		else if (column == 'column5') newRows[index][column] = toDecimal(val, 5);
-		else newRows[index][column] = val;
+		let value = val;
+		if (column == 'column2' || column == 'column4') {
+			value = toDecimal(value);
+		} else if (column == 'column5') value = toDecimal(value, 5);
+
+		newRows[index][column] = value;
 		const result = calculator.calculateThickness(newRows, 'column5');
 
 		setTotalThickness(result);
@@ -129,6 +128,7 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 	function addRow() {
 		setRow([...row, { column1: '', column2: '', column3: '', column4: '', column5: '' }]);
 	}
+
 	return (
 		<>
 			<div className='m-2 my-4'>
