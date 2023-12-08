@@ -13,12 +13,12 @@ export const ResultErrorModal = ({
 }) => {
 	return (
 		<Rodal visible={modalStatus} height={400} onClose={() => setModalStatus(false)}>
-			<Alert isLight color='danger' borderWidth={0} className='shadow-3d-primary'>
+			<Alert color='danger' borderWidth={0} className='shadow-3d-primary'>
 				<AlertHeading tag='h2' className='h5'>
 					Rechazado! ❌
 				</AlertHeading>
-				<span>
-					Proyecto <span className='bold h6'>{projectEntity?.project_name}</span> no ha
+				<span className='text-black-50'>
+					Proyecto <span className='h6 fw-bold'>{projectEntity?.project_name}</span> no ha
 					podido ser aprobado, debido a que los valores reportados y valores meta no son
 					iguales.
 				</span>

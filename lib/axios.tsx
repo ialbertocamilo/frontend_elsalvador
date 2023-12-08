@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import showNotification from '../components/extras/showNotification';
 import Icon from '../components/icon/Icon';
 import { ClientStorage } from '../common/classes/storage';
+import { RoutesList } from '../common/constants/default';
 
 const axiosService = () => {
 	const user = ClientStorage.getUser();
@@ -35,79 +36,85 @@ const axiosService = () => {
 			return value;
 		},
 		(error: AxiosError) => {
-			if (error?.response?.status == 400) {
-				if (error?.response?.data) {
-					const dataError = Object.values(error?.response?.data) as unknown as string[];
-					if (dataError.length > 0) {
-						dataError.forEach((value) =>
+			switch (error?.response?.status) {
+				case 400:
+					if (error?.response?.data) {
+						const dataError = Object.values(
+							error?.response?.data,
+						) as unknown as string[];
+						if (dataError.length > 0) {
+							dataError.forEach((value) =>
+								showNotification(
+									<span className='d-flex align-items-center'>
+										<Icon icon='Info' size='lg' className='me-1' />
+										<span>Error de validación</span>
+									</span>,
+									value,
+									'danger',
+								),
+							);
+						} else {
 							showNotification(
 								<span className='d-flex align-items-center'>
 									<Icon icon='Info' size='lg' className='me-1' />
 									<span>Error de validación</span>
 								</span>,
-								value,
+								JSON.stringify(error.response.data),
 								'danger',
-							),
-						);
-					} else {
-						showNotification(
-							<span className='d-flex align-items-center'>
-								<Icon icon='Info' size='lg' className='me-1' />
-								<span>Error de validación</span>
-							</span>,
-							JSON.stringify(error.response.data),
-							'danger',
-						);
+							);
+						}
 					}
-				}
-			}
-			if (error?.response?.status == 401) {
-				if (error?.response?.data) {
-					const dataError = Object.values(error?.response?.data) as unknown as string[];
-					if (dataError.length > 0) {
-						dataError.forEach((value) =>
+					break;
+				case 401:
+					if (error?.response?.data) {
+						const dataError = Object.values(
+							error?.response?.data,
+						) as unknown as string[];
+						if (dataError.length > 0) {
+							dataError.forEach((value) =>
+								showNotification(
+									<span className='d-flex align-items-center'>
+										<Icon icon='Info' size='lg' className='me-1' />
+										<span>Error de autorización</span>
+									</span>,
+									value,
+									'danger',
+								),
+							);
+						} else {
 							showNotification(
 								<span className='d-flex align-items-center'>
 									<Icon icon='Info' size='lg' className='me-1' />
-									<span>Error de autorización</span>
+									<span>Error de validación</span>
 								</span>,
-								value,
+								JSON.stringify(error.response.data),
 								'danger',
-							),
-						);
-					} else {
-						showNotification(
-							<span className='d-flex align-items-center'>
-								<Icon icon='Info' size='lg' className='me-1' />
-								<span>Error de validación</span>
-							</span>,
-							JSON.stringify(error.response.data),
-							'danger',
-						);
+							);
+						}
 					}
-				}
+					location.href = RoutesList.login;
+					break;
+				case 500:
+					showNotification(
+						<span className='d-flex align-items-center'>
+							<Icon icon='Info' size='lg' className='me-1' />
+							<span>Error</span>
+						</span>,
+						'Error desconocido interno.',
+						'danger',
+					);
+					break;
+				case 422:
+					showNotification(
+						<span className='d-flex align-items-center'>
+							<Icon icon='Info' size='lg' className='me-1' />
+							<span>Error</span>
+						</span>,
+						'Ocurrió un error de validación, verificar datos enviados.',
+						'danger',
+					);
+					break;
 			}
-			if (error?.response?.status == 500) {
-				showNotification(
-					<span className='d-flex align-items-center'>
-						<Icon icon='Info' size='lg' className='me-1' />
-						<span>Error</span>
-					</span>,
-					'Error desconocido interno.',
-					'danger',
-				);
-			}
-			if (error?.response?.status == 422) {
-				showNotification(
-					<span className='d-flex align-items-center'>
-						<Icon icon='Info' size='lg' className='me-1' />
-						<span>Error</span>
-					</span>,
-					'Ocurrió un error de validación, verificar datos enviados.',
-					'danger',
-				);
-			}
-
 			return error;
 		},
 	);

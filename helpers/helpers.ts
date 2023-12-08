@@ -1,4 +1,10 @@
-import { departmentList, municipalityList, RoleNames } from '../common/constants/lists';
+import {
+	departmentList,
+	DepartmentsWithProvincies,
+	keyList,
+	municipalityList,
+	RoleNames,
+} from '../common/constants/lists';
 import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
@@ -120,30 +126,23 @@ export const pathToRoute = (path: string): string => {
 	return path;
 };
 
-export function toDecimal(value: unknown, decimal = 3): string | number | unknown {
+export function toDecimal(value: unknown, decimal = 3) {
+	if (typeof value === 'number') value = value.toString();
 	if (typeof value === 'string') {
-		if (value.includes('.') && value.split('.')[1].length > decimal) {
-			const numberValue = Number(value);
-			const formattedValue = numberValue.toFixed(decimal);
-			return parseFloat(formattedValue).toString();
-		}
-		return parseFloat(value).toString();
+		const numberValue = Number(value);
+		const formattedValue = numberValue.toFixed(decimal);
+		return parseFloat(formattedValue).toString();
 	}
-	return value;
+}
+
+export function toDecimalNumber(value: unknown, decimal = 3) {
+	return Number(toDecimal(value, decimal));
 }
 
 export function arrayToList(arr: string[]) {
 	return arr?.map((name, index) => {
-		return { value: index + 1, text: name };
+		return { value: index, text: name };
 	});
-}
-
-export function getItemFromMunicipalityList(index: number) {
-	return municipalityList[index - 1];
-}
-
-export function getItemFromDepartmentList(index: number) {
-	return departmentList[index - 1];
 }
 
 export function menuByRole(user: IUserStorage): any {
@@ -156,4 +155,50 @@ export function selectRoleName(roleType: number) {
 	if (roleType == RoleType.agent) return RoleNames.Operator;
 	if (roleType == RoleType.supervisor) return RoleNames.Admin;
 	if (roleType == RoleType.admin) return RoleNames.SuperAdmin;
+}
+
+export const extractDataFromArrayProject = (key: string, array: []): any => {
+	const obj: any = array.find((val: any) => val?.key == key);
+	if (obj)
+		switch (key) {
+			case keyList.proportion:
+				return obj.payload as { rows: []; result: { totalPercentage: string } };
+			case keyList.transmittance:
+				return obj.payload.data as {
+					rows: [];
+					result: { u_value: string; surface2: number };
+				};
+			case keyList.roofs:
+				return obj.payload.data as {
+					rows: [];
+					result: { u_value: string; surface2: number };
+				};
+			case keyList.window:
+				return obj.payload as { windowUValue: string; GValue: number };
+
+			case keyList.shading:
+				return obj.payload as {
+					data: [];
+					result: string;
+				};
+		}
+	return null;
+};
+
+export function fillMunicipalitiesByDepartment(departmentIndex: number) {
+	const find = DepartmentsWithProvincies.find((value) => value?.id == departmentIndex);
+	return find?.municipality;
+}
+
+export function selectMunicipalityFromJson(municipalityIndex: number, departmentId: number) {
+	const find = DepartmentsWithProvincies.find((value) => value?.id == departmentId);
+
+	return find
+		? find.municipality[municipalityIndex]
+		: DepartmentsWithProvincies[0].municipality[0];
+}
+export function selectDepartmenFromJson(departmentId: number) {
+	const find = DepartmentsWithProvincies.find((value) => value?.id == departmentId);
+
+	return find ? find.department : DepartmentsWithProvincies[0].department;
 }

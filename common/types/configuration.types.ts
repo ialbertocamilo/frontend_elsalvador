@@ -1,3 +1,5 @@
+import { BuildingClassification } from './building.types';
+
 export interface IConfigurationType {
 	proportion_wall_window: string;
 	walls_u_value: string;
@@ -12,4 +14,5 @@ export interface IConfigurationType {
 	package_name?: string;
 	package_id?: string;
 	package_status?: boolean;
+	building_classification?: BuildingClassification;
 }

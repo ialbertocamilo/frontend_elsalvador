@@ -14,8 +14,6 @@ import { ToggleYesNoButton } from '../../../../components/buttons/ToggleYesNoBut
 import Button from '../../../../components/bootstrap/Button';
 import { useProjectData } from '../../../../hooks/useProjectData';
 import { useFormik } from 'formik';
-import { getItemFromMunicipalityList, toDecimal } from '../../../../helpers/helpers';
-import InputGroup from '../../../../components/bootstrap/forms/InputGroup';
 import { ResultSuccessModal } from '../../../../components/modals/ResultSuccessModal';
 import { ResultErrorModal } from '../../../../components/modals/ResultErrorModal';
 import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
@@ -26,6 +24,9 @@ import Spinner from '../../../../components/bootstrap/Spinner';
 import { keyList, ProjectStatus } from '../../../../common/constants/lists';
 import { IQuestion } from '../../../../common/types/question.types';
 import { useGlobalStatus } from '../../../../hooks/useGlobalStatus';
+import { BuildingClassification } from '../../../../common/types/building.types';
+import { ResultValues } from '../../../../components/packages/ResultValues';
+import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../../../helpers/helpers';
 
 const keyName = keyList.package;
 const PackagesPage = () => {
@@ -41,6 +42,18 @@ const PackagesPage = () => {
 	);
 
 	const { globalReadonly } = useGlobalStatus(params?.projectId as string);
+
+	useEffect(() => {
+		if (projectEntity) {
+			setDepartment(selectDepartmenFromJson(Number(projectEntity.department)));
+			setMunicipalites(
+				selectMunicipalityFromJson(
+					Number(projectEntity.municipality),
+					Number(projectEntity.department),
+				),
+			);
+		}
+	}, [projectEntity]);
 	useEffect(() => {
 		Promise.all([
 			DataService.getPackagesConfig(),
@@ -73,6 +86,8 @@ const PackagesPage = () => {
 						cop: packageFinded.reportedValue.cop.toString(),
 						walls_reflectance: packageFinded.reportedValue.wall_reflectance.toString(),
 						roofs_reflectance: packageFinded.reportedValue.roof_reflectance.toString(),
+						building_classification:
+							packageFinded.reportedValue.building_classification,
 					});
 					setOriginQuestions(packageFinded?.valueOrigin);
 					if (packageFinded?.questions) setQuestions(packageFinded?.questions);
@@ -92,6 +107,7 @@ const PackagesPage = () => {
 		walls_reflectance: '',
 		roofs_reflectance: '',
 		cop: '',
+		building_classification: 0,
 	};
 	const formik = useFormik({
 		initialValues: reportedValues,
@@ -143,6 +159,7 @@ const PackagesPage = () => {
 		window_g_value: false,
 		shades: false,
 		cop: false,
+		building_classification: false,
 	});
 
 	const initialOriginQuestions = {
@@ -155,6 +172,7 @@ const PackagesPage = () => {
 		window_g_value: '1',
 		shades: '1',
 		cop: '1',
+		building_classification: '1',
 	};
 	const [originQuestions, setOriginQuestions] =
 		useState<IPackageOriginQuestions>(initialOriginQuestions);
@@ -173,6 +191,7 @@ const PackagesPage = () => {
 			window_g_value: 0,
 			shades: 0,
 			cop: 0,
+			building_classification: BuildingClassification.households,
 		},
 		reportedValue: {
 			wall_window_proportion: 0,
@@ -184,6 +203,7 @@ const PackagesPage = () => {
 			window_g_value: 0,
 			shades: 0,
 			cop: 0,
+			building_classification: BuildingClassification.households,
 		},
 		valueOrigin: initialOriginQuestions,
 		questions: [],
@@ -265,6 +285,8 @@ const PackagesPage = () => {
 				Number(packageInfo?.shading_coefficient),
 			shades: Number(totalCalculatedValues?.shades) <= Number(packageInfo?.shades),
 			cop: formik.values.cop ? Number(formik.values.cop) <= Number(packageInfo?.hvac) : false,
+			building_classification:
+				formik.values.building_classification === packageInfo?.building_classification,
 		});
 		setCanRequestTechnicalReport(false);
 	}
@@ -288,6 +310,7 @@ const PackagesPage = () => {
 				window_g_value: Number(packageInfo?.shading_coefficient),
 				shades: Number(packageInfo?.shades),
 				cop: Number(packageInfo?.hvac),
+				building_classification: Number(packageInfo?.building_classification),
 			},
 			reportedValue: {
 				wall_window_proportion: Number(totalCalculatedValues?.wall_window_proportion),
@@ -299,6 +322,7 @@ const PackagesPage = () => {
 				window_g_value: Number(totalCalculatedValues?.window_g_value),
 				shades: Number(totalCalculatedValues?.shades),
 				cop: Number(formik.values?.cop),
+				building_classification: Number(formik.values?.building_classification),
 			},
 			meets: complies,
 		});
@@ -393,6 +417,9 @@ const PackagesPage = () => {
 			</div>
 		);
 	};
+
+	const [municipalites, setMunicipalites] = useState<string>();
+	const [department, setDepartment] = useState<string>();
 	return (
 		<PageWrapper>
 			<Page className='mx-3'>
@@ -443,6 +470,21 @@ const PackagesPage = () => {
 										</FormGroup>
 									</div>
 								</div>
+								<div className='row mb-1 row-cols-2 align-baseline align-items-center center justify-content-center  '>
+									<div className='col-2'>
+										<p>Departamento</p>
+									</div>
+									<div className='col'>
+										<FormGroup>
+											<Input
+												type='text'
+												className='text-center bg-info-subtle'
+												readOnly
+												value={department}
+											/>
+										</FormGroup>
+									</div>
+								</div>
 								<div className='row mb-1 row-cols-2  align-baseline align-items-center center justify-content-center '>
 									<div className='col-2'>
 										<p>Municipio</p>
@@ -452,39 +494,7 @@ const PackagesPage = () => {
 											<Input
 												type='text'
 												className='text-center bg-info-subtle'
-												value={getItemFromMunicipalityList(
-													Number(projectEntity?.municipality),
-												)}
-											/>
-										</FormGroup>
-									</div>
-								</div>
-
-								<div className='row mb-1 row-cols-2 align-baseline align-items-center center justify-content-center  '>
-									<div className='col-2'>
-										<p>Evaluado por</p>
-									</div>
-									<div className='col'>
-										<FormGroup>
-											<Input
-												type='text'
-												className='text-center bg-info-subtle'
-												readOnly
-											/>
-										</FormGroup>
-									</div>
-								</div>
-
-								<div className='row mb-1 row-cols-2 align-baseline align-items-center center justify-content-center '>
-									<div className='col-2'>
-										<p>Revisado por</p>
-									</div>
-									<div className='col'>
-										<FormGroup>
-											<Input
-												type='text'
-												className='text-center bg-info-subtle'
-												readOnly
+												value={municipalites}
 											/>
 										</FormGroup>
 									</div>
@@ -493,491 +503,17 @@ const PackagesPage = () => {
 						</Card>
 						<Card>
 							<CardBody>
-								<div className='d-flex justify-content-center '>
-									<table>
-										<thead>
-											<tr>
-												<th className='text-center'>Concepto</th>
-												<th className='text-center '>Valor meta</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td className='p-4'>Proporcion muro ventana</td>
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.proportion_wall_window
-														? packageInfo?.proportion_wall_window + '%'
-														: '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Valor U de muro (W/m2K)
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.walls_u_value || '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Reflectancia Muros (%) coeficiente absortividad
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.walls_reflectance
-														? packageInfo?.walls_reflectance + '%'
-														: '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Valor U de techo (W/m2K)
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.roofs_u_value || '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Reflectancia Techos (%) coeficiente absortividad
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.roofs_reflectance
-														? packageInfo?.roofs_reflectance + '%'
-														: '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Valor U de ventana (W/m2K)
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.windows_u_value || '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Valor g de ventana
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.shading_coefficient || '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Sombras (Ventanas exteriores)
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.shades || '-'}
-												</td>
-											</tr>
-											<tr>
-												<td className='p-4 text-start'>
-													Aire acondicionado COP
-												</td>
-
-												<td className='h5 text-success fw-bold'>
-													{packageInfo?.hvac || '-'}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<table className=' px-5 mx-3'>
-										<thead>
-											<tr>
-												<th>Valor Reportado</th>
-											</tr>
-										</thead>
-										<tbody className='text-center bold h5  px-5 container'>
-											<tr>
-												<td width='150'>
-													<InputGroup>
-														<Input
-															size='sm'
-															readOnly
-															type='number'
-															className='text-center bg-info-subtle'
-															name='proportion_wall_window'
-															value={
-																totalCalculatedValues?.wall_window_proportion
-															}></Input>
-														<Button className='bg-dark-subtle'>
-															%
-														</Button>
-													</InputGroup>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<Input
-														readOnly
-														type='number'
-														className='text-center bg-info-subtle'
-														name='walls_u_value'
-														value={
-															totalCalculatedValues?.wall_u_value
-														}></Input>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<InputGroup>
-														<Input
-															type='number'
-															className='text-center'
-															name='walls_reflectance'
-															readOnly={globalReadonly}
-															onChange={(e: any) => {
-																e.target.value = toDecimal(
-																	e.target.value,
-																);
-																formik.handleChange(e);
-															}}
-															value={
-																formik.values.walls_reflectance
-															}></Input>
-														<Button className='bg-dark-subtle' isLight>
-															%
-														</Button>
-													</InputGroup>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<Input
-														type='number'
-														readOnly
-														className='text-center bg-info-subtle'
-														name='roofs_u_value'
-														value={
-															totalCalculatedValues?.roof_u_value
-														}></Input>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<InputGroup>
-														<Input
-															type='number'
-															className='text-center'
-															name='roofs_reflectance'
-															readOnly={globalReadonly}
-															onChange={(e: any) => {
-																e.target.value = toDecimal(
-																	e.target.value,
-																);
-																formik.handleChange(e);
-															}}
-															value={
-																formik.values.roofs_reflectance
-															}></Input>
-														<Button className='bg-dark-subtle'>
-															%
-														</Button>
-													</InputGroup>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<Input
-														type='number'
-														readOnly
-														className='text-center bg-info-subtle'
-														value={
-															totalCalculatedValues?.window_u_value
-														}></Input>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<Input
-														type='number'
-														readOnly
-														className='text-center bg-info-subtle'
-														value={
-															totalCalculatedValues?.window_g_value
-														}></Input>
-												</td>
-											</tr>
-											<tr>
-												<td width='150'>
-													<Input
-														type='number'
-														className='text-center bg-info-subtle'
-														name='shades'
-														readOnly
-														onChange={(e: any) => {
-															e.target.value = toDecimal(
-																e.target.value,
-															);
-															formik.handleChange(e);
-														}}
-														value={
-															totalCalculatedValues?.shades
-														}></Input>
-												</td>
-											</tr>
-											<tr className='p-4'>
-												<td width='150'>
-													<Input
-														type='number'
-														className='text-center'
-														name='cop'
-														readOnly={globalReadonly}
-														onChange={(e: any) => {
-															e.target.value = toDecimal(
-																e.target.value,
-															);
-															formik.handleChange(e);
-														}}
-														value={formik.values.cop}></Input>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<table className=' px-5 mx-2'>
-										<thead>
-											<tr>
-												<th>Origen de los valores</th>
-											</tr>
-										</thead>
-										<tbody className='align-items-baseline'>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={
-															originQuestions.wall_window_proportion
-														}
-														onChange={(e: any) => {
-															setOriginQuestions({
-																...originQuestions,
-																wall_window_proportion:
-																	e.target.value,
-															});
-														}}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.wall_u_value}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																wall_u_value: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.wall_reflectance}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																wall_reflectance: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.roof_u_value}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																roof_u_value: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.roof_reflectance}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																roof_reflectance: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.window_u_value}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																window_u_value: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.window_g_value}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																window_g_value: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														disabled={globalReadonly}
-														list={selection}
-														value={originQuestions.shades}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																shades: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<Select
-														ariaLabel={'selection'}
-														list={selection}
-														disabled={globalReadonly}
-														value={originQuestions.cop}
-														onChange={(e: any) =>
-															setOriginQuestions({
-																...originQuestions,
-																cop: e.target.value,
-															})
-														}
-													/>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<table>
-										<thead>
-											<tr>
-												<th className='text-center px-2'>Cumple</th>
-											</tr>
-										</thead>
-										<tbody className='text-center bold h5'>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.wall_window_proportion}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.wall_u_value}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.wall_reflectance}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.roof_u_value}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.roof_reflectance}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.window_u_value}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.window_g_value}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.shades}
-													/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<ToggleYesNoButton
-														blocked
-														forceYes={complies.cop}
-													/>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+								<div className='d-flex justify-content-center align-items-baseline'>
+									<ResultValues
+										packageInfo={packageInfo}
+										totalCalculatedValues={totalCalculatedValues}
+										globalReadonly={globalReadonly}
+										formik={formik}
+										selection={selection}
+										originQuestions={originQuestions}
+										setOriginQuestions={setOriginQuestions}
+										complies={complies}
+									/>
 								</div>
 							</CardBody>
 						</Card>

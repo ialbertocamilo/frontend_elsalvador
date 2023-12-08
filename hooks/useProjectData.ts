@@ -5,6 +5,7 @@ import { IProjectDataTotalValues } from '../common/types/project.types';
 import data from '../common/data/dummyCustomerData';
 import { keyList } from '../common/constants/lists';
 import DataService from '../services/data/data.service';
+import { extractDataFromArrayProject } from '../helpers/helpers';
 
 export const useProjectData = (projectId: string) => {
 	const [projectEntity, setProjectEntity] = useState<ProjectEntity>();
@@ -26,44 +27,56 @@ export const useProjectData = (projectId: string) => {
 			let window_u_value = '';
 			let window_g_value = '';
 			let shades = '';
+			let building_classification = '';
 
 			Promise.all([
-				projects.getProjectData({ project_id: projectId, key: keyList.proportion }),
-				projects.getProjectData({ project_id: projectId, key: keyList.transmittance }),
-				projects.getProjectData({ project_id: projectId, key: keyList.window }),
-				projects.getProjectData({ project_id: projectId, key: keyList.roofs }),
-				projects.getProjectData({ project_id: projectId, key: keyList.shading }),
+				projects.getAllProjectData(projectId),
 				DataService.loadPackageByProjectId(projectId),
 			]).then((data: any[]) => {
-				const packageFinded = data[5];
-				if (packageFinded) {
-					// Si encuentra un proyecto con datos de un paquete toma los datos y ya no de las calculadoras
-
-					setTotalCalculatedValues({
-						wall_window_proportion:
-							packageFinded.reportedValue?.wall_window_proportion.toString(),
-						wall_u_value: packageFinded.reportedValue.wall_u_value.toString(),
-						window_g_value: packageFinded.reportedValue.window_g_value.toString(),
-						roof_u_value: packageFinded.reportedValue.roof_u_value.toString(),
-						window_u_value: packageFinded.reportedValue.window_u_value.toString(),
-						shades: packageFinded.reportedValue.shades.toString(),
-					});
+				const result = data[0];
+				const packageDetected = data[1];
+				const temporalPackage = result?.data;
+				// Si encuentra un proyecto con datos de un paquete toma los datos y ya no de las calculadoras
+				if (packageDetected) {
+					wall_window_proportion =
+						packageDetected.reportedValue?.wall_window_proportion.toString();
+					wall_u_value = packageDetected.reportedValue.wall_u_value.toString();
+					window_g_value = packageDetected.reportedValue.window_g_value.toString();
+					roof_u_value = packageDetected.reportedValue.roof_u_value.toString();
+					window_u_value = packageDetected.reportedValue.window_u_value.toString();
+					shades = packageDetected.reportedValue.shades.toString();
+					building_classification =
+						packageDetected.reportedValue.building_classification.toString();
 				} else {
-					if (data[0]) wall_window_proportion = data[0]?.payload?.result?.totalPercentage;
-					if (data[1]) wall_u_value = data[1]?.payload?.data?.result?.u_value;
-					if (data[2]) window_u_value = data[2]?.payload?.windowUValue;
-					if (data[2]) window_g_value = data[2]?.payload?.gValue;
-					if (data[3]) roof_u_value = data[3]?.payload?.data?.result?.u_value;
-					if (data[4]) shades = data[4]?.payload?.result;
-					setTotalCalculatedValues({
-						wall_window_proportion,
-						wall_u_value,
-						roof_u_value,
-						window_u_value,
-						window_g_value,
-						shades,
-					});
+					wall_window_proportion = extractDataFromArrayProject(
+						keyList.proportion,
+						temporalPackage,
+					)?.result?.totalPercentage;
+					window_g_value = extractDataFromArrayProject(
+						keyList.window,
+						temporalPackage,
+					)?.gValue;
+					window_u_value = String(
+						extractDataFromArrayProject(keyList.window, temporalPackage)?.windowUValue,
+					);
+					wall_u_value = extractDataFromArrayProject(
+						keyList.transmittance,
+						temporalPackage,
+					)?.result?.u_value;
+					roof_u_value = extractDataFromArrayProject(keyList.roofs, temporalPackage)
+						?.result?.u_value;
+					shades = extractDataFromArrayProject(keyList.shading, temporalPackage)?.result;
+					building_classification = result?.building_classification;
 				}
+				setTotalCalculatedValues({
+					wall_window_proportion,
+					wall_u_value,
+					roof_u_value,
+					window_g_value,
+					window_u_value,
+					shades,
+					building_classification,
+				});
 			});
 		}
 	}

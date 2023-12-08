@@ -33,15 +33,19 @@ const User = () => {
 	const { t } = useTranslation(['translation', 'menu']);
 
 	const doLogout = useCallback(() => {
-		logout().then((r) => {
-			if (r) {
-				setTimeout(() => {
+		logout()
+			.then((r) => {
+				if (r) {
 					ClientStorage.deleteAll();
 					setUser('');
 					router.replace(RoutesList.login);
-				}, 800);
-			}
-		});
+				}
+			})
+			.catch(() => {
+				ClientStorage.deleteAll();
+				setUser('');
+				router.replace(RoutesList.login);
+			});
 	}, []);
 	return (
 		<>

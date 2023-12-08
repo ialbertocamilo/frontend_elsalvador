@@ -8,7 +8,7 @@ import SubHeader, {
 } from '../../../layout/SubHeader/SubHeader';
 import { useRouter } from 'next/navigation';
 import { RoutesListWithParams } from '../../../common/constants/default';
-import { getItemFromDepartmentList, getItemFromMunicipalityList } from '../../../helpers/helpers';
+import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../../helpers/helpers';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Button from '../../../components/bootstrap/Button';
@@ -24,7 +24,9 @@ import { IUser } from '../../../common/types/user.types';
 import { UserService } from '../../../services/users/user.service';
 import Select from '../../../components/bootstrap/forms/Select';
 import { RoleType } from '../../../common/types/role.types';
-import search from '../../../components/icon/material-icons/Search';
+import moment, { Moment } from 'moment';
+import Popover from '@reactour/popover';
+import Popovers from '../../../components/bootstrap/Popovers';
 
 const AccessTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -35,6 +37,7 @@ const AccessTable = () => {
 	const router = useRouter();
 	useEffect(() => {}, [perPage]);
 
+	const myMoment = moment();
 	async function changeActive(userId: string, value: boolean) {
 		await UserService.changeActive(userId, value);
 		getAllUsers();
@@ -86,6 +89,30 @@ const AccessTable = () => {
 		if (e.key == 'Enter') setSearchValue(value);
 	}
 
+	const IsRecentlyActive = ({ date }: { date: string }) => {
+		if (date) {
+			const userDate = moment(date);
+			const diff = myMoment?.diff(userDate, 'minutes');
+			if (diff >= 0 && diff < 6)
+				return (
+					<Popovers
+						desc={'Conectado recientemente ' + userDate.startOf('minutes').fromNow()}
+						trigger='hover'>
+						<Icon icon={'Circle'} color={'success'}></Icon>
+					</Popovers>
+				);
+		}
+		return (
+			<Popovers desc={'Desconectado'} trigger='hover'>
+				<Icon icon={'Circle'} color={'danger'}></Icon>
+			</Popovers>
+		);
+	};
+	function refreshSearch() {
+		setValue('');
+		getAllUsers();
+	}
+
 	return (
 		<>
 			<div className='col-12'>
@@ -112,6 +139,7 @@ const AccessTable = () => {
 				</SubHeaderLeft>
 				<SubHeaderRight>
 					<SubheaderSeparator />
+					<Button icon='Refresh' onClick={refreshSearch}></Button>
 				</SubHeaderRight>
 			</SubHeader>
 			<div className='row h-100'>
@@ -121,6 +149,7 @@ const AccessTable = () => {
 							<table className='table table-modern table-hover scrollable-table'>
 								<thead>
 									<tr>
+										<th className='text-primary'>Actividad</th>
 										<th className='text-primary'>Correo electrónico</th>
 										<th className='text-primary'>Nombres y apellidos</th>
 										<th className='text-primary'>Profesión</th>
@@ -135,6 +164,20 @@ const AccessTable = () => {
 									{dataPagination(users, currentPage, perPage)?.map(
 										(i: IUser) => (
 											<tr key={i.id} style={{ cursor: 'pointer' }}>
+												<td
+													onClick={() =>
+														router.push(
+															RoutesListWithParams.access(i.id),
+														)
+													}
+													className='fw-semibold'>
+													<IsRecentlyActive
+														date={
+															i?.tokens && i?.tokens?.length > 0
+																? i?.tokens[0].updated_at
+																: ''
+														}></IsRecentlyActive>
+												</td>
 												<td
 													onClick={() =>
 														router.push(
@@ -176,7 +219,7 @@ const AccessTable = () => {
 														)
 													}>
 													<div>
-														{getItemFromDepartmentList(
+														{selectDepartmenFromJson(
 															Number(i.department),
 														)}
 													</div>
@@ -188,8 +231,9 @@ const AccessTable = () => {
 														)
 													}>
 													<div>
-														{getItemFromMunicipalityList(
+														{selectMunicipalityFromJson(
 															Number(i.municipality),
+															Number(i.department),
 														)}
 													</div>
 												</td>

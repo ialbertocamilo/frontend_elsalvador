@@ -21,7 +21,10 @@ export interface IUserRegister {
 	email?: string;
 	password?: string;
 }
-
+export interface IToken {
+	last_used_at: string;
+	updated_at: string;
+}
 export interface IUser {
 	id: string;
 	name: string;
@@ -39,4 +42,5 @@ export interface IUser {
 	active: boolean;
 	created_at?: Date;
 	updated_at?: Date;
+	tokens?: IToken[];
 }

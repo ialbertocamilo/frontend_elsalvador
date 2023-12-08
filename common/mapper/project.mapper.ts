@@ -1,5 +1,6 @@
 import { IProjectFormType } from '../types/project.types';
 import { ProjectEntity, ProjectRequest } from '../classes/project';
+import { BuildingClassification, BuildingType } from '../types/building.types';
 
 export class ProjectMapper {
 	static formToRequest(form: IProjectFormType) {
@@ -20,7 +21,8 @@ export class ProjectMapper {
 			levels: form.levelsNumber,
 			offices: form.offices,
 			surface: form.surface,
-			is_public: form.public,
+			building_type: Number(form.building_type),
+			building_classification: Number(form.building_classification),
 		});
 	}
 
@@ -42,7 +44,8 @@ export class ProjectMapper {
 			levelsNumber: projectEntity.levels,
 			offices: projectEntity.offices,
 			surface: projectEntity.surface,
-			public: projectEntity.is_public,
+			building_type: projectEntity.building_type,
+			building_classification: projectEntity.building_classification,
 			status: projectEntity?.status,
 		};
 	}

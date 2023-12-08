@@ -12,6 +12,7 @@ import Label from '../../../../components/bootstrap/forms/Label';
 import { useProjects } from '../../../../services/project/project.service';
 import { Calculator } from '../../../../services/calculation/calculator';
 import { GoProjectButton } from '../../../../components/buttons/GoProjectButton';
+import { toDecimal } from '../../../../helpers/helpers';
 
 const keyName = 'window';
 const WindowPage = () => {
@@ -70,8 +71,8 @@ const WindowPage = () => {
 
 	const [customEditorText, setCustomEditorText] = useState('');
 
-	function handleChange(e: any) {
-		// e.target.value = to2Decimal(e.target.value);
+	function handleChange(e: any, nDecimals = 3) {
+		e.target.value = toDecimal(e.target.value, nDecimals);
 		formik.handleChange(e);
 	}
 
@@ -97,7 +98,7 @@ const WindowPage = () => {
 								/>
 							</FormGroup>
 							<FormGroup className='col-2 my-1'>
-								<Label className={'border-2'}>Valor U (W/m²K)</Label>
+								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									type='number'
 									name='uValue1'
@@ -149,7 +150,7 @@ const WindowPage = () => {
 								/>
 							</FormGroup>
 							<FormGroup className='col-2 my-1'>
-								<Label className={'border-2'}>Valor U (W/m²K)</Label>
+								<Label className={'border-2'}>Valor U (W/m2K)</Label>
 								<Input
 									name='uValue2'
 									className='text-center'
@@ -164,7 +165,9 @@ const WindowPage = () => {
 									name='frameWidth'
 									className='text-center'
 									value={formik.values.frameWidth}
-									onChange={handleChange}
+									onChange={(e) => {
+										handleChange(e, 5);
+									}}
 									type='number'
 								/>
 							</FormGroup>
@@ -188,7 +191,9 @@ const WindowPage = () => {
 									name='longVain'
 									className='text-center'
 									value={formik.values.longVain}
-									onChange={handleChange}
+									onChange={(e) => {
+										handleChange(e, 5);
+									}}
 									type='number'
 								/>
 							</FormGroup>
@@ -199,7 +204,7 @@ const WindowPage = () => {
 									className='text-center'
 									value={formik.values.highVain}
 									onChange={(e) => {
-										handleChange(e);
+										handleChange(e, 5);
 									}}
 									type='number'
 								/>

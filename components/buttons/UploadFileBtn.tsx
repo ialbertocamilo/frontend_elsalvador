@@ -15,7 +15,7 @@ export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtn
 	function uploadFile(ev: React.ChangeEvent<HTMLInputElement>) {
 		if (ev.currentTarget.files) {
 			const file = ev.currentTarget.files[0];
-			if (file && file.type === 'application/pdf') {
+			if (file) {
 				projects.uploadFile(projectId, file, keyName).then((data) => {
 					if (data) {
 						showNotification(
@@ -35,6 +35,7 @@ export const UploadFileBtn = ({ projectId, keyName, checkUpload }: UploadFileBtn
 	return (
 		<Input
 			type='file'
+			className={'mt-3'}
 			autoComplete='photo'
 			ariaLabel='Adjuntar archivo'
 			accept='.pdf,image/*'

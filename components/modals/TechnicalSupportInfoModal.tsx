@@ -62,13 +62,12 @@ export const TechnicalSupportInfoModal = ({
 					Importante!
 				</AlertHeading>
 			</Alert>
-			<span>
+			<span className='fw-semibold text-black-50'>
 				Para el proyecto <span className='fw-bold'>{projectEntity?.project_name}</span>{' '}
 				tomar en cuenta lo siguiente.
 			</span>
 			<br />
-			<br />
-			<ul className='fw-semibold'>
+			<ul className='fw-semibold text-black-50'>
 				<li>
 					El proyecto no se podrá editar salvo habilitación del responsable de la
 					evaluación técnica.

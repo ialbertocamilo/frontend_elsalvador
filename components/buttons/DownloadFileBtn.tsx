@@ -14,6 +14,8 @@ export const DownloadFileBtn = ({ urlToFile, fileName }: DownloadFileProps) => {
 			to={urlToFile}
 			target='_blank'
 			icon='Download'
+			className={'rbc-ellipsis'}
+			aria-label={fileName}
 			download>
 			Descargar {fileName}
 		</Button>

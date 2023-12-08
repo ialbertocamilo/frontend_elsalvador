@@ -9,6 +9,9 @@ import { IConfigurationType } from '../common/types/configuration.types';
 import PackageList from './extras/PackageList';
 import DataService from '../services/data/data.service';
 import { codePackagePrefix } from '../common/constants/lists';
+import Select from './bootstrap/forms/Select';
+import { BuildingClassification } from '../common/types/building.types';
+import { BuildingClassificationButtons } from './buttons/BuildingClassificationButtons';
 
 const SelectQuestionsConfiguration = ({
 	emitValue,
@@ -31,6 +34,7 @@ const SelectQuestionsConfiguration = ({
 		package_name: '',
 		package_id: '',
 		package_status: true,
+		building_classification: BuildingClassification.households,
 	};
 	const formik = useFormik({
 		initialValues: initial,
@@ -132,7 +136,27 @@ const SelectQuestionsConfiguration = ({
 										</tr>
 										<tr>
 											<td className='p-3'>
-												Nombre del paquete
+												Asociación a clase de edificación
+											</td>
+											<td width='250' className='text-center fw-bold'>
+												<BuildingClassificationButtons
+													readOnly={false}
+													selected={
+														formik.values.building_classification ||
+														BuildingClassification.households
+													}
+													onChange={(value: BuildingClassification) =>
+														formik.setFieldValue(
+															'building_classification',
+															value,
+														)
+													}
+												/>
+											</td>
+										</tr>
+										<tr>
+											<td className='p-3'>
+												Nombre de paquete
 												<i className='text-danger '>*</i>
 											</td>
 											<td width='250' className='text-center'>

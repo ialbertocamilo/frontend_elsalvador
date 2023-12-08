@@ -3,7 +3,7 @@ import FormGroup from '../bootstrap/forms/FormGroup';
 import Button from '../bootstrap/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Calculator } from '../../services/calculation/calculator';
-import { toDecimal } from '../../helpers/helpers';
+import { toDecimal, toDecimalNumber } from '../../helpers/helpers';
 
 interface RowProps {
 	data: any;
@@ -89,10 +89,9 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 	const [totalSurface1, setTotalSurface1] = useState(0);
 	const [totalSurface2, setTotalSurface2] = useState(0);
 
-	useEffect(() => {}, [totalSurface2]);
 	useEffect(() => {
 		if (data?.rows) setRow(data?.rows);
-		if (data?.result) setTotalSurface2(data?.result.surface2);
+		if (data?.result) setTotalSurface2(toDecimalNumber(data?.result.surface2));
 	}, [data]);
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
@@ -104,14 +103,14 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 		newRows[index][column] = value;
 		const result = calculator.calculateThickness(newRows, 'column5');
 
-		setTotalThickness(result);
+		setTotalThickness(toDecimalNumber(result.toString()));
 		setRow(newRows);
 	};
 
 	const calculateExpensive = useMemo(() => {
 		const surface1 = 100 - totalSurface2;
-		setTotalSurface1(surface1);
-		setTotalThickness(calculator.calculateThickness(row, 'column5'));
+		setTotalSurface1(Number(surface1.toFixed(3)));
+		setTotalThickness(toDecimalNumber(calculator.calculateThickness(row, 'column5'), 5));
 		const result = calculator.transmittanceUValue(row, surface1, totalSurface2);
 		if (onData) onData({ rows: row, result: { surface2: totalSurface2, u_value: result } });
 		return result;
@@ -172,17 +171,12 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 								<div className='d-flex align-content-between'>
 									<Input
 										value={totalSurface2}
-										placeholder='%'
 										readOnly={readOnly}
+										type={'number'}
 										className='me-2 text-center '
-										inputMode={'decimal'}
 										onChange={(e: any) => {
-											if (
-												e.target.value.length <= 10 ||
-												e.target.value == 100
-											) {
-												setTotalSurface2(e.target.value);
-											}
+											const value = toDecimalNumber(e.target.value);
+											if (value <= 100) setTotalSurface2(value);
 										}}
 									/>
 									<span className='align-self-center'>%</span>

@@ -1,3 +1,5 @@
+import { toDecimal } from '../../helpers/helpers';
+
 function calculeRTS1(lambda2: number, thickness: number, lambda1: number) {
 	if (lambda2 == 0) return thickness / lambda1;
 	return false;
@@ -167,19 +169,19 @@ export class Calculator {
 		const RTtotalS1 = calculeRTtotalS1(lambda1, RTtotalS2, rt);
 		const percentage = percentageRTtotalS1(lambda1, rt, RTtotalS1, RTtotalS2);
 		const uValue = calculeUValue(lambda1, percentage, RTtotalS1, rt);
-		return uValue.toFixed(2);
+		return uValue.toFixed(3);
 	}
 
 	static calculateGValue(csValue: number) {
-		return csValue * 0.87;
+		return toDecimal(csValue * 0.87);
 	}
 
 	static calculateCrystalArea(areaVain: number, frameArea: number) {
-		return (areaVain - frameArea).toFixed(2);
+		return (areaVain - frameArea).toFixed(3);
 	}
 
 	static calculateFrameArea(longVain: number, highVain: number, frameWidth: number) {
-		return (frameWidth * longVain * 2 + (highVain - frameWidth * 2) * frameWidth).toFixed(2);
+		return (frameWidth * longVain * 2 + (highVain - frameWidth * 2) * frameWidth).toFixed(3);
 	}
 
 	static calculateWindowUValue(
@@ -193,10 +195,10 @@ export class Calculator {
 		const result =
 			(uValue1 * crystalArea + uValue2 * frameArea + 0.08 * (longVain * 2 + highVain * 2)) /
 			(crystalArea + frameArea);
-		return result.toFixed(2);
+		return result.toFixed(3);
 	}
 
 	static calculateVainArea(longVain: number, highVain: number) {
-		return (longVain * highVain).toFixed(2);
+		return (longVain * highVain).toFixed(3);
 	}
 }

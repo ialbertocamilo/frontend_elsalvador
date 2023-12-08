@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import useDarkMode from '../../../hooks/useDarkMode';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ import Icon from '../../../components/icon/Icon';
 import Logo from '../../../components/Logo';
 import userStore from '../../../stores/userStore';
 import Select from '../../../components/bootstrap/forms/Select';
-import { arrayToList } from '../../../helpers/helpers';
+import { arrayToList, fillMunicipalitiesByDepartment } from '../../../helpers/helpers';
 import { departmentList, municipalityList } from '../../../common/constants/lists';
 
 interface ILoginHeaderProps {
@@ -97,8 +97,8 @@ const Login = () => {
 			lastname: '',
 			profession: '',
 			nationality: '',
-			department: '1',
-			municipality: '1',
+			department: '0',
+			municipality: '0',
 			address: '',
 			phone: '',
 			email: '',
@@ -170,8 +170,22 @@ const Login = () => {
 		}
 	}
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
+	const [municipalites, setMunicipalites] = useState<any[]>();
+	useEffect(() => {
+		formik1.setFieldValue('department', 0);
+		const municipalitiesByDepartment = fillMunicipalitiesByDepartment(
+			Number(formik1.values.department),
+		);
+		if (municipalitiesByDepartment) {
+			setMunicipalites(arrayToList(municipalitiesByDepartment));
+		}
+	}, []);
+	useEffect(() => {
+		const array = fillMunicipalitiesByDepartment(Number(formik1.values.department));
+		if (array) {
+			setMunicipalites(arrayToList(array));
+		}
+	}, [formik1.values.department]);
 	return (
 		<div className={'bg-primary h-100'}>
 			<ReactNotifications />
@@ -295,7 +309,7 @@ const Login = () => {
 													name='municipality'
 													value={formik1.values.municipality}
 													onChange={formik1.handleChange}
-													list={arrayToList(municipalityList)}
+													list={municipalites}
 													ariaLabel='municipality'></Select>
 											</FormGroup>
 										</div>

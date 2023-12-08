@@ -1,4 +1,5 @@
 import { ProjectEntity } from '../classes/project';
+import { BuildingClassification, BuildingType } from './building.types';
 
 export interface IProjectFormType {
 	id?: string;
@@ -18,7 +19,8 @@ export interface IProjectFormType {
 	levelsNumber?: number;
 	offices?: number;
 	surface?: number;
-	public?: boolean;
+	building_type?: BuildingType;
+	building_classification?: BuildingClassification;
 	status?: number;
 }
 
@@ -59,4 +61,5 @@ export interface IProjectDataTotalValues {
 	window_u_value: string;
 	window_g_value: string;
 	shades: string;
+	building_classification: string;
 }

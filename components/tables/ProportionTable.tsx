@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../bootstrap/Button';
 import { useProjects } from '../../services/project/project.service';
 import { useParams } from 'next/navigation';
-import { toDecimal } from '../../helpers/helpers';
+import { toDecimal, toDecimalNumber } from '../../helpers/helpers';
 
 function calculatePercentage(num1: number, num2: number): string | number {
 	const res = Number((num1 / num2) * 100).toFixed(0);
@@ -150,9 +150,9 @@ export const ProportionTable = ({ onData, keyName, readOnly }: ProportiontablePr
 		}
 		setRow(newRows);
 
-		setTotalOpaqueSurface(sum1);
-		setTotalGlazedSurface(sum2);
-		setTotalPercentage(calculatePercentage(sum2, sum1));
+		setTotalOpaqueSurface(toDecimalNumber(sum1, 5));
+		setTotalGlazedSurface(toDecimalNumber(sum2, 5));
+		setTotalPercentage(toDecimal(calculatePercentage(sum2, sum1)));
 	};
 
 	function handleDelete(id: number) {
@@ -232,7 +232,7 @@ export const ProportionTable = ({ onData, keyName, readOnly }: ProportiontablePr
 										id='ownerName'
 										name='ownerName'
 										type='text'
-										className='me-2 bg-info-subtle text-black text-center'
+										className='me-2 bg-info-subtle text-center'
 										value={totalPercentage}
 										readOnly
 									/>

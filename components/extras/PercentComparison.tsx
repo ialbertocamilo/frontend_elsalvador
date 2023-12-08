@@ -19,7 +19,7 @@ const PercentComparison: FC<IPercentComparisonProps> = ({ valueOne, valueTwo }) 
 		return { icon: 'TrendingFlat', color: 'info' };
 	}
 	return (
-		<span className={`text-${getIcon().color} fs-5 fw-bold ms-3 d-inline`}>
+		<span className={`text-${getIcon().color} fs-5 fw-bold ms-3 d-inline small`}>
 			{`${VALUE}%`}
 			<Icon icon={getIcon().icon} />
 		</span>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageWrapper from '../../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../../layout/Page/Page';
 import Button from '../../../../components/bootstrap/Button';
@@ -9,7 +9,7 @@ import Card, { CardBody, CardFooter } from '../../../../components/bootstrap/Car
 import Select from '../../../../components/bootstrap/forms/Select';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
-import { arrayToList } from '../../../../helpers/helpers';
+import { arrayToList, fillMunicipalitiesByDepartment } from '../../../../helpers/helpers';
 import { departmentList, municipalityList } from '../../../../common/constants/lists';
 import { useFormik } from 'formik';
 import { IUser } from '../../../../common/types/user.types';
@@ -45,6 +45,23 @@ const AccessIdPage = () => {
 			UserService.updateUser(formik.values);
 		},
 	});
+
+	const [municipalites, setMunicipalites] = useState<any[]>();
+	useEffect(() => {
+		formik.setFieldValue('department', 0);
+		const municipalitiesByDepartment = fillMunicipalitiesByDepartment(
+			Number(formik.values.department),
+		);
+		if (municipalitiesByDepartment) {
+			setMunicipalites(arrayToList(municipalitiesByDepartment));
+		}
+	}, []);
+	useEffect(() => {
+		const array = fillMunicipalitiesByDepartment(Number(formik.values.department));
+		if (array) {
+			setMunicipalites(arrayToList(array));
+		}
+	}, [formik.values.department]);
 	return (
 		<PageWrapper>
 			<Page container='fluid'>
@@ -211,7 +228,7 @@ const AccessIdPage = () => {
 											name='municipality'
 											value={formik.values.municipality}
 											onChange={formik.handleChange}
-											list={arrayToList(municipalityList)}
+											list={municipalites}
 											ariaLabel='municipality'></Select>
 									</FormGroup>
 									<div>

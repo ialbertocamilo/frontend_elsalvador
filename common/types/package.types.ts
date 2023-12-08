@@ -1,4 +1,5 @@
 import { IQuestion } from './question.types';
+import { BuildingClassification } from './building.types';
 
 export interface IPackage {
 	wall_window_proportion: number;
@@ -10,6 +11,7 @@ export interface IPackage {
 	window_g_value: number;
 	shades: number;
 	cop: number;
+	building_classification: BuildingClassification;
 }
 
 export interface ITechnicalSupport {
@@ -31,4 +33,5 @@ export interface IPackageOriginQuestions {
 	window_g_value: string;
 	shades: string;
 	cop: string;
+	building_classification: string;
 }

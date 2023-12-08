@@ -14,7 +14,6 @@ import Input from '../bootstrap/forms/Input';
 import { ProjectEntity } from '../../common/classes/project';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '../../services/project/project.service';
-import { getItemFromMunicipalityList } from '../../helpers/helpers';
 import { ProjectStatus } from '../../common/constants/lists';
 import { ClientStorage } from '../../common/classes/storage';
 import DataService from '../../services/data/data.service';
@@ -22,6 +21,7 @@ import { RoutesList } from '../../common/constants/default';
 import { Roles } from '../../common/types/role.types';
 import Popovers from '../bootstrap/Popovers';
 import moment from 'moment';
+import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../helpers/helpers';
 
 const ProjectTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -202,6 +202,7 @@ const ProjectTable = () => {
 											Director responsable de obra
 										</th>
 										<th className='text-primary'>Dirección</th>
+										<th className='text-primary'>Departamento</th>
 										<th className='text-primary'>Municipio</th>
 										<th
 											className='text-primary'
@@ -281,8 +282,19 @@ const ProjectTable = () => {
 															if (i.id) goToProject(i.id);
 														}}>
 														<div>
-															{getItemFromMunicipalityList(
-																Number(i.municipality) - 1,
+															{selectDepartmenFromJson(
+																Number(i.department),
+															)}
+														</div>
+													</td>
+													<td
+														onClick={() => {
+															if (i.id) goToProject(i.id);
+														}}>
+														<div>
+															{selectMunicipalityFromJson(
+																Number(i.municipality),
+																Number(i.department),
 															)}
 														</div>
 													</td>

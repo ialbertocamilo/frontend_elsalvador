@@ -32,6 +32,7 @@ export function useProjects() {
 
 	async function updateProject(params: IProjectFormType) {
 		const payload = ProjectMapper.formToRequest(params);
+
 		const response = await axiosService().patch(`/projects/${params.id}`, payload);
 
 		if (!response?.data) return false;
@@ -49,6 +50,15 @@ export function useProjects() {
 	async function getProjectData(params: IProjectDataGetterRequest): Promise<unknown> {
 		if (params.project_id && params.key) {
 			const result = await axiosService().post(`/projects/get-data`, params);
+			return result?.data;
+		}
+		return null;
+	}
+	async function getAllProjectData(projectId: string): Promise<unknown> {
+		if (projectId) {
+			const result = await axiosService().post(`/projects/get-all-data`, {
+				project_id: projectId,
+			});
 			return result?.data;
 		}
 		return null;
@@ -122,5 +132,6 @@ export function useProjects() {
 		saveProjectData,
 		getProjectData,
 		uploadFile,
+		getAllProjectData,
 	};
 }
