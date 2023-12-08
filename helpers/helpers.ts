@@ -158,7 +158,7 @@ export function selectRoleName(roleType: number) {
 }
 
 export const extractDataFromArrayProject = (key: string, array: []): any => {
-	const obj: any = array.find((val: any) => val?.key == key);
+	const obj: any = array?.find((val: any) => val?.key == key);
 	if (obj)
 		switch (key) {
 			case keyList.proportion:

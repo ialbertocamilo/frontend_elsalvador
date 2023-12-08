@@ -72,6 +72,8 @@ const WindowPage = () => {
 	const [customEditorText, setCustomEditorText] = useState('');
 
 	function handleChange(e: any, nDecimals = 3) {
+		if (e.target.name != 'crystalType' && e.target.name != 'frameType')
+			e.target.value = toDecimal(e.target.value, nDecimals);
 		e.target.value = toDecimal(e.target.value, nDecimals);
 		formik.handleChange(e);
 	}
