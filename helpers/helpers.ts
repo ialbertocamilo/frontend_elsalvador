@@ -202,3 +202,49 @@ export function selectDepartmenFromJson(departmentId: number) {
 
 	return find ? find.department : DepartmentsWithProvincies[0].department;
 }
+interface DataItem {
+	year: number;
+	department: string;
+	building_classification: number;
+	classification: string;
+	project_count: number;
+}
+
+interface ResultItem {
+	name: string;
+	type: string;
+	data: number[];
+}
+
+export function orderByClassification(
+	data: {
+		year: number;
+		department: string;
+		classification: string;
+		project_count: number;
+	}[],
+) {
+	const result: ResultItem[] = [];
+
+	// Mapear los datos originales al formato deseado
+	const mappedData = data.reduce((acc: any, curr: any) => {
+		if (!acc[curr.classification]) {
+			acc[curr.classification] = [];
+		}
+		acc[curr.classification].push(curr.project_count);
+		return acc;
+	}, {});
+
+	// Organizar los datos en el formato esperado
+	for (const classification in mappedData) {
+		if (Object.prototype.hasOwnProperty.call(mappedData, classification)) {
+			const dataPoints = mappedData[classification];
+			result.push({
+				name: classification,
+				type: 'column',
+				data: dataPoints,
+			});
+		}
+	}
+	return result;
+}
