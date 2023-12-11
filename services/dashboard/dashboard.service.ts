@@ -18,6 +18,7 @@ export class DashboardService {
 			};
 		};
 	}
+
 	static async getBuildingsByUserReport() {
 		const result = await axiosService().post('projects/report', { type: 'user-buildings' });
 		return result.data as {
@@ -31,5 +32,13 @@ export class DashboardService {
 			}[];
 			total: number;
 		};
+	}
+
+	static async getBuildingsBySystemReport(year: number) {
+		const result = await axiosService().post('projects/report', {
+			type: 'system-buildings',
+			year,
+		});
+		return result.data as ObjClassification[];
 	}
 }

@@ -359,44 +359,6 @@ export const ResultValues = ({
 						<ToggleYesNoButton blocked forceYes={complies.cop} />
 					</td>
 				</tr>
-				<tr>
-					<td>Clase de edificación</td>
-					<td className='text-success '>
-						<BuildingClassificationButtons
-							id={'expected'}
-							readOnly
-							selected={Number(packageInfo?.building_classification)}
-						/>
-					</td>
-					<td className={'px-3'}>
-						<div className='d-flex justify-content-center'>
-							<BuildingClassificationButtons
-								readOnly={globalReadonly || false}
-								selected={Number(totalCalculatedValues?.building_classification)}
-								onChange={(value: BuildingClassification) =>
-									formik.setFieldValue('building_classification', value)
-								}
-							/>
-						</div>
-					</td>
-					<td>
-						<Select
-							ariaLabel={'selection'}
-							list={selection}
-							disabled={globalReadonly}
-							value={originQuestions.building_classification}
-							onChange={(e: any) => {
-								setOriginQuestions({
-									...originQuestions,
-									building_classification: e.target.value,
-								});
-							}}
-						/>
-					</td>
-					<td>
-						<ToggleYesNoButton blocked forceYes={complies.building_classification} />
-					</td>
-				</tr>
 			</tbody>
 		</table>
 	);

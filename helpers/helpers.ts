@@ -1,10 +1,4 @@
-import {
-	departmentList,
-	DepartmentsWithProvincies,
-	keyList,
-	municipalityList,
-	RoleNames,
-} from '../common/constants/lists';
+import { DepartmentsWithProvincies, keyList, RoleNames } from '../common/constants/lists';
 import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
@@ -197,8 +191,40 @@ export function selectMunicipalityFromJson(municipalityIndex: number, department
 		? find.municipality[municipalityIndex]
 		: DepartmentsWithProvincies[0].municipality[0];
 }
+
 export function selectDepartmenFromJson(departmentId: number) {
 	const find = DepartmentsWithProvincies.find((value) => value?.id == departmentId);
 
 	return find ? find.department : DepartmentsWithProvincies[0].department;
+}
+
+export function getDataFromDepartment(obj: ObjClassification) {
+	return DepartmentsWithProvincies.map((value) => {
+		if (value.id == Number(obj.department)) return obj.total_projects;
+		return 0;
+	});
+}
+export function orderByClassification(data: ObjClassification[]) {
+	return data.map((value) => {
+		let name = '';
+		let total_projects = 0;
+		switch (Number(value.building_classification)) {
+			case 0:
+				name = 'Viviendas';
+				total_projects += value.total_projects;
+				break;
+			case 1:
+				name = 'Oficinas';
+				total_projects += value.total_projects;
+				break;
+			case 2:
+				name = 'Terciarios';
+				total_projects += value.total_projects;
+				break;
+		}
+		return { name, type: 'column', data: getDataFromDepartment(value) };
+	});
+}
+export function getDepartmentsFromList() {
+	return DepartmentsWithProvincies.map((value) => value.department);
 }
