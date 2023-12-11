@@ -2,6 +2,7 @@ import { DepartmentsWithProvincies, keyList, RoleNames } from '../common/constan
 import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
+import { ObjClassification } from '../common/types/dashboard.types';
 
 export function test() {
 	return null;
@@ -204,6 +205,7 @@ export function getDataFromDepartment(obj: ObjClassification) {
 		return 0;
 	});
 }
+
 export function orderByClassification(data: ObjClassification[]) {
 	return data.map((value) => {
 		let name = '';
@@ -225,6 +227,7 @@ export function orderByClassification(data: ObjClassification[]) {
 		return { name, type: 'column', data: getDataFromDepartment(value) };
 	});
 }
+
 export function getDepartmentsFromList() {
 	return DepartmentsWithProvincies.map((value) => value.department);
 }
