@@ -298,8 +298,8 @@ const ProjectTable = () => {
 															)}
 														</div>
 													</td>
-													<td>{moment(i.created_at).format('LLLL')}</td>
-													<td>{moment(i.updated_at).calendar()}</td>
+													<td>{moment(i.created_at).format('L LTS')}</td>
+													<td>{moment(i.updated_at).format('L LTS')}</td>
 													<td>
 														<ActionSupervisor project={i} />
 													</td>

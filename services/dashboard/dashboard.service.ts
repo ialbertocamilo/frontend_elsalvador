@@ -39,11 +39,6 @@ export class DashboardService {
 			type: 'system-buildings',
 			year,
 		});
-		return result.data as {
-			year: number;
-			department: string;
-			classification: string;
-			project_count: number;
-		}[];
+		return result.data as ObjClassification[];
 	}
 }

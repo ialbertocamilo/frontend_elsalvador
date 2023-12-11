@@ -54,6 +54,7 @@ const PackagesPage = () => {
 			);
 		}
 	}, [projectEntity]);
+
 	useEffect(() => {
 		Promise.all([
 			DataService.getPackagesConfig(),
@@ -64,10 +65,15 @@ const PackagesPage = () => {
 			if (data.length > 0) {
 				if (data[0]) {
 					const packages = data[0]?.config as IConfigurationType[];
+					const newPackages = packages?.filter(
+						(value) =>
+							Number(value?.building_classification) ==
+							Number(projectEntity?.building_classification),
+					);
 					const questions = data[0]?.questions as IQuestion[];
 
 					const questionsActivated = questions?.filter((value) => !value.deactivated);
-					const packagesActivated = packages?.filter((value) => value.package_status);
+					const packagesActivated = newPackages?.filter((value) => value.package_status);
 
 					setPackagesSelect(
 						packagesActivated?.map((val, index) => {
@@ -97,7 +103,7 @@ const PackagesPage = () => {
 				}
 			}
 		});
-	}, []);
+	}, [projectEntity]);
 
 	const [projectStatus, setProjectStatus] = useState(0);
 	useEffect(() => {

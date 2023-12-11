@@ -11,15 +11,15 @@ const DashboardPage = () => {
 			<Page>
 				<div className='row'>
 					<div className='col-7'>
-						<BuildingsChart title={'Reporte de parámetros de edificación'} />
+						<BuildingsChart
+							title={'Reporte de edificaciones registradas en el sistema'}
+						/>
 					</div>
 					<div className='col-5'>
 						<BuildingsPerUser />
 					</div>
 					<div className='col-7'>
-						<BuildingsChart
-							title={'Reporte de edificaciones registradas en el sistema'}
-						/>
+						{/*<BuildingsChart title={'Reporte de parámetros de edificación'} />*/}
 					</div>
 					<div className='col-5'>
 						<DesignCompliances title={'Cumplimientos de diseño'} />
