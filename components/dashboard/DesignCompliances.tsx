@@ -82,7 +82,11 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 	return (
 		<Card>
 			<CardHeader>
-				<CardLabel>{title}</CardLabel>
+				<CardLabel icon='DesignServices' iconColor='secondary'>
+					<CardTitle tag='div' className='h5'>
+						{title}
+					</CardTitle>
+				</CardLabel>
 			</CardHeader>
 			<CardBody>
 				<div className='row g-4'>

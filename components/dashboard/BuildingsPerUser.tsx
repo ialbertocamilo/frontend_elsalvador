@@ -145,7 +145,7 @@ export const BuildingsPerUser = () => {
 	return (
 		<Card stretch>
 			<CardHeader>
-				<CardLabel icon='ContactSupport' iconColor='secondary'>
+				<CardLabel icon='SupervisedUserCircle' iconColor='secondary'>
 					<CardTitle tag='div' className='h5'>
 						Reporte de edificaciones registrados por el usuario
 					</CardTitle>

@@ -3,6 +3,7 @@ import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
 import { ObjClassification } from '../common/types/dashboard.types';
+import { values } from 'mobx';
 
 export function test() {
 	return null;
@@ -199,33 +200,49 @@ export function selectDepartmenFromJson(departmentId: number) {
 	return find ? find.department : DepartmentsWithProvincies[0].department;
 }
 
-export function getDataFromDepartment(obj: ObjClassification) {
+export function getDataFromClassification(obj: ObjClassification) {
 	return DepartmentsWithProvincies.map((value) => {
 		if (value.id == Number(obj.department)) return obj.total_projects;
 		return 0;
 	});
 }
+interface DataObject {
+	name: string;
+	type: string;
+	data: number[];
+}
+function sumDataObjects(dataObjects: DataObject[]): DataObject[] {
+	const groupedByName: { [key: string]: DataObject } = {};
 
+	dataObjects.forEach((obj) => {
+		if (!groupedByName[obj.name]) {
+			groupedByName[obj.name] = { ...obj };
+		} else {
+			groupedByName[obj.name].data = groupedByName[obj.name].data.map(
+				(value, index) => value + obj.data[index],
+			);
+		}
+	});
+
+	return Object.values(groupedByName);
+}
 export function orderByClassification(data: ObjClassification[]) {
-	return data.map((value) => {
+	const classif = data.map((value) => {
 		let name = '';
-		let total_projects = 0;
 		switch (Number(value.building_classification)) {
 			case 0:
 				name = 'Viviendas';
-				total_projects += value.total_projects;
 				break;
 			case 1:
 				name = 'Oficinas';
-				total_projects += value.total_projects;
 				break;
 			case 2:
 				name = 'Terciarios';
-				total_projects += value.total_projects;
 				break;
 		}
-		return { name, type: 'column', data: getDataFromDepartment(value) };
+		return { name, type: 'column', data: getDataFromClassification(value) };
 	});
+	return sumDataObjects(classif);
 }
 
 export function getDepartmentsFromList() {
