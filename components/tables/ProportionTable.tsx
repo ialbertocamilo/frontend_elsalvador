@@ -137,7 +137,8 @@ export const ProportionTable = ({ onData, keyName, readOnly }: ProportiontablePr
 	const handleInputChange = (index: number, column: string | number, val: any) => {
 		const newRows = [...row];
 
-		newRows[index][column] = toDecimal(val, 5);
+		if (column == 'column1') newRows[index][column] = val;
+		else newRows[index][column] = toDecimal(val, 5);
 		setRow(newRows);
 		let sum1 = 0;
 		let sum2 = 0;

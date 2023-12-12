@@ -35,7 +35,7 @@ const FileUploader = ({ keyName, projectId }: FileUploaderProps) => {
 	const { globalReadonly } = useGlobalStatus(projectId);
 	useEffect(() => {
 		getFiles(projectId, keyName).then((data: []) => {
-			if (data.length <= 0) {
+			if (data?.length <= 0) {
 				setHasDownload(false);
 				return;
 			}

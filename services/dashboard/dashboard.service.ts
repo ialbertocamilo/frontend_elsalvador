@@ -1,4 +1,5 @@
 import axiosService from '../../lib/axios';
+import { ChartSeriesObject, ObjClassification } from '../../common/types/dashboard.types';
 
 export class DashboardService {
 	static async getDesignCompliancesReport() {
@@ -40,5 +41,12 @@ export class DashboardService {
 			year,
 		});
 		return result.data as ObjClassification[];
+	}
+	static async getBuildingsByParametersReport(year: number) {
+		const result = await axiosService().post('projects/report', {
+			type: 'buildings-parameters',
+			year,
+		});
+		return result.data as ChartSeriesObject[];
 	}
 }

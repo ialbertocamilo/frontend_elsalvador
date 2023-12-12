@@ -7,11 +7,11 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { getDepartmentsFromList, orderByClassification } from '../../helpers/helpers';
 import Select from '../bootstrap/forms/Select';
 
-export const BuildingsChart = ({ title }: { title: string }) => {
+export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
 			type: 'line',
-			height: 500,
+			height: 555,
 			stacked: false, // Habilitar apilamiento si es necesario
 			toolbar: {
 				show: true, // Mostrar barra de herramientas
@@ -25,7 +25,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 		plotOptions: {
 			bar: {
 				horizontal: false,
-				columnWidth: '100%',
+				columnWidth: '25%',
 				borderRadius: 5,
 			},
 		},
@@ -38,23 +38,27 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			curve: 'smooth',
 		},
 		xaxis: {
-			categories: getDepartmentsFromList(),
+			categories: [
+				'Promedio de proporción muro ventana',
+				'Promedio de valor U de muro',
+				'Promedio de valor U de ventana',
+				'Promedio de valor G de ventana',
+				'Promedio de aire acondicionado COP',
+				'Promedio de reflectancia de muros',
+				'Promedio de valor u de techo',
+				'Promedio de reflectancia de techos',
+				'Promedio de sombras de ventanas exteriores',
+			],
 		},
 		yaxis: {
 			title: {
-				text: 'Proyectos registrados',
+				text: 'Promedios de valores de proyectos aceptados',
 			},
 		},
 		fill: {
 			opacity: 1,
 		},
-		tooltip: {
-			y: {
-				formatter: function (val) {
-					return val + ' proyectos';
-				},
-			},
-		},
+		tooltip: {},
 		legend: {
 			show: true, // Mostrar leyenda
 			position: 'top', // Posición de la leyenda (puede ser 'top', 'bottom', 'right', 'left', etc.)
@@ -90,8 +94,8 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 	}
 	const [selectYear, setSelectYear] = useState(year);
 	useEffect(() => {
-		DashboardService.getBuildingsBySystemReport(selectYear).then((data) => {
-			setSeries(orderByClassification(data));
+		DashboardService.getBuildingsByParametersReport(selectYear).then((data) => {
+			setSeries(data);
 		});
 	}, [selectYear]);
 	return (

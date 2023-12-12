@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import DataService from '../services/data/data.service';
 import { RoleType } from '../common/types/role.types';
