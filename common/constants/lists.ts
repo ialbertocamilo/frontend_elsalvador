@@ -306,6 +306,7 @@ export const RoleNames = {
 export const DepartmentsWithProvincies = [
 	{
 		department: 'Ahuachapán',
+		code: 'AHUA',
 		municipality: [
 			'Ahuachapán',
 			'Apaneca',
@@ -324,6 +325,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Cabañas',
+		code: 'CAB',
 		municipality: [
 			'Cinquera',
 			'Dolores',
@@ -339,6 +341,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Chalatenango',
+		code: 'CHAL',
 		municipality: [
 			'Agua Caliente',
 			'Arcatao',
@@ -378,6 +381,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Cuscatlán',
+		code: 'CUS',
 		municipality: [
 			'Candelaria',
 			'Cojutepeque',
@@ -400,6 +404,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'La Libertad',
+		code: 'LIB',
 		municipality: [
 			'Antiguo Cuscatlán',
 			'Chiltiupán',
@@ -427,6 +432,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'La Paz',
+		code: 'PAZ',
 		municipality: [
 			'Cuyultitán',
 			'El Rosario',
@@ -455,6 +461,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'La Unión',
+		code: 'UNIO',
 		municipality: [
 			'Anamorós',
 			'Bolívar',
@@ -479,6 +486,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Morazán',
+		code: 'MOR',
 		municipality: [
 			'Arambala',
 			'Cacaopera',
@@ -511,6 +519,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'San Miguel',
+		code: 'MIG',
 		municipality: [
 			'Carolina',
 			'Chapeltique',
@@ -537,6 +546,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'San Salvador',
+		code: 'SAL',
 		municipality: [
 			'Aguilares',
 			'Apopa',
@@ -562,6 +572,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'San Vicente',
+		code: 'VIC',
 		municipality: [
 			'Apastepeque',
 			'Guadalupe',
@@ -580,6 +591,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Santa Ana',
+		code: 'ANA',
 		municipality: [
 			'Candelaria de la Frontera',
 			'Chalchuapa',
@@ -599,6 +611,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Sonsonate',
+		code: 'SON',
 		municipality: [
 			'Acajutla',
 			'Armenia',
@@ -621,6 +634,7 @@ export const DepartmentsWithProvincies = [
 	},
 	{
 		department: 'Usulután',
+		code: 'USU',
 		municipality: [
 			'Alegría',
 			'Berlín',

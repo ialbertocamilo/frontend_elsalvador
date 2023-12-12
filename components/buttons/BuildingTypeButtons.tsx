@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BuildingType } from '../../common/types/building.types';
 import Checks, { ChecksGroup } from '../bootstrap/forms/Checks';
 import { useFormik } from 'formik';
-import button from '../bootstrap/Button';
 
 export const BuildingTypeButtons = ({
 	readOnly,
@@ -31,7 +30,7 @@ export const BuildingTypeButtons = ({
 	}, [formikTypeRadios.values]);
 
 	return (
-		<div className='row align-items-center justify-content-center align-self-center'>
+		<div className='row align-items-center justify-content-center align-self-center h5'>
 			{!buttonPublicPrivate && (
 				<ChecksGroup>
 					<Checks

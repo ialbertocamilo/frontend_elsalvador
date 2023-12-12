@@ -204,20 +204,6 @@ const ProjectTable = () => {
 										<th className='text-primary'>Dirección</th>
 										<th className='text-primary'>Departamento</th>
 										<th className='text-primary'>Municipio</th>
-										<th
-											className='text-primary'
-											style={{ cursor: 'pointer' }}
-											onClick={() => orderBy('created_at')}>
-											Fecha de creación
-											<Icon size='lg' icon='FilterList'></Icon>
-										</th>
-										<th
-											className='text-primary'
-											style={{ cursor: 'pointer' }}
-											onClick={() => orderBy('updated_at')}>
-											Ultima modificación
-											<Icon size='lg' icon='FilterList'></Icon>
-										</th>
 										<th className='text-primary text-center'>Acciones</th>
 									</tr>
 								</thead>
@@ -298,8 +284,6 @@ const ProjectTable = () => {
 															)}
 														</div>
 													</td>
-													<td>{moment(i.created_at).format('L LTS')}</td>
-													<td>{moment(i.updated_at).format('L LTS')}</td>
 													<td>
 														<ActionSupervisor project={i} />
 													</td>

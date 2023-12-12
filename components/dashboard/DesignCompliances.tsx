@@ -34,7 +34,7 @@ export const Box = ({
 				<div className='d-flex align-items-center pb-3'>
 					<div className='flex-shrink-0'>
 						<Icon
-							icon={title == 'Rechazados' ? 'Remove' : 'Check'}
+							icon={title == 'Rechazados' ? 'Delete' : 'Check'}
 							size='4x'
 							color={title == 'Rechazados' ? 'danger' : 'primary'}
 						/>
@@ -82,7 +82,7 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 	return (
 		<Card>
 			<CardHeader>
-				<CardLabel icon='DesignServices' iconColor='secondary'>
+				<CardLabel icon='SpaceDashboard' iconColor='secondary'>
 					<CardTitle tag='div' className='h5'>
 						{title}
 					</CardTitle>

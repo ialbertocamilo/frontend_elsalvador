@@ -396,14 +396,14 @@ export const ProjectComponent = ({
 									onChange={formik.handleChange}></Input>
 							</FormGroup>
 							<FormGroup id='offices'>
-								<Label>Número de oficinas por nivel</Label>
+								<Label>Número de viviendas u oficinas por nivel</Label>
 								<Input
 									className='my-2'
 									name='offices'
 									readOnly={globalReadonly}
 									type='number'
 									value={formik.values.offices}
-									placeholder='Número de oficinas por nivel'
+									placeholder='Número de viviendas u oficinas por nivel'
 									onChange={formik.handleChange}></Input>
 							</FormGroup>
 							<Label>Superficie construida m2</Label>

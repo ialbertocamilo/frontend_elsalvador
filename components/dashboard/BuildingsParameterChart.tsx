@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Card, { CardBody, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
-import { getDepartmentsFromList, orderByClassification } from '../../helpers/helpers';
 import Select from '../bootstrap/forms/Select';
 
 export const BuildingsParameterChart = ({ title }: { title: string }) => {
+	const [maxValue, setMaxValue] = useState(10);
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
 			type: 'line',
@@ -25,8 +25,8 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 		plotOptions: {
 			bar: {
 				horizontal: false,
-				columnWidth: '25%',
-				borderRadius: 5,
+				columnWidth: '80%',
+				borderRadius: 8,
 			},
 		},
 		colors: ['#008FFB', '#00E396', '#AB4278'],
@@ -34,26 +34,27 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			enabled: false,
 		},
 		stroke: {
-			width: [1, 1, 4],
+			width: [0, 1],
 			curve: 'smooth',
 		},
 		xaxis: {
 			categories: [
-				'Promedio de proporción muro ventana',
-				'Promedio de valor U de muro',
-				'Promedio de valor U de ventana',
-				'Promedio de valor G de ventana',
-				'Promedio de aire acondicionado COP',
-				'Promedio de reflectancia de muros',
-				'Promedio de valor u de techo',
-				'Promedio de reflectancia de techos',
-				'Promedio de sombras de ventanas exteriores',
+				'PROP',
+				'VALU M',
+				'VALU V',
+				'VALG V',
+				'COP',
+				'REF M',
+				'VALU T',
+				'REF T',
+				'SOM',
 			],
 		},
 		yaxis: {
 			title: {
 				text: 'Promedios de valores de proyectos aceptados',
 			},
+			max: maxValue,
 		},
 		fill: {
 			opacity: 1,
@@ -92,10 +93,15 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			label: `Año ${year}`,
 		}));
 	}
+
 	const [selectYear, setSelectYear] = useState(year);
 	useEffect(() => {
 		DashboardService.getBuildingsByParametersReport(selectYear).then((data) => {
 			setSeries(data);
+
+			const allData = data?.flatMap((entry) => entry.data.map(Number));
+			const maxValue = Math.max(...allData);
+			setMaxValue(maxValue + 10);
 		});
 	}, [selectYear]);
 	return (

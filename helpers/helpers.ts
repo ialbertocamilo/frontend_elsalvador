@@ -246,5 +246,5 @@ export function orderByClassification(data: ObjClassification[]) {
 }
 
 export function getDepartmentsFromList() {
-	return DepartmentsWithProvincies.map((value) => value.department);
+	return DepartmentsWithProvincies.map((value) => value.code);
 }

@@ -29,7 +29,7 @@ export const BuildingClassificationButtons = ({
 		if (onChange) onChange(formikClassificationRadios.values.buildingClassification);
 	}, [formikClassificationRadios.values]);
 	return (
-		<div className='row align-items-center justify-content-center align-self-center'>
+		<div className='row align-items-center justify-content-center align-self-center h5'>
 			<ChecksGroup>
 				<Checks
 					type={'radio'}

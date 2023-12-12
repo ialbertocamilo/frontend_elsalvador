@@ -8,6 +8,8 @@ import { getDepartmentsFromList, orderByClassification } from '../../helpers/hel
 import Select from '../bootstrap/forms/Select';
 
 export const BuildingsChart = ({ title }: { title: string }) => {
+	const [maxValue, setMaxValue] = useState(10);
+
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
 			type: 'line',
@@ -25,8 +27,11 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 		plotOptions: {
 			bar: {
 				horizontal: false,
-				columnWidth: '100%',
+				columnWidth: '80%',
 				borderRadius: 5,
+				dataLabels: {
+					position: 'top', // Posición de los valores en las barras
+				},
 			},
 		},
 		colors: ['#008FFB', '#00E396', '#AB4278'],
@@ -34,7 +39,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			enabled: false,
 		},
 		stroke: {
-			width: [1, 1, 4],
+			width: [0, 1],
 			curve: 'smooth',
 		},
 		xaxis: {
@@ -44,6 +49,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			title: {
 				text: 'Proyectos registrados',
 			},
+			max: maxValue,
 		},
 		fill: {
 			opacity: 1,
@@ -91,6 +97,10 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 	const [selectYear, setSelectYear] = useState(year);
 	useEffect(() => {
 		DashboardService.getBuildingsBySystemReport(selectYear).then((data) => {
+			const highestValue = data?.reduce((max, obj) => {
+				return obj?.total_projects > max ? obj?.total_projects : max;
+			}, 0);
+			setMaxValue(highestValue + 5);
 			setSeries(orderByClassification(data));
 		});
 	}, [selectYear]);
