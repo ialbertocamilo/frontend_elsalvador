@@ -6,7 +6,7 @@ import useDarkMode from '../../hooks/useDarkMode';
 import { useCallback, useEffect, useState } from 'react';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import Select from '../bootstrap/forms/Select';
-import { getLastFiveYearsFormatted } from '../../helpers/helpers';
+import { exportExcel, getLastFiveYearsFormatted } from '../../helpers/helpers';
 import dayjs from 'dayjs';
 import Button from '../bootstrap/Button';
 import XLSX from 'xlsx';
@@ -89,14 +89,16 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 
 	const doReport = useCallback(async () => {
 		const report = await DashboardService.getDesignCompliancesReportExcel(selectYear);
-		const wb = XLSX.utils.book_new();
-		const ws = XLSX.utils.json_to_sheet(report);
-		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+
 		let date = dayjs().unix();
-		XLSX.writeFile(wb, `Cumplimientos de diseño ${date} .xlsx`);
+		exportExcel(
+			report,
+			`Cumplimientos de diseño ${date} .xlsx`,
+			'REPORTE DE CUMPLIMIENTOS DE DISEÑO',
+		);
 	}, [selectYear]);
 	return (
-		<Card>
+		<Card stretch>
 			<CardHeader>
 				<CardLabel icon='SpaceDashboard' iconColor='secondary'>
 					<CardTitle tag='div' className='h5'>
@@ -116,10 +118,12 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 					<Box title={'Aprobados'} color={'bg-l25-primary'} data={approved} />
 					<Box title={'Rechazados'} color={'bg-l25-secondary'} data={denied} />
 				</div>
+			</CardBody>
+			<CardHeader>
 				<Button onClick={doReport} color='primary'>
 					Descargar reporte
 				</Button>
-			</CardBody>
+			</CardHeader>
 		</Card>
 	);
 };

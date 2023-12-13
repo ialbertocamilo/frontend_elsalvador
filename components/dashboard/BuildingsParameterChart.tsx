@@ -7,14 +7,14 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import Select from '../bootstrap/forms/Select';
 import XLSX from 'xlsx';
 import Button from '../bootstrap/Button';
-import { getLastFiveYearsFormatted } from '../../helpers/helpers';
+import { exportExcel, getLastFiveYearsFormatted } from '../../helpers/helpers';
 
 export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
 			type: 'line',
-			height: 555,
+			height: 500,
 			stacked: false, // Habilitar apilamiento si es necesario
 			toolbar: {
 				show: true, // Mostrar barra de herramientas
@@ -28,7 +28,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 		plotOptions: {
 			bar: {
 				horizontal: false,
-				columnWidth: '80%',
+				columnWidth: '50%',
 				borderRadius: 8,
 			},
 		},
@@ -52,10 +52,14 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 				'REF T',
 				'SOM',
 			],
+			title: {
+				text: 'Promedios de valores de proyectos aprobados',
+			},
 		},
+
 		yaxis: {
 			title: {
-				text: 'Promedios de valores de proyectos aceptados',
+				text: 'Promedios de valores de proyectos aprobados',
 			},
 			max: maxValue,
 		},
@@ -87,16 +91,17 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 
 			const allData = data?.flatMap((entry) => entry.data.map(Number));
 			const maxValue = Math.max(...allData);
-			setMaxValue(maxValue + 10);
+			setMaxValue(maxValue + 50);
 		});
 	}, [selectYear]);
 	const doReport = useCallback(async () => {
 		const report = await DashboardService.getBuildingsByParametersReportExcel(selectYear);
-		const wb = XLSX.utils.book_new();
-		const ws = XLSX.utils.json_to_sheet(report);
-		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
 		let date = dayjs().unix();
-		XLSX.writeFile(wb, `Reporte de parámetros de edificación ${date} .xlsx`);
+		exportExcel(
+			report,
+			`Reporte de parámetros de edificación ${date} .xlsx`,
+			'REPORTE DE PARÁMETROS DE EDIFICACIÓN',
+		);
 	}, [selectYear]);
 	return (
 		<Card stretch>

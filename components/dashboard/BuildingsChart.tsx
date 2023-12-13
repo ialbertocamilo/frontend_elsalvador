@@ -5,13 +5,15 @@ import dayjs from 'dayjs';
 import Card, { CardBody, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import {
+	exportExcel,
 	getDepartmentCodeFromList,
 	getLastFiveYearsFormatted,
 	orderByClassification,
 } from '../../helpers/helpers';
 import Select from '../bootstrap/forms/Select';
 import Button from '../bootstrap/Button';
-import XLSX from 'xlsx';
+import 'xlsx-js-style';
+import XLSX from 'sheetjs-style';
 
 export const BuildingsChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
@@ -94,14 +96,27 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			setSeries(orderByClassification(data));
 		});
 	}, [selectYear]);
+	const exportToExcel = (filedata: any) => {
+		const fileType =
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+
+		const ws = XLSX.utils.json_to_sheet(filedata);
+
+		const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+		const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+		const data = new Blob([excelBuffer], { type: fileType });
+		return data;
+	};
 
 	const doReport = useCallback(async () => {
-		const report = await DashboardService.getBuildingsBySystemReportExcel(selectYear);
-		const wb = XLSX.utils.book_new();
-		const ws = XLSX.utils.json_to_sheet(report);
-		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+		let report = await DashboardService.getBuildingsBySystemReportExcel(selectYear);
+
 		let date = dayjs().unix();
-		XLSX.writeFile(wb, `Reporte de edificaciones registradas en el sistema ${date} .xlsx`);
+		exportExcel(
+			report,
+			`Reporte de edificaciones registradas en el sistema ${date} .xlsx`,
+			'REPORTE DE EDIFICACIONES REGISTRADAS EN EL SISTEMA',
+		);
 	}, [selectYear]);
 	return (
 		<Card stretch>

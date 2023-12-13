@@ -17,7 +17,9 @@ const DashboardPage = () => {
 						/>
 					</div>
 					<div className='col-6'>
-						<BuildingsPerUser />
+						<BuildingsPerUser
+							title={'Reporte Top Ten de edificaciones registrados por el usuario'}
+						/>
 					</div>
 					<div className='col-6'>
 						<BuildingsParameterChart title={'Reporte de parámetros de edificación'} />

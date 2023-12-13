@@ -3,7 +3,8 @@ import { IUserStorage } from '../common/types/user.types';
 import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
 import { ObjClassification } from '../common/types/dashboard.types';
-import { values } from 'mobx';
+import 'xlsx-js-style';
+import XLSX from 'sheetjs-style';
 import dayjs from 'dayjs';
 
 export function test() {
@@ -264,4 +265,55 @@ export function getLastFiveYearsFormatted(): CustomFormat[] {
 		text: year.toString(),
 		label: `Año ${year}`,
 	}));
+}
+
+export function exportExcel(report: any[], fileName: string, title: string) {
+	const wb = XLSX.utils.book_new();
+	const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
+	const headers = Object.keys(report[0]);
+	let Heading = [[]];
+	ws['A1'] = { v: title, t: 's' };
+	ws['A1'].s = {
+		font: {
+			bold: true,
+			sz: 13,
+			color: { rgb: '00F5FAFB' },
+		},
+		alignment: {
+			wrapText: false,
+			readingOrder: 2,
+			vertical: 'center',
+			horizontal: 'center',
+		},
+		fill: { patternType: 'solid', fgColor: { rgb: '0000A0D5' } },
+	};
+	ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: headers.length } }];
+	XLSX.utils.sheet_add_aoa(ws, Heading);
+	XLSX.utils.sheet_add_json(ws, report, { origin: 'A2' });
+	XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+
+	const widthCols: XLSX.ColInfo[] | { wch: number }[] | undefined = [];
+	headers.forEach((value) => widthCols.push({ wch: 25 }));
+	headers.forEach((key, colIndex) => {
+		ws[XLSX.utils.encode_col(colIndex) + '2'].s = {
+			font: {
+				bold: true,
+				sz: 11,
+				color: { rgb: '00F5FAFB' },
+			},
+			alignment: {
+				wrapText: true,
+				readingOrder: 4,
+				vertical: 'center',
+			},
+			border: {
+				top: { style: 'thin' },
+				bottom: { style: 'thin' },
+				left: { style: 'thin' },
+				right: { style: 'thin' },
+			},
+			fill: { patternType: 'solid', fgColor: { rgb: '0098989A' } },
+		};
+	});
+	XLSX.writeFile(wb, fileName);
 }

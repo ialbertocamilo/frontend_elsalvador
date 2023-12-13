@@ -1,14 +1,6 @@
 import Chart, { IChartOptions } from '../extras/Chart';
 import { FC, useCallback, useEffect, useState } from 'react';
-import Card, {
-	CardBody,
-	CardFooter,
-	CardFooterLeft,
-	CardFooterRight,
-	CardHeader,
-	CardLabel,
-	CardTitle,
-} from '../bootstrap/Card';
+import Card, { CardBody, CardFooter, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
 import { TColor } from '../../type/color-type';
 import Avatar from '../Avatar';
 import Popovers from '../bootstrap/Popovers';
@@ -17,8 +9,7 @@ import classNames from 'classnames';
 import useDarkMode from '../../hooks/useDarkMode';
 import Link from 'next/link';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
-import { getLastFiveYearsFormatted, selectRoleName } from '../../helpers/helpers';
-import XLSX from 'xlsx';
+import { exportExcel, getLastFiveYearsFormatted, selectRoleName } from '../../helpers/helpers';
 import dayjs from 'dayjs';
 import Select from '../bootstrap/forms/Select';
 
@@ -127,7 +118,7 @@ const AnswerCustomer: FC<IAnswerCustomerProps> = (props: IAnswerCustomerProps) =
 	);
 };
 
-export const BuildingsPerUser = () => {
+export const BuildingsPerUser = ({ title }: { title: string }) => {
 	const [users, setUsers] = useState<
 		{
 			id: number;
@@ -150,13 +141,12 @@ export const BuildingsPerUser = () => {
 
 	const doReport = useCallback(async () => {
 		const report = await DashboardService.getBuildingsByUserReportExcel(selectYear);
-		const wb = XLSX.utils.book_new();
-		const ws = XLSX.utils.json_to_sheet(report);
-		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+
 		let date = dayjs().unix();
-		XLSX.writeFile(
-			wb,
+		exportExcel(
+			report,
 			`Reporte Top Ten de edificaciones registrados por el usuario ${date} .xlsx`,
+			'REPORTE DE EDIFICACIONES REGISTRADOS POR EL USUARIO',
 		);
 	}, [selectYear]);
 
@@ -165,7 +155,7 @@ export const BuildingsPerUser = () => {
 			<CardHeader>
 				<CardLabel icon='SupervisedUserCircle' iconColor='secondary'>
 					<CardTitle tag='div' className='h5'>
-						Reporte Top Ten de edificaciones registrados por el usuario
+						{title}
 					</CardTitle>
 				</CardLabel>
 			</CardHeader>

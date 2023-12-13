@@ -31,6 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					rel='stylesheet'
 					href='https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css'
 				/>
+				<script src='dist/xlsx.bundle.js'></script>
 				<title>
 					Plataforma electrónica para la certificación de Construcción Sostenible
 				</title>
