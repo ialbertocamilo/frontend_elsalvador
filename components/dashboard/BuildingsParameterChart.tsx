@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import Card, { CardBody, CardHeader, CardLabel, CardSubTitle, CardTitle } from '../bootstrap/Card';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import Select from '../bootstrap/forms/Select';
-import XLSX from 'xlsx';
 import Button from '../bootstrap/Button';
 import { exportExcel, getLastFiveYearsFormatted } from '../../helpers/helpers';
 
@@ -55,6 +54,9 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			title: {
 				text: 'Promedios de valores de proyectos aprobados',
 			},
+			labels: {
+				show: true,
+			},
 		},
 
 		yaxis: {
@@ -66,7 +68,41 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 		fill: {
 			opacity: 1,
 		},
-		tooltip: {},
+		tooltip: {
+			style: { fontSize: '11px' },
+			//@ts-ignore
+			y: {
+				formatter: function (val) {
+					if (val === undefined) return '-';
+					return val;
+				},
+			},
+			x: {
+				formatter: function (val) {
+					switch (val) {
+						case 1:
+							return 'Proporción muro ventana';
+						case 2:
+							return 'Valor u muro';
+						case 3:
+							return 'Valor u ventana';
+						case 4:
+							return 'Valor g ventana';
+						case 5:
+							return 'Aire acondicionado COP';
+						case 6:
+							return 'Reflectancia de muros';
+						case 7:
+							return 'Valor u de techos';
+						case 8:
+							return 'Reflectancia de techos';
+						case 9:
+							return 'Sombras ventanas exteriores';
+					}
+					return 'Valor desconocido';
+				},
+			},
+		},
 		legend: {
 			show: true, // Mostrar leyenda
 			position: 'top', // Posición de la leyenda (puede ser 'top', 'bottom', 'right', 'left', etc.)
@@ -74,7 +110,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 		},
 		grid: {
 			row: {
-				colors: ['#f3f3f3', 'transparent'], // Colores de las filas de la cuadrícula
+				colors: ['#f3f3f3'], // Colores de las filas de la cuadrícula
 				opacity: 0.5, // Opacidad de las filas de la cuadrícula
 			},
 		},

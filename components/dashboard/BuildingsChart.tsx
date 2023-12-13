@@ -9,6 +9,7 @@ import {
 	getDepartmentCodeFromList,
 	getLastFiveYearsFormatted,
 	orderByClassification,
+	selectDepartmenFromJson,
 } from '../../helpers/helpers';
 import Select from '../bootstrap/forms/Select';
 import Button from '../bootstrap/Button';
@@ -66,6 +67,11 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			y: {
 				formatter: function (val) {
 					return val + ' proyectos';
+				},
+			},
+			x: {
+				formatter: function (val) {
+					return selectDepartmenFromJson(val - 1);
 				},
 			},
 		},
