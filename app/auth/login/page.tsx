@@ -17,7 +17,7 @@ import Logo from '../../../components/Logo';
 import userStore from '../../../stores/userStore';
 import Select from '../../../components/bootstrap/forms/Select';
 import { arrayToList, fillMunicipalitiesByDepartment } from '../../../helpers/helpers';
-import { departmentList, municipalityList } from '../../../common/constants/lists';
+import { departmentList } from '../../../common/constants/lists';
 
 interface ILoginHeaderProps {
 	isNewUser?: boolean;
