@@ -30,7 +30,7 @@ export const BuildingTypeButtons = ({
 	}, [formikTypeRadios.values]);
 
 	return (
-		<div className='row align-items-center justify-content-center align-self-center h5'>
+		<div className='fw-bold'>
 			{!buttonPublicPrivate && (
 				<ChecksGroup>
 					<Checks

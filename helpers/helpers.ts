@@ -4,6 +4,7 @@ import { RoleType } from '../common/types/role.types';
 import { operatorMenu, pagesMenu } from '../common/constants/menu';
 import { ObjClassification } from '../common/types/dashboard.types';
 import { values } from 'mobx';
+import dayjs from 'dayjs';
 
 export function test() {
 	return null;
@@ -245,6 +246,22 @@ export function orderByClassification(data: ObjClassification[]) {
 	return sumDataObjects(classif);
 }
 
-export function getDepartmentsFromList() {
+export function getDepartmentCodeFromList() {
 	return DepartmentsWithProvincies.map((value) => value.code);
+}
+interface CustomFormat {
+	value?: string | number | undefined;
+	text?: string | number | undefined;
+	label?: string | number | undefined;
+}
+
+export function getLastFiveYearsFormatted(): CustomFormat[] {
+	const currentYear = dayjs().year();
+	const lastTenYears = Array.from({ length: 5 }, (_, index) => currentYear - index);
+
+	return lastTenYears.map((year) => ({
+		value: year,
+		text: year.toString(),
+		label: `Año ${year}`,
+	}));
 }

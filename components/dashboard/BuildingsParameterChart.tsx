@@ -1,10 +1,13 @@
 import Chart from '../extras/Chart';
 import { ApexOptions } from 'apexcharts';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import Card, { CardBody, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
+import Card, { CardBody, CardHeader, CardLabel, CardSubTitle, CardTitle } from '../bootstrap/Card';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import Select from '../bootstrap/forms/Select';
+import XLSX from 'xlsx';
+import Button from '../bootstrap/Button';
+import { getLastFiveYearsFormatted } from '../../helpers/helpers';
 
 export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
@@ -72,29 +75,12 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			},
 		},
 	};
+	const [series, setSeries] = useState<any>([]);
 
 	const [year, setYear] = useState(Number(dayjs().format('YYYY')));
 
-	const [series, setSeries] = useState<any>([]);
-
-	interface CustomFormat {
-		value?: string | number | undefined;
-		text?: string | number | undefined;
-		label?: string | number | undefined;
-	}
-
-	function getLastFiveYearsFormatted(): CustomFormat[] {
-		const currentYear = dayjs().year();
-		const lastTenYears = Array.from({ length: 5 }, (_, index) => currentYear - index);
-
-		return lastTenYears.map((year) => ({
-			value: year,
-			text: year.toString(),
-			label: `Año ${year}`,
-		}));
-	}
-
 	const [selectYear, setSelectYear] = useState(year);
+
 	useEffect(() => {
 		DashboardService.getBuildingsByParametersReport(selectYear).then((data) => {
 			setSeries(data);
@@ -104,6 +90,14 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			setMaxValue(maxValue + 10);
 		});
 	}, [selectYear]);
+	const doReport = useCallback(async () => {
+		const report = await DashboardService.getBuildingsByParametersReportExcel(selectYear);
+		const wb = XLSX.utils.book_new();
+		const ws = XLSX.utils.json_to_sheet(report);
+		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+		let date = dayjs().unix();
+		XLSX.writeFile(wb, `Reporte de parámetros de edificación ${date} .xlsx`);
+	}, [selectYear]);
 	return (
 		<Card stretch>
 			<CardHeader>
@@ -111,6 +105,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 					<CardTitle tag='div' className='h5'>
 						{title}
 					</CardTitle>
+					<CardSubTitle>Aprobados</CardSubTitle>
 				</CardLabel>
 			</CardHeader>
 			<CardBody>
@@ -120,6 +115,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 					list={getLastFiveYearsFormatted()}
 					onChange={(e: any) => setSelectYear(e.target.value)}
 				/>
+				<br />
 				<Chart
 					options={salesByStoreOptions}
 					type={salesByStoreOptions.chart?.type}
@@ -127,6 +123,9 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 					// @ts-ignore
 					series={series}
 				/>
+				<Button className={''} onClick={doReport} color='primary'>
+					Descargar reporte
+				</Button>
 			</CardBody>
 		</Card>
 	);

@@ -74,7 +74,10 @@
 		"react-use": "^17.4.0",
 		"rodal": "^2.1.0",
 		"sass": "^1.60.0",
-		"use-clipboard-copy": "^0.2.0"
+		"sheetjs-style": "^0.15.8",
+		"use-clipboard-copy": "^0.2.0",
+		"xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz",
+		"xlsx-js-style": "^1.2.0"
 	},
 	"devDependencies": {
 		"@types/node": "18.15.11",

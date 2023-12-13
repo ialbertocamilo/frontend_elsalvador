@@ -1,5 +1,5 @@
 import Chart, { IChartOptions } from '../extras/Chart';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import Card, {
 	CardBody,
 	CardFooter,
@@ -17,7 +17,10 @@ import classNames from 'classnames';
 import useDarkMode from '../../hooks/useDarkMode';
 import Link from 'next/link';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
-import { selectRoleName } from '../../helpers/helpers';
+import { getLastFiveYearsFormatted, selectRoleName } from '../../helpers/helpers';
+import XLSX from 'xlsx';
+import dayjs from 'dayjs';
+import Select from '../bootstrap/forms/Select';
 
 interface IAnswerCustomerProps {
 	id: string | number;
@@ -136,12 +139,27 @@ export const BuildingsPerUser = () => {
 		}[]
 	>();
 	const [total, setTotal] = useState(0);
+	const [year, setYear] = useState(Number(dayjs().format('YYYY')));
+	const [selectYear, setSelectYear] = useState(year);
 	useEffect(() => {
-		DashboardService.getBuildingsByUserReport().then((data) => {
+		DashboardService.getBuildingsByUserReport(selectYear).then((data) => {
 			setUsers(data.users);
 			setTotal(data.total);
 		});
-	}, []);
+	}, [selectYear]);
+
+	const doReport = useCallback(async () => {
+		const report = await DashboardService.getBuildingsByUserReportExcel(selectYear);
+		const wb = XLSX.utils.book_new();
+		const ws = XLSX.utils.json_to_sheet(report);
+		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+		let date = dayjs().unix();
+		XLSX.writeFile(
+			wb,
+			`Reporte Top Ten de edificaciones registrados por el usuario ${date} .xlsx`,
+		);
+	}, [selectYear]);
+
 	return (
 		<Card stretch>
 			<CardHeader>
@@ -152,6 +170,13 @@ export const BuildingsPerUser = () => {
 				</CardLabel>
 			</CardHeader>
 			<CardBody isScrollable>
+				<Select
+					ariaLabel={'select year'}
+					value={selectYear.toString()}
+					list={getLastFiveYearsFormatted()}
+					onChange={(e: any) => setSelectYear(e.target.value)}
+				/>
+				<br />
 				<div className='row g-3'>
 					{users?.map((value, key) => (
 						<AnswerCustomer
@@ -173,8 +198,17 @@ export const BuildingsPerUser = () => {
 				</div>
 			</CardBody>
 			<CardFooter>
-				<CardFooterLeft>Total: {total} proyecto(s)</CardFooterLeft>
-				<CardFooterRight>Total: {users?.length} usuario(s)</CardFooterRight>
+				<div className='row g-3 w-100'>
+					<div className='col-12 d-flex justify-content-between'>
+						<span>Total: {total} proyecto(s)</span>
+						<span>Total: {users?.length} usuario(s)</span>
+					</div>
+					<div className='col-12'>
+						<Button className={''} color='primary' onClick={doReport}>
+							Descargar reporte
+						</Button>
+					</div>
+				</div>
 			</CardFooter>
 		</Card>
 	);

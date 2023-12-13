@@ -10,11 +10,11 @@ import Select from '../../../../components/bootstrap/forms/Select';
 import FormGroup from '../../../../components/bootstrap/forms/FormGroup';
 import Label from '../../../../components/bootstrap/forms/Label';
 import { arrayToList, fillMunicipalitiesByDepartment } from '../../../../helpers/helpers';
-import { departmentList, municipalityList } from '../../../../common/constants/lists';
 import { useFormik } from 'formik';
 import { IUser } from '../../../../common/types/user.types';
 import { UserService } from '../../../../services/users/user.service';
 import { useParams } from 'next/navigation';
+import { departmentList } from '../../../../common/constants/lists';
 
 const AccessIdPage = () => {
 	const params = useParams();
@@ -61,7 +61,7 @@ const AccessIdPage = () => {
 		if (array) {
 			setMunicipalites(arrayToList(array));
 		}
-	}, [formik.values.department]);
+	}, [formik.values]);
 	return (
 		<PageWrapper>
 			<Page container='fluid'>

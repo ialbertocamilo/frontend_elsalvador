@@ -33,5 +33,5 @@ export interface IPackageOriginQuestions {
 	window_g_value: string;
 	shades: string;
 	cop: string;
-	building_classification: string;
+	building_classification?: string;
 }

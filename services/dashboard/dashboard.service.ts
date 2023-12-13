@@ -2,8 +2,11 @@ import axiosService from '../../lib/axios';
 import { ChartSeriesObject, ObjClassification } from '../../common/types/dashboard.types';
 
 export class DashboardService {
-	static async getDesignCompliancesReport() {
-		const result = await axiosService().post('projects/report', { type: 'design-compliances' });
+	static async getDesignCompliancesReport(year: number) {
+		const result = await axiosService().post('projects/report', {
+			type: 'design-compliances',
+			year,
+		});
 		return result.data as {
 			approved: {
 				households: number;
@@ -19,9 +22,19 @@ export class DashboardService {
 			};
 		};
 	}
+	static async getDesignCompliancesReportExcel(year: number) {
+		const result = await axiosService().post('projects/report-excel', {
+			type: 'design-compliances',
+			year,
+		});
+		return result.data;
+	}
 
-	static async getBuildingsByUserReport() {
-		const result = await axiosService().post('projects/report', { type: 'user-buildings' });
+	static async getBuildingsByUserReport(year: number) {
+		const result = await axiosService().post('projects/report', {
+			type: 'user-buildings',
+			year,
+		});
 		return result.data as {
 			users: {
 				id: number;
@@ -34,6 +47,13 @@ export class DashboardService {
 			total: number;
 		};
 	}
+	static async getBuildingsByUserReportExcel(year: number) {
+		const result = await axiosService().post('projects/report-excel', {
+			type: 'user-buildings',
+			year,
+		});
+		return result.data;
+	}
 
 	static async getBuildingsBySystemReport(year: number) {
 		const result = await axiosService().post('projects/report', {
@@ -42,11 +62,25 @@ export class DashboardService {
 		});
 		return result.data as ObjClassification[];
 	}
+	static async getBuildingsBySystemReportExcel(year: number) {
+		const result = await axiosService().post('projects/report-excel', {
+			type: 'system-buildings',
+			year,
+		});
+		return result.data;
+	}
 	static async getBuildingsByParametersReport(year: number) {
 		const result = await axiosService().post('projects/report', {
 			type: 'buildings-parameters',
 			year,
 		});
 		return result.data as ChartSeriesObject[];
+	}
+	static async getBuildingsByParametersReportExcel(year: number) {
+		const result = await axiosService().post('projects/report-excel', {
+			type: 'buildings-parameters',
+			year,
+		});
+		return result.data;
 	}
 }

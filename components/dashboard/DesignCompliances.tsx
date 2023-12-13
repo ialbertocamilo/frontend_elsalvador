@@ -1,10 +1,15 @@
-import Card, { CardBody, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
+import Card, { CardBody, CardFooter, CardHeader, CardLabel, CardTitle } from '../bootstrap/Card';
 import classNames from 'classnames';
 import Icon from '../icon/Icon';
 import PercentComparison from '../extras/PercentComparison';
 import useDarkMode from '../../hooks/useDarkMode';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
+import Select from '../bootstrap/forms/Select';
+import { getLastFiveYearsFormatted } from '../../helpers/helpers';
+import dayjs from 'dayjs';
+import Button from '../bootstrap/Button';
+import XLSX from 'xlsx';
 
 export const Box = ({
 	title,
@@ -18,7 +23,7 @@ export const Box = ({
 	const { darkModeStatus } = useDarkMode();
 	return (
 		<Card
-			className={classNames('transition-base rounded-2 mb-0 text-dark', color, {
+			className={classNames('transition-base rounded-2 text-dark', color, {
 				'bg-l10-primary-hover': !darkModeStatus,
 				'bg-lo25-primary-hover': darkModeStatus,
 			})}
@@ -73,12 +78,23 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 		tertiary: number;
 		total: number;
 	}>();
+	const [year, setYear] = useState(Number(dayjs().format('YYYY')));
+	const [selectYear, setSelectYear] = useState(year);
 	useEffect(() => {
-		DashboardService.getDesignCompliancesReport().then((data) => {
+		DashboardService.getDesignCompliancesReport(selectYear).then((data) => {
 			setApproved(data.approved);
 			setDenied(data.denied);
 		});
-	}, []);
+	}, [selectYear]);
+
+	const doReport = useCallback(async () => {
+		const report = await DashboardService.getDesignCompliancesReportExcel(selectYear);
+		const wb = XLSX.utils.book_new();
+		const ws = XLSX.utils.json_to_sheet(report);
+		XLSX.utils.book_append_sheet(wb, ws, 'Reporte');
+		let date = dayjs().unix();
+		XLSX.writeFile(wb, `Cumplimientos de diseño ${date} .xlsx`);
+	}, [selectYear]);
 	return (
 		<Card>
 			<CardHeader>
@@ -89,10 +105,20 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 				</CardLabel>
 			</CardHeader>
 			<CardBody>
-				<div className='row g-4'>
+				<Select
+					ariaLabel={'select year'}
+					value={selectYear.toString()}
+					list={getLastFiveYearsFormatted()}
+					onChange={(e: any) => setSelectYear(e.target.value)}
+				/>
+				<br />
+				<div className='row g-1'>
 					<Box title={'Aprobados'} color={'bg-l25-primary'} data={approved} />
 					<Box title={'Rechazados'} color={'bg-l25-secondary'} data={denied} />
 				</div>
+				<Button onClick={doReport} color='primary'>
+					Descargar reporte
+				</Button>
 			</CardBody>
 		</Card>
 	);
