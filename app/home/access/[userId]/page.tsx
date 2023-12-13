@@ -15,6 +15,8 @@ import { IUser } from '../../../../common/types/user.types';
 import { UserService } from '../../../../services/users/user.service';
 import { useParams } from 'next/navigation';
 import { departmentList } from '../../../../common/constants/lists';
+import Popovers from '../../../../components/bootstrap/Popovers';
+import { logoutAll } from '../../../../services/auth/authentication';
 
 const AccessIdPage = () => {
 	const params = useParams();
@@ -62,6 +64,10 @@ const AccessIdPage = () => {
 			setMunicipalites(arrayToList(array));
 		}
 	}, [formik.values]);
+
+	async function closeSessions() {
+		await logoutAll(formik.values.id);
+	}
 	return (
 		<PageWrapper>
 			<Page container='fluid'>
@@ -256,6 +262,21 @@ const AccessIdPage = () => {
 										icon='Save'>
 										Guardar datos
 									</Button>
+									<Popovers
+										trigger={'hover'}
+										desc={
+											'Se cerrarán automaticamente todas las sesiones abiertas en todos los dispositivos.'
+										}>
+										<Button
+											className='col-auto mx-2'
+											color='danger'
+											isLight
+											type='submit'
+											onClick={closeSessions}
+											icon='ExitToApp'>
+											Cerrar todas las sesiones
+										</Button>
+									</Popovers>
 								</div>
 							</CardFooter>
 						</Card>

@@ -76,7 +76,7 @@ export const ProjectComponent = ({
 		},
 		onSubmit: async (values) => {
 			Object.assign(values, { ...values, id: projectId });
-			if (values.id) await projects.updateProject(values);
+			if (values?.id) await projects.updateProject(values);
 			else {
 				projects.saveProject(values).then((data) => {
 					if (data) router.push(RoutesListWithParams.project(data.id));

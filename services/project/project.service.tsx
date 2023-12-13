@@ -13,6 +13,7 @@ export function useProjects() {
 	async function getProject(id: string) {
 		const response = await axiosService().get(`/projects/${id}`);
 		if (response.status === 200) return new ProjectEntity(response.data);
+
 		return null;
 	}
 
@@ -54,6 +55,7 @@ export function useProjects() {
 		}
 		return null;
 	}
+
 	async function getAllProjectData(projectId: string): Promise<unknown> {
 		if (projectId) {
 			const result = await axiosService().post(`/projects/get-all-data`, {

@@ -42,3 +42,19 @@ export async function logout() {
 	}
 	return false;
 }
+
+export async function logoutAll(userId: string) {
+	const response = await axiosService().post('/logout-all', { user_id: userId });
+	if (response?.data) {
+		showNotification(
+			<span className='d-flex align-items-center'>
+				<Icon icon='Info' size='lg' className='me-1' />
+				<span>Autenticación</span>
+			</span>,
+			'Se ha cerrado las sesiones en todos los dispositivos.',
+			'danger',
+		);
+		return true;
+	}
+	return false;
+}
