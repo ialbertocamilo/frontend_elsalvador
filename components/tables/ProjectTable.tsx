@@ -21,7 +21,7 @@ import { RoutesList } from '../../common/constants/default';
 import { Roles } from '../../common/types/role.types';
 import Popovers from '../bootstrap/Popovers';
 import moment from 'moment';
-import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../helpers/helpers';
+import { selectDepartmentFromJson, selectMunicipalityFromJson } from '../../helpers/helpers';
 
 const ProjectTable = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -268,7 +268,7 @@ const ProjectTable = () => {
 															if (i.id) goToProject(i.id);
 														}}>
 														<div>
-															{selectDepartmenFromJson(
+															{selectDepartmentFromJson(
 																Number(i.department),
 															)}
 														</div>

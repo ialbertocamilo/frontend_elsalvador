@@ -8,7 +8,7 @@ import SubHeader, {
 } from '../../../layout/SubHeader/SubHeader';
 import { useRouter } from 'next/navigation';
 import { RoutesListWithParams } from '../../../common/constants/default';
-import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../../helpers/helpers';
+import { selectDepartmentFromJson, selectMunicipalityFromJson } from '../../../helpers/helpers';
 import PageWrapper from '../../../layout/PageWrapper/PageWrapper';
 import Page from '../../../layout/Page/Page';
 import Button from '../../../components/bootstrap/Button';
@@ -219,7 +219,7 @@ const AccessTable = () => {
 														)
 													}>
 													<div>
-														{selectDepartmenFromJson(
+														{selectDepartmentFromJson(
 															Number(i.department),
 														)}
 													</div>

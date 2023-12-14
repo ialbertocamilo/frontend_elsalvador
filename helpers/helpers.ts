@@ -198,8 +198,14 @@ export function selectMunicipalityFromJson(municipalityIndex: number, department
 		: DepartmentsWithProvincies[0].municipality[0];
 }
 
-export function selectDepartmenFromJson(departmentId: number) {
+export function selectDepartmentFromJson(departmentId: number) {
 	const find = DepartmentsWithProvincies.find((value) => value?.id == departmentId);
+
+	return find ? find.department : DepartmentsWithProvincies[0].department;
+}
+
+export function selectDepartmentByCodeFromJson(code: string) {
+	const find = DepartmentsWithProvincies.find((value) => value?.code == code);
 
 	return find ? find.department : DepartmentsWithProvincies[0].department;
 }
@@ -295,7 +301,7 @@ export function exportExcel(report: any[], fileName: string, title: string) {
 		},
 		fill: { patternType: 'solid', fgColor: { rgb: '0000A0D5' } },
 	};
-	ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: headers.length } }];
+	ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: headers?.length - 1 } }];
 	XLSX.utils.sheet_add_aoa(ws, Heading);
 	XLSX.utils.sheet_add_json(ws, report, { origin: 'A2' });
 	XLSX.utils.book_append_sheet(wb, ws, 'Reporte');

@@ -26,7 +26,7 @@ import { IQuestion } from '../../../../common/types/question.types';
 import { useGlobalStatus } from '../../../../hooks/useGlobalStatus';
 import { BuildingClassification } from '../../../../common/types/building.types';
 import { ResultValues } from '../../../../components/packages/ResultValues';
-import { selectDepartmenFromJson, selectMunicipalityFromJson } from '../../../../helpers/helpers';
+import { selectDepartmentFromJson, selectMunicipalityFromJson } from '../../../../helpers/helpers';
 
 const keyName = keyList.package;
 const PackagesPage = () => {
@@ -45,7 +45,7 @@ const PackagesPage = () => {
 
 	useEffect(() => {
 		if (projectEntity) {
-			setDepartment(selectDepartmenFromJson(Number(projectEntity.department)));
+			setDepartment(selectDepartmentFromJson(Number(projectEntity.department)));
 			setMunicipalites(
 				selectMunicipalityFromJson(
 					Number(projectEntity.municipality),

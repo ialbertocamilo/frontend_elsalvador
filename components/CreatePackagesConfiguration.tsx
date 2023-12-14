@@ -291,7 +291,7 @@ const SelectQuestionsConfiguration = ({
 											</td>
 										</tr>
 										<tr>
-											<td className='p-3 h5'>% Reducción Energia final</td>
+											<td className='p-3'>% Reducción Energia final</td>
 											<td width='150'>
 												<InputGroup size='sm'>
 													<Input

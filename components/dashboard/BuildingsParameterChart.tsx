@@ -25,11 +25,6 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 				type: 'x', // Tipo de zoom ('x', 'y', 'xy')
 				autoScaleYaxis: true, // Escalar automáticamente el eje Y al hacer zoom en el eje X
 			},
-			events: {
-				legendClick: function (chartContext, seriesIndex, config) {
-					console.log(seriesIndex);
-				},
-			},
 		},
 		plotOptions: {
 			bar: {
@@ -67,13 +62,13 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			labels: {
 				show: true,
 			},
+			type: 'category',
 		},
 
 		yaxis: {
 			title: {
 				text: 'Promedios de valores de proyectos aprobados',
 			},
-			max: maxValue,
 		},
 		fill: {
 			opacity: 1,
@@ -88,28 +83,30 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 				},
 			},
 			x: {
-				formatter: function (val) {
-					switch (val) {
-						case 1:
+				show: true,
+				formatter: function (val: number) {
+					const value = String(val);
+					switch (value) {
+						case 'PROP':
 							return 'Proporción muro ventana';
-						case 2:
+						case 'VALU M':
 							return 'Valor u muro';
-						case 3:
+						case 'VALU V':
 							return 'Valor u ventana';
-						case 4:
+						case 'VALG V':
 							return 'Valor g ventana';
-						case 5:
+						case 'COP':
 							return 'Aire acondicionado COP';
-						case 6:
+						case 'REF M':
 							return 'Reflectancia de muros';
-						case 7:
+						case 'VALU T':
 							return 'Valor u de techos';
-						case 8:
+						case 'REF T':
 							return 'Reflectancia de techos';
-						case 9:
+						case 'SOM':
 							return 'Sombras ventanas exteriores';
 					}
-					return 'Valor desconocido';
+					return 'val';
 				},
 			},
 		},

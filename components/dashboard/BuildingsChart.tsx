@@ -9,7 +9,8 @@ import {
 	getDepartmentCodeFromList,
 	getLastFiveYearsFormatted,
 	orderByClassification,
-	selectDepartmenFromJson,
+	selectDepartmentByCodeFromJson,
+	selectDepartmentFromJson,
 } from '../../helpers/helpers';
 import Select from '../bootstrap/forms/Select';
 import Button from '../bootstrap/Button';
@@ -19,25 +20,21 @@ import showNotification from '../extras/showNotification';
 import Icon from '../icon/Icon';
 
 export const BuildingsChart = ({ title }: { title: string }) => {
-	const [maxValue, setMaxValue] = useState(10);
+	const [maxValue, setMaxValue] = useState(0);
 
-	const salesByStoreOptions: ApexOptions = {
+	const [options, setOptions] = useState<ApexOptions>({
 		chart: {
 			type: 'bar',
 			height: 500,
-			stacked: false, // Habilitar apilamiento si es necesario
+			stacked: false,
 			toolbar: {
-				show: true, // Mostrar barra de herramientas
+				show: true,
+				tools: { zoomout: true },
 			},
 			zoom: {
 				enabled: true, // Habilitar zoom
 				type: 'x', // Tipo de zoom ('x', 'y', 'xy')
 				autoScaleYaxis: true, // Escalar automáticamente el eje Y al hacer zoom en el eje X
-			},
-			events: {
-				legendClick: function (chartContext, seriesIndex, config) {
-					console.log(seriesIndex);
-				},
 			},
 		},
 		plotOptions: {
@@ -66,12 +63,16 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			labels: {
 				show: true,
 			},
+			type: 'category',
 		},
 		yaxis: {
 			title: {
-				text: 'Proyectos registrados',
+				text: 'Promedios de valores de proyectos aprobados',
 			},
-			max: maxValue,
+			show: true,
+			labels: { show: true },
+			min: 0,
+			max: 10,
 		},
 		fill: {
 			opacity: 1,
@@ -85,7 +86,8 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			},
 			x: {
 				formatter: function (val) {
-					return selectDepartmenFromJson(val - 1);
+					const value = String(val);
+					return selectDepartmentByCodeFromJson(value);
 				},
 			},
 		},
@@ -97,11 +99,11 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 		},
 		grid: {
 			row: {
-				colors: ['#f3f3f3', 'transparent'], // Colores de las filas de la cuadrícula
+				colors: ['#f3f3f3'], // Colores de las filas de la cuadrícula
 				opacity: 0.5, // Opacidad de las filas de la cuadrícula
 			},
 		},
-	};
+	});
 
 	const [year, setYear] = useState(Number(dayjs().format('YYYY')));
 
@@ -113,7 +115,8 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			const highestValue = data?.reduce((max, obj) => {
 				return obj?.total_projects > max ? obj?.total_projects : max;
 			}, 0);
-			setMaxValue(highestValue + 5);
+			options.yaxis = { ...options.yaxis, max: Number(highestValue + 2) };
+			setOptions(options);
 			setSeries(orderByClassification(data));
 		});
 	}, [selectYear]);
@@ -156,10 +159,9 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 				/>
 				<br />
 				<Chart
-					options={salesByStoreOptions}
-					type={salesByStoreOptions.chart?.type}
-					height={salesByStoreOptions.chart?.height}
-					// @ts-ignore
+					options={options}
+					type={options.chart?.type}
+					height={options.chart?.height}
 					series={series}
 				/>
 				<Button className={''} color='primary' onClick={doReport}>
