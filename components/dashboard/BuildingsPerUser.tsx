@@ -92,7 +92,7 @@ const AnswerCustomer: FC<IAnswerCustomerProps> = (props: IAnswerCustomerProps) =
 						<Popovers
 							desc={projectsCount + ' de ' + projectsTotal + ' proyectos'}
 							trigger='hover'>
-							<span className='me-3'>%{value}</span>
+							<span className='me-3'>{value ? value : 0}%</span>
 						</Popovers>
 						<Chart
 							series={state.series}
@@ -102,15 +102,17 @@ const AnswerCustomer: FC<IAnswerCustomerProps> = (props: IAnswerCustomerProps) =
 							width={35}
 							className='me-3'
 						/>
-						<Button
-							color='info'
-							isLight
-							icon='ScheduleSend'
-							className='text-nowrap'
-							tag='a'
-							href={'mailto:' + email}>
-							Send
-						</Button>
+						<Popovers desc={`Enviar un correo a ${email}`} trigger='hover'>
+							<Button
+								color='info'
+								isLight
+								icon='ScheduleSend'
+								className='text-nowrap'
+								tag='a'
+								href={'mailto:' + email}>
+								Send
+							</Button>
+						</Popovers>
 					</div>
 				</div>
 			</div>
