@@ -10,6 +10,7 @@ import { exportExcel, getLastFiveYearsFormatted } from '../../helpers/helpers';
 import dayjs from 'dayjs';
 import Button from '../bootstrap/Button';
 import XLSX from 'xlsx';
+import showNotification from '../extras/showNotification';
 
 export const Box = ({
 	title,
@@ -91,11 +92,21 @@ export const DesignCompliances = ({ title }: { title: string }) => {
 		const report = await DashboardService.getDesignCompliancesReportExcel(selectYear);
 
 		let date = dayjs().unix();
-		exportExcel(
-			report,
-			`Cumplimientos de diseño ${date} .xlsx`,
-			'REPORTE DE CUMPLIMIENTOS DE DISEÑO',
-		);
+		if (
+			!exportExcel(
+				report,
+				`Cumplimientos de diseño ${date} .xlsx`,
+				'REPORTE DE CUMPLIMIENTOS DE DISEÑO',
+			)
+		)
+			showNotification(
+				<span className='d-flex align-items-center'>
+					<Icon icon='Info' size='lg' className='me-1' />
+					<span>Error en reporte</span>
+				</span>,
+				'No se puede descargar el siguiente reporte debido a que no existen datos.',
+				'danger',
+			);
 	}, [selectYear]);
 	return (
 		<Card stretch>

@@ -6,6 +6,8 @@ import { ObjClassification } from '../common/types/dashboard.types';
 import 'xlsx-js-style';
 import XLSX from 'sheetjs-style';
 import dayjs from 'dayjs';
+import showNotification from '../components/extras/showNotification';
+import Icon from '../components/icon/Icon';
 
 export function test() {
 	return null;
@@ -208,11 +210,13 @@ export function getDataFromClassification(obj: ObjClassification) {
 		return 0;
 	});
 }
+
 interface DataObject {
 	name: string;
 	type: string;
 	data: number[];
 }
+
 function sumDataObjects(dataObjects: DataObject[]): DataObject[] {
 	const groupedByName: { [key: string]: DataObject } = {};
 
@@ -228,6 +232,7 @@ function sumDataObjects(dataObjects: DataObject[]): DataObject[] {
 
 	return Object.values(groupedByName);
 }
+
 export function orderByClassification(data: ObjClassification[]) {
 	const classif = data.map((value) => {
 		let name = '';
@@ -250,6 +255,7 @@ export function orderByClassification(data: ObjClassification[]) {
 export function getDepartmentCodeFromList() {
 	return DepartmentsWithProvincies.map((value) => value.code);
 }
+
 interface CustomFormat {
 	value?: string | number | undefined;
 	text?: string | number | undefined;
@@ -270,6 +276,8 @@ export function getLastFiveYearsFormatted(): CustomFormat[] {
 export function exportExcel(report: any[], fileName: string, title: string) {
 	const wb = XLSX.utils.book_new();
 	const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
+	if (report?.length == 0) return false;
+
 	const headers = Object.keys(report[0]);
 	let Heading = [[]];
 	ws['A1'] = { v: title, t: 's' };
@@ -316,4 +324,5 @@ export function exportExcel(report: any[], fileName: string, title: string) {
 		};
 	});
 	XLSX.writeFile(wb, fileName);
+	return true;
 }

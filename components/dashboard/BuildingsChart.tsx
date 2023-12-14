@@ -15,6 +15,8 @@ import Select from '../bootstrap/forms/Select';
 import Button from '../bootstrap/Button';
 import 'xlsx-js-style';
 import XLSX from 'sheetjs-style';
+import showNotification from '../extras/showNotification';
+import Icon from '../icon/Icon';
 
 export const BuildingsChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
@@ -115,27 +117,26 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			setSeries(orderByClassification(data));
 		});
 	}, [selectYear]);
-	const exportToExcel = (filedata: any) => {
-		const fileType =
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-
-		const ws = XLSX.utils.json_to_sheet(filedata);
-
-		const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
-		const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-		const data = new Blob([excelBuffer], { type: fileType });
-		return data;
-	};
 
 	const doReport = useCallback(async () => {
 		let report = await DashboardService.getBuildingsBySystemReportExcel(selectYear);
 
 		let date = dayjs().unix();
-		exportExcel(
-			report,
-			`Reporte de edificaciones registradas en el sistema ${date} .xlsx`,
-			'REPORTE DE EDIFICACIONES REGISTRADAS EN EL SISTEMA',
-		);
+		if (
+			!exportExcel(
+				report,
+				`Reporte de edificaciones registradas en el sistema ${date} .xlsx`,
+				'REPORTE DE EDIFICACIONES REGISTRADAS EN EL SISTEMA',
+			)
+		)
+			showNotification(
+				<span className='d-flex align-items-center'>
+					<Icon icon='Info' size='lg' className='me-1' />
+					<span>Error en reporte</span>
+				</span>,
+				'No se puede descargar el siguiente reporte debido a que no existen datos.',
+				'danger',
+			);
 	}, [selectYear]);
 	return (
 		<Card stretch>

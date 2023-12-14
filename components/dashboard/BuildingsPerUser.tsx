@@ -12,6 +12,8 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { exportExcel, getLastFiveYearsFormatted, selectRoleName } from '../../helpers/helpers';
 import dayjs from 'dayjs';
 import Select from '../bootstrap/forms/Select';
+import showNotification from '../extras/showNotification';
+import Icon from '../icon/Icon';
 
 interface IAnswerCustomerProps {
 	id: string | number;
@@ -145,11 +147,21 @@ export const BuildingsPerUser = ({ title }: { title: string }) => {
 		const report = await DashboardService.getBuildingsByUserReportExcel(selectYear);
 
 		let date = dayjs().unix();
-		exportExcel(
-			report,
-			`Reporte Top Ten de edificaciones registrados por el usuario ${date} .xlsx`,
-			'REPORTE DE EDIFICACIONES REGISTRADOS POR EL USUARIO',
-		);
+		if (
+			!exportExcel(
+				report,
+				`Reporte Top Ten de edificaciones registrados por el usuario ${date} .xlsx`,
+				'REPORTE DE EDIFICACIONES REGISTRADOS POR EL USUARIO',
+			)
+		)
+			showNotification(
+				<span className='d-flex align-items-center'>
+					<Icon icon='Info' size='lg' className='me-1' />
+					<span>Error en reporte</span>
+				</span>,
+				'No se puede descargar el siguiente reporte debido a que no existen datos.',
+				'danger',
+			);
 	}, [selectYear]);
 
 	return (

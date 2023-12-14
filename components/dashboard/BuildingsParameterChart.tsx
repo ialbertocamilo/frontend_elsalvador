@@ -7,6 +7,8 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import Select from '../bootstrap/forms/Select';
 import Button from '../bootstrap/Button';
 import { exportExcel, getLastFiveYearsFormatted } from '../../helpers/helpers';
+import showNotification from '../extras/showNotification';
+import Icon from '../icon/Icon';
 
 export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
@@ -142,11 +144,21 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const doReport = useCallback(async () => {
 		const report = await DashboardService.getBuildingsByParametersReportExcel(selectYear);
 		let date = dayjs().unix();
-		exportExcel(
-			report,
-			`Reporte de parámetros de edificación ${date} .xlsx`,
-			'REPORTE DE PARÁMETROS DE EDIFICACIÓN',
-		);
+		if (
+			!exportExcel(
+				report,
+				`Reporte de parámetros de edificación ${date} .xlsx`,
+				'REPORTE DE PARÁMETROS DE EDIFICACIÓN',
+			)
+		)
+			showNotification(
+				<span className='d-flex align-items-center'>
+					<Icon icon='Info' size='lg' className='me-1' />
+					<span>Error en reporte</span>
+				</span>,
+				'No se puede descargar el siguiente reporte debido a que no existen datos.',
+				'danger',
+			);
 	}, [selectYear]);
 	return (
 		<Card stretch>
