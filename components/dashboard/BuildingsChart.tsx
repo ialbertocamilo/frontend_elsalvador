@@ -21,7 +21,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
-			type: 'line',
+			type: 'bar',
 			height: 500,
 			stacked: false, // Habilitar apilamiento si es necesario
 			toolbar: {
@@ -31,6 +31,11 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 				enabled: true, // Habilitar zoom
 				type: 'x', // Tipo de zoom ('x', 'y', 'xy')
 				autoScaleYaxis: true, // Escalar automáticamente el eje Y al hacer zoom en el eje X
+			},
+			events: {
+				legendClick: function (chartContext, seriesIndex, config) {
+					console.log(seriesIndex);
+				},
 			},
 		},
 		plotOptions: {
@@ -53,6 +58,12 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 		},
 		xaxis: {
 			categories: getDepartmentCodeFromList(),
+			title: {
+				text: 'Departamentos',
+			},
+			labels: {
+				show: true,
+			},
 		},
 		yaxis: {
 			title: {
@@ -64,6 +75,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			opacity: 1,
 		},
 		tooltip: {
+			style: { fontSize: '11px' },
 			y: {
 				formatter: function (val) {
 					return val + ' proyectos';
@@ -79,6 +91,7 @@ export const BuildingsChart = ({ title }: { title: string }) => {
 			show: true, // Mostrar leyenda
 			position: 'top', // Posición de la leyenda (puede ser 'top', 'bottom', 'right', 'left', etc.)
 			horizontalAlign: 'left', // Alineación horizontal
+			showForNullSeries: true,
 		},
 		grid: {
 			row: {

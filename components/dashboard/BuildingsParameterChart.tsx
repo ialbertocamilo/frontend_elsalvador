@@ -12,7 +12,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 	const [maxValue, setMaxValue] = useState(10);
 	const salesByStoreOptions: ApexOptions = {
 		chart: {
-			type: 'line',
+			type: 'bar',
 			height: 500,
 			stacked: false, // Habilitar apilamiento si es necesario
 			toolbar: {
@@ -23,12 +23,20 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 				type: 'x', // Tipo de zoom ('x', 'y', 'xy')
 				autoScaleYaxis: true, // Escalar automáticamente el eje Y al hacer zoom en el eje X
 			},
+			events: {
+				legendClick: function (chartContext, seriesIndex, config) {
+					console.log(seriesIndex);
+				},
+			},
 		},
 		plotOptions: {
 			bar: {
 				horizontal: false,
-				columnWidth: '50%',
-				borderRadius: 8,
+				columnWidth: '80%',
+				borderRadius: 5,
+				dataLabels: {
+					position: 'top', // Posición de los valores en las barras
+				},
 			},
 		},
 		colors: ['#008FFB', '#00E396', '#AB4278'],
@@ -107,6 +115,7 @@ export const BuildingsParameterChart = ({ title }: { title: string }) => {
 			show: true, // Mostrar leyenda
 			position: 'top', // Posición de la leyenda (puede ser 'top', 'bottom', 'right', 'left', etc.)
 			horizontalAlign: 'left', // Alineación horizontal
+			showForNullSeries: true,
 		},
 		grid: {
 			row: {
