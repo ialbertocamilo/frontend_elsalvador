@@ -49,12 +49,12 @@ const User = () => {
 	}, []);
 	return (
 		<>
-			<Collapse isOpen={collapseStatus} className='user-menu'>
+			<Collapse isOpen={collapseStatus} className='user-menu mt-2'>
 				<nav aria-label='aside-bottom-user-menu'>
-					<div className='navigation '>
-						<div className='social-icon '>
+					<div className='navigation  '>
+						<div className='social-icon col g-2 '>
 							<Link
-								className='m-2'
+								className='m-4'
 								target='_blank'
 								href='https://www.facebook.com/DGEHMSV/'>
 								<SvgFacebook
@@ -63,7 +63,7 @@ const User = () => {
 								/>
 							</Link>
 							<Link
-								className='m-2'
+								className='m-4'
 								target='_blank'
 								href='https://www.instagram.com/dgehm_sv/'>
 								<InstagramIcon
@@ -73,7 +73,7 @@ const User = () => {
 							</Link>
 
 							<Link
-								className='m-2'
+								className='m-4'
 								target='_blank'
 								href='https://twitter.com/DGEHMSV'>
 								<TwitterIcon
@@ -81,7 +81,7 @@ const User = () => {
 									height={25}
 								/>
 							</Link>
-							<Link className='m-2' target='_blank' href='https://www.dgehm.gob.sv/'>
+							<Link className='m-4' target='_blank' href='https://www.dgehm.gob.sv/'>
 								<SvgCircle
 									className=' cursor-pointer social-icon text-white'
 									height={25}

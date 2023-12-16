@@ -86,6 +86,11 @@ export const ProjectComponent = ({
 		enableReinitialize: true,
 	});
 
+	const [activateButtons, setActivateButtons] = useState(false);
+	useEffect(() => {
+		console.log(projectId);
+		if (projectId) setActivateButtons(true);
+	}, [projectId]);
 	useEffect(() => {
 		if (formik.values.levelsNumber)
 			formik.setFieldValue('levelsNumber', Math.round(formik.values.levelsNumber));
@@ -443,7 +448,7 @@ export const ProjectComponent = ({
 						<>
 							{!globalReadonly && (
 								<Button
-									className='col-auto mx-2'
+									className='col-auto'
 									color='info'
 									isLight
 									type='submit'
@@ -453,28 +458,38 @@ export const ProjectComponent = ({
 								</Button>
 							)}
 						</>
-						<Button
-							className='col-auto  mx-2'
-							color='storybook'
-							isLight
-							onClick={() => router.push(RoutesListWithParams.geolocation(projectId))}
-							icon='GpsFixed'>
-							Geolocalización
-						</Button>
-						<BackToCalculatorsBtn />
-						<Button
-							color='link'
-							className='mx-1 col-2 m-0 p-0'
-							onClick={() => router.push(RoutesListWithParams.packages(projectId))}>
-							<span className='text-start'>
-								<Icon icon='Backpack' />
-								Paquetes
-							</span>
-						</Button>
-						<NextButton
-							route={RoutesListWithParams.calculatorProportion(projectId)}
-							text='Siguiente'
-						/>
+						<>
+							{activateButtons && (
+								<>
+									<Button
+										className='col-auto  mx-2'
+										color='storybook'
+										isLight
+										onClick={() =>
+											router.push(RoutesListWithParams.geolocation(projectId))
+										}
+										icon='GpsFixed'>
+										Geolocalización
+									</Button>
+									<BackToCalculatorsBtn />
+									<Button
+										color='link'
+										className='mx-1 col-2 m-0 p-0'
+										onClick={() =>
+											router.push(RoutesListWithParams.packages(projectId))
+										}>
+										<span className='text-start'>
+											<Icon icon='Backpack' />
+											Paquetes
+										</span>
+									</Button>
+									<NextButton
+										route={RoutesListWithParams.calculatorProportion(projectId)}
+										text='Siguiente'
+									/>
+								</>
+							)}
+						</>
 					</CardFooter>
 				</Card>
 			</div>
