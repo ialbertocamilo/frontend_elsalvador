@@ -335,10 +335,16 @@ export const ShadingTable = ({ setData, data, setResult, readOnly }: ShadingProp
 							}></Row>
 					))}
 					<tr>
-						<th colSpan={6} className={'text-center h5 align-items-center'}>
-							<Label>Promedio de resultados</Label>
+						<th
+							colSpan={6}
+							className={
+								'text-center h5 align-items-center border-opacity-10 border-info '
+							}>
+							<span className=' text-primary-emphasis'>
+								Promedio total de elementos
+							</span>
 						</th>
-						<th>
+						<th colSpan={3}>
 							<Input
 								type='number'
 								readOnly
