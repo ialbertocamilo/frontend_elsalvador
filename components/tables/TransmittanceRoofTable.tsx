@@ -173,7 +173,7 @@ export const TransmittanceRoofTable = ({ onData, data, readOnly }: Props) => {
 								<Input
 									value={totalSurface2}
 									readOnly={readOnly}
-									type={'text'}
+									type={'number'}
 									className='me-2 text-center '
 									onChange={(e: any) => {
 										const value = toDecimalNumber(e.target.value);
