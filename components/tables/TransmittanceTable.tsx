@@ -176,7 +176,8 @@ export const TransmittanceTable = ({ onData, data, readOnly }: Props) => {
 										className='me-2 text-center '
 										onChange={(e: any) => {
 											const value = toDecimalNumber(e.target.value);
-											if (value <= 100) setTotalSurface2(value);
+											if (!isNaN(value) && value <= 100)
+												setTotalSurface2(value);
 										}}
 									/>
 									<span className='align-self-center'>%</span>

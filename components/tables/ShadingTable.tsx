@@ -8,6 +8,7 @@ import { toDecimal } from '../../helpers/helpers';
 import classNames from 'classnames';
 import { ClientStorage } from '../../common/classes/storage';
 import { RoleType } from '../../common/types/role.types';
+import Label from '../bootstrap/forms/Label';
 
 interface Row {
 	data: any;
@@ -100,9 +101,9 @@ const Row = ({ data, onInputChange, onRemove, readOnly }: Row) => {
 					onChange={(e: any) => onInputChange('column6', e.target.value)}
 				/>
 			</td>
-			<td className='bold h4 text-center'>{RowIsX(data.result1)}</td>
-			<td className='bold h4 text-center'>{RowIsX(data.result2)}</td>
-			<td className='bold h4 text-center'>{RowIsX(data.result3)}</td>
+			<td className='bold h5 text-center'>{RowIsX(data.result1)}</td>
+			<td className='bold h5 text-center'>{RowIsX(data.result2)}</td>
+			<td className='bold h5 text-center'>{RowIsX(data.result3)}</td>
 
 			<td className='p-2'>
 				<FormGroup id='width-window'>
@@ -334,15 +335,16 @@ export const ShadingTable = ({ setData, data, setResult, readOnly }: ShadingProp
 							}></Row>
 					))}
 					<tr>
-						<th className='p-2'>
-							<FormGroup label='Promedio de resultados'>
-								<Input
-									type='number'
-									readOnly
-									className='bg-info-subtle'
-									value={averageResult}
-									onChange={(e: any) => setAverageResult(e.target.value)}></Input>
-							</FormGroup>
+						<th colSpan={6} className={'text-center h5 align-items-center'}>
+							<Label>Promedio de resultados</Label>
+						</th>
+						<th>
+							<Input
+								type='number'
+								readOnly
+								className='bg-info-subtle text-center'
+								value={averageResult}
+								onChange={(e: any) => setAverageResult(e.target.value)}></Input>
 						</th>
 					</tr>
 				</tbody>

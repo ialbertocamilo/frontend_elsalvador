@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 import { toDecimal, toDecimalNumber } from '../../helpers/helpers';
 
 function calculatePercentage(num1: number, num2: number): string | number {
-	const res = Number((num1 / num2) * 100).toFixed(0);
+	const res = Number((num1 / num2) * 100).toFixed(5);
 	if (isNaN(Number(res)) || Number(res) === Infinity) return 0;
 
 	return res;
@@ -145,7 +145,7 @@ export const ProportionTable = ({ onData, keyName, readOnly }: ProportiontablePr
 		for (const newRowsKey in newRows) {
 			sum1 += Number(newRows[newRowsKey]['column2']);
 			sum2 += Number(newRows[newRowsKey]['column3']);
-			newRows[newRowsKey]['column4'] = Number(
+			newRows[newRowsKey]['column4'] = toDecimalNumber(
 				calculatePercentage(newRows[newRowsKey]['column3'], newRows[newRowsKey]['column2']),
 			);
 		}

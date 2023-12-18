@@ -453,11 +453,11 @@ const Login = () => {
 												onClick={formik.handleSubmit}>
 												Ingresar
 											</Button>
-											<span
-												color='link '
-												className='cursor-pointer text-primary'>
-												¿Olvidaste tu contraseña?
-											</span>
+											{/*<span*/}
+											{/*	color='link '*/}
+											{/*	className='cursor-pointer text-primary'>*/}
+											{/*	¿Olvidaste tu contraseña?*/}
+											{/*</span>*/}
 										</div>
 									</>
 								)}

@@ -6,8 +6,6 @@ import { ObjClassification } from '../common/types/dashboard.types';
 import 'xlsx-js-style';
 import XLSX from 'sheetjs-style';
 import dayjs from 'dayjs';
-import showNotification from '../components/extras/showNotification';
-import Icon from '../components/icon/Icon';
 
 export function test() {
 	return null;
@@ -126,10 +124,24 @@ export const pathToRoute = (path: string): string => {
 	return path;
 };
 
+export function removeZeros(value: string) {
+	const esNumeroEntero = /^\d+$/.test(value);
+
+	if (esNumeroEntero && value.length > 1 && value.startsWith('0')) {
+		// Eliminar ceros adicionales al inicio
+		while (value.length > 1 && value.startsWith('0')) {
+			value = value.slice(1);
+		}
+		return value;
+	}
+	return '';
+}
+
 export function toDecimal(value: unknown, decimal = 3) {
 	if (typeof value === 'number') value = value.toString();
 	if (typeof value === 'string') {
 		const numberValue = Number(value);
+		if (isNaN(numberValue)) return 0;
 		const formattedValue = numberValue.toFixed(decimal);
 		return parseFloat(formattedValue).toString();
 	}

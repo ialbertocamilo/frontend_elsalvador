@@ -14,7 +14,7 @@ const ShadingPage = () => {
 			<Page>
 				<div className='row '>
 					<div className='col display-4 fw-bold py-3 text-primary-emphasis'>
-						Total de elementos de sombreado
+						Cálculo de elementos de sombreado
 					</div>
 					<span>Horizontales, verticales o combinados</span>
 				</div>
