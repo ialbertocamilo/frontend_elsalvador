@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"lint:scss": "stylelint **/*.scss",
-		"lint:fix-scss": "stylelint --fix **/*.scss"
+		"lint:fix-scss": "stylelint --fix **/*.scss",
+		"prettier": "prettier --write --ignore-path .gitignore ."
 	},
 	"dependencies": {
 		"@aws-sdk/client-location": "^3.409.0",

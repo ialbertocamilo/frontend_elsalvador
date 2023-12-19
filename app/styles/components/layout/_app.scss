@@ -17,16 +17,16 @@
 	height: 70vh;
 }
 
-.logo{
+.logo {
 	filter: brightness(0) invert(1);
 }
-.social-icon{
+.social-icon {
 	@include aside-close {
 		display: none;
 	}
 }
 
-.brand-logo-min{
+.brand-logo-min {
 	display: none;
 }
 

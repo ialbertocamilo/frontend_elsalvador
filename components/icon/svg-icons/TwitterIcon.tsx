@@ -1,11 +1,12 @@
 import React, { SVGProps } from 'react';
-import useDarkMode from "../../../hooks/useDarkMode";
+import useDarkMode from '../../../hooks/useDarkMode';
 
 const TwitterIcon = (props: SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
-			height='1em' fill='currentColor'
+			height='1em'
+			fill='currentColor'
 			className='svg-icon'
 			viewBox='0 0 512 512'
 			{...props}>
